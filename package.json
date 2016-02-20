@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --require babel-register --watch \"./**/*.spec.js\"",
+    "test": "mocha --require babel-register \"./**/*.spec.js\"",
+    "test:watch": "npm run test -- --watch",
     "start": "node ./devServer.js"
   },
   "keywords": [],
