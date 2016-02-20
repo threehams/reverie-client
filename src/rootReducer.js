@@ -8,4 +8,3 @@ export default function rootReducer(state = Map(), action) {
       return state;
   }
 }
-g
