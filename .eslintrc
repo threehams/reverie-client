@@ -96,7 +96,6 @@
     "no-undef-init": 2,
     "no-undef": 2,
     "no-unused-vars": 2,
-    "no-use-before-define": [2,"nofunc"],
     "array-bracket-spacing": [1,"never",{}],
     "brace-style": [2,"1tbs",{"allowSingleLine":true}],
     "camelcase": [2,{"properties":"always"}],

@@ -1,10 +1,8 @@
-import {Map} from 'immutable';
+import { combineReducers } from 'redux-immutable';
+import inventoryIdsReducer from './reducers/inventory-ids-reducer';
+import inventoryByIdReducer from './reducers/inventory-by-id-reducer';
 
-export default function rootReducer(state = Map(), action) {
-  switch (action.type) {
-    case 'SET_STATE':
-      return state;
-    default:
-      return state;
-  }
-}
+export default combineReducers({
+  inventoryIds: inventoryIdsReducer,
+  inventoryById: inventoryByIdReducer
+});
