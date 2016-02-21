@@ -18,7 +18,10 @@ describe('rootReducer', function() {
       };
       expect(rootReducer(initial, action)).to.equal(fromJS({
         inventoryById: {},
-        inventoryIds: []
+        inventoryIds: [],
+        ui: {
+          inventoryExpandedById: {}
+        }
       }));
     });
   });
