@@ -18,12 +18,14 @@ export class InventoryItem extends React.Component {
     const expanded = inventoryExpandedById.get(item.get('id'));
     return (
       <div>
-        { item.get('itemIds') ? <Icon name={ expanded ? 'minus' : 'plus' } onClick={() => toggleExpand(item.get('id'))} /> : null }
-        <span>{ item.get('name') }</span>
+        { item.get('itemIds') ? <Icon name={ expanded ? 'chevron-down' : 'chevron-right' } onClick={() => toggleExpand(item.get('id'))} /> : null }
+        <span style={{ paddingLeft: 4 }}>{ item.get('name') }</span>
         {
           item.get('itemIds') && expanded ?
             item.get('itemIds').map(id => {
-              return <InventoryItemContainer key={id} item={inventoryById.get(id)} />;
+              return <div style={{ paddingLeft: 16 }}>
+                <InventoryItemContainer key={id} item={inventoryById.get(id)} />
+              </div>;
             }) :
             null
         }
