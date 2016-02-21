@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Map, List } from 'immutable';
 
-import * as inventoryActions from '../actions/inventory-actions';
 import InventoryItem from './InventoryItem';
 
 export class Inventory extends React.Component {
@@ -32,10 +31,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = {
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Inventory);
+export default connect(mapStateToProps)(Inventory);
 
 const STYLES = {
   window: {
