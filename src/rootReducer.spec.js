@@ -1,5 +1,5 @@
 import rootReducer from './rootReducer';
-import {fromJS} from 'immutable';
+import {Map, fromJS} from 'immutable';
 import chai, {expect} from 'chai';
 import chaiImmutable from 'chai-immutable';
 
@@ -10,9 +10,16 @@ describe('rootReducer', function() {
     it('returns the state', function() {
       const initial = fromJS({});
       const action = {
-        type: 'SET_STATE'
+        type: 'SET_STATE',
+        payload: fromJS({
+          inventoryById: {},
+          inventoryIds: []
+        })
       };
-      expect(rootReducer(initial, action)).to.equal(fromJS({}));
+      expect(rootReducer(initial, action)).to.equal(fromJS({
+        inventoryById: {},
+        inventoryIds: []
+      }));
     });
   });
 });
