@@ -1,12 +1,20 @@
 {
-  "name": "react-universal-boilerplate",
+  "name": "reverie-client",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --require babel-register \"./**/*.spec.js\"",
-    "test:watch": "npm run test -- --watch",
+    "test": "better-npm-run test",
+    "test:watch": "better-npm-run test --watch",
     "start": "node ./devServer.js"
+  },
+  "betterScripts": {
+    "test": {
+      "command": "mocha --require babel-register src/**/*.spec.js",
+      "env": {
+        "NODE_ENV": "test"
+      }
+    }
   },
   "keywords": [],
   "author": "",
@@ -14,6 +22,7 @@
   "dependencies": {
     "font-awesome": "^4.5.0",
     "immutable": "^3.7.6",
+    "radium": "^0.16.6",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-redux": "^4.4.0",
@@ -32,6 +41,7 @@
     "babel-preset-react-hmre": "^1.1.0",
     "babel-preset-stage-0": "^6.3.13",
     "babel-register": "^6.4.3",
+    "better-npm-run": "0.0.7",
     "chai": "^3.5.0",
     "chai-immutable": "^1.5.3",
     "eslint": "^2.2.0",
