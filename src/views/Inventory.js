@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Map, List } from 'immutable';
+import panelStyles from '../styles/panel';
+import Radium from 'radium';
 
 import InventoryItem from './InventoryItem';
 
@@ -13,7 +15,7 @@ export class Inventory extends React.Component {
   render() {
     const { inventoryIds, inventoryById } = this.props;
     return (
-      <section style={STYLES.window}>
+      <section style={[panelStyles, styles]}>
         {
           inventoryIds.map(id => {
             return <InventoryItem key={id} item={inventoryById.get(id)} />;
@@ -24,6 +26,10 @@ export class Inventory extends React.Component {
   }
 }
 
+const styles = {
+  width: '30%'
+};
+
 const mapStateToProps = (state) => {
   return {
     inventoryIds: state.get('inventoryIds'),
@@ -31,10 +37,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Inventory);
-
-const STYLES = {
-  window: {
-    border: '1px solid black'
-  }
-};
+export default connect(mapStateToProps)(Radium(Inventory));

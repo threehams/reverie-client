@@ -1,7 +1,5 @@
 import {fromJS} from 'immutable';
-import chai, {expect} from 'chai';
-import chaiImmutable from 'chai-immutable';
-chai.use(chaiImmutable);
+import expect from '../__test__/configureExpect';
 
 import inventoryIdsReducer from './inventory-ids-reducer';
 import {setState} from '../actions/initial-actions';
