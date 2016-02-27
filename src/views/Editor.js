@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { List } from 'immutable';
-import panelStyles from '../styles/panel';
 import Radium from 'radium';
 
 export class Editor extends React.Component {
@@ -11,14 +10,10 @@ export class Editor extends React.Component {
 
   render() {
     return (
-      <div style={[panelStyles, styles]}></div>
+      <div></div>
     );
   }
 }
-
-const styles = {
-  width: '70%'
-};
 
 export default connect((state) => {
   return {
