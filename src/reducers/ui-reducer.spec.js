@@ -21,11 +21,11 @@ describe('uiReducer', function() {
     it('toggles the expanded state', function() {
       const initial = new UiRecord();
       const action = toggleExpand('1');
-      expect(uiReducer(initial, action)).to.equal(fromJS({
+      expect(uiReducer(initial, action)).to.equal(new UiRecord(fromJS({
         inventoryExpandedById: {
           '1': true
         }
-      }));
+      })));
     });
   });
 });

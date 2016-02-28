@@ -1,9 +1,9 @@
-import rootReducer from './rootReducer';
 import {Map, fromJS} from 'immutable';
-import chai, {expect} from 'chai';
-import chaiImmutable from 'chai-immutable';
+import expect from './__test__/configureExpect';
 
-chai.use(chaiImmutable);
+import rootReducer from './rootReducer';
+import UiRecord from './records/ui-record';
+
 
 describe('rootReducer', function() {
   describe('SET_STATE', function() {
@@ -17,11 +17,10 @@ describe('rootReducer', function() {
         })
       };
       expect(rootReducer(initial, action)).to.equal(fromJS({
+        commandHistory: [],
         inventoryById: {},
         inventoryIds: [],
-        ui: {
-          inventoryExpandedById: {}
-        }
+        ui: new UiRecord()
       }));
     });
   });
