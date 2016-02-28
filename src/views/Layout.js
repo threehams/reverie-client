@@ -42,6 +42,7 @@ const styles = {
     display: 'flex',
     flexFlow: 'row nowrap',
     height: '100vh',
+    padding: 20,
     width: '100vw'
   },
   sidebar: {
