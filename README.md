@@ -14,3 +14,8 @@ Install node.js, probably v4. Best done with NVM (node version manager).
 `npm test` or `npm run test:watch` to run tests
 
 Supports all evergreen browsers.
+
+# Continuous Integration
+
+Tests are run on CircleCI for all branches, and notify Github on
+pending / success / failure. Results appear on pull requests.
