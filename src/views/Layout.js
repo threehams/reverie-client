@@ -3,7 +3,8 @@ import Radium from 'radium';
 
 import Inventory from './Inventory';
 import Editor from './Editor';
-import Debugger from './Debugger';
+import DebuggerHistory from './DebuggerHistory';
+import DebuggerPrompt from './DebuggerPrompt';
 import panelStyles from '../styles/panel';
 
 export class Layout extends React.Component {
@@ -23,7 +24,12 @@ export class Layout extends React.Component {
             <Editor />
           </section>
           <section style={[panelStyles, styles.debugger]}>
-            <Debugger />
+            <div style={styles.debuggerHistory}>
+              <DebuggerHistory />
+            </div>
+            <div style={styles.debuggerPrompt}>
+              <DebuggerPrompt />
+            </div>
           </section>
         </section>
       </div>
@@ -53,7 +59,15 @@ const styles = {
     flex: '1 1 80%'
   },
   debugger: {
-    flex: '1 1 20%'
+    flex: '1 1 20%',
+    display: 'flex',
+    flexFlow: 'column nowrap'
+  },
+  debuggerHistory: {
+    flex: '1 1 auto'
+  },
+  debuggerPrompt: {
+    flex: '0 0 30px'
   }
 };
 
