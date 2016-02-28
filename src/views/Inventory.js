@@ -14,7 +14,8 @@ export class Inventory extends React.Component {
   render() {
     const { inventoryIds, inventoryById } = this.props;
     return (
-      <section>
+      <section style={styles}>
+        <span>inventory</span>
         {
           inventoryIds.map(id => {
             return <InventoryItem key={id} item={inventoryById.get(id)} />;
@@ -25,11 +26,13 @@ export class Inventory extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const styles = {
+  padding: '2px 10px'
+};
+
+export default connect((state) => {
   return {
     inventoryIds: state.get('inventoryIds'),
     inventoryById: state.get('inventoryById')
   };
-};
-
-export default connect(mapStateToProps)(Radium(Inventory));
+})(Radium(Inventory));

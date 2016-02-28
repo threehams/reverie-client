@@ -11,10 +11,10 @@ export class DebuggerHistory extends React.Component {
   render() {
     const { history } = this.props;
     return (
-      <ul style={styles.history}>
+      <ul style={styles.main}>
         {
           history.map((command, index) => {
-            return <li style={styles.historyItem} key={index}>{command}</li>;
+            return <li style={styles.item} key={index}>{command}</li>;
           })
         }
       </ul>
@@ -23,11 +23,8 @@ export class DebuggerHistory extends React.Component {
 }
 
 const styles = {
-  history: {
-    paddingLeft: 0
-  },
-  historyItem: {
-    listStyleType: 'none'
+  main: {
+    padding: 10
   }
 };
 

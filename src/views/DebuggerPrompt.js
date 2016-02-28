@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Radium from 'radium';
 
 import * as historyActions from '../actions/history-actions';
+import Autocomplete from './Autocomplete';
 
 export class DebuggerPrompt extends React.Component {
   static propTypes = {
@@ -20,6 +21,7 @@ export class DebuggerPrompt extends React.Component {
     const { currentCommand, setCurrentCommand } = this.props;
     return (
       <form onSubmit={::this.submit}>
+        { currentCommand.length > 1 ? <Autocomplete command={currentCommand} /> : null }
         <input type="text"
                value={currentCommand}
                style={styles}
@@ -31,7 +33,9 @@ export class DebuggerPrompt extends React.Component {
 
 const styles = {
   width: '100%',
-  border: 0,
+  borderBottom: 0,
+  borderLeft: 0,
+  borderRight: 0,
   borderTop: '1px solid black',
   padding: 4,
   outline: 0
