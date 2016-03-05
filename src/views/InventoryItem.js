@@ -2,30 +2,42 @@ import React from 'react';
 import {Map} from 'immutable';
 import { connect } from 'react-redux';
 import Radium from 'radium';
+import shouldPureComponentUpdate from 'react-pure-render/function';
 
 import Icon from '../components/Icon';
 import * as inventoryActions from '../actions/inventory-actions';
 import InventoryItemRecord from '../records/inventory-item-record';
 
+const TYPE_ICONS = {
+  script: 'file-code-o',
+  folder: 'folder-o',
+  text: 'file-text-o'
+};
+
 export class InventoryItem extends React.Component {
+  shouldComponentUpdate = shouldPureComponentUpdate;
   static propTypes = {
     item: React.PropTypes.instanceOf(InventoryItemRecord),
-    inventoryById: React.PropTypes.instanceOf(Map),
     expanded: React.PropTypes.bool,
     toggleExpand: React.PropTypes.func
   };
 
   render() {
-    const { item, inventoryById, expanded, toggleExpand } = this.props;
+    const { item, expanded, toggleExpand } = this.props;
     return (
-      <div>
-        { item.itemIds.size ? <DropdownArrow expanded={expanded} onClick={() => toggleExpand(item.id)} /> : null }
-        <span style={{ paddingLeft: 4 }}>{ item.name }</span>
+      <div style={{ paddingLeft: 16 }}>
+        {
+          item.itemIds.size ?
+            <DropdownArrow expanded={expanded} onClick={() => toggleExpand(item.id)} /> :
+            <span style={{ paddingLeft: 18 }} />
+        }
+        <Icon name={TYPE_ICONS[item.type]} before />
+        <span>{ item.name }</span>
         {
           expanded ?
             item.itemIds.map(id => {
-              return <div key={id} style={{ paddingLeft: 16 }}>
-                <InventoryItemContainer item={inventoryById.get(id)} />
+              return <div key={id}>
+                <InventoryItemContainer id={id} />
               </div>;
             }) :
             null
@@ -35,26 +47,26 @@ export class InventoryItem extends React.Component {
   }
 }
 
-export default class DropdownArrow extends React.Component {
+class DropdownArrow extends React.Component {
+  shouldComponentUpdate = shouldPureComponentUpdate;
   static propTypes = {
     expanded: React.PropTypes.bool,
     onClick: React.PropTypes.func
   };
 
   render() {
+    const { expanded, onClick } = this.props;
     return (
-      <Icon name={ this.props.expanded ? 'chevron-down' : 'chevron-right' } onClick={this.props.onClick} />
+      <Icon name={ expanded ? 'caret-down' : 'caret-right' } onClick={ onClick } before />
     );
   }
 }
 
-
 const InventoryItemContainer = connect(
   (state, props) => {
     return {
-      inventoryById: state.get('inventoryById'),
-      inventoryExpandedById: state.getIn(['ui', 'inventoryExpandedById']),
-      expanded: !!state.getIn(['ui', 'inventoryExpandedById', props.item.id])
+      item: state.getIn(['inventoryById', props.id]),
+      expanded: !!state.getIn(['ui', 'inventoryExpandedById', props.id])
     };
   },
   inventoryActions

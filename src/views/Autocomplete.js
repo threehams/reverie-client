@@ -23,7 +23,8 @@ export class Autocomplete extends React.Component {
 
 export default connect((state, props) => {
   return {
-    options: List(state.get('inventoryById').values())
+    options: state.get('inventoryById')
+      .toList()
       .filter(item => item.name.includes(props.command) && item.type === 'script')
       .map(item => item.name)
   };
