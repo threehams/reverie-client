@@ -1,26 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Map, List } from 'immutable';
+import { List } from 'immutable';
 import Radium from 'radium';
+import shouldPureComponentUpdate from 'react-pure-render/function';
 
-import InventoryItem from './InventoryItem';
+import InventoryItemContainer from './InventoryItem';
 
 export class Inventory extends React.Component {
+  shouldComponentUpdate = shouldPureComponentUpdate;
   static propTypes = {
-    inventoryById: React.PropTypes.instanceOf(Map),
-    inventoryIds: React.PropTypes.instanceOf(List)
+    ids: React.PropTypes.instanceOf(List)
   };
 
   render() {
-    const { inventoryIds, inventoryById } = this.props;
+    const { ids } = this.props;
     return (
       <section style={styles}>
         <span>inventory</span>
-        {
-          inventoryIds.map(id => {
-            return <InventoryItem key={id} item={inventoryById.get(id)} />;
-          })
-        }
+        { ids.map(id => <InventoryItemContainer key={id} id={id} />) }
       </section>
     );
   }
@@ -32,7 +29,6 @@ const styles = {
 
 export default connect((state) => {
   return {
-    inventoryIds: state.get('inventoryIds'),
-    inventoryById: state.get('inventoryById')
+    ids: state.get('inventoryIds')
   };
 })(Radium(Inventory));

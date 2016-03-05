@@ -10,7 +10,7 @@
   },
   "betterScripts": {
     "test": {
-      "command": "mocha --require babel-register src/**/*.spec.js",
+      "command": "mocha --require babel-register --reporter min src/**/*.spec.js",
       "env": {
         "NODE_ENV": "test"
       }
@@ -25,6 +25,7 @@
     "radium": "^0.16.6",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
+    "react-pure-render": "^1.0.2",
     "react-redux": "^4.4.0",
     "redux": "^3.3.1",
     "redux-immutable": "^3.0.3",
@@ -50,6 +51,7 @@
     "mocha": "^2.4.5",
     "react-addons-test-utils": "^0.14.7",
     "react-tools": "^0.13.3",
+    "skin-deep": "^0.14.0",
     "style-loader": "^0.13.0",
     "webpack": "^1.12.12",
     "webpack-dev-middleware": "^1.5.1",

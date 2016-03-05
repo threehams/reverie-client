@@ -1,14 +1,14 @@
 export default {
-  inventoryIds: ['3', '4'],
+  inventoryIds: ['3', '4', '9'],
   inventoryById: {
     '1': {
       id: '1',
-      name: 'rm',
+      name: 'rm.js',
       type: 'script'
     },
     '2': {
       id: '2',
-      name: 'portscan',
+      name: 'portscan.js',
       type: 'script'
     },
     '3': {
@@ -25,24 +25,40 @@ export default {
     },
     '5': {
       id: '5',
-      name: 'portscan1',
+      name: 'portscan1.js',
       type: 'script'
     },
     '6': {
       id: '6',
-      name: 'portscan2',
-      type: 'script',
+      name: 'portscans',
+      type: 'folder',
       itemIds: ['7', '8']
     },
     '7': {
       id: '7',
-      name: 'hack',
+      name: 'hack.js',
       type: 'script'
     },
     '8': {
       id: '8',
-      name: 'more-hacks',
+      name: 'hack-more.js',
       type: 'script'
+    },
+    '9': {
+      id: '9',
+      name: 'docs',
+      type: 'folder',
+      itemIds: ['10', '11']
+    },
+    '10': {
+      id: '10',
+      name: 'readme.txt',
+      type: 'text'
+    },
+    '11': {
+      id: '11',
+      name: 'commands.txt',
+      type: 'text'
     }
   }
 };
