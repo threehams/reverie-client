@@ -2,7 +2,7 @@ import {List} from 'immutable';
 
 export default function commandHistoryReducer(state = List(), action) {
   switch (action.type) {
-    case 'SET_STATE':
+    case 'HISTORY_FETCH_FULFILLED':
       return state.merge(action.payload.get('commandHistory'));
     case 'COMMAND_SEND':
       return state.push(action.payload.command);

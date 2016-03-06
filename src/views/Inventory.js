@@ -5,20 +5,29 @@ import Radium from 'radium';
 import shouldPureComponentUpdate from 'react-pure-render/function';
 
 import InventoryItemContainer from './InventoryItem';
+import LoadingCircle from '../components/LoadingCircle';
+import * as inventoryActions from '../actions/inventory-actions';
 
 export class Inventory extends React.Component {
-  shouldComponentUpdate = shouldPureComponentUpdate;
   static propTypes = {
-    ids: React.PropTypes.instanceOf(List)
+    ids: React.PropTypes.instanceOf(List),
+    fetch: React.PropTypes.func
   };
+
+  shouldComponentUpdate = shouldPureComponentUpdate;
+  componentDidMount() {
+    this.props.fetch();
+  }
 
   render() {
     const { ids } = this.props;
     return (
-      <section style={styles}>
-        <span>inventory</span>
-        { ids.map(id => <InventoryItemContainer key={id} id={id} />) }
-      </section>
+      <LoadingCircle showUntil={!!(ids && ids.size)}>
+        <section style={styles}>
+          <span>inventory</span>
+          { ids.map(id => <InventoryItemContainer key={id} id={id} />) }
+        </section>
+      </LoadingCircle>
     );
   }
 }
@@ -31,4 +40,4 @@ export default connect((state) => {
   return {
     ids: state.get('inventoryIds')
   };
-})(Radium(Inventory));
+}, inventoryActions)(Radium(Inventory));

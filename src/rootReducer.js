@@ -6,8 +6,8 @@ import inventoryByIdReducer from './reducers/inventory-by-id-reducer';
 import uiReducer from './reducers/ui-reducer';
 
 export default combineReducers({
+  commandHistory: commandHistoryReducer,
   inventoryIds: inventoryIdsReducer,
   inventoryById: inventoryByIdReducer,
-  commandHistory: commandHistoryReducer,
   ui: uiReducer
 });
