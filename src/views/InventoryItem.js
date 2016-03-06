@@ -1,5 +1,4 @@
 import React from 'react';
-import {Map} from 'immutable';
 import { connect } from 'react-redux';
 import Radium from 'radium';
 import shouldPureComponentUpdate from 'react-pure-render/function';
@@ -27,7 +26,7 @@ export class InventoryItem extends React.Component {
     return (
       <div style={{ paddingLeft: 16 }}>
         {
-          item.itemIds.size ?
+          item.items.size ?
             <DropdownArrow expanded={expanded} onClick={() => toggleExpand(item.id)} /> :
             <span style={{ paddingLeft: 18 }} />
         }
@@ -35,7 +34,7 @@ export class InventoryItem extends React.Component {
         <span>{ item.name }</span>
         {
           expanded ?
-            item.itemIds.map(id => {
+            item.items.map(id => {
               return <div key={id}>
                 <InventoryItemContainer id={id} />
               </div>;

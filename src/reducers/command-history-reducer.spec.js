@@ -3,15 +3,17 @@ import expect from '../__test__/configureExpect';
 
 import commandHistoryReducer from './command-history-reducer';
 import * as historyActions from '../actions/history-actions';
-import {setState} from '../actions/initial-actions';
 
 describe('commandHistoryReducer', function() {
-  describe('SET_STATE', function() {
+  describe('HISTORY_FETCH_FULFILLED', function() {
     it('returns the inventory ids', function() {
       const initial = undefined;
-      const action = setState(fromJS({
-        commandHistory: ['git status']
-      }));
+      const action = {
+        type: 'HISTORY_FETCH_FULFILLED',
+        payload: fromJS({
+          commandHistory: ['git status']
+        })
+      };
       expect(commandHistoryReducer(initial, action)).to.equal(fromJS(['git status']));
     });
   });

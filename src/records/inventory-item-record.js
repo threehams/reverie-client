@@ -4,5 +4,5 @@ export default Record({
   id: null,
   name: null,
   type: null,
-  itemIds: List()
+  items: List()
 });

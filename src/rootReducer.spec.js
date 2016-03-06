@@ -1,4 +1,4 @@
-import {Map, fromJS} from 'immutable';
+import {fromJS} from 'immutable';
 import expect from './__test__/configureExpect';
 
 import rootReducer from './rootReducer';
@@ -6,11 +6,11 @@ import UiRecord from './records/ui-record';
 
 
 describe('rootReducer', function() {
-  describe('SET_STATE', function() {
+  describe('DEFAULT', function() {
     it('returns the state', function() {
       const initial = fromJS({});
       const action = {
-        type: 'SET_STATE',
+        type: 'DEFAULT',
         payload: fromJS({
           inventoryById: {},
           inventoryIds: []
