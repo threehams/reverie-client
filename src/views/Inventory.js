@@ -24,7 +24,6 @@ export class Inventory extends React.Component {
     return (
       <LoadingCircle showUntil={!!(ids && ids.size)}>
         <section style={styles}>
-          <span>inventory</span>
           { ids.map(id => <InventoryItemContainer key={id} id={id} />) }
         </section>
       </LoadingCircle>
