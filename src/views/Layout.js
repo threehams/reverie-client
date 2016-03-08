@@ -7,6 +7,9 @@ import DebuggerHistory from './DebuggerHistory';
 import DebuggerPrompt from './DebuggerPrompt';
 import panelStyles from '../styles/panel';
 
+import TabContainer from '../components/TabContainer';
+import Tab from '../components/Tab';
+
 export class Layout extends React.Component {
   static propTypes = {
 
@@ -16,6 +19,11 @@ export class Layout extends React.Component {
     return (
       <div style={styles.container}>
         <aside style={[panelStyles, styles.sidebar]}>
+          <TabContainer>
+            <Tab active>
+              Inventory
+            </Tab>
+          </TabContainer>
           <Inventory />
         </aside>
 
