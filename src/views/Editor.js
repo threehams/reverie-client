@@ -12,18 +12,18 @@ import InventoryItemRecord from '../records/inventory-item-record';
 export class Editor extends React.Component {
   static propTypes = {
     activeView: React.PropTypes.string,
-    inventoryById: React.PropTypes.instanceOf(Map),
+    entityById: React.PropTypes.instanceOf(Map),
     log: React.PropTypes.instanceOf(List),
     setActiveView: React.PropTypes.func,
     tabs: React.PropTypes.instanceOf(List)
   };
 
   render() {
-    const { activeView, inventoryById } = this.props;
+    const { activeView, entityById } = this.props;
     return (
       <div>
         <EditorTabs {...this.props} />
-        { activeView ? <EditorDetail item={ inventoryById.get(activeView) } /> : <EditorMain {...this.props } /> }
+        { activeView ? <EditorDetail item={ entityById.get(activeView) } /> : <EditorMain {...this.props } /> }
       </div>
     );
   }
@@ -32,14 +32,14 @@ export class Editor extends React.Component {
 class EditorTabs extends React.Component {
   static propTypes = {
     activeView: React.PropTypes.string,
-    inventoryById: React.PropTypes.instanceOf(Map),
+    entityById: React.PropTypes.instanceOf(Map),
     setActiveView: React.PropTypes.func,
     removeView: React.PropTypes.func,
     tabs: React.PropTypes.instanceOf(List)
   };
 
   render() {
-    const { tabs, inventoryById, activeView, setActiveView, removeView } = this.props;
+    const { tabs, entityById, activeView, setActiveView, removeView } = this.props;
     return (
       <TabContainer>
         {
@@ -51,7 +51,7 @@ class EditorTabs extends React.Component {
                 </Tab>
               );
             }
-            const item = inventoryById.get(tab.id);
+            const item = entityById.get(tab.id);
             return item ?
               <Tab key={tab.id}
                    active={tab.id === activeView}
@@ -103,7 +103,7 @@ class EditorDetail extends React.Component {
 export default connect((state) => {
   return {
     activeView: state.getIn(['ui', 'activeEditorView']),
-    inventoryById: state.get('inventoryById'),
+    entityById: state.get('entityById'),
     log: state.get('log'),
     tabs: state.getIn(['ui', 'editorTabs'])
   };

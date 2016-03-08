@@ -10,7 +10,7 @@
   },
   "betterScripts": {
     "test": {
-      "command": "mocha --require babel-register --reporter min src/**/*.spec.js",
+      "command": "mocha --require babel-register --require babel-polyfill --timeout=200 --reporter min src/**/*.spec.js",
       "env": {
         "NODE_ENV": "test"
       }
@@ -52,9 +52,12 @@
     "eslint-plugin-react": "^4.0.0",
     "express": "^4.13.4",
     "mocha": "^2.4.5",
+    "nock": "^7.2.2",
     "nodemon": "^1.9.1",
     "react-addons-test-utils": "^0.14.7",
     "react-tools": "^0.13.3",
+    "sinon": "^1.17.3",
+    "sinon-chai": "^2.8.0",
     "skin-deep": "^0.14.0",
     "style-loader": "^0.13.0",
     "webpack": "^1.12.12",

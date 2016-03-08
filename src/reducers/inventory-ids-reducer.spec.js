@@ -4,11 +4,11 @@ import expect from '../__test__/configureExpect';
 import inventoryIdsReducer from './inventory-ids-reducer';
 
 describe('inventoryIdsReducer', function() {
-  describe('SET_STATE', function() {
+  describe('ENTITY_FETCH_FULFILLED', function() {
     it('returns the inventory ids', function() {
       const initial = undefined;
       const action = {
-        type: 'INVENTORY_FETCH_FULFILLED',
+        type: 'ENTITY_FETCH_FULFILLED',
         payload: fromJS({
           inventoryIds: ['1']
         })

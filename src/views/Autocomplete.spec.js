@@ -14,24 +14,24 @@ describe('Autocomplete', function() {
   const configureStore = (inventory) => {
     return createStore(() => {
       return Map({
-        inventoryById: inventory
+        entityById: inventory
       });
     });
   };
 
   describe('connected component', function() {
-    context('scripts', function() {
+    context('executables', function() {
       beforeEach(function() {
         const inventory = fromJS({
           '1': new InventoryItemRecord({
             id: '1',
             name: 'rm',
-            type: 'script'
+            executable: true
           }),
           '2': new InventoryItemRecord({
             id: '2',
             name: 'rm-hack',
-            type: 'script'
+            executable: true
           })
         });
         store = configureStore(inventory);
@@ -50,7 +50,7 @@ describe('Autocomplete', function() {
           '1': new InventoryItemRecord({
             id: '1',
             name: 'rm',
-            type: 'file'
+            executable: false
           })
         });
         store = configureStore(inventory);

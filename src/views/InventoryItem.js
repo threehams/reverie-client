@@ -26,15 +26,15 @@ export class InventoryItem extends React.Component {
     return (
       <div style={{ paddingLeft: 16 }}>
         {
-          item.items.size ?
+          item.entities.size ?
             <DropdownArrow expanded={expanded} onClick={() => toggleExpand(item.id)} /> :
             <span style={{ paddingLeft: 18 }} />
         }
-        <Icon name={TYPE_ICONS[item.type]} before />
+        <Icon name={TYPE_ICONS[item.type] || 'file-text-o'} before />
         <span>{ item.name }</span>
         {
           expanded ?
-            item.items.map(id => {
+            item.entities.map(id => {
               return <div key={id}>
                 <InventoryItemContainer id={id} />
               </div>;
@@ -64,7 +64,7 @@ class DropdownArrow extends React.Component {
 const InventoryItemContainer = connect(
   (state, props) => {
     return {
-      item: state.getIn(['inventoryById', props.id]),
+      item: state.getIn(['entityById', props.id]),
       expanded: !!state.getIn(['ui', 'inventoryExpandedById', props.id])
     };
   },
