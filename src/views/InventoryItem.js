@@ -5,7 +5,7 @@ import shouldPureComponentUpdate from 'react-pure-render/function';
 
 import Icon from '../components/Icon';
 import * as inventoryActions from '../actions/inventory-actions';
-import InventoryItemRecord from '../records/inventory-item-record';
+import EntityRecord from '../records/entity-record';
 
 const TYPE_ICONS = {
   script: 'file-code-o',
@@ -16,7 +16,7 @@ const TYPE_ICONS = {
 export class InventoryItem extends React.Component {
   shouldComponentUpdate = shouldPureComponentUpdate;
   static propTypes = {
-    item: React.PropTypes.instanceOf(InventoryItemRecord),
+    item: React.PropTypes.instanceOf(EntityRecord),
     expanded: React.PropTypes.bool,
     toggleExpand: React.PropTypes.func
   };
@@ -26,15 +26,15 @@ export class InventoryItem extends React.Component {
     return (
       <div style={{ paddingLeft: 16 }}>
         {
-          item.items.size ?
+          item.entities.size ?
             <DropdownArrow expanded={expanded} onClick={() => toggleExpand(item.id)} /> :
             <span style={{ paddingLeft: 18 }} />
         }
-        <Icon name={TYPE_ICONS[item.type]} before />
+        <Icon name={TYPE_ICONS[item.type] || 'file-text-o'} before />
         <span>{ item.name }</span>
         {
           expanded ?
-            item.items.map(id => {
+            item.entities.map(id => {
               return <div key={id}>
                 <InventoryItemContainer id={id} />
               </div>;
@@ -64,7 +64,7 @@ class DropdownArrow extends React.Component {
 const InventoryItemContainer = connect(
   (state, props) => {
     return {
-      item: state.getIn(['inventoryById', props.id]),
+      item: state.getIn(['entityById', props.id]),
       expanded: !!state.getIn(['ui', 'inventoryExpandedById', props.id])
     };
   },

@@ -1,26 +1,32 @@
 import React from 'react';
 import {createStore} from 'redux';
-import {Map, List} from 'immutable';
+import {fromJS, List} from 'immutable';
 
 import expect from '../__test__/configureExpect';
 import sd from 'skin-deep';
 
 import InventoryContainer, {Inventory} from './Inventory';
+import UiRecord from '../records/ui-record';
 
 describe('Inventory', function() {
   let store;
 
-  const configureStore = (inventory) => {
-    return createStore(() => {
-      return Map({
-        inventoryIds: inventory
-      });
-    });
-  };
-
   describe('connected component', function() {
     beforeEach(function() {
-      store = configureStore(List(['1', '2']));
+      store = createStore(() => {
+        return fromJS({
+          entityById: {
+            '1': {
+              id: '1',
+              name: 'Grarble',
+              entities: ['1', '2']
+            }
+          },
+          ui: new UiRecord({
+            player: '1'
+          })
+        });
+      });
     });
 
     it('passes IDs to Inventory', function() {

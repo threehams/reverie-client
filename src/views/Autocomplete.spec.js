@@ -6,7 +6,7 @@ import expect from '../__test__/configureExpect';
 import sd from 'skin-deep';
 
 import AutocompleteContainer, {Autocomplete} from './Autocomplete';
-import InventoryItemRecord from '../records/inventory-item-record';
+import EntityRecord from '../records/entity-record';
 
 describe('Autocomplete', function() {
   let store;
@@ -14,24 +14,24 @@ describe('Autocomplete', function() {
   const configureStore = (inventory) => {
     return createStore(() => {
       return Map({
-        inventoryById: inventory
+        entityById: inventory
       });
     });
   };
 
   describe('connected component', function() {
-    context('scripts', function() {
+    context('executables', function() {
       beforeEach(function() {
         const inventory = fromJS({
-          '1': new InventoryItemRecord({
+          '1': new EntityRecord({
             id: '1',
             name: 'rm',
-            type: 'script'
+            executable: true
           }),
-          '2': new InventoryItemRecord({
+          '2': new EntityRecord({
             id: '2',
             name: 'rm-hack',
-            type: 'script'
+            executable: true
           })
         });
         store = configureStore(inventory);
@@ -47,10 +47,10 @@ describe('Autocomplete', function() {
     context('other items', function() {
       beforeEach(function() {
         const inventory = fromJS({
-          '1': new InventoryItemRecord({
+          '1': new EntityRecord({
             id: '1',
             name: 'rm',
-            type: 'file'
+            executable: false
           })
         });
         store = configureStore(inventory);

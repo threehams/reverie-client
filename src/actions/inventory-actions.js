@@ -13,22 +13,22 @@ export function toggleExpand(id) {
 
 export function fetch() {
   return {
-    type: 'INVENTORY_FETCH',
+    type: 'ENTITY_FETCH',
     payload: {
       promise: axios.get('/api/inventory.json').then(response => response.data).then(transform)
     }
   };
 }
 
-const item = new Schema('item');
-item.define({
-  items: arrayOf(item)
-});
+const entity = new Schema('entity');
+entity.define({});
 
 function transform(data) {
-  const normalized = normalize(data, arrayOf(item));
-  return fromJS({
-    inventoryIds: normalized.result,
-    inventoryById: normalized.entities.item
+  const normalized = normalize(data, {
+    entities: arrayOf(entity)
   });
+  return {
+    player: normalized.result.player,
+    entityById: fromJS(normalized.entities.entity)
+  };
 }
