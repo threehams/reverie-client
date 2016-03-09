@@ -5,7 +5,7 @@ import shouldPureComponentUpdate from 'react-pure-render/function';
 
 import Icon from '../components/Icon';
 import * as inventoryActions from '../actions/inventory-actions';
-import InventoryItemRecord from '../records/inventory-item-record';
+import EntityRecord from '../records/entity-record';
 
 const TYPE_ICONS = {
   script: 'file-code-o',
@@ -16,7 +16,7 @@ const TYPE_ICONS = {
 export class InventoryItem extends React.Component {
   shouldComponentUpdate = shouldPureComponentUpdate;
   static propTypes = {
-    item: React.PropTypes.instanceOf(InventoryItemRecord),
+    item: React.PropTypes.instanceOf(EntityRecord),
     expanded: React.PropTypes.bool,
     toggleExpand: React.PropTypes.func
   };

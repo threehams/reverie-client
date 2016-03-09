@@ -11,15 +11,11 @@ describe('rootReducer', function() {
       const initial = fromJS({});
       const action = {
         type: 'DEFAULT',
-        payload: fromJS({
-          entityById: {},
-          inventoryIds: []
-        })
+        payload: {}
       };
       expect(rootReducer(initial, action)).to.equal(fromJS({
         commandHistory: [],
         entityById: {},
-        inventoryIds: [],
         ui: new UiRecord()
       }));
     });

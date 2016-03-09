@@ -20,16 +20,17 @@ describe('inventoryActions', function() {
   describe('fetch', function() {
     beforeEach(function() {
       nock('http://localhost:80').get('/api/inventory.json').reply(200, {
-        player: {
-          location: '1',
-          entities: ['2']
-        },
+        player: '3',
         entities: [
           {
             id: '1'
           },
           {
             id: '2'
+          },
+          {
+            id: '3',
+            entities: ['1', '2']
           }
         ]
       });
@@ -44,14 +45,14 @@ describe('inventoryActions', function() {
               type: 'ENTITY_FETCH_PENDING'
             });
             expect(state[2].type).to.equal('ENTITY_FETCH_FULFILLED');
-            expect(state[2].payload).to.equal(fromJS({
-              location: '1',
-              inventoryIds: ['2'],
-              entityById: {
+            expect(state[2].payload).to.eql({
+              player: '3',
+              entityById: fromJS({
                 '1': { id: '1'},
-                '2': { id: '2'}
-              }
-            }));
+                '2': { id: '2'},
+                '3': { id: '3', entities: ['1', '2']}
+              })
+            });
             done();
           });
         }

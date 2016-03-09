@@ -1,9 +1,5 @@
 export default {
-  player: {
-    name: 'Garble Glarble',
-    location: '12',
-    entities: ['1', '4', '9']
-  },
+  player: '17',
   entities: [
     {
       id: '1',
@@ -79,6 +75,12 @@ export default {
       id: '14',
       name: 'leaflet',
       description: 'WELCOME TO ZORK!'
+    },
+    {
+      id: '17',
+      name: 'Grarble Garble',
+      location: '12',
+      entities: ['1', '4', '9']
     }
   ]
 };

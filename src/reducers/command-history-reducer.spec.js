@@ -10,9 +10,9 @@ describe('commandHistoryReducer', function() {
       const initial = undefined;
       const action = {
         type: 'HISTORY_FETCH_FULFILLED',
-        payload: fromJS({
-          commandHistory: ['git status']
-        })
+        payload: {
+          commandHistory: List(['git status'])
+        }
       };
       expect(commandHistoryReducer(initial, action)).to.equal(fromJS(['git status']));
     });

@@ -6,7 +6,6 @@ import {setState} from '../actions/initial-actions';
 import {toggleExpand} from '../actions/inventory-actions';
 import {removeView} from '../actions/editor-actions';
 import UiRecord from '../records/ui-record';
-import EditorTabRecord from '../records/editor-tab-record';
 
 describe('uiReducer', function() {
   describe('SET_STATE', function() {
@@ -33,18 +32,12 @@ describe('uiReducer', function() {
     context('when removing the current view', function() {
       it('sets the active view to the next available view', function() {
         const initial = new UiRecord({
-          editorTabs: List([
-            new EditorTabRecord({
-              id: '1'
-            }),
-            new EditorTabRecord({
-              id: '2'
-            })
-          ]),
+          editorViews: List(['1', '2']),
           activeEditorView: '2'
         });
         const action = removeView('2');
         const newState = uiReducer(initial, action);
+        expect(newState.editorViews).to.equal(List('1'));
         expect(newState.activeEditorView).to.equal('1');
       });
     });
@@ -52,15 +45,12 @@ describe('uiReducer', function() {
     context('when removing a non-current view', function() {
       it('does not change the active view', function() {
         const initial = new UiRecord({
-          editorTabs: List([
-            new EditorTabRecord({
-              id: '1'
-            })
-          ]),
+          editorViews: List(['1', '2']),
           activeEditorView: '2'
         });
         const action = removeView('1');
         const newState = uiReducer(initial, action);
+        expect(newState.editorViews).to.equal(List('2'));
         expect(newState.activeEditorView).to.equal('2');
       });
     });

@@ -27,9 +27,8 @@ function transform(data) {
   const normalized = normalize(data, {
     entities: arrayOf(entity)
   });
-  return fromJS({
-    location: normalized.result.player.location,
-    inventoryIds: normalized.result.player.entities,
-    entityById: normalized.entities.entity
-  });
+  return {
+    player: normalized.result.player,
+    entityById: fromJS(normalized.entities.entity)
+  };
 }

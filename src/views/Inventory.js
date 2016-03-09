@@ -24,7 +24,7 @@ export class Inventory extends React.Component {
     return (
       <LoadingCircle showUntil={!!(ids && ids.size)}>
         <section style={styles}>
-          { ids.map(id => <InventoryItemContainer key={id} id={id} />) }
+          { ids && ids.map(id => <InventoryItemContainer key={id} id={id} />) }
         </section>
       </LoadingCircle>
     );
@@ -36,7 +36,8 @@ const styles = {
 };
 
 export default connect((state) => {
+  const id = state.getIn(['ui', 'player']);
   return {
-    ids: state.get('inventoryIds')
+    ids: state.getIn(['entityById', id, 'entities'])
   };
 }, inventoryActions)(Radium(Inventory));

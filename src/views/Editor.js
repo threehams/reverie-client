@@ -7,7 +7,7 @@ import TabContainer from '../components/TabContainer';
 import Tab from '../components/Tab';
 import LoadingCircle from '../components/LoadingCircle';
 import * as editorActions from '../actions/editor-actions';
-import InventoryItemRecord from '../records/inventory-item-record';
+import EntityRecord from '../records/entity-record';
 
 export class Editor extends React.Component {
   static propTypes = {
@@ -15,15 +15,15 @@ export class Editor extends React.Component {
     entityById: React.PropTypes.instanceOf(Map),
     log: React.PropTypes.instanceOf(List),
     setActiveView: React.PropTypes.func,
-    tabs: React.PropTypes.instanceOf(List)
+    views: React.PropTypes.instanceOf(List)
   };
 
   render() {
-    const { activeView, entityById } = this.props;
+    const { activeView, locationId, entityById } = this.props;
     return (
       <div>
         <EditorTabs {...this.props} />
-        { activeView ? <EditorDetail item={ entityById.get(activeView) } /> : <EditorMain {...this.props } /> }
+        { activeView ? <EditorDetail item={ entityById.get(activeView) } /> : <EditorMain /> }
       </div>
     );
   }
@@ -35,29 +35,29 @@ class EditorTabs extends React.Component {
     entityById: React.PropTypes.instanceOf(Map),
     setActiveView: React.PropTypes.func,
     removeView: React.PropTypes.func,
-    tabs: React.PropTypes.instanceOf(List)
+    views: React.PropTypes.instanceOf(List)
   };
 
   render() {
-    const { tabs, entityById, activeView, setActiveView, removeView } = this.props;
+    const { views, entityById, activeView, setActiveView, removeView } = this.props;
     return (
       <TabContainer>
         {
-          tabs.map((tab, index) => {
-            if (tab.type === 'main') {
+          views.map((view, index) => {
+            const entity = entityById.get(view);
+            if (index === 0) {
               return (
                 <Tab key={index} active={!activeView} onClick={ () => setActiveView(null) }>
                   main.js
                 </Tab>
               );
             }
-            const item = entityById.get(tab.id);
-            return item ?
-              <Tab key={tab.id}
-                   active={tab.id === activeView}
-                   onClick={ () => setActiveView(tab.id) }
-                   onClickClose={ () => removeView(tab.id)}>
-                {item.name}
+            return entity ?
+              <Tab key={view}
+                   active={view === activeView}
+                   onClick={ () => setActiveView(view) }
+                   onClickClose={ () => removeView(view)}>
+                {entity.name}
               </Tab> :
               <LoadingCircle key={index} />;
           })
@@ -69,15 +69,12 @@ class EditorTabs extends React.Component {
 
 class EditorMain extends React.Component {
   static propTypes = {
-    log: React.PropTypes.instanceOf(List)
+    location: React.PropTypes.instanceOf(EntityRecord)
   };
 
   render() {
-    const { log } = this.props;
     return (
       <div>
-        You are standing in an open field west of a white house, with a boarded front door.
-        There is a small mailbox here.
       </div>
     );
   }
@@ -85,7 +82,7 @@ class EditorMain extends React.Component {
 
 class EditorDetail extends React.Component {
   static propTypes = {
-    item: React.PropTypes.instanceOf(InventoryItemRecord)
+    item: React.PropTypes.instanceOf(EntityRecord)
   };
 
   render() {
@@ -105,6 +102,6 @@ export default connect((state) => {
     activeView: state.getIn(['ui', 'activeEditorView']),
     entityById: state.get('entityById'),
     log: state.get('log'),
-    tabs: state.getIn(['ui', 'editorTabs'])
+    views: state.getIn(['ui', 'editorViews'])
   };
 }, editorActions)(Radium(Editor));
