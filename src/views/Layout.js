@@ -7,11 +7,11 @@ import Inventory from './Inventory';
 import Editor from './Editor';
 import DebuggerHistory from './DebuggerHistory';
 import DebuggerPrompt from './DebuggerPrompt';
-import panelStyles from '../styles/panel';
 
 import TabContainer from '../components/TabContainer';
 import Tab from '../components/Tab';
 import * as inventoryActions from '../actions/inventory-actions';
+import * as panelStyles from '../styles/panel';
 
 export class Layout extends React.Component {
   static propTypes = {
@@ -24,7 +24,7 @@ export class Layout extends React.Component {
     const { playerInventoryIds, locationInventoryIds } = this.props;
     return (
       <div style={styles.container}>
-        <aside style={[panelStyles, styles.sidebar]}>
+        <aside style={styles.sidebar}>
           <div style={styles.sidebarSection}>
             <TabContainer>
               <Tab active>Inventory</Tab>
@@ -32,7 +32,7 @@ export class Layout extends React.Component {
             </TabContainer>
             <Inventory ids={playerInventoryIds} {...inventoryActions} />
           </div>
-          <div style={styles.sidebarSection}>
+          <div style={[styles.sidebarSection, { borderTop: panelStyles.border}]}>
             <TabContainer>
               <Tab active>
                 Floor
@@ -43,10 +43,10 @@ export class Layout extends React.Component {
         </aside>
 
         <section style={styles.main}>
-          <section style={[panelStyles, styles.editor]}>
+          <section style={styles.editor}>
             <Editor />
           </section>
-          <section style={[panelStyles, styles.debugger]}>
+          <section style={styles.debugger}>
             <div style={styles.debuggerHistory}>
               <DebuggerHistory />
             </div>
@@ -60,43 +60,52 @@ export class Layout extends React.Component {
   }
 }
 
+const pagePadding = 20;
+const promptHeight = 30;
 const styles = {
   container: {
-    display: 'flex',
-    flexFlow: 'row nowrap',
+    boxSizing: 'padding-box',
     height: '100vh',
-    padding: 20,
+    padding: pagePadding,
     width: '100vw'
   },
   sidebar: {
-    display: 'flex',
-    flexFlow: 'column nowrap',
-    flex: '1 1 20%'
+    boxSizing: 'padding-box',
+    border: panelStyles.border,
+    display: 'inline-block',
+    height: `calc(100vh - ${pagePadding * 2}px)`,
+    width: '25%',
+    verticalAlign: 'top'
   },
   sidebarSection: {
-    flex: '1 1 50%'
+    height: `calc(50vh - ${pagePadding}px)`
   },
   main: {
-    flex: '1 1 80%',
-    display: 'flex',
-    flexFlow: 'column nowrap'
-  },
-  inventory: {
-    flex: '1 1 20%'
+    boxSizing: 'padding-box',
+    borderTop: panelStyles.border,
+    borderRight: panelStyles.border,
+    borderBottom: panelStyles.border,
+    display: 'inline-block',
+    width: '75%',
+    verticalAlign: 'top',
+    height: `calc(100vh - ${pagePadding * 2}px)`
   },
   editor: {
-    flex: '1 1 80%'
+    boxSizing: 'padding-box',
+    height: `calc(50vh - ${pagePadding}px)`
   },
   debugger: {
-    flex: '1 1 20%',
-    display: 'flex',
-    flexFlow: 'column nowrap'
+    borderTop: panelStyles.border,
+    boxSizing: 'padding-box',
+    height: `calc(50vh - ${pagePadding}px - 3px)`
   },
   debuggerHistory: {
-    flex: '1 1 auto'
+    boxSizing: 'padding-box',
+    height: `calc(50vh - ${pagePadding}px - ${promptHeight}px - 1px)`
   },
   debuggerPrompt: {
-    flex: '0 0 30px'
+    boxSizing: 'padding-box',
+    height: promptHeight
   }
 };
 

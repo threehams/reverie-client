@@ -20,7 +20,13 @@ socket.onopen = function() {
   socket.send('add inventory');
 };
 socket.onmessage = function(event) {
-  const diff = JSON.parse(event.data);
+  // TODO remove after server always returns JSON
+  let diff;
+  try {
+    diff = JSON.parse(event.data);
+  } catch (error) {
+    return;
+  }
   store.dispatch(initialActions.mergeState(diff));
 };
 store.dispatch(initialActions.setState(initialStateFixture));

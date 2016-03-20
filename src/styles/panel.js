@@ -1,3 +1,1 @@
-export default {
-  border: '1px solid black'
-};
+export const border = '1px solid #999';
