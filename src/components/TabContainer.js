@@ -1,4 +1,5 @@
 import React from 'react';
+import * as panelStyles from '../styles/panel';
 
 export default class TabContainer extends React.Component {
   static propTypes = {
@@ -13,6 +14,6 @@ export default class TabContainer extends React.Component {
 }
 
 const styles = {
-  borderBottom: '1px solid black',
+  borderBottom: panelStyles.border,
   width: '100%'
 };

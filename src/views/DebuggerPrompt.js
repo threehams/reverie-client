@@ -4,6 +4,7 @@ import Radium from 'radium';
 
 import * as commandActions from '../actions/command-actions';
 import Autocomplete from './Autocomplete';
+import * as panelStyles from '../styles/panel';
 
 export class DebuggerPrompt extends React.Component {
   static propTypes = {
@@ -36,7 +37,7 @@ const styles = {
   borderBottom: 0,
   borderLeft: 0,
   borderRight: 0,
-  borderTop: '1px solid black',
+  borderTop: panelStyles.border,
   padding: 4,
   outline: 0
 };

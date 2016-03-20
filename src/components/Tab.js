@@ -2,6 +2,7 @@ import React from 'react';
 import Radium from 'radium';
 
 import Icon from '../components/Icon';
+import * as panelStyles from '../styles/panel';
 
 class Tab extends React.Component {
   static propTypes = {
@@ -26,14 +27,13 @@ class Tab extends React.Component {
 const styles = {
   global: {
     padding: '5px 5px 5px 15px',
-    borderRight: '1px solid black',
+    borderRight: panelStyles.border,
     display: 'inline-block'
   },
   inactive: {
     cursor: 'pointer'
   },
   active: {
-    borderBottom: '1px solid #333',
     borderLeft: '1px solid #333',
     backgroundColor: '#666',
     color: 'white'
