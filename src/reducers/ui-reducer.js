@@ -5,6 +5,7 @@ import {
   MERGE_STATE,
   INVENTORY_TOGGLE_EXPAND,
   COMMAND_SET_CURRENT,
+  EDITOR_ADD_VIEW,
   EDITOR_SET_ACTIVE_VIEW,
   EDITOR_REMOVE_VIEW
 } from '../actions/action-types';
@@ -26,6 +27,9 @@ export default function uiReducer(state = INITIAL_STATE, action) {
       return state.set('currentCommand', action.payload.command);
     case COMMAND_SEND:
       return state.set('currentCommand', '');
+    case EDITOR_ADD_VIEW:
+      const viewAdded = state.update('editorViews', views => views.add(action.payload.id));
+      return viewAdded.set('activeEditorView', action.payload.id);
     case EDITOR_SET_ACTIVE_VIEW:
       return state.set('activeEditorView', action.payload.id);
     case EDITOR_REMOVE_VIEW:
@@ -36,6 +40,6 @@ export default function uiReducer(state = INITIAL_STATE, action) {
 }
 
 function removeView(state, id) {
-  const newState = state.update('editorViews', tabs => tabs.filter(view => view !== id));
+  const newState = state.update('editorViews', tabs => tabs.remove(id));
   return newState.update('activeEditorView', view => view === id ? newState.get('editorViews').last() : view);
 }

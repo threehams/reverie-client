@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Map, List } from 'immutable';
+import { Map, List, Set } from 'immutable';
 import Radium from 'radium';
 
 import LoadingCircle from '../components/LoadingCircle';
 import * as editorActions from '../actions/editor-actions';
 import EntityRecord from '../records/entity-record';
 import EditorTabs from './EditorTabs';
+import * as panelStyles from '../styles/panel';
 
 export class Editor extends React.Component {
   static propTypes = {
@@ -15,7 +16,7 @@ export class Editor extends React.Component {
     entities: React.PropTypes.instanceOf(Map),
     log: React.PropTypes.instanceOf(List),
     setActiveView: React.PropTypes.func,
-    views: React.PropTypes.instanceOf(List)
+    views: React.PropTypes.instanceOf(Set)
   };
 
   render() {
@@ -36,7 +37,7 @@ class EditorMain extends React.Component {
 
   render() {
     const { history } = this.props;
-    return <ul style={styles.panel}>
+    return <ul style={{ padding: panelStyles.padding }}>
       { history.map((item, index) => <li key={index}>{ item || '\u00a0' }</li>) }
     </ul>;
   }
@@ -51,7 +52,7 @@ class EditorDetail extends React.Component {
     const { item } = this.props;
     if (!item) return <LoadingCircle />;
     return (
-      <div>
+      <div style={{ padding: panelStyles.padding }}>
         <h1>{ item.name }</h1>
         <span>{ item.description }</span>
       </div>
@@ -67,9 +68,3 @@ export default connect((state) => {
     views: state.getIn(['ui', 'editorViews'])
   };
 }, editorActions)(Radium(Editor));
-
-const styles = {
-  panel: {
-    padding: 10
-  }
-};

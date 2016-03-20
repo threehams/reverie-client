@@ -71,7 +71,7 @@ export default {
     },
     '14': {
       id: '14',
-      name: 'leaflet',
+      name: 'leaflet.txt',
       description: 'WELCOME TO REVERIE FORGE!'
     },
     '17': {

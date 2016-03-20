@@ -1,5 +1,5 @@
 import React from 'react';
-import {List, Map} from 'immutable';
+import {Set, Map} from 'immutable';
 
 import LoadingCircle from '../components/LoadingCircle';
 import TabContainer from '../components/TabContainer';
@@ -11,7 +11,7 @@ export default class EditorTabs extends React.Component {
     entities: React.PropTypes.instanceOf(Map),
     setActiveView: React.PropTypes.func,
     removeView: React.PropTypes.func,
-    views: React.PropTypes.instanceOf(List)
+    views: React.PropTypes.instanceOf(Set)
   };
 
   render() {
