@@ -15,7 +15,8 @@ describe('rootReducer', function() {
       };
       expect(rootReducer(initial, action)).to.equal(fromJS({
         commandHistory: [],
-        entityById: {},
+        editorHistory: [],
+        entities: {},
         ui: new UiRecord()
       }));
     });

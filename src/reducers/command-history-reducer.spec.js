@@ -2,34 +2,27 @@ import {List, fromJS} from 'immutable';
 import expect from '../__test__/configureExpect';
 
 import commandHistoryReducer from './command-history-reducer';
-import * as historyActions from '../actions/history-actions';
+import * as commandActions from '../actions/command-actions';
+import { COMMAND_SEND } from '../actions/action-types';
 
 describe('commandHistoryReducer', function() {
-  describe('HISTORY_FETCH_FULFILLED', function() {
-    it('returns the inventory ids', function() {
-      const initial = undefined;
-      const action = {
-        type: 'HISTORY_FETCH_FULFILLED',
-        payload: {
-          commandHistory: List(['git status'])
-        }
-      };
-      expect(commandHistoryReducer(initial, action)).to.equal(fromJS(['git status']));
-    });
-  });
-
-  describe('SEND_COMMAND', function() {
+  describe('sendCommand', function() {
     it('adds the command to the history', function() {
       const initial = List(['git status']);
-      const action = historyActions.sendCommand('git add .');
+      const action = {
+        type: COMMAND_SEND,
+        payload: {
+          command: 'git add .'
+        }
+      };
       expect(commandHistoryReducer(initial, action)).to.equal(fromJS(['git status', 'git add .']));
     });
   });
 
-  describe('HISTORY_CLEAR', function() {
+  describe('clear', function() {
     it('clears the history', function() {
       const initial = List(['git status']);
-      const action = historyActions.clear();
+      const action = commandActions.clear();
       expect(commandHistoryReducer(initial, action)).to.equal(List());
     });
   });

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Radium from 'radium';
 
-import * as historyActions from '../actions/history-actions';
+import * as commandActions from '../actions/command-actions';
 import Autocomplete from './Autocomplete';
 
 export class DebuggerPrompt extends React.Component {
@@ -45,4 +45,4 @@ export default connect((state) => {
   return {
     currentCommand: state.getIn(['ui', 'currentCommand'])
   };
-}, historyActions)(Radium(DebuggerPrompt));
+}, commandActions)(Radium(DebuggerPrompt));

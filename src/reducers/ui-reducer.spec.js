@@ -2,7 +2,7 @@ import {List, fromJS} from 'immutable';
 import expect from '../__test__/configureExpect';
 
 import uiReducer from './ui-reducer';
-import {setState} from '../actions/initial-actions';
+import * as initialActions from '../actions/initial-actions';
 import {toggleExpand} from '../actions/inventory-actions';
 import {removeView} from '../actions/editor-actions';
 import UiRecord from '../records/ui-record';
@@ -11,8 +11,10 @@ describe('uiReducer', function() {
   describe('SET_STATE', function() {
     it('returns the default UI state', function() {
       const initial = undefined;
-      const action = setState(fromJS({}));
-      expect(uiReducer(initial, action)).to.equal(new UiRecord());
+      const action = initialActions.setState({
+        player: '1'
+      });
+      expect(uiReducer(initial, action)).to.equal(new UiRecord({player: '1'}));
     });
   });
 

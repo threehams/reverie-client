@@ -10,7 +10,7 @@
   },
   "betterScripts": {
     "test": {
-      "command": "mocha --require babel-register --require babel-polyfill --timeout=200 --reporter min src/**/*.spec.js",
+      "command": "mocha --require babel-register --require babel-polyfill --require ./src/__test__/test-helper.js --timeout=200 --reporter min src/**/*.spec.js",
       "env": {
         "NODE_ENV": "test"
       }
@@ -20,7 +20,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.9.1",
     "babel-polyfill": "^6.5.0",
     "immutable": "^3.7.6",
     "normalizr": "^2.0.0",
@@ -31,7 +30,7 @@
     "react-redux": "^4.4.0",
     "redux": "^3.3.1",
     "redux-immutable": "^3.0.3",
-    "redux-promise-middleware": "^2.3.3"
+    "redux-thunk": "^2.0.1"
   },
   "devDependencies": {
     "babel": "^6.3.26",

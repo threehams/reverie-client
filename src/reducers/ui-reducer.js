@@ -1,23 +1,41 @@
 import UiRecord from '../records/ui-record';
+import {
+  COMMAND_SEND,
+  SET_STATE,
+  MERGE_STATE,
+  INVENTORY_TOGGLE_EXPAND,
+  COMMAND_SET_CURRENT,
+  EDITOR_SET_ACTIVE_VIEW,
+  EDITOR_REMOVE_VIEW
+} from '../actions/action-types';
 
 const INITIAL_STATE = new UiRecord();
 
 export default function uiReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case 'ENTITY_FETCH_FULFILLED':
+    case SET_STATE:
       return state.set('player', action.payload.player);
-    case 'INVENTORY_TOGGLE_EXPAND':
+    case MERGE_STATE:
+      return action.payload.entitiesToRemove.reduce((newState, id) => {
+        const viewRemoved = removeView(newState, id);
+        return viewRemoved.update('inventoryExpandedById', expanded => expanded.remove(id));
+      }, state);
+    case INVENTORY_TOGGLE_EXPAND:
       return state.updateIn(['inventoryExpandedById', action.payload.id], expanded => !expanded);
-    case 'COMMAND_SET_CURRENT':
+    case COMMAND_SET_CURRENT:
       return state.set('currentCommand', action.payload.command);
-    case 'COMMAND_SEND':
+    case COMMAND_SEND:
       return state.set('currentCommand', '');
-    case 'EDITOR_SET_ACTIVE_VIEW':
+    case EDITOR_SET_ACTIVE_VIEW:
       return state.set('activeEditorView', action.payload.id);
-    case 'EDITOR_REMOVE_VIEW':
-      const newState = state.update('editorViews', tabs => tabs.filter(view => view !== action.payload.id));
-      return newState.update('activeEditorView', view => view === action.payload.id ? newState.get('editorViews').last() : view);
+    case EDITOR_REMOVE_VIEW:
+      return removeView(state, action.payload.id);
     default:
       return state;
   }
+}
+
+function removeView(state, id) {
+  const newState = state.update('editorViews', tabs => tabs.filter(view => view !== id));
+  return newState.update('activeEditorView', view => view === id ? newState.get('editorViews').last() : view);
 }

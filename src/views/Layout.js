@@ -1,5 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
+import { List } from 'immutable';
+import {connect} from 'react-redux';
 
 import Inventory from './Inventory';
 import Editor from './Editor';
@@ -9,22 +11,35 @@ import panelStyles from '../styles/panel';
 
 import TabContainer from '../components/TabContainer';
 import Tab from '../components/Tab';
+import * as inventoryActions from '../actions/inventory-actions';
 
 export class Layout extends React.Component {
   static propTypes = {
-
+    inventoryActions: React.PropTypes.object,
+    playerInventoryIds: React.PropTypes.instanceOf(List),
+    locationInventoryIds: React.PropTypes.instanceOf(List)
   };
 
   render() {
+    const { playerInventoryIds, locationInventoryIds } = this.props;
     return (
       <div style={styles.container}>
         <aside style={[panelStyles, styles.sidebar]}>
-          <TabContainer>
-            <Tab active>
-              Inventory
-            </Tab>
-          </TabContainer>
-          <Inventory />
+          <div style={styles.sidebarSection}>
+            <TabContainer>
+              <Tab active>Inventory</Tab>
+              <Tab>Character</Tab>
+            </TabContainer>
+            <Inventory ids={playerInventoryIds} {...inventoryActions} />
+          </div>
+          <div style={styles.sidebarSection}>
+            <TabContainer>
+              <Tab active>
+                Floor
+              </Tab>
+            </TabContainer>
+            <Inventory ids={locationInventoryIds} {...inventoryActions} />
+          </div>
         </aside>
 
         <section style={styles.main}>
@@ -54,7 +69,12 @@ const styles = {
     width: '100vw'
   },
   sidebar: {
+    display: 'flex',
+    flexFlow: 'column nowrap',
     flex: '1 1 20%'
+  },
+  sidebarSection: {
+    flex: '1 1 50%'
   },
   main: {
     flex: '1 1 80%',
@@ -80,4 +100,11 @@ const styles = {
   }
 };
 
-export default Radium(Layout);
+export default connect((state) => {
+  const playerId = state.getIn(['ui', 'player']);
+  const locationId = state.get('entities').find(entity => entity.entities.contains(playerId)).id;
+  return {
+    playerInventoryIds: state.getIn(['entities', playerId, 'entities']),
+    locationInventoryIds: state.getIn(['entities', locationId, 'entities']).filter(id => playerId !== id)
+  };
+}, inventoryActions)(Radium(Layout));
