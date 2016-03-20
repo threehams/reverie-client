@@ -5,7 +5,7 @@ import {Map, fromJS, List} from 'immutable';
 import expect from '../__test__/configureExpect';
 import sd from 'skin-deep';
 
-import AutocompleteContainer, {Autocomplete} from './Autocomplete';
+import AutocompleteContainer from './Autocomplete';
 import EntityRecord from '../records/entity-record';
 
 describe('Autocomplete', function() {

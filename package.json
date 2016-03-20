@@ -10,7 +10,7 @@
   },
   "betterScripts": {
     "test": {
-      "command": "mocha --require babel-register --require babel-polyfill --timeout=200 --reporter min src/**/*.spec.js",
+      "command": "mocha --require babel-register --require babel-polyfill --require ./src/__test__/test-helper.js --timeout=200 --reporter min src/**/*.spec.js",
       "env": {
         "NODE_ENV": "test"
       }

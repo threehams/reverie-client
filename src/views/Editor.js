@@ -37,7 +37,7 @@ class EditorMain extends React.Component {
   render() {
     const { history } = this.props;
     return <ul style={styles.panel}>
-      { history.map((item, index) => <li key={index}>{ item || "\u00a0" }</li>) }
+      { history.map((item, index) => <li key={index}>{ item || '\u00a0' }</li>) }
     </ul>;
   }
 }

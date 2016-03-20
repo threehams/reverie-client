@@ -103,7 +103,6 @@ const styles = {
 export default connect((state) => {
   const playerId = state.getIn(['ui', 'player']);
   const locationId = state.get('entities').find(entity => entity.entities.contains(playerId)).id;
-  console.log(locationId);
   return {
     playerInventoryIds: state.getIn(['entities', playerId, 'entities']),
     locationInventoryIds: state.getIn(['entities', locationId, 'entities']).filter(id => playerId !== id)

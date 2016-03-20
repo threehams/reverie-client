@@ -1,3 +1,4 @@
+/* eslint-env node */
 import path from 'path';
 import express from 'express';
 import webpack from 'webpack';
@@ -22,9 +23,9 @@ app.get('*', function(request, response) {
 
 app.listen(8080, 'localhost', function(err) {
   if (err) {
-    console.log(err);
+    console.log(err); //eslint-disable-line no-console
     return;
   }
 
-  console.log('Listening at http://localhost:8080');
+  console.log('Listening at http://localhost:8080'); //eslint-disable-line no-console
 });
