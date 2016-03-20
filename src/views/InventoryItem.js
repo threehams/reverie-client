@@ -22,7 +22,7 @@ export class InventoryItem extends React.Component {
   };
 
   render() {
-    const { item, expanded, toggleExpand } = this.props;
+    const { item, expanded, toggleExpand, addView } = this.props;
     return (
       <div style={{ paddingLeft: 16 }}>
         {
@@ -30,8 +30,10 @@ export class InventoryItem extends React.Component {
             <DropdownArrow expanded={expanded} onClick={() => toggleExpand(item.id)} /> :
             <span style={{ paddingLeft: 18 }} />
         }
-        <Icon name={TYPE_ICONS[item.type] || 'file-text-o'} before />
-        <span>{ item.name }</span>
+        <Icon name={TYPE_ICONS[item.type] || 'file-text-o'}
+              before
+              onDoubleClick={(e) => { e.preventDefault(); addView(item.id); }} />
+        <span style={{cursor: 'default'}}>{ item.name }</span>
         {
           expanded ?
             item.entities.map(id => {

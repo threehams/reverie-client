@@ -4,11 +4,12 @@ export default class Icon extends React.Component {
   static propTypes = {
     name: React.PropTypes.string.isRequired,
     onClick: React.PropTypes.func,
+    onDoubleClick: React.PropTypes.func,
     before: React.PropTypes.bool
   };
 
   render() {
-    const { name, onClick, before } = this.props;
+    const { name, onClick, onDoubleClick, before } = this.props;
     const style = Object.assign(
       {},
       styles.all,
@@ -16,7 +17,7 @@ export default class Icon extends React.Component {
       onClick ? styles.interactive : null
     );
     return (
-      <i className={`fa fa-${name}`} style={style} onClick={onClick} />
+      <i className={`fa fa-${name}`} style={style} onClick={onClick} onDoubleClick={onDoubleClick} />
     );
   }
 }

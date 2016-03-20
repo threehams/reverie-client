@@ -1,4 +1,4 @@
-import {List, fromJS} from 'immutable';
+import {List, Set, fromJS} from 'immutable';
 import expect from '../__test__/configureExpect';
 
 import uiReducer from './ui-reducer';
@@ -34,12 +34,12 @@ describe('uiReducer', function() {
     context('when removing the current view', function() {
       it('sets the active view to the next available view', function() {
         const initial = new UiRecord({
-          editorViews: List(['1', '2']),
+          editorViews: Set(['1', '2']),
           activeEditorView: '2'
         });
         const action = removeView('2');
         const newState = uiReducer(initial, action);
-        expect(newState.editorViews).to.equal(List('1'));
+        expect(newState.editorViews).to.equal(Set('1'));
         expect(newState.activeEditorView).to.equal('1');
       });
     });
@@ -47,12 +47,12 @@ describe('uiReducer', function() {
     context('when removing a non-current view', function() {
       it('does not change the active view', function() {
         const initial = new UiRecord({
-          editorViews: List(['1', '2']),
+          editorViews: Set(['1', '2']),
           activeEditorView: '2'
         });
         const action = removeView('1');
         const newState = uiReducer(initial, action);
-        expect(newState.editorViews).to.equal(List('2'));
+        expect(newState.editorViews).to.equal(Set('2'));
         expect(newState.activeEditorView).to.equal('2');
       });
     });
