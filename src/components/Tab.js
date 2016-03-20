@@ -15,9 +15,9 @@ class Tab extends React.Component {
   render() {
     const { active, onClick, onClickClose } = this.props;
     return (
-      <div style={[styles.global, active ? styles.active : styles.inactive]}>
-        <div style={styles.label} onClick={onClick}>{ this.props.children }</div>
-        { onClickClose ? <Icon name="times" onClick={onClickClose} /> : null }
+      <div style={[styles.global, active ? styles.active : styles.inactive]} onClick={onClick}>
+        <div style={styles.label}>{ this.props.children }</div>
+        { onClickClose ? <Icon name="times" onClick={(e) => { e.stopPropagation(); onClickClose(); }} /> : null }
       </div>
     );
   }

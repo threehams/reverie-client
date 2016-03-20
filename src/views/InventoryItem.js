@@ -64,7 +64,7 @@ class DropdownArrow extends React.Component {
 const InventoryItemContainer = connect(
   (state, props) => {
     return {
-      item: state.getIn(['entityById', props.id]),
+      item: state.getIn(['entities', props.id]),
       expanded: !!state.getIn(['ui', 'inventoryExpandedById', props.id])
     };
   },

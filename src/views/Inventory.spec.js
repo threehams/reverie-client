@@ -15,7 +15,7 @@ describe('Inventory', function() {
     beforeEach(function() {
       store = createStore(() => {
         return fromJS({
-          entityById: {
+          entities: {
             '1': {
               id: '1',
               name: 'Grarble',

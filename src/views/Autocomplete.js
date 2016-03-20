@@ -23,7 +23,7 @@ export class Autocomplete extends React.Component {
 
 export default connect((state, props) => {
   return {
-    options: state.get('entityById')
+    options: state.get('entities')
       .toList()
       .filter(item => item.name.includes(props.command) && item.executable)
       .map(item => item.name)

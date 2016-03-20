@@ -2,7 +2,7 @@ import {List, fromJS} from 'immutable';
 import expect from '../__test__/configureExpect';
 
 import commandHistoryReducer from './command-history-reducer';
-import * as historyActions from '../actions/history-actions';
+import * as commandActions from '../actions/command-actions';
 
 describe('commandHistoryReducer', function() {
   describe('HISTORY_FETCH_FULFILLED', function() {
@@ -21,7 +21,7 @@ describe('commandHistoryReducer', function() {
   describe('SEND_COMMAND', function() {
     it('adds the command to the history', function() {
       const initial = List(['git status']);
-      const action = historyActions.sendCommand('git add .');
+      const action = commandActions.sendCommand('git add .');
       expect(commandHistoryReducer(initial, action)).to.equal(fromJS(['git status', 'git add .']));
     });
   });
@@ -29,7 +29,7 @@ describe('commandHistoryReducer', function() {
   describe('HISTORY_CLEAR', function() {
     it('clears the history', function() {
       const initial = List(['git status']);
-      const action = historyActions.clear();
+      const action = commandActions.clear();
       expect(commandHistoryReducer(initial, action)).to.equal(List());
     });
   });

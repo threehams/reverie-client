@@ -10,7 +10,7 @@ Install node.js, probably v4. Best done with NVM (node version manager).
 `nvm use 5.7.0` (or 4.3.1 for not-so-bleeding-edge)
 
 `npm install` to install all dependencies
-`npm start` to start a dev server at <http://localhost:3000/>
+`npm start` to start a dev server at <http://localhost:8080/>
 `npm test` or `npm run test:watch` to run tests
 
 Supports all evergreen browsers.

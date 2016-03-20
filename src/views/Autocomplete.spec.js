@@ -14,7 +14,7 @@ describe('Autocomplete', function() {
   const configureStore = (inventory) => {
     return createStore(() => {
       return Map({
-        entityById: inventory
+        entities: inventory
       });
     });
   };
