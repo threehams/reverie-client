@@ -4,6 +4,6 @@ export default Record({
   inventoryExpandedById: Map(),
   currentCommand: '',
   editorViews: OrderedSet(['0']),
-  activeEditorView: null,
+  activeEditorView: '0',
   player: null
 });
