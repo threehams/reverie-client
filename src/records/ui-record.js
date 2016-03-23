@@ -1,9 +1,9 @@
-import {Record, Map, Set} from 'immutable';
+import {Record, Map, OrderedSet} from 'immutable';
 
 export default Record({
   inventoryExpandedById: Map(),
   currentCommand: '',
-  editorViews: Set(['12', '7', '2']),
+  editorViews: OrderedSet(['0']),
   activeEditorView: null,
   player: null
 });

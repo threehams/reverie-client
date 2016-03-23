@@ -5,5 +5,7 @@ export default Record({
   name: '',
   description: '',
   executable: false,
-  entities: List()
+  entities: List(),
+  health: 0,
+  maxHealth: 0
 });

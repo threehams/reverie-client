@@ -23,7 +23,8 @@ export class DebuggerPrompt extends React.Component {
     return (
       <form onSubmit={::this.submit}>
         { currentCommand && currentCommand.length > 1 ? <Autocomplete command={currentCommand} /> : null }
-        <input type="text"
+        <input id="prompt"
+               type="text"
                value={currentCommand}
                style={styles}
                onChange={(event) => { setCurrentCommand(event.target.value); } } />

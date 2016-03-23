@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Map, List, Set } from 'immutable';
+import { Map, List, OrderedSet } from 'immutable';
 import Radium from 'radium';
 
 import LoadingCircle from '../components/LoadingCircle';
@@ -16,7 +16,7 @@ export class Editor extends React.Component {
     entities: React.PropTypes.instanceOf(Map),
     log: React.PropTypes.instanceOf(List),
     setActiveView: React.PropTypes.func,
-    views: React.PropTypes.instanceOf(Set)
+    views: React.PropTypes.instanceOf(OrderedSet)
   };
 
   render() {
@@ -24,7 +24,7 @@ export class Editor extends React.Component {
     return (
       <div>
         <EditorTabs {...this.props} />
-        { activeView ? <EditorDetail item={ entities.get(activeView) } /> : <EditorMain history={editorHistory} /> }
+        { activeView !== '0' ? <EditorDetail item={ entities.get(activeView) } /> : <EditorMain history={editorHistory} /> }
       </div>
     );
   }
