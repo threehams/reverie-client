@@ -77,7 +77,9 @@ export default {
     '17': {
       id: '17',
       name: 'Player',
-      entities: ['1', '4', '9']
+      entities: ['1', '4', '9'],
+      health: 100,
+      maxHealth: 100
     },
     '18': {
       id: '18',

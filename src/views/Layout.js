@@ -60,7 +60,7 @@ export class Layout extends React.Component {
   }
 }
 
-const pagePadding = 20;
+const pagePadding = 10;
 const promptHeight = 30;
 const styles = {
   container: {
@@ -92,16 +92,16 @@ const styles = {
   },
   editor: {
     boxSizing: 'padding-box',
-    height: `calc(50vh - ${pagePadding}px)`
+    height: `calc(70vh - ${pagePadding}px)`
   },
   debugger: {
     borderTop: panelStyles.border,
     boxSizing: 'padding-box',
-    height: `calc(50vh - ${pagePadding}px - 3px)`
+    height: `calc(30vh - ${pagePadding}px - 3px)`
   },
   debuggerHistory: {
     boxSizing: 'padding-box',
-    height: `calc(50vh - ${pagePadding}px - ${promptHeight}px - 1px)`
+    height: `calc(30vh - ${pagePadding}px - ${promptHeight}px - 1px)`
   },
   debuggerPrompt: {
     boxSizing: 'padding-box',

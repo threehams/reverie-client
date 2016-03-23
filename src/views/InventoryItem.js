@@ -15,10 +15,12 @@ const TYPE_ICONS = {
 
 export class InventoryItem extends React.Component {
   shouldComponentUpdate = shouldPureComponentUpdate;
+
   static propTypes = {
     item: React.PropTypes.instanceOf(EntityRecord),
     expanded: React.PropTypes.bool,
-    toggleExpand: React.PropTypes.func
+    toggleExpand: React.PropTypes.func,
+    addView: React.PropTypes.func
   };
 
   render() {
