@@ -1,2 +1,4 @@
-export const border = '1px solid #999';
-export const padding = 10;
+export default {
+  border: '1px solid #999',
+  padding: 10
+};

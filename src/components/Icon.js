@@ -1,6 +1,11 @@
 import React from 'react';
+import shallowCompare from 'react-addons-shallow-compare';
 
 export default class Icon extends React.Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
+
   static propTypes = {
     name: React.PropTypes.string.isRequired,
     onClick: React.PropTypes.func,

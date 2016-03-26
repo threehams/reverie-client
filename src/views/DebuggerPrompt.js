@@ -1,12 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Radium from 'radium';
+import shallowCompare from 'react-addons-shallow-compare';
 
 import * as commandActions from '../actions/command-actions';
 import Autocomplete from './Autocomplete';
-import * as panelStyles from '../styles/panel';
+import panelStyles from '../styles/panel';
 
 export class DebuggerPrompt extends React.Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
+
   static propTypes = {
     sendCommand: React.PropTypes.func,
     setCurrentCommand: React.PropTypes.func,

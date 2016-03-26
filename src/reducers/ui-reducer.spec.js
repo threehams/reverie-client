@@ -1,10 +1,10 @@
-import {List, Set, fromJS} from 'immutable';
+import {List, OrderedSet, fromJS} from 'immutable';
 import expect from '../__test__/configureExpect';
 
 import uiReducer from './ui-reducer';
 import * as initialActions from '../actions/initial-actions';
-import {toggleExpand} from '../actions/inventory-actions';
-import {removeView} from '../actions/editor-actions';
+import * as inventoryActions from '../actions/inventory-actions';
+import * as editorActions from '../actions/editor-actions';
 import UiRecord from '../records/ui-record';
 
 describe('uiReducer', function() {
@@ -21,7 +21,7 @@ describe('uiReducer', function() {
   describe('INVENTORY_TOGGLE_EXPAND', function() {
     it('toggles the expanded state', function() {
       const initial = new UiRecord();
-      const action = toggleExpand('1');
+      const action = inventoryActions.toggleExpand('1');
       expect(uiReducer(initial, action)).to.equal(new UiRecord(fromJS({
         inventoryExpandedById: {
           '1': true
@@ -34,27 +34,41 @@ describe('uiReducer', function() {
     context('when removing the current view', function() {
       it('sets the active view to the next available view', function() {
         const initial = new UiRecord({
-          editorViews: Set(['1', '2']),
+          editorViews: OrderedSet(['1', '2', '3', '4']),
           activeEditorView: '2'
         });
-        const action = removeView('2');
+        const action = editorActions.removeView('2');
         const newState = uiReducer(initial, action);
-        expect(newState.editorViews).to.equal(Set('1'));
-        expect(newState.activeEditorView).to.equal('1');
+        expect(newState.editorViews).to.equal(OrderedSet(['1', '3', '4']));
+        expect(newState.activeEditorView).to.equal('4');
       });
     });
 
     context('when removing a non-current view', function() {
       it('does not change the active view', function() {
         const initial = new UiRecord({
-          editorViews: Set(['1', '2']),
+          editorViews: OrderedSet(['1', '2']),
           activeEditorView: '2'
         });
-        const action = removeView('1');
+        const action = editorActions.removeView('1');
         const newState = uiReducer(initial, action);
-        expect(newState.editorViews).to.equal(Set('2'));
+        expect(newState.editorViews).to.equal(OrderedSet('2'));
         expect(newState.activeEditorView).to.equal('2');
       });
+    });
+  });
+
+  describe('EDITOR_SELECT_ITEMS', function() {
+    it('sets the items to the list given', function() {
+      const initial = new UiRecord({});
+      const action = {
+        type: 'EDITOR_SELECT_ITEMS',
+        payload: {
+          ids: List(['2', '3', '4'])
+        }
+      };
+      const newState = uiReducer(initial, action);
+      expect(newState.selectedItems).to.equal(OrderedSet(['2', '3', '4']));
     });
   });
 });

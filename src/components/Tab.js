@@ -1,10 +1,16 @@
 import React from 'react';
 import Radium from 'radium';
+import shallowCompare from 'react-addons-shallow-compare';
 
 import Icon from '../components/Icon';
-import * as panelStyles from '../styles/panel';
+import panelStyles from '../styles/panel';
+import fontStyles from '../styles/font';
 
 class Tab extends React.Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
+
   static propTypes = {
     active: React.PropTypes.bool,
     children: React.PropTypes.node,
@@ -28,9 +34,11 @@ const styles = {
   global: {
     padding: '5px 5px 5px 15px',
     borderRight: panelStyles.border,
-    display: 'inline-block'
+    display: 'inline-block',
+    ...fontStyles.default,
   },
   inactive: {
+    backgroundColor: '#d4d4d4',
     cursor: 'pointer'
   },
   active: {

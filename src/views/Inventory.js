@@ -1,32 +1,31 @@
 import React from 'react';
 import { List } from 'immutable';
 import Radium from 'radium';
-import shouldPureComponentUpdate from 'react-pure-render/function';
+import shallowCompare from 'react-addons-shallow-compare';
 
 import InventoryItemContainer from './InventoryItem';
 import LoadingCircle from '../components/LoadingCircle';
 
 export class Inventory extends React.Component {
-  shouldComponentUpdate = shouldPureComponentUpdate;
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
 
   static propTypes = {
-    ids: React.PropTypes.instanceOf(List)
+    ids: React.PropTypes.instanceOf(List),
+    containerId: React.PropTypes.string
   };
 
   render() {
-    const { ids } = this.props;
+    const { containerId, ids } = this.props;
     return (
       <LoadingCircle showUntil={!!(ids && ids.size)}>
-        <section style={styles}>
-          { ids && ids.map(id => <InventoryItemContainer key={id} id={id} />) }
+        <section>
+          { ids && ids.map(id => <InventoryItemContainer key={id} id={id} containerId={containerId} />) }
         </section>
       </LoadingCircle>
     );
   }
 }
-
-const styles = {
-  padding: '2px 10px'
-};
 
 export default Radium(Inventory);

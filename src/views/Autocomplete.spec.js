@@ -26,12 +26,12 @@ describe('Autocomplete', function() {
           '1': new EntityRecord({
             id: '1',
             name: 'rm',
-            executable: true
+            type: 'executable'
           }),
           '2': new EntityRecord({
             id: '2',
             name: 'rm-hack',
-            executable: true
+            type: 'executable'
           })
         });
         store = configureStore(inventory);
