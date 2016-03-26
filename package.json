@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "better-npm-run build",
-    "lint": "",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "test": "better-npm-run test",
     "test:watch": "better-npm-run test --watch",
     "start": "better-npm-run start",
