@@ -5,14 +5,14 @@ import { Map } from 'immutable';
 import configureStore from '../configure-store';
 import Layout from './Layout';
 import socket from '../socket';
-import attackEnemySuccessFixture from '../fixtures/attack-enemy-success-fixture';
-import attackEnemyFailureFixture from '../fixtures/attack-enemy-failure-fixture';
+// import attackEnemySuccessFixture from '../fixtures/attack-enemy-success-fixture';
+// import attackEnemyFailureFixture from '../fixtures/attack-enemy-failure-fixture';
 import initialStateFixture from '../fixtures/initial-state-fixture';
 import inventoryAddFixture from '../fixtures/inventory-add-fixture';
 import inventoryRemoveFixture from '../fixtures/inventory-remove-fixture';
 import moveItemToContainerFixture from '../fixtures/move-item-to-container-fixture';
-import movePlayerFixture from '../fixtures/move-player-fixture';
-import takeItemFromContainerFixture from '../fixtures/take-item-from-container-fixture';
+// import movePlayerFixture from '../fixtures/move-player-fixture';
+// import takeItemFromContainerFixture from '../fixtures/take-item-from-container-fixture';
 import * as initialActions from '../actions/initial-actions';
 
 const store = configureStore(Map());
@@ -28,7 +28,6 @@ socket.onmessage = function(event) {
   } catch (error) {
     return;
   }
-  console.log(diff);
   store.dispatch(initialActions.setState(diff));
 };
 store.dispatch(initialActions.setState(initialStateFixture));

@@ -19,10 +19,18 @@ class Tab extends React.Component {
     onClick: React.PropTypes.func
   };
 
+  elementClicked(event) {
+    // Button 1 is middle click
+    if (event.button === 1 && this.props.onClickClose) {
+      return this.props.onClickClose();
+    }
+    return this.props.onClick();
+  }
+
   render() {
-    const { active, onClick, onClickClose } = this.props;
+    const { active, onClickClose } = this.props;
     return (
-      <div style={[styles.global, active ? styles.active : styles.inactive]} onClick={onClick}>
+      <div style={[styles.global, active ? styles.active : styles.inactive]} onClick={::this.elementClicked}>
         <div style={styles.label}>{ this.props.children }</div>
         { onClickClose ? <Icon name="times" onClick={(e) => { e.stopPropagation(); onClickClose(); }} /> : null }
       </div>
@@ -32,14 +40,14 @@ class Tab extends React.Component {
 
 const styles = {
   global: {
+    cursor: 'default',
     padding: '5px 5px 5px 15px',
     borderRight: panelStyles.border,
     display: 'inline-block',
     ...fontStyles.default,
   },
   inactive: {
-    backgroundColor: '#d4d4d4',
-    cursor: 'pointer'
+    backgroundColor: '#d4d4d4'
   },
   active: {
     borderLeft: '1px solid #333',

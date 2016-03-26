@@ -50,7 +50,6 @@ export class Layout extends React.Component {
 
         <section style={styles.main}>
           <section style={styles.editor}>
-            { /* TODO elegant way of doing this? function for generating calc? */ }
             <Editor height={`calc(70vh - ${pagePadding}px - 30px)`} />
           </section>
           <section style={styles.debugger}>
@@ -71,9 +70,7 @@ const pagePadding = 10;
 const promptHeight = 30;
 const styles = {
   container: {
-    height: '100%',
     padding: pagePadding,
-    width: '100vw'
   },
   sidebar: {
     border: panelStyles.border,

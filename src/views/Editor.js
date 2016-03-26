@@ -56,7 +56,7 @@ class EditorMain extends React.Component {
     const { height, history } = this.props;
     return (
       <div style={{position: 'relative', paddingLeft: Math.ceil(history.size / 10) * 14 + 20, backgroundColor: '#f0f0f0', height }}>
-        <ul style={{position: 'absolute', left: 4, height, textAlign: 'right'}}>
+        <ul style={{cursor: 'default', position: 'absolute', left: 4, height, textAlign: 'right'}}>
           { history.map((item, index) => <li key={index} style={{color: '#800000'}}>{index}</li>) }
         </ul>
         <ul style={{backgroundColor: 'white', borderLeft: '1px solid #d0d0d0', paddingLeft: 4, height}}>

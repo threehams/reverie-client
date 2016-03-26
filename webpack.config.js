@@ -1,4 +1,6 @@
 /* eslint-env node */
+/* eslint no-process-env:0 */
+
 var path = require('path');
 var webpack = require('webpack');
 
@@ -27,7 +29,7 @@ var PLUGINS = {
       }
     }),
     new webpack.DefinePlugin({
-      "process.env.NODE_ENV": "'production'"
+      'process.env.NODE_ENV': '\'production\''
     })
   ]
 };
