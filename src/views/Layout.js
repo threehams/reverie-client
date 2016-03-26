@@ -71,13 +71,11 @@ const pagePadding = 10;
 const promptHeight = 30;
 const styles = {
   container: {
-    boxSizing: 'padding-box',
-    height: '100vh',
+    height: '100%',
     padding: pagePadding,
     width: '100vw'
   },
   sidebar: {
-    boxSizing: 'padding-box',
     border: panelStyles.border,
     display: 'inline-block',
     height: `calc(100vh - ${pagePadding * 2}px)`,
@@ -88,7 +86,6 @@ const styles = {
     height: `calc(50vh - ${pagePadding}px)`
   },
   main: {
-    boxSizing: 'padding-box',
     borderTop: panelStyles.border,
     borderRight: panelStyles.border,
     borderBottom: panelStyles.border,
@@ -98,21 +95,18 @@ const styles = {
     height: `calc(100vh - ${pagePadding * 2}px)`
   },
   editor: {
-    boxSizing: 'padding-box',
     height: `calc(70vh - ${pagePadding}px)`
   },
   debugger: {
     borderTop: panelStyles.border,
-    boxSizing: 'padding-box',
     height: `calc(30vh - ${pagePadding}px - 3px)`,
     ...fontStyles.monospace,
+    position: 'relative'
   },
   debuggerHistory: {
-    boxSizing: 'padding-box',
     height: `calc(30vh - ${pagePadding}px - ${promptHeight}px - 1px)`
   },
   debuggerPrompt: {
-    boxSizing: 'padding-box',
     height: promptHeight
   }
 };
