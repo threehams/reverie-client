@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { Map } from 'immutable';
 
-import configureStore from '../configureStore';
+import configureStore from '../configure-store';
 import Layout from './Layout';
 import socket from '../socket';
 import attackEnemySuccessFixture from '../fixtures/attack-enemy-success-fixture';

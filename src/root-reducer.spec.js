@@ -1,7 +1,7 @@
 import {fromJS} from 'immutable';
 import expect from './__test__/configureExpect';
 
-import rootReducer from './rootReducer';
+import rootReducer from './root-reducer';
 import UiRecord from './records/ui-record';
 
 
