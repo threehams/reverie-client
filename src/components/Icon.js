@@ -18,8 +18,7 @@ export default class Icon extends React.Component {
     const style = Object.assign(
       {},
       styles.all,
-      before ? styles.before : null,
-      onClick ? styles.interactive : null
+      before ? styles.before : null
     );
     return (
       <i className={`fa fa-${name}`} style={style} onClick={onClick} onDoubleClick={onDoubleClick} />
@@ -35,8 +34,5 @@ const styles = {
   },
   before: {
     marginRight: 2
-  },
-  interactive: {
-    cursor: 'pointer'
   }
 };

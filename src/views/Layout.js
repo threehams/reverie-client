@@ -70,9 +70,7 @@ const pagePadding = 10;
 const promptHeight = 30;
 const styles = {
   container: {
-    height: '100%',
     padding: pagePadding,
-    width: '100vw'
   },
   sidebar: {
     border: panelStyles.border,
