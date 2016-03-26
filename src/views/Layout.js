@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
-import { List } from 'immutable';
 import {connect} from 'react-redux';
+import shallowCompare from 'react-addons-shallow-compare';
 
 import Inventory from './Inventory';
 import Editor from './Editor';
@@ -11,17 +11,23 @@ import DebuggerPrompt from './DebuggerPrompt';
 import TabContainer from '../components/TabContainer';
 import Tab from '../components/Tab';
 import * as inventoryActions from '../actions/inventory-actions';
-import * as panelStyles from '../styles/panel';
+import panelStyles from '../styles/panel';
+import fontStyles from '../styles/font';
+import EntityRecord from '../records/entity-record';
 
 export class Layout extends React.Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
+
   static propTypes = {
     inventoryActions: React.PropTypes.object,
-    playerInventoryIds: React.PropTypes.instanceOf(List),
-    locationInventoryIds: React.PropTypes.instanceOf(List)
+    player: React.PropTypes.instanceOf(EntityRecord),
+    location: React.PropTypes.instanceOf(EntityRecord)
   };
 
   render() {
-    const { playerInventoryIds, locationInventoryIds } = this.props;
+    const { player, location } = this.props;
     return (
       <div style={styles.container}>
         <aside style={styles.sidebar}>
@@ -30,7 +36,7 @@ export class Layout extends React.Component {
               <Tab active>Inventory</Tab>
               <Tab>Character</Tab>
             </TabContainer>
-            <Inventory ids={playerInventoryIds} {...inventoryActions} />
+            <Inventory containerId={player.id} ids={player.entities} {...inventoryActions} />
           </div>
           <div style={[styles.sidebarSection, { borderTop: panelStyles.border}]}>
             <TabContainer>
@@ -38,13 +44,14 @@ export class Layout extends React.Component {
                 Floor
               </Tab>
             </TabContainer>
-            <Inventory ids={locationInventoryIds} {...inventoryActions} />
+            <Inventory containerId={location.id} ids={location.entities.filterNot(id => id === player.id)} {...inventoryActions} />
           </div>
         </aside>
 
         <section style={styles.main}>
           <section style={styles.editor}>
-            <Editor />
+            { /* TODO elegant way of doing this? function for generating calc? */ }
+            <Editor height={`calc(70vh - ${pagePadding}px - 30px)`} />
           </section>
           <section style={styles.debugger}>
             <div style={styles.debuggerHistory}>
@@ -97,7 +104,8 @@ const styles = {
   debugger: {
     borderTop: panelStyles.border,
     boxSizing: 'padding-box',
-    height: `calc(30vh - ${pagePadding}px - 3px)`
+    height: `calc(30vh - ${pagePadding}px - 3px)`,
+    ...fontStyles.monospace,
   },
   debuggerHistory: {
     boxSizing: 'padding-box',
@@ -113,7 +121,7 @@ export default connect((state) => {
   const playerId = state.getIn(['ui', 'player']);
   const locationId = state.get('entities').find(entity => entity.entities.contains(playerId)).id;
   return {
-    playerInventoryIds: state.getIn(['entities', playerId, 'entities']),
-    locationInventoryIds: state.getIn(['entities', locationId, 'entities']).filter(id => playerId !== id)
+    player: state.getIn(['entities', playerId]),
+    location: state.getIn(['entities', locationId])
   };
 }, inventoryActions)(Radium(Layout));

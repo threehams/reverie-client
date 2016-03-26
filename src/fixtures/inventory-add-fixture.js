@@ -9,6 +9,7 @@ export default {
     '35': {
       id: '35',
       name: 'tmp',
+      type: 'container',
       entities: ['36']
     },
     '36': {

@@ -2,8 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {List} from 'immutable';
 import Radium from 'radium';
+import shallowCompare from 'react-addons-shallow-compare';
 
 export class Autocomplete extends React.Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
+
   static propTypes = {
     options: React.PropTypes.instanceOf(List)
   };
@@ -25,7 +30,7 @@ export default connect((state, props) => {
   return {
     options: state.get('entities')
       .toList()
-      .filter(item => item.name.includes(props.command) && item.executable)
+      .filter(item => item.name.includes(props.command) && item.type === 'executable')
       .map(item => item.name)
   };
 })(Radium(Autocomplete));

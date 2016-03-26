@@ -5,5 +5,6 @@ export default Record({
   currentCommand: '',
   editorViews: OrderedSet(['0']),
   activeEditorView: '0',
-  player: null
+  player: null,
+  selectedItems: OrderedSet()
 });

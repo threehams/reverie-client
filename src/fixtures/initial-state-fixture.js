@@ -4,48 +4,53 @@ export default {
     '1': {
       id: '1',
       name: 'scripts',
+      type: 'container',
       entities: ['2', '3']
     },
     '2': {
       id: '2',
       name: 'rm.js',
       description: 'Remove a file',
-      executable: true
+      type: 'executable'
     },
     '3': {
       id: '3',
       name: 'portscan.js',
-      executable: true
+      quantity: 4,
+      type: 'executable'
     },
     '4': {
       id: '4',
       name: 'hacks',
+      type: 'container',
       entities: ['5', '6']
     },
     '5': {
       id: '5',
       name: 'portscan1.js',
-      executable: true
+      type: 'executable'
     },
     '6': {
       id: '6',
       name: 'portscans',
+      type: 'container',
       entities: ['7', '8']
     },
     '7': {
       id: '7',
       name: 'hack.js',
       description: 'Hacks a thing',
-      executable: true
+      type: 'executable'
     },
     '8': {
       id: '8',
       name: 'hack-more.js',
-      executable: true
+      type: 'executable'
     },
     '9': {
       id: '9',
       name: 'docs',
+      type: 'container',
       entities: ['10', '11']
     },
     '10': {
@@ -62,11 +67,13 @@ export default {
       id: '12',
       name: 'Field',
       description: 'You are standing in an open field west of a white house, with a boarded front door',
-      entities: ['13', '17', '18']
+      entities: ['13', '17', '18'],
+      exits: ['20', '21']
     },
     '13': {
       id: '13',
       name: 'small mailbox',
+      type: 'container',
       entities: ['14']
     },
     '14': {
@@ -84,12 +91,17 @@ export default {
     '18': {
       id: '18',
       name: 'usb-drive',
+      type: 'container',
       entities: ['19']
     },
     '19': {
       id: '19',
       name: 'mydoom.js',
+      type: 'executable',
       description: 'andy; I’m just doing my job, nothing personal, sorry,'
     }
-  }
+  },
+  message: `You are standing in an open field west of a white house, with a boarded front door.
+
+  There is a small mailbox here.`
 };
