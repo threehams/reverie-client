@@ -20,5 +20,28 @@ describe('entitiesReducer', function() {
         Map({ '1': new EntityRecord()})
       );
     });
+
+    it('removes records which are marked for deletion', function() {
+      const initial = Map({
+        '1': new EntityRecord({
+          id: '1'
+        }),
+        '2': new EntityRecord({
+          id: '2'
+        })
+      });
+      const action = {
+        type: SET_STATE,
+        payload: {
+          entities: Map(),
+          entitiesToRemove: List(['1'])
+        }
+      };
+      expect(entitiesReducer(initial, action)).to.equal(
+        Map({ '2': new EntityRecord({
+          id: '2'
+        })})
+      );
+    });
   });
 });

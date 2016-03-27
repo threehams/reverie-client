@@ -5,6 +5,7 @@ import shallowCompare from 'react-addons-shallow-compare';
 
 import Icon from '../components/Icon';
 import * as inventoryActions from '../actions/inventory-actions';
+import * as editorActions from '../actions/editor-actions';
 import EntityRecord from '../records/entity-record';
 
 const TYPE_ICONS = {
@@ -110,7 +111,12 @@ const InventoryItemContainer = connect(
       expanded: !!state.getIn(['ui', 'inventoryExpandedById', props.id])
     };
   },
-  inventoryActions
+  {
+    addView: editorActions.addView,
+    selectItem: inventoryActions.selectItem,
+    toggleExpand: inventoryActions.toggleExpand,
+    toggleItem: inventoryActions.toggleItem
+  }
 )(Radium(InventoryItem));
 
 export default InventoryItemContainer;

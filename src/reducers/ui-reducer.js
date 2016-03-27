@@ -7,7 +7,7 @@ import {
   INVENTORY_TOGGLE_EXPAND,
   COMMAND_SET_CURRENT,
   EDITOR_ADD_VIEW,
-  EDITOR_TOGGLE_ITEM,
+  INVENTORY_TOGGLE_SELECT,
   EDITOR_SET_ACTIVE_VIEW,
   EDITOR_SELECT_ITEMS,
   EDITOR_REMOVE_VIEW
@@ -29,7 +29,7 @@ export default function uiReducer(state = INITIAL_STATE, action) {
       return state.set('selectedItems', OrderedSet(action.payload.ids));
     case EDITOR_SET_ACTIVE_VIEW:
       return state.set('activeEditorView', action.payload.id);
-    case EDITOR_TOGGLE_ITEM:
+    case INVENTORY_TOGGLE_SELECT:
       return state.update('selectedItems', items => toggleSetItem(items, action.payload.id));
     case INVENTORY_TOGGLE_EXPAND:
       return state.updateIn(['inventoryExpandedById', action.payload.id], expanded => !expanded);
