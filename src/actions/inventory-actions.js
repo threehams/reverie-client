@@ -1,23 +1,13 @@
 import { List } from 'immutable';
 import {
   INVENTORY_TOGGLE_EXPAND,
-  EDITOR_ADD_VIEW,
-  EDITOR_TOGGLE_ITEM,
+  INVENTORY_TOGGLE_SELECT,
   EDITOR_SELECT_ITEMS
 } from './action-types';
 
 export function toggleExpand(id) {
   return {
     type: INVENTORY_TOGGLE_EXPAND,
-    payload: {
-      id: id
-    }
-  };
-}
-
-export function addView(id) {
-  return {
-    type: EDITOR_ADD_VIEW,
     payload: {
       id: id
     }
@@ -64,7 +54,7 @@ function getEntityChildren(id, entities) {
 
 export function toggleItem(id) {
   return {
-    type: EDITOR_TOGGLE_ITEM,
+    type: INVENTORY_TOGGLE_SELECT,
     payload: {
       id: id
     }
