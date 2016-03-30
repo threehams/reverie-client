@@ -7,8 +7,8 @@
     "build": "better-npm-run build",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test": "better-npm-run test",
-    "test:watch": "better-npm-run test --watch",
+    "test": "better-npm-run test --watch",
+    "test:ci": "better-npm-run test",
     "test:coverage": "better-npm-run coverage",
     "start": "better-npm-run start",
     "server": "better-npm-run server",
@@ -17,6 +17,12 @@
   "betterScripts": {
     "test": {
       "command": "mocha --require babel-register --require babel-polyfill --require ./src/__test__/test-helper.js --timeout=200 --reporter min src/**/*.spec.js",
+      "env": {
+        "NODE_ENV": "test"
+      }
+    },
+    "test:ci": {
+      "command": "mocha --require babel-register --require babel-polyfill --require ./src/__test__/test-helper.js --reporter mocha-junit-reporter src/**/*.spec.js",
       "env": {
         "NODE_ENV": "test"
       }
@@ -85,6 +91,7 @@
     "eslint-plugin-react": "^4.0.0",
     "isparta": "^4.0.0",
     "mocha": "^2.4.5",
+    "mocha-junit-reporter": "^1.10.0",
     "nock": "^7.2.2",
     "nodemon": "^1.9.1",
     "nyc": "^6.1.1",

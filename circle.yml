@@ -6,3 +6,7 @@ deployment:
     branch: master
     heroku:
       appname: reverie-forge
+test:
+  override:
+    - npm run test:ci
+    - npm run lint
