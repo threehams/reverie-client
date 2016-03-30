@@ -56,7 +56,7 @@ describe('uiReducer', function() {
       expect(uiReducer(initial, action).activeEditorView).to.equal('3');
     });
   });
-  
+
   describe('EDITOR_REMOVE_VIEW', function() {
     context('when removing the current view', function() {
       it('sets the active view to the next available view', function() {
