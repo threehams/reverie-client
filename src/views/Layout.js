@@ -7,6 +7,7 @@ import Inventory from './Inventory';
 import Editor from './Editor';
 import DebuggerHistory from './DebuggerHistory';
 import DebuggerPrompt from './DebuggerPrompt';
+import LoadingCircle from '../components/LoadingCircle';
 
 import TabContainer from '../components/TabContainer';
 import Tab from '../components/Tab';
@@ -14,6 +15,7 @@ import * as inventoryActions from '../actions/inventory-actions';
 import panelStyles from '../styles/panel';
 import fontStyles from '../styles/font';
 import EntityRecord from '../records/entity-record';
+
 
 export class Layout extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
@@ -28,6 +30,9 @@ export class Layout extends React.Component {
 
   render() {
     const { player, location } = this.props;
+    if (!player || !location) {
+      return <LoadingCircle />;
+    }
     return (
       <div style={styles.container}>
         <aside style={styles.sidebar}>
@@ -110,7 +115,8 @@ const styles = {
 
 export default connect((state) => {
   const playerId = state.getIn(['ui', 'player']);
-  const locationId = state.get('entities').find(entity => entity.entities.contains(playerId)).id;
+  const location = state.get('entities').find(entity => entity.entities.contains(playerId));
+  const locationId = location && location.id;
   return {
     player: state.getIn(['entities', playerId]),
     location: state.getIn(['entities', locationId])

@@ -23,7 +23,7 @@ export class InventoryItem extends React.Component {
     addView: React.PropTypes.func,
     containerId: React.PropTypes.string,
     expanded: React.PropTypes.bool,
-    item: React.PropTypes.instanceOf(EntityRecord),
+    item: React.PropTypes.instanceOf(EntityRecord).isRequired,
     indent: React.PropTypes.number,
     selected: React.PropTypes.bool,
     selectItem: React.PropTypes.func,

@@ -7,7 +7,9 @@ import {
 
 export function sendCommand(command) {
   return (dispatch) => {
-    socket.send(command);
+    socket.send(JSON.stringify({
+      command: command
+    }));
     dispatch({
       type: COMMAND_SEND,
       payload: {

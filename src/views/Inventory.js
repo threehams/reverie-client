@@ -19,7 +19,7 @@ export class Inventory extends React.Component {
   render() {
     const { containerId, ids } = this.props;
     return (
-      <LoadingCircle showUntil={!!(ids && ids.size)}>
+      <LoadingCircle showUntil={!!(ids)}>
         <section>
           { ids && ids.map(id => <InventoryItemContainer key={id} id={id} containerId={containerId} />) }
         </section>
