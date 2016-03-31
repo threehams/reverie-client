@@ -81,7 +81,7 @@
     "babel-cli": "^6.6.5",
     "babel-core": "^6.4.5",
     "babel-eslint": "^6.0.0",
-    "babel-preset-react-hmre": "^1.1.0",
+    "babel-preset-react-hmre": "*",
     "babel-register": "^6.7.2",
     "chai": "^3.5.0",
     "chai-immutable": "^1.5.3",
@@ -101,6 +101,7 @@
     "skin-deep": "^0.16.0",
     "webpack-dev-middleware": "^1.5.1",
     "webpack-dev-server": "^1.14.1",
-    "webpack-hot-middleware": "^2.7.1"
+    "webpack-hot-middleware": "^2.7.1",
+    "ws": "^1.0.1"
   }
 }

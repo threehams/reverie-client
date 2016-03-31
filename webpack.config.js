@@ -34,7 +34,7 @@ var PLUGINS = {
   ]
 };
 var DEV_TOOLS = {
-  development: 'eval',
+  development: 'source-map',
   production: 'source-map'
 };
 
