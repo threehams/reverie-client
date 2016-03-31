@@ -2,8 +2,6 @@
 import path from 'path';
 import express from 'express';
 import webpack from 'webpack';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
 
 import webpackConfig from '../webpack.config';
 import config from './server-config';
@@ -18,8 +16,37 @@ import fixtureMovePlayer from './fixtures/move-player-fixture';
 import fixtureMovePlayerBack from './fixtures/move-player-back-fixture';
 import fixtureMoveItemToContainer from './fixtures/move-item-to-container-fixture';
 
-const wss = new WebSocket.Server({ port: 3000 });
-wss.on('connection', function(ws) {
+const app = express();
+const compiler = webpack(webpackConfig);
+
+if (config.development) {
+  var webpackDevMiddleware = require('webpack-dev-middleware');
+  var webpackHotMiddleware = require('webpack-hot-middleware');
+  app.use(webpackDevMiddleware(compiler, {
+    noInfo: true,
+    publicPath: webpackConfig.output.publicPath
+  }));
+
+  app.use(webpackHotMiddleware(compiler));
+} else {
+  app.use('/dist', express.static(path.join( __dirname, '..', 'dist')));
+}
+
+app.get('/', function(request, response) {
+  response.sendFile(path.join(__dirname, 'index.html'));
+});
+
+const server = app.listen(config.port || 8080, function(err) {
+  if (err) {
+    console.log(err); //eslint-disable-line no-console
+    return;
+  }
+
+  console.log('Listening at http://localhost, port', config.port); //eslint-disable-line no-console
+});
+
+const wsServer = new WebSocket.Server({ server });
+wsServer.on('connection', function(ws) {
   function sendMessage(message) {
     ws.send(JSON.stringify(message));
   }
@@ -43,16 +70,11 @@ wss.on('connection', function(ws) {
       case 's':
       case 'south':
         return sendMessage(fixtureMovePlayerBack);
-      case 'get inventory':
-        return sendMessage({
-          message: 'YOU LOOK AT STUFF'
-        });
       case 'help':
         return sendMessage({
           message: `Available commands:
             attack hiro
             attack raven
-            get inventory
             move readme.txt to usb-drive
             north || n
             run tmp
@@ -70,25 +92,3 @@ wss.on('connection', function(ws) {
   });
 });
 
-var app = express();
-var compiler = webpack(webpackConfig);
-
-app.use(webpackDevMiddleware(compiler, {
-  noInfo: true,
-  publicPath: webpackConfig.output.publicPath
-}));
-
-app.use(webpackHotMiddleware(compiler));
-
-app.get('*', function(request, response) {
-  response.sendFile(path.join(__dirname, 'index.html'));
-});
-
-app.listen(config.port || 8080, 'localhost', function(err) {
-  if (err) {
-    console.log(err); //eslint-disable-line no-console
-    return;
-  }
-
-  console.log('Listening at http://localhost, port', config.port); //eslint-disable-line no-console
-});
