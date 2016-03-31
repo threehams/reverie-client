@@ -36,7 +36,6 @@
     "start": {
       "command": "nodemon ./dev-server.js",
       "env": {
-        "NODE_ENV": "dev",
         "PORT": 8080
       }
     },

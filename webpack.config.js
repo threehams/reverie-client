@@ -5,7 +5,7 @@ var path = require('path');
 var webpack = require('webpack');
 
 var ENTRY_POINTS = {
-  dev: [
+  development: [
     //'eventsource-polyfill', // necessary for hot reloading with IE
     'webpack-hot-middleware/client',
     './src/index'
@@ -15,10 +15,10 @@ var ENTRY_POINTS = {
   ]
 };
 
-var ENV = process.env.NODE_ENV || 'production';
+var ENV = process.env.NODE_ENV || 'development';
 
 var PLUGINS = {
-  dev: [
+  development: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ],
@@ -34,7 +34,7 @@ var PLUGINS = {
   ]
 };
 var DEV_TOOLS = {
-  dev: 'eval',
+  development: 'eval',
   production: 'source-map'
 };
 
