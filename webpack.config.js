@@ -20,7 +20,12 @@ var ENV = process.env.NODE_ENV || 'development';
 var PLUGINS = {
   development: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '\'development\''
+      }
+    })
   ],
   production: [
     new webpack.optimize.UglifyJsPlugin({
@@ -29,7 +34,9 @@ var PLUGINS = {
       }
     }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '\'production\''
+      'process.env': {
+        NODE_ENV: '\'production\''
+      }
     })
   ]
 };
