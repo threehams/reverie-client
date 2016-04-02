@@ -22,8 +22,7 @@ socket.onclose = function() {
 
 socket.onmessage = function(event) {
   const diff = JSON.parse(event.data);
-  console.log(diff);
-  store.dispatch(initialActions.setState(diff));
+  store.dispatch(initialActions.setInitialState(diff));
 };
 
 document.onkeypress = function () {

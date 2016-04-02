@@ -30,48 +30,61 @@ export class Layout extends React.Component {
   };
 
   render() {
-    const { player, location, alert, } = this.props;
+    const { player, location, alert } = this.props;
     if (!player || !location) {
       return <LoadingCircle />;
     }
     return (
-      <div style={styles.container}>
+      <div>
         { alert && <div style={styles.alert}>{ alert }</div> }
-        <aside style={styles.sidebar}>
-          <div style={styles.sidebarSection}>
-            <TabContainer>
-              <Tab active>Inventory</Tab>
-              <Tab>Character</Tab>
-            </TabContainer>
-            <Inventory containerId={player.id} ids={player.entities} {...inventoryActions} />
-          </div>
-          <div style={[styles.sidebarSection, { borderTop: panelStyles.border}]}>
-            <TabContainer>
-              <Tab active>
-                Floor
-              </Tab>
-            </TabContainer>
-            <Inventory containerId={location.id} ids={location.entities.filterNot(id => id === player.id)} {...inventoryActions} />
-          </div>
-        </aside>
+        <div style={styles.container}>
+          <aside style={styles.sidebar}>
+            <div style={styles.sidebarSection}>
+              <TabContainer>
+                <Tab active>Inventory</Tab>
+                <Tab>Character</Tab>
+              </TabContainer>
+              <Inventory containerId={player.id} ids={player.entities} {...inventoryActions} />
+            </div>
+            <div style={[styles.sidebarSection, { borderTop: panelStyles.border}]}>
+              <TabContainer>
+                <Tab active>
+                  Floor
+                </Tab>
+              </TabContainer>
+              <Inventory containerId={location.id} ids={location.entities.filterNot(id => id === player.id)} {...inventoryActions} />
+            </div>
+          </aside>
 
-        <section style={styles.main}>
-          <section style={styles.editor}>
-            <Editor height={`calc(70vh - ${pagePadding}px - 30px)`} />
+          <section style={styles.main}>
+            <section style={styles.editor}>
+              <Editor height={`calc(70vh - ${pagePadding}px - 30px)`} />
+            </section>
+            <section style={styles.debugger}>
+              <div style={styles.debuggerHistory}>
+                <DebuggerHistory />
+              </div>
+              <div style={styles.debuggerPrompt}>
+                <DebuggerPrompt />
+              </div>
+            </section>
           </section>
-          <section style={styles.debugger}>
-            <div style={styles.debuggerHistory}>
-              <DebuggerHistory />
-            </div>
-            <div style={styles.debuggerPrompt}>
-              <DebuggerPrompt />
-            </div>
-          </section>
-        </section>
+        </div>
       </div>
     );
   }
 }
+
+export default connect((state) => {
+  const playerId = state.getIn(['ui', 'player']);
+  const location = state.get('entities').find(entity => entity.entities.contains(playerId));
+  const locationId = location && location.id;
+  return {
+    player: state.getIn(['entities', playerId]),
+    location: state.getIn(['entities', locationId]),
+    alert: state.getIn(['ui', 'alert'])
+  };
+}, inventoryActions)(Radium(Layout));
 
 const pagePadding = 10;
 const promptHeight = 30;
@@ -82,7 +95,11 @@ const styles = {
   alert: {
     backgroundColor: 'red',
     color: 'white',
-    width: '100%'
+    padding: 10,
+    position: 'absolute',
+    textAlign: 'center',
+    width: '100%',
+    zIndex: 1
   },
   sidebar: {
     border: panelStyles.border,
@@ -119,14 +136,3 @@ const styles = {
     height: promptHeight
   }
 };
-
-export default connect((state) => {
-  const playerId = state.getIn(['ui', 'player']);
-  const location = state.get('entities').find(entity => entity.entities.contains(playerId));
-  const locationId = location && location.id;
-  return {
-    player: state.getIn(['entities', playerId]),
-    location: state.getIn(['entities', locationId]),
-    alert: state.getIn(['ui', 'alert'])
-  };
-}, inventoryActions)(Radium(Layout));
