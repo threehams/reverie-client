@@ -5,16 +5,45 @@
   "main": "index.js",
   "scripts": {
     "build": "better-npm-run build",
+    "dev": "better-npm-run dev",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "postinstall": "node scripts/postinstall.js",
     "test": "better-npm-run test --watch",
     "test:ci": "better-npm-run test",
     "test:coverage": "better-npm-run coverage",
     "start": "better-npm-run start",
-    "server": "better-npm-run server",
-    "postinstall": "node scripts/postinstall.js"
+    "server": "better-npm-run server"
   },
   "betterScripts": {
+    "build": {
+      "command": "webpack",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    "coverage": {
+      "command": "nyc --require babel-core/register node_modules/.bin/mocha --require babel-register --require babel-polyfill --require ./src/__test__/testHelper.js --timeout=200 src/**/*.spec.js && nyc  --require babel-core/register report --reporter=lcov",
+      "env": {
+        "NODE_ENV": "test"
+      }
+    },
+    "dev": {
+      "command": "concurrently --prefix none \"npm start\" \"npm test\""
+    },
+    "server": {
+      "command": "node ./server.js",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    "start": {
+      "command": "nodemon ./server.js",
+      "env": {
+        "NODE_ENV": "development",
+        "PORT": 8080
+      }
+    },
     "test": {
       "command": "mocha --require babel-register --require babel-polyfill --require ./src/__test__/testHelper.js --timeout=200 --reporter min src/**/*.spec.js",
       "env": {
@@ -25,31 +54,6 @@
       "command": "mocha --require babel-register --require babel-polyfill --require ./src/__test__/testHelper.js --reporter mocha-junit-reporter src/**/*.spec.js",
       "env": {
         "NODE_ENV": "test"
-      }
-    },
-    "coverage": {
-      "command": "nyc --require babel-core/register node_modules/.bin/mocha --require babel-register --require babel-polyfill --require ./src/__test__/testHelper.js --timeout=200 src/**/*.spec.js && nyc  --require babel-core/register report --reporter=lcov",
-      "env": {
-        "NODE_ENV": "test"
-      }
-    },
-    "start": {
-      "command": "nodemon ./server.js",
-      "env": {
-        "NODE_ENV": "development",
-        "PORT": 8080
-      }
-    },
-    "build": {
-      "command": "webpack",
-      "env": {
-        "NODE_ENV": "production"
-      }
-    },
-    "server": {
-      "command": "node ./server.js",
-      "env": {
-        "NODE_ENV": "production"
       }
     }
   },
@@ -86,6 +90,7 @@
     "babel-preset-react-hmre": "*",
     "chai": "^3.5.0",
     "chai-immutable": "^1.5.3",
+    "concurrently": "^2.0.0",
     "dirty-chai": "^1.2.2",
     "enzyme": "^2.2.0",
     "eslint": "^2.5.1",
