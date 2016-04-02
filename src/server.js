@@ -52,12 +52,14 @@ wsServer.on('connection', function(ws) {
   }
 
   ws.send(
-    JSON.stringify(fixtureInitialState)
+    JSON.stringify({})
   );
 
   ws.on('message', (json) => {
     const message = JSON.parse(json);
     switch (message.command.toLowerCase()) {
+      case 'get initial state':
+        return sendMessage(fixtureInitialState);
       case 'attack hiro':
         return sendMessage(fixtureAttackEnemySuccess);
       case 'attack raven':
@@ -85,9 +87,7 @@ wsServer.on('connection', function(ws) {
       case 'take tmp':
         return sendMessage(fixtureInventoryAdd);
       default:
-        return sendMessage({
-          message: `I don't know how to ${message.command}.`
-        });
+        return sendMessage({ message: `I don't know how to ${message.command}.`});
     }
   });
 });

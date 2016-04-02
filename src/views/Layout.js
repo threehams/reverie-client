@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import Radium from 'radium';
 import {connect} from 'react-redux';
 import shallowCompare from 'react-addons-shallow-compare';
@@ -23,18 +23,20 @@ export class Layout extends React.Component {
   }
 
   static propTypes = {
-    inventoryActions: React.PropTypes.object,
-    player: React.PropTypes.instanceOf(EntityRecord),
-    location: React.PropTypes.instanceOf(EntityRecord)
+    inventoryActions: PropTypes.object,
+    player: PropTypes.instanceOf(EntityRecord),
+    location: PropTypes.instanceOf(EntityRecord),
+    alert: PropTypes.string
   };
 
   render() {
-    const { player, location } = this.props;
+    const { player, location, alert, } = this.props;
     if (!player || !location) {
       return <LoadingCircle />;
     }
     return (
       <div style={styles.container}>
+        { alert && <div style={styles.alert}>{ alert }</div> }
         <aside style={styles.sidebar}>
           <div style={styles.sidebarSection}>
             <TabContainer>
@@ -76,6 +78,11 @@ const promptHeight = 30;
 const styles = {
   container: {
     padding: pagePadding,
+  },
+  alert: {
+    backgroundColor: 'red',
+    color: 'white',
+    width: '100%'
   },
   sidebar: {
     border: panelStyles.border,
@@ -119,6 +126,7 @@ export default connect((state) => {
   const locationId = location && location.id;
   return {
     player: state.getIn(['entities', playerId]),
-    location: state.getIn(['entities', locationId])
+    location: state.getIn(['entities', locationId]),
+    alert: state.getIn(['ui', 'alert'])
   };
 }, inventoryActions)(Radium(Layout));

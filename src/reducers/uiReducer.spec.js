@@ -7,6 +7,7 @@ import * as inventoryActions from '../actions/inventoryActions';
 import * as editorActions from '../actions/editorActions';
 import { COMMAND_SEND } from '../actions/actionTypes';
 import * as commandActions from '../actions/commandActions';
+import * as socketActions from '../actions/socketActions';
 import UiRecord from '../records/uiRecord';
 
 describe('uiReducer', function() {
@@ -163,6 +164,15 @@ describe('uiReducer', function() {
       const newState = uiReducer(initial, action);
       expect(newState.editorViews).not.to.contain('1');
       expect(newState.activeEditorView).to.equal('0');
+    });
+  });
+
+  describe('SOCKET_STATUS', function() {
+    it('updates the alert', function() {
+      const action = socketActions.disconnected();
+      expect(uiReducer(undefined, action).alert).to.equal(
+        'Reconnecting to server, give it a minute...'
+      );
     });
   });
 });
