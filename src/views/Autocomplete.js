@@ -17,7 +17,7 @@ export class Autocomplete extends React.Component {
     const { options } = this.props;
     if (!options) return <div></div>;
     return (
-      <div>
+      <div style={styles} className="pork">
         <ul>
           { options.map((option, i) => <li key={i}>{option}</li>) }
         </ul>
@@ -26,11 +26,17 @@ export class Autocomplete extends React.Component {
   }
 }
 
-export default connect((state, props) => {
+export const mapStateToProps = (state, props) => {
   return {
     options: state.get('entities')
       .toList()
       .filter(item => item.name.includes(props.command) && item.type === 'executable')
       .map(item => item.name)
   };
-})(Radium(Autocomplete));
+};
+
+export default connect(mapStateToProps)(Radium(Autocomplete));
+
+const styles = {
+  position: 'absolute'
+};

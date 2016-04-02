@@ -36,6 +36,7 @@
     "start": {
       "command": "nodemon ./server.js",
       "env": {
+        "NODE_ENV": "development",
         "PORT": 8080
       }
     },
@@ -86,6 +87,7 @@
     "chai": "^3.5.0",
     "chai-immutable": "^1.5.3",
     "dirty-chai": "^1.2.2",
+    "enzyme": "^2.2.0",
     "eslint": "^2.5.1",
     "eslint-plugin-react": "^4.0.0",
     "isparta": "^4.0.0",
@@ -98,7 +100,6 @@
     "react-tools": "^0.13.3",
     "sinon": "^1.17.3",
     "sinon-chai": "^2.8.0",
-    "skin-deep": "^0.16.0",
     "webpack-dev-middleware": "^1.5.1",
     "webpack-dev-server": "^1.14.1",
     "webpack-hot-middleware": "^2.7.1"
