@@ -3,7 +3,7 @@ import {
   INVENTORY_TOGGLE_EXPAND,
   INVENTORY_TOGGLE_SELECT,
   EDITOR_SELECT_ITEMS
-} from './action-types';
+} from './actionTypes';
 
 export function toggleExpand(id) {
   return {

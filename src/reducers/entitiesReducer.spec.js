@@ -1,9 +1,9 @@
 import {Map, fromJS, List} from 'immutable';
 import expect from '../__test__/configureExpect';
 
-import entitiesReducer from './entities-reducer';
-import EntityRecord from '../records/entity-record';
-import { SET_STATE } from '../actions/action-types';
+import entitiesReducer from './entitiesReducer';
+import EntityRecord from '../records/entityRecord';
+import { SET_STATE } from '../actions/actionTypes';
 
 describe('entitiesReducer', function() {
   describe('SET_STATE', function() {

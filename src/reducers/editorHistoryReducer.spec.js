@@ -1,9 +1,9 @@
 import {List, fromJS} from 'immutable';
 import expect from '../__test__/configureExpect';
 
-import editorHistoryReducer from './editor-history-reducer';
-import * as editorActions from '../actions/editor-actions';
-import * as initialActions from '../actions/initial-actions';
+import editorHistoryReducer from './editorHistoryReducer';
+import * as editorActions from '../actions/editorActions';
+import * as initialActions from '../actions/initialActions';
 
 describe('editorHistoryReducer', function() {
   describe('sendCommand', function() {

@@ -1,9 +1,9 @@
 import {List, fromJS} from 'immutable';
 import expect from '../__test__/configureExpect';
 
-import commandHistoryReducer from './command-history-reducer';
-import * as commandActions from '../actions/command-actions';
-import { COMMAND_SEND } from '../actions/action-types';
+import commandHistoryReducer from './commandHistoryReducer';
+import * as commandActions from '../actions/commandActions';
+import { COMMAND_SEND } from '../actions/actionTypes';
 
 describe('commandHistoryReducer', function() {
   describe('sendCommand', function() {

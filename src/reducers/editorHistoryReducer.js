@@ -3,7 +3,7 @@ import {List} from 'immutable';
 import {
   SET_STATE,
   EDITOR_HISTORY_CLEAR
-} from '../actions/action-types';
+} from '../actions/actionTypes';
 
 export default function editorHistoryReducer(state = List(), action) {
   switch (action.type) {

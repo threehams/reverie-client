@@ -3,7 +3,7 @@ import {fromJS, List} from 'immutable';
 import expect from '../__test__/configureExpect';
 
 import { mapStateToProps } from './Autocomplete';
-import EntityRecord from '../records/entity-record';
+import EntityRecord from '../records/entityRecord';
 
 describe('Autocomplete', function() {
   describe('mapStateToProps', function() {

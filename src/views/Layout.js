@@ -11,10 +11,10 @@ import LoadingCircle from '../components/LoadingCircle';
 
 import TabContainer from '../components/TabContainer';
 import Tab from '../components/Tab';
-import * as inventoryActions from '../actions/inventory-actions';
+import * as inventoryActions from '../actions/inventoryActions';
 import panelStyles from '../styles/panel';
 import fontStyles from '../styles/font';
-import EntityRecord from '../records/entity-record';
+import EntityRecord from '../records/entityRecord';
 
 
 export class Layout extends React.Component {

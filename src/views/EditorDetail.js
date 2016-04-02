@@ -3,7 +3,7 @@ import Radium from 'radium';
 import shallowCompare from 'react-addons-shallow-compare';
 
 import LoadingCircle from '../components/LoadingCircle';
-import EntityRecord from '../records/entity-record';
+import EntityRecord from '../records/entityRecord';
 
 import panelStyles from '../styles/panel';
 

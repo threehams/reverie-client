@@ -2,11 +2,11 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { Map } from 'immutable';
 
-import configureStore from '../configure-store';
+import configureStore from '../configureStore';
 import Layout from './Layout';
 import socket from '../socket';
 
-import * as initialActions from '../actions/initial-actions';
+import * as initialActions from '../actions/initialActions';
 
 const store = configureStore(Map());
 

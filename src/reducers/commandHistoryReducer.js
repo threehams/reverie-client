@@ -3,7 +3,7 @@ import {List} from 'immutable';
 import {
   COMMAND_SEND,
   COMMAND_HISTORY_CLEAR
-} from '../actions/action-types';
+} from '../actions/actionTypes';
 
 export default function commandHistoryReducer(state = List(), action) {
   switch (action.type) {

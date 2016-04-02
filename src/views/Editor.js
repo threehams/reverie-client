@@ -4,7 +4,7 @@ import { Map, List, OrderedSet } from 'immutable';
 import Radium from 'radium';
 import shallowCompare from 'react-addons-shallow-compare';
 
-import * as editorActions from '../actions/editor-actions';
+import * as editorActions from '../actions/editorActions';
 import EditorDetail from './EditorDetail';
 import EditorMain from './EditorMain';
 import EditorTabs from './EditorTabs';

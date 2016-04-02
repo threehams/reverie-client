@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Radium from 'radium';
 import shallowCompare from 'react-addons-shallow-compare';
 
-import * as commandActions from '../actions/command-actions';
+import * as commandActions from '../actions/commandActions';
 import Autocomplete from './Autocomplete';
 import panelStyles from '../styles/panel';
 
