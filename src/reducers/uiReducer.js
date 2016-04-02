@@ -10,10 +10,15 @@ import {
   INVENTORY_TOGGLE_SELECT,
   EDITOR_SET_ACTIVE_VIEW,
   EDITOR_SELECT_ITEMS,
-  EDITOR_REMOVE_VIEW
+  EDITOR_REMOVE_VIEW,
+  SOCKET_STATUS
 } from '../actions/actionTypes';
 
 const INITIAL_STATE = new UiRecord();
+const ALERTS = {
+  disconnected: 'Reconnecting to server, give it a minute...',
+  reconnected: ''
+};
 
 export default function uiReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
@@ -35,6 +40,8 @@ export default function uiReducer(state = INITIAL_STATE, action) {
       return state.updateIn(['inventoryExpandedById', action.payload.id], expanded => !expanded);
     case SET_STATE:
       return setState(state, action);
+    case SOCKET_STATUS:
+      return state.set('alert', ALERTS[action.payload.status]);
     default:
       return state;
   }

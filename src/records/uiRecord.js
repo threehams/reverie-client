@@ -1,10 +1,11 @@
 import {Record, Map, OrderedSet} from 'immutable';
 
 export default Record({
-  inventoryExpandedById: Map(),
+  activeEditorView: '0',
+  alert: null,
   currentCommand: '',
   editorViews: OrderedSet(['0']),
-  activeEditorView: '0',
+  inventoryExpandedById: Map(),
   player: null,
   selectedItems: OrderedSet()
 });
