@@ -1,10 +1,10 @@
 import {List, Map, OrderedSet} from 'immutable';
 
-import * as inventoryActions from './inventory-actions';
-import UiRecord from '../records/ui-record';
-import EntityRecord from '../records/entity-record';
+import * as inventoryActions from './inventoryActions';
+import UiRecord from '../records/uiRecord';
+import EntityRecord from '../records/entityRecord';
 import expect from '../__test__/configureExpect';
-import { EDITOR_SELECT_ITEMS } from './action-types';
+import { EDITOR_SELECT_ITEMS } from './actionTypes';
 
 describe('inventoryActions', function() {
   describe('expandItems', function() {

@@ -1,9 +1,9 @@
 import {Map} from 'immutable';
-import EntityRecord from '../records/entity-record';
+import EntityRecord from '../records/entityRecord';
 
 import {
   SET_STATE
-} from '../actions/action-types';
+} from '../actions/actionTypes';
 
 export default function entitiesReducer(state = Map(), action) {
   switch (action.type) {

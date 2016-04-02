@@ -4,17 +4,17 @@ import express from 'express';
 import webpack from 'webpack';
 
 import webpackConfig from '../webpack.config';
-import config from './server-config';
+import config from './serverConfig';
 import WebSocket from 'ws';
 
-import fixtureInitialState from './fixtures/initial-state-fixture';
-import fixtureInventoryAdd from './fixtures/inventory-add-fixture';
-import fixtureInventoryRemove from './fixtures/inventory-remove-fixture';
-import fixtureAttackEnemySuccess from './fixtures/attack-enemy-success-fixture';
-import fixtureAttackEnemyFailure from './fixtures/attack-enemy-failure-fixture';
-import fixtureMovePlayer from './fixtures/move-player-fixture';
-import fixtureMovePlayerBack from './fixtures/move-player-back-fixture';
-import fixtureMoveItemToContainer from './fixtures/move-item-to-container-fixture';
+import fixtureInitialState from './fixtures/fixtureInitialState';
+import fixtureInventoryAdd from './fixtures/fixtureInventoryAdd';
+import fixtureInventoryRemove from './fixtures/fixtureInventoryRemove';
+import fixtureAttackEnemySuccess from './fixtures/fixtureAttackEnemySuccess';
+import fixtureAttackEnemyFailure from './fixtures/fixtureAttackEnemyFailure';
+import fixtureMovePlayer from './fixtures/fixtureMovePlayer';
+import fixtureMovePlayerBack from './fixtures/fixtureMovePlayerBack';
+import fixtureMoveItemToContainer from './fixtures/fixtureMoveItemToContainer';
 
 const app = express();
 const compiler = webpack(webpackConfig);
@@ -55,7 +55,7 @@ wsServer.on('connection', function(ws) {
     JSON.stringify(fixtureInitialState)
   );
 
-  ws.on('message', function(json) {
+  ws.on('message', (json) => {
     const message = JSON.parse(json);
     switch (message.command.toLowerCase()) {
       case 'attack hiro':

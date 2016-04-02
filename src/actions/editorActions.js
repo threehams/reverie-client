@@ -3,7 +3,7 @@ import {
   EDITOR_SET_ACTIVE_VIEW,
   EDITOR_REMOVE_VIEW,
   EDITOR_HISTORY_CLEAR
-} from './action-types';
+} from './actionTypes';
 
 export function setActiveView(id) {
   return {

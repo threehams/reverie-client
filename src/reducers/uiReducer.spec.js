@@ -1,13 +1,13 @@
 import {Map, List, OrderedSet, fromJS} from 'immutable';
 import expect from '../__test__/configureExpect';
 
-import uiReducer from './ui-reducer';
-import * as initialActions from '../actions/initial-actions';
-import * as inventoryActions from '../actions/inventory-actions';
-import * as editorActions from '../actions/editor-actions';
-import { COMMAND_SEND } from '../actions/action-types';
-import * as commandActions from '../actions/command-actions';
-import UiRecord from '../records/ui-record';
+import uiReducer from './uiReducer';
+import * as initialActions from '../actions/initialActions';
+import * as inventoryActions from '../actions/inventoryActions';
+import * as editorActions from '../actions/editorActions';
+import { COMMAND_SEND } from '../actions/actionTypes';
+import * as commandActions from '../actions/commandActions';
+import UiRecord from '../records/uiRecord';
 
 describe('uiReducer', function() {
   describe('COMMAND_SEND', function() {

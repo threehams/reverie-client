@@ -3,7 +3,7 @@ import {
   COMMAND_SEND,
   COMMAND_SET_CURRENT,
   COMMAND_HISTORY_CLEAR
-} from './action-types';
+} from './actionTypes';
 
 export function sendCommand(command) {
   return (dispatch) => {

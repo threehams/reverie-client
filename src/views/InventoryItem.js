@@ -4,9 +4,9 @@ import Radium from 'radium';
 import shallowCompare from 'react-addons-shallow-compare';
 
 import Icon from '../components/Icon';
-import * as inventoryActions from '../actions/inventory-actions';
-import * as editorActions from '../actions/editor-actions';
-import EntityRecord from '../records/entity-record';
+import * as inventoryActions from '../actions/inventoryActions';
+import * as editorActions from '../actions/editorActions';
+import EntityRecord from '../records/entityRecord';
 
 const TYPE_ICONS = {
   executable: 'file-code-o',

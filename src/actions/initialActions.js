@@ -2,7 +2,7 @@ import {fromJS, List, Map} from 'immutable';
 
 import {
   SET_STATE
-} from './action-types';
+} from './actionTypes';
 
 export function setState(state) {
   return {

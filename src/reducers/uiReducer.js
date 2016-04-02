@@ -1,6 +1,6 @@
 import {OrderedSet} from 'immutable';
 
-import UiRecord from '../records/ui-record';
+import UiRecord from '../records/uiRecord';
 import {
   COMMAND_SEND,
   SET_STATE,
@@ -11,7 +11,7 @@ import {
   EDITOR_SET_ACTIVE_VIEW,
   EDITOR_SELECT_ITEMS,
   EDITOR_REMOVE_VIEW
-} from '../actions/action-types';
+} from '../actions/actionTypes';
 
 const INITIAL_STATE = new UiRecord();
 
