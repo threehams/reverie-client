@@ -15,11 +15,12 @@ import fixtureAttackEnemyFailure from './fixtures/fixtureAttackEnemyFailure';
 import fixtureMovePlayer from './fixtures/fixtureMovePlayer';
 import fixtureMovePlayerBack from './fixtures/fixtureMovePlayerBack';
 import fixtureMoveItemToContainer from './fixtures/fixtureMoveItemToContainer';
+import compression from 'compression';
 
 const app = express();
-const compiler = webpack(webpackConfig);
 
 if (config.development) {
+  const compiler = webpack(webpackConfig);
   var webpackDevMiddleware = require('webpack-dev-middleware');
   var webpackHotMiddleware = require('webpack-hot-middleware');
   app.use(webpackDevMiddleware(compiler, {
@@ -29,6 +30,7 @@ if (config.development) {
 
   app.use(webpackHotMiddleware(compiler));
 } else {
+  app.use(compression());
   app.use('/dist', express.static(path.join( __dirname, '..', 'dist')));
 }
 
