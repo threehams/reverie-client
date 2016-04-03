@@ -1,7 +1,8 @@
 import React from 'react';
+import Radium from 'radium';
 import shallowCompare from 'react-addons-shallow-compare';
 
-export default class Icon extends React.Component {
+export class Icon extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
   }
@@ -9,19 +10,16 @@ export default class Icon extends React.Component {
   static propTypes = {
     name: React.PropTypes.string.isRequired,
     onClick: React.PropTypes.func,
+    onMouseDown: React.PropTypes.func,
     onDoubleClick: React.PropTypes.func,
     before: React.PropTypes.bool
   };
 
   render() {
-    const { name, onClick, onDoubleClick, before } = this.props;
-    const style = Object.assign(
-      {},
-      styles.all,
-      before ? styles.before : null
-    );
+    const { name, before, ...rest } = this.props;
+
     return (
-      <i className={`fa fa-${name}`} style={style} onClick={onClick} onDoubleClick={onDoubleClick} />
+      <i {...rest} className={`fa fa-${name}`} style={[styles.all, before && styles.before]} />
     );
   }
 }
@@ -36,3 +34,5 @@ const styles = {
     marginRight: 2
   }
 };
+
+export default Radium(Icon);

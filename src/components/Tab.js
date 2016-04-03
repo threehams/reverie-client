@@ -32,7 +32,7 @@ class Tab extends React.Component {
     return (
       <div style={[styles.global, active ? styles.active : styles.inactive]} onClick={::this.elementClicked}>
         <div style={styles.label}>{ this.props.children }</div>
-        { onClickClose ? <Icon name="times" onClick={(e) => { e.stopPropagation(); onClickClose(); }} /> : null }
+        { onClickClose && <Icon name="times" onClick={(e) => { e.stopPropagation(); onClickClose(); }} /> }
       </div>
     );
   }
@@ -41,7 +41,7 @@ class Tab extends React.Component {
 const styles = {
   global: {
     cursor: 'default',
-    padding: '5px 5px 5px 15px',
+    padding: '3px 3px 3px 15px',
     borderRight: panelStyles.border,
     display: 'inline-block',
     ...fontStyles.default,

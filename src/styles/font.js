@@ -5,6 +5,6 @@ export default {
   },
   default: {
     fontFamily: ['Open Sans', 'sans-serif'],
-    fontSize: 14
+    fontSize: 13
   }
 };

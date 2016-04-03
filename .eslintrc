@@ -40,7 +40,7 @@
     "use-isnan": 2,
     "valid-typeof": 2,
     "no-unexpected-multiline": 2,
-    "complexity": [1,10],
+    "complexity": [1,20],
     "consistent-return": 2,
     "curly": [2,"multi-line"],
     "default-case": 2,
@@ -105,7 +105,7 @@
     "eol-last": 2,
     "indent": [2, 2, {"SwitchCase": 1}],
     "new-cap": [2,{"newIsCap":true,"capIsNew":true,"capIsNewExceptions": [
-      "List", "Map", "Set", "OrderedSet", "Radium", "Record"
+      "List", "Map", "Set", "OrderedSet", "Radium", "Record", "DragSource", "DropTarget", "DragDropContext"
     ]}],
     "new-parens": 2,
     "no-array-constructor": 2,
