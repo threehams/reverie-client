@@ -47,19 +47,25 @@ const server = app.listen(config.port || 8080, function(err) {
 
 const wsServer = new WebSocket.Server({ server });
 wsServer.on('connection', function(ws) {
-  function sendMessage(message) {
-    ws.send(JSON.stringify(message));
+  function sendMessage(message, opts = {}) {
+    ws.send(JSON.stringify({
+      payload: message,
+      meta: {
+        initial: opts.initial
+      }
+    }));
   }
 
-  ws.send(
-    JSON.stringify({})
-  );
+  sendMessage();
 
+  // Canned responses!
+  // See expected meta/payload message structure in views/App.js
+  // Follow Flux Standard Action, minus 'type'
   ws.on('message', (json) => {
     const message = JSON.parse(json);
     switch (message.command.toLowerCase()) {
       case 'get initial state':
-        return sendMessage(fixtureInitialState);
+        return sendMessage(fixtureInitialState, {initial: true});
       case 'attack hiro':
         return sendMessage(fixtureAttackEnemySuccess);
       case 'attack raven':
