@@ -1,4 +1,5 @@
 import { List } from 'immutable';
+import * as commandActions from './commandActions';
 import {
   INVENTORY_TOGGLE_EXPAND,
   INVENTORY_TOGGLE_SELECT,
@@ -11,6 +12,15 @@ export function toggleExpand(id) {
     payload: {
       id: id
     }
+  };
+}
+
+export function moveItem(sourceId, targetId) {
+  return (dispatch, getState) => {
+    const entities = getState().get('entities');
+    const source = entities.get(sourceId);
+    const target = entities.get(targetId);
+    dispatch(commandActions.sendCommand(`move ${source.name} to ${target.name}`));
   };
 }
 
