@@ -69,7 +69,7 @@ export class InventoryItem extends React.Component {
       connectDropTarget(
         <div onMouseDown={(event) => this.selectItem(event, item, containerId)}
              onDoubleClick={(event) => this.expandItem(event, item, containerId)}>
-          <div style={[styles.item, selected && styles.selected, isOver && canDrop && styles.canDrop, { paddingLeft: styles.indent * indent }]}>
+          <div style={[styles.item, selected && styles.selected, { paddingLeft: styles.indent * indent }]}>
             {
               item.entities.size ?
                 <DropdownArrow expanded={expanded}
@@ -77,7 +77,9 @@ export class InventoryItem extends React.Component {
                 <span style={{ paddingLeft: 18 }} />
             }
             <Icon name={TYPE_ICONS[item.type] || 'file-text-o'} color={styles[item.type]} before />
-            <span style={{cursor: 'default'}}>{ item.name + (item.quantity > 1 ? ` (${item.quantity})` : '') }</span>
+            <span style={[{cursor: 'default'}, isOver && canDrop && styles.canDrop]}>
+              { item.name + (item.quantity > 1 ? ` (${item.quantity})` : '') }
+            </span>
           </div>
           {
             expanded && item.entities.map(id => {
@@ -120,7 +122,8 @@ function collectDrag(dragConnect) {
 function collectDrop(dropConnect, monitor) {
   return {
     connectDropTarget: dropConnect.dropTarget(),
-    isOver: monitor.isOver()
+    isOver: monitor.isOver(),
+    canDrop: monitor.canDrop()
   };
 }
 
@@ -161,5 +164,8 @@ const styles = {
   },
   container: {
     color: '#bd9662'
+  },
+  canDrop: {
+    outline: '1px solid red'
   }
 };
