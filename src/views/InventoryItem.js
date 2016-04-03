@@ -2,8 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Radium from 'radium';
 import shallowCompare from 'react-addons-shallow-compare';
+import { DragSource } from 'react-dnd';
 
 import Icon from '../components/Icon';
+import DropdownArrow from '../components/DropdownArrow';
 import * as inventoryActions from '../actions/inventoryActions';
 import * as editorActions from '../actions/editorActions';
 import EntityRecord from '../records/entityRecord';
@@ -59,13 +61,13 @@ export class InventoryItem extends React.Component {
   render() {
     const { indent, item, containerId, expanded, selected } = this.props;
     return (
-      <div onClick={(event) => this.selectItem(event, item, containerId)}
+      <div onMouseDown={(event) => this.selectItem(event, item, containerId)}
            onDoubleClick={(event) => this.expandItem(event, item, containerId)}>
         <div style={[styles.item, selected && styles.selected, { paddingLeft: styles.indent * indent }]}>
           {
             item.entities.size ?
               <DropdownArrow expanded={expanded}
-                             onClick={(event) => this.expandItem(event, item)} /> :
+                             onMouseDown={(event) => this.expandItem(event, item)} /> :
               <span style={{ paddingLeft: 18 }} />
           }
           <Icon name={TYPE_ICONS[item.type] || 'file-text-o'} color={styles[item.type]} before />
@@ -85,23 +87,7 @@ export class InventoryItem extends React.Component {
   }
 }
 
-class DropdownArrow extends React.Component {
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
-  }
-
-  static propTypes = {
-    expanded: React.PropTypes.bool,
-    onClick: React.PropTypes.func
-  };
-
-  render() {
-    const { expanded, onClick } = this.props;
-    return (
-      <Icon name={ expanded ? 'caret-down' : 'caret-right' } onClick={ onClick } before />
-    );
-  }
-}
+// const DraggableInventoryItem = DragSource('INVENTORY_ITEM', )(InventoryItem)
 
 const InventoryItemContainer = connect(
   (state, props) => {
@@ -124,11 +110,10 @@ export default InventoryItemContainer;
 const styles = {
   indent: 16,
   item: {
-    display: 'inline-block',
+    display: 'block',
     paddingBottom: 2,
     paddingTop: 2,
-    userSelect: 'none',
-    width: '100%'
+    userSelect: 'none'
   },
   selected: {
     backgroundColor: '#3875d6',
