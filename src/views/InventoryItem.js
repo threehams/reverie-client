@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Radium from 'radium';
 import shallowCompare from 'react-addons-shallow-compare';
@@ -57,7 +57,7 @@ export class InventoryItem extends React.Component {
     if (event.ctrlKey) {
       this.props.toggleItem(item.id, containerId);
     } else if (event.shiftKey) {
-      this.props.selectItem(item.id, containerId, {multiple: true});
+      this.props.selectItem(item.id, containerId, { multiple: true });
     } else {
       this.props.selectItem(item.id, containerId);
     }
@@ -73,10 +73,10 @@ export class InventoryItem extends React.Component {
             {
               item.entities.size ?
                 <DropdownArrow expanded={expanded}
-                               onMouseDown={(event) => this.expandItem(event, item)} /> :
-                <span style={{ paddingLeft: 18 }} />
+                               onMouseDown={(event) => this.expandItem(event, item)}/> :
+                <span style={{ paddingLeft: 18 }}/>
             }
-            <Icon name={TYPE_ICONS[item.type] || 'file-text-o'} color={styles[item.type]} before />
+            <Icon name={TYPE_ICONS[item.type] || 'file-text-o'} color={styles[item.type]} before/>
             <span style={[{cursor: 'default'}, isOver && canDrop && styles.canDrop]}>
               { item.name + (item.quantity > 1 ? ` (${item.quantity})` : '') }
             </span>
@@ -84,7 +84,7 @@ export class InventoryItem extends React.Component {
           {
             expanded && item.entities.map(id => {
               return <div key={id}>
-                <InventoryItemContainer id={id} indent={indent + 1} containerId={containerId} />
+                <InventoryItemContainer id={id} indent={indent + 1} containerId={containerId}/>
               </div>;
             })
           }

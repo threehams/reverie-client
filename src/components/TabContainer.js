@@ -19,7 +19,7 @@ export default class TabContainer extends React.Component {
 }
 
 const styles = {
-  backgroundColor: '#c8d1e1',
+  backgroundColor: '#e8e8e8',
   borderBottom: panelStyles.border,
   width: '100%'
 };

@@ -27,8 +27,8 @@ export class Icon extends React.Component {
 const styles = {
   all: {
     display: 'inline-block',
-    height: 16,
-    width: 16
+    height: 15,
+    width: 15
   },
   before: {
     marginRight: 2
