@@ -9,7 +9,7 @@ describe('editorHistoryReducer', function() {
   describe('sendCommand', function() {
     context('with a message', function() {
       it('adds the command to the history with a trailing blank line', function() {
-        const initial = List(['Hello.', '']);
+        const initial = List(['Hello.']);
         const action = initialActions.setState({
           message: 'You drop the USB drive.\nCongratulations.'
         });
@@ -17,8 +17,7 @@ describe('editorHistoryReducer', function() {
           'Hello.',
           '',
           'You drop the USB drive.',
-          'Congratulations.',
-          ''
+          'Congratulations.'
         ]));
       });
     });
