@@ -19,15 +19,20 @@ class EditorMain extends React.Component {
 
   render() {
     const { height, history } = this.props;
-    const paddingLeft = Math.ceil(history.size.toString().length - 1) * 14 + 20;
+    const marginLeft = Math.ceil(Math.ceil((history.size + 1).toString().length) * 7.5);
+    const items = history.map((item, index) => {
+      return (
+        <li key={index}>
+          <span style={[styles.counter, {width: marginLeft + 4}]}>{index}</span>
+          { item || '\u00a0' }
+        </li>
+      );
+    });
     return (
-      <div style={[styles.container, { paddingLeft, height }]} ref={(container) => { this.container = container; } }>
-        <ul style={[styles.numbers, {minHeight: height}]}>
-          { history.map((item, index) => <li key={index} style={styles.numbersItem}>{index}</li>) }
-        </ul>
-        <ul style={[styles.list, { minHeight: height}]}>
-          { history.map((item, index) => <li key={index}>{ item || '\u00a0' }</li>) }
-        </ul>
+      <div style={[styles.container, { height }]} ref={(container) => { this.container = container; } }>
+        <ol style={[styles.list, { marginLeft: marginLeft + 20, minHeight: height}]}>
+          { items }
+        </ol>
       </div>
     );
   }
@@ -37,22 +42,20 @@ export default Radium(EditorMain);
 
 const styles = {
   container: {
-    position: 'relative',
+    backgroundColor: '#f0f0f0',
     overflowY: 'auto',
-    backgroundColor: '#f0f0f0'
+    position: 'relative'
   },
-  numbers: {
+  counter: {
+    color: '#800000',
     cursor: 'default',
+    display: 'inline-block',
+    left: 0,
     position: 'absolute',
-    left: 4,
     textAlign: 'right'
-  },
-  numbersItem: {
-    color: '#800000'
   },
   list: {
     backgroundColor: 'white',
-    borderLeft: '1px solid #d0d0d0',
     paddingLeft: 4
   }
 };

@@ -50,9 +50,8 @@ const styles = {
     backgroundColor: '#d4d4d4'
   },
   active: {
-    borderLeft: '1px solid #333',
-    backgroundColor: '#666',
-    color: 'white'
+    backgroundColor: 'white',
+    color: 'black'
   },
   label: {
     display: 'inline-block',

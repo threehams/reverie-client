@@ -58,7 +58,7 @@ export class Layout extends React.Component {
 
           <section style={styles.main}>
             <section style={styles.editor}>
-              <Editor height={`calc(70vh - ${pagePadding}px - 30px)`} />
+              <Editor height={`calc(70vh - ${pagePadding}px - 24px)`} />
             </section>
             <section style={styles.debugger}>
               <div style={styles.debuggerHistory}>
