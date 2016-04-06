@@ -14,7 +14,6 @@ import Tab from '../components/Tab';
 import * as inventoryActions from '../actions/inventoryActions';
 import panelStyles from '../styles/panel';
 import fontStyles from '../styles/font';
-import EntityRecord from '../records/entityRecord';
 
 
 export class Layout extends React.Component {
@@ -24,14 +23,14 @@ export class Layout extends React.Component {
 
   static propTypes = {
     inventoryActions: PropTypes.object,
-    player: PropTypes.instanceOf(EntityRecord),
-    location: PropTypes.instanceOf(EntityRecord),
+    playerId: PropTypes.string,
+    locationId: PropTypes.string,
     alert: PropTypes.string
   };
 
   render() {
-    const { player, location, alert } = this.props;
-    if (!player || !location) {
+    const { playerId, locationId, alert } = this.props;
+    if (!playerId || !locationId) {
       return <LoadingCircle />;
     }
     return (
@@ -42,9 +41,9 @@ export class Layout extends React.Component {
             <div style={styles.sidebarSection}>
               <TabContainer>
                 <Tab active>Inventory</Tab>
-                <Tab>Character</Tab>
+                <Tab>Player</Tab>
               </TabContainer>
-              <Inventory containerId={player.id} ids={player.entities} {...inventoryActions} />
+              <Inventory id={playerId} {...inventoryActions} />
             </div>
             <div style={[styles.sidebarSection, { borderTop: panelStyles.border}]}>
               <TabContainer>
@@ -52,11 +51,11 @@ export class Layout extends React.Component {
                   Floor
                 </Tab>
               </TabContainer>
-              <Inventory containerId={location.id} ids={location.entities.filterNot(id => id === player.id)} {...inventoryActions} />
+              <Inventory id={locationId} {...inventoryActions} />
             </div>
           </aside>
 
-          <section style={styles.main}>
+          <main style={styles.main}>
             <section style={styles.editor}>
               <Editor height={`calc(70vh - ${pagePadding}px - 24px)`} />
             </section>
@@ -68,7 +67,7 @@ export class Layout extends React.Component {
                 <DebuggerPrompt />
               </div>
             </section>
-          </section>
+          </main>
         </div>
       </div>
     );
@@ -76,13 +75,11 @@ export class Layout extends React.Component {
 }
 
 export default connect((state) => {
-  const playerId = state.getIn(['ui', 'player']);
-  const location = state.get('entities').find(entity => entity.entities.contains(playerId));
-  const locationId = location && location.id;
   return {
-    player: state.getIn(['entities', playerId]),
-    location: state.getIn(['entities', locationId]),
-    alert: state.getIn(['ui', 'alert'])
+    playerId: state.getIn(['ui', 'player']),
+    locationId: state.getIn(['ui', 'location']),
+    alert: state.getIn(['ui', 'alert']),
+    activePlayerTab: state.getIn(['ui', 'activePlayerTab'])
   };
 }, inventoryActions)(Radium(Layout));
 

@@ -26,7 +26,7 @@ export default class EditorTabs extends React.Component {
         {
           views.map((view, index) => {
             const entity = entities.get(view);
-            if (index === '0') {
+            if (view === '0') {
               return (
                 <Tab key={index} active={activeView === '0'} onClick={ () => setActiveView('0') }>
                   index.js

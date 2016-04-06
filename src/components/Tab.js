@@ -41,6 +41,7 @@ class Tab extends React.Component {
 const styles = {
   global: {
     cursor: 'default',
+    color: '#333333',
     padding: '3px 3px 3px 15px',
     borderRight: panelStyles.border,
     display: 'inline-block',
@@ -51,7 +52,6 @@ const styles = {
   },
   active: {
     backgroundColor: 'white',
-    color: 'black'
   },
   label: {
     display: 'inline-block',

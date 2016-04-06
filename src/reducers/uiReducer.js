@@ -1,4 +1,4 @@
-import {OrderedSet} from 'immutable';
+import {OrderedSet, Map} from 'immutable';
 
 import UiRecord from '../records/uiRecord';
 import {
@@ -62,12 +62,12 @@ function removeView(state, id) {
 }
 
 function setState(state, action) {
-  const newState = action.payload.entitiesToRemove.reduce((removedState, id) => {
+  const entitiesRemoved = action.payload.entitiesToRemove.reduce((removedState, id) => {
     const viewRemoved = removeView(removedState, id);
     return viewRemoved.update('inventoryExpandedById', expanded => expanded.remove(id));
   }, state);
-  if (action.payload.player) {
-    return newState.set('player', action.payload.player);
-  }
-  return newState;
+
+  // If player or location are provided, merge them into the state
+  const newState = Map({ player: action.payload.player, location: action.payload.location});
+  return entitiesRemoved.mergeWith((prev, next) => next || prev, newState);
 }
