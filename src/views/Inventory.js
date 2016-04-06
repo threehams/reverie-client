@@ -1,5 +1,4 @@
-import React from 'react';
-import { List } from 'immutable';
+import React, { PropTypes } from 'react';
 import Radium from 'radium';
 import shallowCompare from 'react-addons-shallow-compare';
 
@@ -12,17 +11,14 @@ export class Inventory extends React.Component {
   }
 
   static propTypes = {
-    ids: React.PropTypes.instanceOf(List),
-    containerId: React.PropTypes.string
+    id: PropTypes.string
   };
 
   render() {
-    const { containerId, ids } = this.props;
+    const { id } = this.props;
     return (
-      <LoadingCircle showUntil={!!(ids)}>
-        <section>
-          { ids && ids.map(id => <InventoryItemContainer key={id} id={id} containerId={containerId} />) }
-        </section>
+      <LoadingCircle showUntil={!!(id)}>
+        { id && <InventoryItemContainer key={id} id={id} containerId={id} expanded /> }
       </LoadingCircle>
     );
   }

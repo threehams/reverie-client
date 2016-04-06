@@ -5,8 +5,7 @@ import Radium from 'radium';
 import shallowCompare from 'react-addons-shallow-compare';
 
 import * as editorActions from '../actions/editorActions';
-import EditorDetail from './EditorDetail';
-import EditorMain from './EditorMain';
+import EditorPanel from './EditorPanel';
 import EditorTabs from './EditorTabs';
 
 import fontStyles from '../styles/font';
@@ -27,6 +26,14 @@ export class Editor extends React.Component {
     views: React.PropTypes.instanceOf(OrderedSet)
   };
 
+  createHistory(item) {
+    return List([
+      `# ${item.name}`,
+      '',
+      item.description
+    ]);
+  }
+
   render() {
     const { activeView, editorHistory, entities, height, removeView, setActiveView, views} = this.props;
     const tabProps = {activeView, entities, setActiveView, removeView, views};
@@ -35,8 +42,8 @@ export class Editor extends React.Component {
         <EditorTabs {...tabProps} />
         {
           activeView !== '0' ?
-            <EditorDetail item={ entities.get(activeView) } height={height} /> :
-            <EditorMain history={editorHistory} height={height} />
+            <EditorPanel history={this.createHistory(entities.get(activeView))} height={height} /> :
+            <EditorPanel history={editorHistory} height={height} />
         }
       </div>
     );

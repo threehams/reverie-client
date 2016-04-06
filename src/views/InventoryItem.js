@@ -45,7 +45,7 @@ export class InventoryItem extends React.Component {
   expandItem(event, item) {
     event.stopPropagation();
     if (event.shiftKey || event.ctrlKey) return;
-    if (item.type === 'container') {
+    if (item.entities.size) {
       this.props.toggleExpand(item.id);
     } else {
       this.props.addView(item.id);
@@ -136,7 +136,7 @@ const InventoryItemContainer = connect(
     return {
       item: state.getIn(['entities', props.id]),
       selected: state.getIn(['ui', 'selectedItems']).contains(props.id),
-      expanded: !!state.getIn(['ui', 'inventoryExpandedById', props.id])
+      expanded: props.expanded || !!state.getIn(['ui', 'inventoryExpandedById', props.id])
     };
   },
   {

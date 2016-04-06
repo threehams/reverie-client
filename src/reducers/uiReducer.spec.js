@@ -2,10 +2,9 @@ import {Map, List, OrderedSet, fromJS} from 'immutable';
 import expect from '../__test__/configureExpect';
 
 import uiReducer from './uiReducer';
-import * as initialActions from '../actions/initialActions';
 import * as inventoryActions from '../actions/inventoryActions';
 import * as editorActions from '../actions/editorActions';
-import { COMMAND_SEND } from '../actions/actionTypes';
+import { COMMAND_SEND, SET_STATE } from '../actions/actionTypes';
 import * as commandActions from '../actions/commandActions';
 import * as socketActions from '../actions/socketActions';
 import UiRecord from '../records/uiRecord';
@@ -133,12 +132,47 @@ describe('uiReducer', function() {
   });
 
   describe('SET_STATE', function() {
-    it('returns the default UI state', function() {
-      const initial = undefined;
-      const action = initialActions.setState({
-        player: '1'
+    context('with a player', function() {
+      it('replaces the player', function() {
+        const initial = new UiRecord({ player: '2' });
+        const action = {
+          type: SET_STATE,
+          payload: {
+            entitiesToRemove: List(),
+            player: '1'
+          }
+        };
+        expect(uiReducer(initial, action)).to.equal(new UiRecord({player: '1'}));
       });
-      expect(uiReducer(initial, action)).to.equal(new UiRecord({player: '1'}));
+    });
+
+    context('with a location', function() {
+      it('replaces the player', function() {
+        const initial = new UiRecord({ player: '2' });
+        const action = {
+          type: SET_STATE,
+          payload: {
+            entitiesToRemove: List(),
+            player: '1'
+          }
+        };
+        expect(uiReducer(initial, action)).to.equal(new UiRecord({player: '1'}));
+      });
+    });
+
+    context('with no player or location', function() {
+      it('keeps the existing data', function() {
+        const initial = new UiRecord({ player: '1', location: '2' });
+        const action = {
+          type: SET_STATE,
+          payload: {
+            entitiesToRemove: List(),
+            player: undefined,
+            location: undefined
+          }
+        };
+        expect(uiReducer(initial, action)).to.equal(new UiRecord({player: '1', location: '2'}));
+      });
     });
 
     it('removes entities from inventoryExpandedById', function() {
@@ -147,9 +181,12 @@ describe('uiReducer', function() {
           '1': true
         })
       });
-      const action = initialActions.setState({
-        entitiesToRemove: List(['1'])
-      });
+      const action = {
+        type: SET_STATE,
+        payload: {
+          entitiesToRemove: List(['1'])
+        }
+      };
       expect(uiReducer(initial, action).inventoryExpandedById).to.equal(Map());
     });
 
@@ -158,9 +195,12 @@ describe('uiReducer', function() {
         activeEditorView: '1',
         editorViews: OrderedSet(['0', '1'])
       });
-      const action = initialActions.setState({
-        entitiesToRemove: List(['1'])
-      });
+      const action = {
+        type: SET_STATE,
+        payload: {
+          entitiesToRemove: List(['1'])
+        }
+      };
       const newState = uiReducer(initial, action);
       expect(newState.editorViews).not.to.contain('1');
       expect(newState.activeEditorView).to.equal('0');

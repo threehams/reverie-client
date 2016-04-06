@@ -3,7 +3,7 @@ import { List } from 'immutable';
 import Radium from 'radium';
 import shallowCompare from 'react-addons-shallow-compare';
 
-class EditorMain extends React.Component {
+class EditorPanel extends React.Component {
   componentDidUpdate() {
     this.container.scrollTop = this.container.scrollHeight;
   }
@@ -38,7 +38,7 @@ class EditorMain extends React.Component {
   }
 }
 
-export default Radium(EditorMain);
+export default Radium(EditorPanel);
 
 const styles = {
   container: {

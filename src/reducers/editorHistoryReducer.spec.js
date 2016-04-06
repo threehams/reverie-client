@@ -3,16 +3,19 @@ import expect from '../__test__/configureExpect';
 
 import editorHistoryReducer from './editorHistoryReducer';
 import * as editorActions from '../actions/editorActions';
-import * as initialActions from '../actions/initialActions';
+import { SET_STATE } from '../actions/actionTypes';
 
 describe('editorHistoryReducer', function() {
   describe('sendCommand', function() {
     context('with a message', function() {
       it('adds the command to the history with a trailing blank line', function() {
         const initial = List(['Hello.']);
-        const action = initialActions.setState({
-          message: 'You drop the USB drive.\nCongratulations.'
-        });
+        const action = {
+          type: SET_STATE,
+          payload: {
+            message: 'You drop the USB drive.\nCongratulations.'
+          }
+        };
         expect(editorHistoryReducer(initial, action)).to.equal(fromJS([
           'Hello.',
           '',
@@ -25,9 +28,12 @@ describe('editorHistoryReducer', function() {
     context('with no message', function() {
       it('returns the state', function() {
         const initial = List(['Hello.', '']);
-        const action = initialActions.setState({
-          unrelated: 'Oh hai mark'
-        });
+        const action = {
+          type: SET_STATE,
+          payload: {
+            unrelated: 'Oh hai mark'
+          }
+        };
         expect(editorHistoryReducer(initial, action)).to.equal(fromJS([
           'Hello.',
           ''
