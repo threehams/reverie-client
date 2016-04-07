@@ -49,3 +49,77 @@ h1, h2, h3, h4, h5, h6 {
   95% {left: 120%;}
   to {left: 100%;}
 }
+
+.markdown p {
+  margin: 0;
+}
+
+.markdown strong {
+  font-weight: normal;
+  color: #0000ff;
+}
+
+.markdown em {
+  font-style: normal;
+  color: #008000;
+}
+
+.markdown h1 {
+  font-size: inherit;
+  font-weight: normal;
+  margin: 0;
+}
+
+.markdown h1:after {
+  content: "---------------";
+  display: block;
+}
+
+.markdown h2:before {
+  content: "##\00a0";
+  display: inline-block;
+}
+
+.markdown pre {
+  margin: 0;
+}
+
+.markdown blockquote, .markdown code {
+  color: #660e7a;
+  display: inline-block;
+  margin: 0;
+  padding-left: 30px;
+  position: relative;
+  white-space: normal;
+}
+
+.markdown blockquote > p {
+  display: inline;
+}
+
+.markdown blockquote:before {
+  content: "|";
+  display: inline;
+  left: 0;
+  position: absolute;
+}
+
+.markdown ul {
+  position: relative;
+  padding-left: 15px;
+}
+
+.markdown ul > li:before {
+  color: #008000;
+  content: "*";
+  left: 0;
+  position: absolute;
+}
+
+.markdown a {
+  text-decoration: none;
+}
+
+.markdown a:hover {
+
+}
