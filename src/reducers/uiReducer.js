@@ -11,6 +11,7 @@ import {
   EDITOR_SET_ACTIVE_VIEW,
   EDITOR_SELECT_ITEMS,
   EDITOR_REMOVE_VIEW,
+  PLAYER_SET_ACTIVE_VIEW,
   SOCKET_STATUS
 } from '../actions/actionTypes';
 
@@ -42,6 +43,8 @@ export default function uiReducer(state = INITIAL_STATE, action) {
       return setState(state, action);
     case SOCKET_STATUS:
       return state.set('alert', ALERTS[action.payload.status]);
+    case PLAYER_SET_ACTIVE_VIEW:
+      return state.set('activePlayerView', action.payload.name);
     default:
       return state;
   }

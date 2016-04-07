@@ -7,7 +7,11 @@ export default Record({
   type: null,
   executable: false,
   entities: List(),
-  health: 0,
+  currentHealth: 0,
+  currentMemory: 0,
+  currentStorage: 0,
   quantity: 1,
-  maxHealth: 0
+  maxHealth: 0,
+  maxMemory: 0,
+  maxStorage: 0,
 });

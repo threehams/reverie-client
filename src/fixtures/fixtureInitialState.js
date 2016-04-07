@@ -85,8 +85,12 @@ export default {
       id: '17',
       name: 'Player',
       entities: ['1', '4', '9'],
-      health: 100,
-      maxHealth: 100
+      currentHealth: 100,
+      currentMemory: 100,
+      currentStorage: 100,
+      maxHealth: 100,
+      maxMemory: 100,
+      maxStorage: 100
     },
     '18': {
       id: '18',

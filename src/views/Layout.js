@@ -4,14 +4,16 @@ import {connect} from 'react-redux';
 import shallowCompare from 'react-addons-shallow-compare';
 
 import Inventory from './Inventory';
+import Player from './Player';
 import Editor from './Editor';
 import DebuggerHistory from './DebuggerHistory';
 import DebuggerPrompt from './DebuggerPrompt';
 import LoadingCircle from '../components/LoadingCircle';
+import EntityRecord from '../records/entityRecord';
 
 import TabContainer from '../components/TabContainer';
 import Tab from '../components/Tab';
-import * as inventoryActions from '../actions/inventoryActions';
+import * as playerActions from '../actions/playerActions';
 import panelStyles from '../styles/panel';
 import fontStyles from '../styles/font';
 
@@ -22,28 +24,37 @@ export class Layout extends React.Component {
   }
 
   static propTypes = {
-    inventoryActions: PropTypes.object,
-    playerId: PropTypes.string,
+    activePlayerView: PropTypes.string,
+    alert: PropTypes.string,
     locationId: PropTypes.string,
-    alert: PropTypes.string
+    player: PropTypes.instanceOf(EntityRecord),
+    setActiveView: PropTypes.func
   };
 
   render() {
-    const { playerId, locationId, alert } = this.props;
-    if (!playerId || !locationId) {
+    const { activePlayerView, player, locationId, setActiveView, alert } = this.props;
+    if (!player || !locationId) {
       return <LoadingCircle />;
     }
+
     return (
       <div>
         { alert && <div style={styles.alert}>{ alert }</div> }
         <div style={styles.container}>
           <aside style={styles.sidebar}>
             <div style={styles.sidebarSection}>
-              <TabContainer>
-                <Tab active>Inventory</Tab>
-                <Tab>Player</Tab>
+              <TabContainer equalWidth>
+                <Tab onClick={() => setActiveView('inventory') }
+                     active={activePlayerView === 'inventory'}>
+                  Inventory
+                </Tab>
+                <Tab onClick={() => setActiveView('character') }
+                     active={activePlayerView === 'character'}>
+                  Character
+                </Tab>
               </TabContainer>
-              <Inventory id={playerId} {...inventoryActions} />
+              { activePlayerView === 'inventory' && <Inventory id={player.id} /> }
+              { activePlayerView === 'character' && <Player player={player} /> }
             </div>
             <div style={[styles.sidebarSection, { borderTop: panelStyles.border}]}>
               <TabContainer>
@@ -51,14 +62,17 @@ export class Layout extends React.Component {
                   Floor
                 </Tab>
               </TabContainer>
-              <Inventory id={locationId} {...inventoryActions} />
+              <Inventory id={locationId} />
             </div>
           </aside>
 
           <main style={styles.main}>
             <section style={styles.editor}>
-              <Editor height={`calc(70vh - ${pagePadding}px - 24px)`} />
+              <Editor height={`calc(80vh - ${pagePadding}px - 24px)`} />
             </section>
+          </main>
+
+          <footer style={styles.footer}>
             <section style={styles.debugger}>
               <div style={styles.debuggerHistory}>
                 <DebuggerHistory />
@@ -67,7 +81,7 @@ export class Layout extends React.Component {
                 <DebuggerPrompt />
               </div>
             </section>
-          </main>
+          </footer>
         </div>
       </div>
     );
@@ -76,14 +90,16 @@ export class Layout extends React.Component {
 
 export default connect((state) => {
   return {
-    playerId: state.getIn(['ui', 'player']),
+    player: state.getIn(['entities', state.getIn(['ui', 'player'])]),
     locationId: state.getIn(['ui', 'location']),
     alert: state.getIn(['ui', 'alert']),
-    activePlayerTab: state.getIn(['ui', 'activePlayerTab'])
+    activePlayerView: state.getIn(['ui', 'activePlayerView'])
   };
-}, inventoryActions)(Radium(Layout));
+}, {
+  setActiveView: playerActions.setActiveView
+})(Radium(Layout));
 
-const pagePadding = 10;
+const pagePadding = 0;
 const promptHeight = 30;
 const styles = {
   container: {
@@ -99,35 +115,38 @@ const styles = {
     zIndex: 1
   },
   sidebar: {
-    border: panelStyles.border,
+    backgroundColor: panelStyles.backgroundColor,
+    borderRight: panelStyles.border,
     display: 'inline-block',
-    height: `calc(100vh - ${pagePadding * 2}px)`,
+    height: `calc(80vh - ${pagePadding}px)`,
     width: '25%',
     verticalAlign: 'top'
   },
   sidebarSection: {
-    height: `calc(50vh - ${pagePadding}px)`
+    height: `calc(40vh - ${pagePadding}px)`
   },
   main: {
-    borderTop: panelStyles.border,
-    borderRight: panelStyles.border,
     borderBottom: panelStyles.border,
     display: 'inline-block',
     width: '75%',
     verticalAlign: 'top',
-    height: `calc(100vh - ${pagePadding * 2}px)`
+    height: `calc(80vh - ${pagePadding}px)`
   },
   editor: {
-    height: `calc(70vh - ${pagePadding}px)`
+    height: `calc(80vh - ${pagePadding}px)`
+  },
+  footer: {
+    backgroundColor: panelStyles.backgroundColor,
+    height: `calc(20vh - ${pagePadding}px)`
   },
   debugger: {
     borderTop: panelStyles.border,
-    height: `calc(30vh - ${pagePadding}px - 3px)`,
+    height: `calc(20vh - ${pagePadding}px)`,
     ...fontStyles.monospace,
     position: 'relative'
   },
   debuggerHistory: {
-    height: `calc(30vh - ${pagePadding}px - ${promptHeight}px - 1px)`
+    height: `calc(20vh - ${pagePadding}px - ${promptHeight}px)`
   },
   debuggerPrompt: {
     height: promptHeight
