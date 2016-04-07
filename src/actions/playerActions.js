@@ -1,3 +1,4 @@
+import * as commandActions from './commandActions';
 import {
   PLAYER_SET_ACTIVE_VIEW
 } from './actionTypes';
@@ -9,4 +10,8 @@ export function setActiveView(name) {
       name: name
     }
   };
+}
+
+export function move(direction) {
+  return commandActions.sendCommand(direction.toString());
 }

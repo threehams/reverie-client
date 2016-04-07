@@ -17,7 +17,6 @@ import * as playerActions from '../actions/playerActions';
 import panelStyles from '../styles/panel';
 import fontStyles from '../styles/font';
 
-
 export class Layout extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);

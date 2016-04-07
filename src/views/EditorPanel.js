@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import { List } from 'immutable';
 import Radium from 'radium';
 import shallowCompare from 'react-addons-shallow-compare';
+import ReactMarkdown from 'react-markdown';
+
+import * as playerActions from '../actions/playerActions';
 
 class EditorPanel extends React.Component {
   componentDidUpdate() {
@@ -20,11 +24,19 @@ class EditorPanel extends React.Component {
   render() {
     const { height, history } = this.props;
     const marginLeft = Math.ceil(Math.ceil((history.size + 1).toString().length) * 7.5);
+    const markdownProps = {
+      skipHtml: true,
+      className: 'markdown',
+      renderers: {
+        Link: MarkdownLinkContainer
+      }
+    };
     const items = history.map((item, index) => {
+      const trimmed = item ? item.trim() : '';
       return (
         <li key={index}>
           <span style={[styles.counter, {width: marginLeft + 4}]}>{index}</span>
-          { item || '\u00a0' }
+          { trimmed ? <ReactMarkdown source={trimmed} {...markdownProps} /> : '\u00a0' }
         </li>
       );
     });
@@ -37,6 +49,30 @@ class EditorPanel extends React.Component {
     );
   }
 }
+
+export default class MarkdownLink extends React.Component {
+  static propTypes = {
+    children: PropTypes.node,
+    href: PropTypes.string,
+    title: PropTypes.string,
+    move: PropTypes.func
+  };
+
+  onClick(event) {
+    event.preventDefault();
+    this.props.move(this.props.href);
+  }
+
+  render() {
+    return (
+      <a href='' onClick={::this.onClick} >{ this.props.children }</a>
+    );
+  }
+}
+
+const MarkdownLinkContainer = connect(null, {
+  move: playerActions.move
+})(MarkdownLink);
 
 export default Radium(EditorPanel);
 

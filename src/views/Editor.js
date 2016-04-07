@@ -30,7 +30,7 @@ export class Editor extends React.Component {
     return List([
       `# ${item.name}`,
       '',
-      item.description
+      ...item.description.split('\n')
     ]);
   }
 

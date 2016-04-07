@@ -15,6 +15,9 @@ export default {
     },
     '3': {
       id: '3',
+      description: `Scans the target system for open ports.
+
+        > The Ares Technology Portscanner is designed for performance, but has some security and reliability concerns.`,
       name: 'portscan.js',
       quantity: 4,
       type: 'executable'
@@ -79,7 +82,7 @@ export default {
     '14': {
       id: '14',
       name: 'leaflet.txt',
-      description: 'WELCOME TO REVERIE FORGE!'
+      description: 'WELCOME TO **REVERIE FORGE**!'
     },
     '17': {
       id: '17',
@@ -105,7 +108,13 @@ export default {
       description: 'andy; I’m just doing my job, nothing personal, sorry,'
     }
   },
-  message: `You are standing in an open field west of a white house, with a boarded front door.
+  message: `# West of House
 
-  There is a small mailbox here.`
+  You are standing in an open field *west* of a white house, with a boarded front door.
+
+  - There is a **small mailbox** here.
+  - There is a **usb-drive** here.
+
+  Exits:
+  - [North](North)`
 };

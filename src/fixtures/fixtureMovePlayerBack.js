@@ -15,7 +15,13 @@ export default {
       exits: ['12']
     }
   },
-  message: `West of House
+  message: `# West of House
 
-  This is an open field west of a white house, with a boarded front door.`
+  This is an open field west of a white house, with a boarded front door.
+
+  - There is a **small mailbox** here.
+  - There is a **usb-drive** here.
+
+  Exits:
+  - [North](North)`
 };
