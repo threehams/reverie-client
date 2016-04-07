@@ -46,6 +46,7 @@ const styles = {
     borderRight: panelStyles.border,
     display: 'inline-block',
     ...fontStyles.default,
+    flex: '1 1 auto'
   },
   inactive: {
     backgroundColor: '#d4d4d4'

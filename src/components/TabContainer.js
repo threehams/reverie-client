@@ -1,25 +1,37 @@
-import React from 'react';
-import panelStyles from '../styles/panel';
+import React, { PropTypes } from 'react';
+import Radium from 'radium';
 import shallowCompare from 'react-addons-shallow-compare';
 
-export default class TabContainer extends React.Component {
+import panelStyles from '../styles/panel';
+
+export class TabContainer extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
   }
 
   static propTypes = {
-    children: React.PropTypes.node
+    children: PropTypes.node,
+    equalWidth: PropTypes.bool
   };
 
   render() {
+    const { equalWidth } = this.props;
     return (
-      <div style={styles}>{this.props.children}</div>
+      <div style={[styles.all, equalWidth && styles.equalWidth]}>{this.props.children}</div>
     );
   }
 }
 
+export default Radium(TabContainer);
+
 const styles = {
-  backgroundColor: '#e8e8e8',
-  borderBottom: panelStyles.border,
-  width: '100%'
+  all: {
+    backgroundColor: '#e8e8e8',
+    borderBottom: panelStyles.border,
+    width: '100%'
+  },
+  equalWidth: {
+    display: 'flex',
+    flexFlow: 'row wrap'
+  }
 };
