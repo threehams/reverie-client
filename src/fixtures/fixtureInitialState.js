@@ -110,10 +110,10 @@ export default {
   },
   message: `# West of House
 
-  You are standing in an open field *west* of a white house, with a boarded front door.
+  You are standing in an open field west of a white house, with a boarded front door.
 
-  - There is a **small mailbox** here.
-  - There is a **usb-drive** here.
+  - There is a [small mailbox](13) here.
+  - There is a [usb-drive](18) here.
 
   Exits:
   - [North](North)`
