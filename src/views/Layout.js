@@ -13,6 +13,7 @@ import EntityRecord from '../records/entityRecord';
 
 import TabContainer from '../components/TabContainer';
 import Tab from '../components/Tab';
+import Icon from '../components/Icon';
 import * as playerActions from '../actions/playerActions';
 import panelStyles from '../styles/panel';
 import fontStyles from '../styles/font';
@@ -45,11 +46,11 @@ export class Layout extends React.Component {
               <TabContainer equalWidth>
                 <Tab onClick={() => setActiveView('inventory') }
                      active={activePlayerView === 'inventory'}>
-                  Inventory
+                  <Icon name="folder-o" before /> Inventory
                 </Tab>
                 <Tab onClick={() => setActiveView('character') }
                      active={activePlayerView === 'character'}>
-                  Character
+                  <Icon name="user" before /> Character 
                 </Tab>
               </TabContainer>
               { activePlayerView === 'inventory' && <Inventory id={player.id} /> }

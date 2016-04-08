@@ -1,0 +1,135 @@
+$statement-color: #0000ff;
+$property-color: #660e7a;
+$variable-color: #458383;
+$string-color: #008000;
+
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-size: 14px;
+}
+
+ol, ul {
+  margin: 0;
+  padding-left: 0;
+}
+
+li {
+  list-style-type: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+}
+
+.loader {
+  height: 4px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background-color: #ddd;
+}
+.loader:before{
+  display: block;
+  position: absolute;
+  content: "";
+  left: -200px;
+  width: 200px;
+  height: 4px;
+  background-color: #2980b9;
+  animation: loading 2s linear infinite;
+}
+
+@keyframes loading {
+  from {left: -200px; width: 30%;}
+  50% {width: 30%;}
+  70% {width: 70%;}
+  80% { left: 50%;}
+  95% {left: 120%;}
+  to {left: 100%;}
+}
+
+.markdown {
+  p {
+    margin: 0;
+  }
+
+  em {
+    font-style: normal;
+    color: $string-color;
+  }
+
+  strong {
+    font-weight: normal;
+    color: $statement-color;
+
+    // *** emphasis in Markdown
+    > em {
+      font-weight: normal;
+      font-style: normal;
+      color: $property-color;
+    }
+  }
+
+  h1 {
+    font-size: inherit;
+    font-weight: normal;
+    margin: 0;
+
+    &:after {
+      content: "---------------";
+      display: block;
+    }
+  }
+
+  pre {
+    margin: 0;
+  }
+
+  blockquote {
+    color: $variable-color;
+    display: inline-block;
+    margin: 0 0 0 15px;
+    position: relative;
+    white-space: normal;
+
+    > p {
+      display: inline;
+    }
+
+    &:before, &:after {
+      content: "\"";
+      display: inline;
+    }
+  }
+
+  ul {
+    position: relative;
+    padding-left: 15px;
+
+    > li:before {
+      color: $string-color;
+      content: "*";
+      left: 0;
+      position: absolute;
+    }
+  }
+
+  a {
+    color: $statement-color;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:visited {
+      color: $statement-color;
+    }
+  }
+}
