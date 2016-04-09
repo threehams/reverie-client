@@ -6,7 +6,7 @@ var webpack = require('webpack');
 
 var ENTRY_POINTS = {
   development: [
-    //'eventsource-polyfill', // necessary for hot reloading with IE
+    'eventsource-polyfill', // necessary for hot reloading with IE
     'webpack-hot-middleware/client',
     './src/index'
   ],

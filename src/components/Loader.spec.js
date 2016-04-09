@@ -3,12 +3,12 @@ import { shallow } from 'enzyme';
 
 import expect from '../__test__/configureExpect';
 
-import LoadingCircle from './LoadingCircle';
+import Loader from './Loader';
 
-describe('LoadingCircle', function() {
+describe('Loader', function() {
   context('when showUntil is false', function() {
     it('shows a loading circle', function() {
-      const element = shallow(<LoadingCircle showUntil={false}><dl /></LoadingCircle>);
+      const element = shallow(<Loader showUntil={false}><dl /></Loader>);
       expect(element.contains(<div className="loader" />)).to.be.true();
       expect(element.contains(<dl />)).to.be.false();
     });
@@ -16,7 +16,7 @@ describe('LoadingCircle', function() {
 
   context('when showUntil is true', function() {
     it('shows a down arrow when expanded', function() {
-      const element = shallow(<LoadingCircle showUntil={true}><dl /></LoadingCircle>);
+      const element = shallow(<Loader showUntil={true}><dl /></Loader>);
       expect(element.contains(<div className="loader" />)).to.be.false();
       expect(element.contains(<dl />)).to.be.true();
     });

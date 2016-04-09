@@ -8,7 +8,7 @@ import Player from './Player';
 import Editor from './Editor';
 import DebuggerHistory from './DebuggerHistory';
 import DebuggerPrompt from './DebuggerPrompt';
-import LoadingCircle from '../components/LoadingCircle';
+import Loader from '../components/Loader';
 import EntityRecord from '../records/entityRecord';
 
 import TabContainer from '../components/TabContainer';
@@ -34,7 +34,7 @@ export class Layout extends React.Component {
   render() {
     const { activePlayerView, player, locationId, setActiveView, alert } = this.props;
     if (!player || !locationId) {
-      return <LoadingCircle />;
+      return <Loader />;
     }
 
     return (
