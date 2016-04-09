@@ -8,6 +8,7 @@ import {
   COMMAND_SET_CURRENT,
   EDITOR_ADD_VIEW,
   INVENTORY_TOGGLE_SELECT,
+  INVENTORY_EXPAND_ITEMS,
   EDITOR_SET_ACTIVE_VIEW,
   EDITOR_SELECT_ITEMS,
   EDITOR_REMOVE_VIEW,
@@ -38,7 +39,9 @@ export default function uiReducer(state = INITIAL_STATE, action) {
     case INVENTORY_TOGGLE_SELECT:
       return state.update('selectedItems', items => toggleSetItem(items, action.payload.id));
     case INVENTORY_TOGGLE_EXPAND:
-      return state.updateIn(['inventoryExpandedById', action.payload.id], expanded => !expanded);
+      return state.update('inventoryExpandedById', expanded => toggleSetItem(expanded, action.payload.id));
+    case INVENTORY_EXPAND_ITEMS:
+      return state.update('inventoryExpandedById', expanded => expanded.union(action.payload.ids));
     case SET_STATE:
       return setState(state, action);
     case SOCKET_STATUS:
@@ -66,8 +69,8 @@ function removeView(state, id) {
 
 function setState(state, action) {
   const entitiesRemoved = action.payload.entitiesToRemove.reduce((removedState, id) => {
-    const viewRemoved = removeView(removedState, id);
-    return viewRemoved.update('inventoryExpandedById', expanded => expanded.remove(id));
+    return removeView(removedState, id)
+      .update('inventoryExpandedById', expanded => expanded.remove(id));
   }, state);
 
   // If player or location are provided, merge them into the state

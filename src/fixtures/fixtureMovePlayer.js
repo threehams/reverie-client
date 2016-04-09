@@ -20,5 +20,5 @@ export default {
   You are facing the north side of a white house. There is no door here, and all the windows are barred.
 
   Exits:
-  - [South](South)`
+  - [South](/exits/south)`
 };
