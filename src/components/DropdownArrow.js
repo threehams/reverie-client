@@ -9,8 +9,7 @@ export default class DropdownArrow extends React.Component {
   }
 
   static propTypes = {
-    expanded: React.PropTypes.bool,
-    onMouseDown: React.PropTypes.func
+    expanded: React.PropTypes.bool
   };
 
   render() {

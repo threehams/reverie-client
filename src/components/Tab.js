@@ -14,31 +14,32 @@ class Tab extends React.Component {
   static propTypes = {
     active: React.PropTypes.bool,
     children: React.PropTypes.node,
-    closeable: React.PropTypes.bool,
     onClickClose: React.PropTypes.func,
     onClick: React.PropTypes.func
   };
 
   elementClicked(event) {
+    const { onClick, onClickClose } = this.props;
     // Button 1 is middle click
-    if (event.button === 1 && this.props.onClickClose) {
-      return this.props.onClickClose();
+    if (event.button === 1 && onClickClose) {
+      onClickClose();
+    } else if (onClick) {
+      onClick();
     }
-    return this.props.onClick();
   }
 
   render() {
     const { active, onClickClose } = this.props;
     return (
       <div style={[styles.global, active ? styles.active : styles.inactive]} onClick={::this.elementClicked}>
-        <div style={styles.label}>{ this.props.children }</div>
+        <span style={styles.label}>{ this.props.children }</span>
         { onClickClose && <Icon name="times" onClick={(e) => { e.stopPropagation(); onClickClose(); }} /> }
       </div>
     );
   }
 }
 
-const styles = {
+export const styles = {
   global: {
     cursor: 'default',
     color: '#333333',

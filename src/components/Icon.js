@@ -9,9 +9,6 @@ export class Icon extends React.Component {
 
   static propTypes = {
     name: React.PropTypes.string.isRequired,
-    onClick: React.PropTypes.func,
-    onMouseDown: React.PropTypes.func,
-    onDoubleClick: React.PropTypes.func,
     before: React.PropTypes.bool
   };
 
