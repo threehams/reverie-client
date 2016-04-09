@@ -69,7 +69,7 @@ export default {
     '12': {
       id: '12',
       name: 'Field',
-      description: 'You are standing in an open field west of a white house, with a boarded front door',
+      description: 'This is a field. No big deal.',
       entities: ['13', '17', '18'],
       exits: ['20', '21']
     },
@@ -106,15 +106,36 @@ export default {
       name: 'mydoom.js',
       type: 'executable',
       description: 'andy; I’m just doing my job, nothing personal, sorry,'
+    },
+    '74': {
+      id: '74',
+      name: 'Hiro',
+      description: `Last of the freelance hackers
+        Greatest sword fighter in the world
+        Stringer, Central Intelligence Corporation
+        Specializing in software-related intel
+        (music, movies & microcode)`,
+      maxHealth: 200,
+      currentHealth: 200
+    },
+    '75': {
+      id: '75',
+      name: 'Raven',
+      description: 'A large man with a tattoo on his forehead which reads "Poor Impulse Control"',
+      maxHealth: 400,
+      currentHealth: 400
     }
   },
   message: `# West of House
 
   You are standing in an open field west of a white house, with a boarded front door.
 
-  - There is a [small mailbox](13) here.
-  - There is a [usb-drive](18) here.
+  - There is a [small mailbox](/items/13) here.
+  - There is a [usb-drive](/items/18) here.
+
+  - [Hiro](/characters/74) is here.
+  - [Raven](/characters/75) is here.
 
   Exits:
-  - [North](North)`
+  - [North](/exits/north)`
 };

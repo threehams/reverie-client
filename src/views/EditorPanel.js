@@ -55,23 +55,39 @@ export default class MarkdownLink extends React.Component {
     children: PropTypes.node,
     href: PropTypes.string,
     title: PropTypes.string,
-    move: PropTypes.func
+    move: PropTypes.func,
+    attack: PropTypes.func,
+    locateItem: PropTypes.func
   };
 
   onClick(event) {
     event.preventDefault();
-    this.props.move(this.props.href);
+    const { href } = this.props;
+    const [type, id] = href.split('/').slice(1);
+    switch (type) {
+      case 'exits':
+        return this.props.move(id);
+      case 'characters':
+        return this.props.attack(id);
+      case 'items':
+        return this.props.locateItem(id);
+      default:
+        throw new Error('Cannot handle type: ', type); // eslint-disable-line no-console
+    }
   }
 
   render() {
+    const { href, children } = this.props;
     return (
-      <a href='' onClick={::this.onClick} >{ this.props.children }</a>
+      <a href={href} onClick={::this.onClick}>{ children }</a>
     );
   }
 }
 
 const MarkdownLinkContainer = connect(null, {
-  move: playerActions.move
+  move: playerActions.move,
+  attack: playerActions.attack,
+  locateItem: playerActions.locateItem
 })(MarkdownLink);
 
 export default Radium(EditorPanel);

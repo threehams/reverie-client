@@ -136,7 +136,7 @@ const InventoryItemContainer = connect(
     return {
       item: state.getIn(['entities', props.id]),
       selected: state.getIn(['ui', 'selectedItems']).contains(props.id),
-      expanded: props.expanded || !!state.getIn(['ui', 'inventoryExpandedById', props.id])
+      expanded: props.expanded || !!state.getIn(['ui', 'inventoryExpandedById']).contains(props.id)
     };
   },
   {

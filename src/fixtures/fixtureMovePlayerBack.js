@@ -17,11 +17,14 @@ export default {
   },
   message: `# West of House
 
-  This is an open field west of a white house, with a boarded front door.
+  You are standing in an open field west of a white house, with a boarded front door.
 
-  - There is a **small mailbox** here.
-  - There is a **usb-drive** here.
+  - There is a [small mailbox](/item/13) here.
+  - There is a [usb-drive](/item/18) here.
+
+  - [Hiro](/character/74) is here.
+  - [Raven](/character/75) is here.
 
   Exits:
-  - [North](North)`
+  - [North](/exits/north)`
 };

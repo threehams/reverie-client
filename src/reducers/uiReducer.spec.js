@@ -1,4 +1,4 @@
-import {Map, List, OrderedSet, fromJS} from 'immutable';
+import {Set, List, OrderedSet, fromJS} from 'immutable';
 import expect from '../__test__/configureExpect';
 
 import uiReducer from './uiReducer';
@@ -104,9 +104,7 @@ describe('uiReducer', function() {
       const initial = new UiRecord();
       const action = inventoryActions.toggleExpand('1');
       expect(uiReducer(initial, action)).to.equal(new UiRecord(fromJS({
-        inventoryExpandedById: {
-          '1': true
-        }
+        inventoryExpandedById: Set('1')
       })));
     });
   });
@@ -177,9 +175,7 @@ describe('uiReducer', function() {
 
     it('removes entities from inventoryExpandedById', function() {
       const initial = new UiRecord({
-        inventoryExpandedById: Map({
-          '1': true
-        })
+        inventoryExpandedById: Set(['1'])
       });
       const action = {
         type: SET_STATE,
@@ -187,7 +183,7 @@ describe('uiReducer', function() {
           entitiesToRemove: List(['1'])
         }
       };
-      expect(uiReducer(initial, action).inventoryExpandedById).to.equal(Map());
+      expect(uiReducer(initial, action).inventoryExpandedById).to.equal(Set());
     });
 
     it('replaces the active view if the entity is removed', function() {
