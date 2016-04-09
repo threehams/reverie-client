@@ -3,7 +3,6 @@ import path from 'path';
 import express from 'express';
 import webpack from 'webpack';
 
-import webpackConfig from '../webpack.config';
 import config from './serverConfig';
 import WebSocket from 'ws';
 
@@ -16,6 +15,8 @@ import fixtureMovePlayer from './fixtures/fixtureMovePlayer';
 import fixtureMovePlayerBack from './fixtures/fixtureMovePlayerBack';
 import fixtureMoveItemToContainer from './fixtures/fixtureMoveItemToContainer';
 import compression from 'compression';
+
+const webpackConfig = require('../webpack.config');
 
 const app = express();
 
@@ -99,4 +100,3 @@ wsServer.on('connection', function(ws) {
     }
   });
 });
-

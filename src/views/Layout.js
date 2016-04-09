@@ -50,7 +50,7 @@ export class Layout extends React.Component {
                 </Tab>
                 <Tab onClick={() => setActiveView('character') }
                      active={activePlayerView === 'character'}>
-                  <Icon name="user" before /> Character 
+                  <Icon name="user" before /> Character
                 </Tab>
               </TabContainer>
               { activePlayerView === 'inventory' && <Inventory id={player.id} /> }
