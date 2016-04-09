@@ -14,6 +14,8 @@ import fixtureAttackEnemyFailure from './fixtures/fixtureAttackEnemyFailure';
 import fixtureMovePlayer from './fixtures/fixtureMovePlayer';
 import fixtureMovePlayerBack from './fixtures/fixtureMovePlayerBack';
 import fixtureMoveItemToContainer from './fixtures/fixtureMoveItemToContainer';
+import fixtureOtherPlayerSay from './fixtures/fixtureOtherPlayerSay';
+import fixturePlayerSay from './fixtures/fixturePlayerSay';
 import compression from 'compression';
 
 const webpackConfig = require('../webpack.config');
@@ -89,10 +91,16 @@ wsServer.on('connection', function(ws) {
             move readme.txt to usb-drive
             north || n
             run tmp
-            take tmp`
+            take tmp
+            say something`
         });
       case 'run tmp':
         return sendMessage(fixtureInventoryRemove);
+      case 'say something':
+        sendMessage(fixturePlayerSay);
+        return setTimeout(() => {
+          sendMessage(fixtureOtherPlayerSay);
+        }, 1000);
       case 'take tmp':
         return sendMessage(fixtureInventoryAdd);
       default:
