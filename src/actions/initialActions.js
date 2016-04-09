@@ -1,5 +1,4 @@
 import {fromJS, List, Map} from 'immutable';
-
 import {
   SET_STATE
 } from './actionTypes';

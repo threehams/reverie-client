@@ -41,8 +41,8 @@ socket.onmessage = function(event) {
 
   // If this is an initial state message, and we're reconnecting, don't apply it.
   // Otherwise, it'll duplicate the location message.
-  const actionCreator = message.meta.initial ? 'setInitialState' : 'setState';
-  store.dispatch(initialActions[actionCreator](message.payload));
+  const actionCreator = message.meta.initial ? initialActions.setInitialState : initialActions.setState;
+  store.dispatch(actionCreator(message.payload));
 };
 
 // Focus on debugger prompt on all keypresses.

@@ -14,5 +14,9 @@ export default {
     }
   },
   entitiesToRemove: ['2', '35', '36'],
-  message: 'The "tmp" folder contained ransomware! You\'ve lost the following:\n"rm.js"\n"tmp"\n"scratch.txt"'
+  message: `The [tmp](/items/35) folder contained ransomware! You've lost the following:
+
+  - [rm.js](/items/2)
+  - [tmp](/items/35)
+  - [scratch.txt](/items/36)`
 };

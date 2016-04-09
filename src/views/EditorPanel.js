@@ -50,7 +50,7 @@ class EditorPanel extends React.Component {
   }
 }
 
-export default class MarkdownLink extends React.Component {
+class MarkdownLink extends React.Component {
   static propTypes = {
     children: PropTypes.node,
     href: PropTypes.string,
