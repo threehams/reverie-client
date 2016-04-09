@@ -2,7 +2,7 @@ import React from 'react';
 import {OrderedSet, Map} from 'immutable';
 import shallowCompare from 'react-addons-shallow-compare';
 
-import LoadingCircle from '../components/LoadingCircle';
+import Loader from '../components/Loader';
 import TabContainer from '../components/TabContainer';
 import Tab from '../components/Tab';
 
@@ -40,7 +40,7 @@ export default class EditorTabs extends React.Component {
                    onClickClose={ () => removeView(view)}>
                 {entity.name}
               </Tab> :
-              <LoadingCircle key={index} />;
+              <Loader key={index} />;
           })
         }
       </TabContainer>

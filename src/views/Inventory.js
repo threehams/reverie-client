@@ -3,7 +3,7 @@ import Radium from 'radium';
 import shallowCompare from 'react-addons-shallow-compare';
 
 import InventoryItemContainer from './InventoryItem';
-import LoadingCircle from '../components/LoadingCircle';
+import Loader from '../components/Loader';
 
 export class Inventory extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
@@ -17,9 +17,9 @@ export class Inventory extends React.Component {
   render() {
     const { id } = this.props;
     return (
-      <LoadingCircle showUntil={!!(id)}>
+      <Loader showUntil={!!(id)}>
         { id && <InventoryItemContainer key={id} id={id} containerId={id} expanded /> }
-      </LoadingCircle>
+      </Loader>
     );
   }
 }
