@@ -137,16 +137,15 @@ const styles = {
   },
   footer: {
     backgroundColor: panelStyles.backgroundColor,
-    height: `calc(20vh - ${pagePadding}px)`
+    height: `calc(20vh - ${pagePadding}px - 2px)`
   },
   debugger: {
     borderTop: panelStyles.border,
-    height: `calc(20vh - ${pagePadding}px)`,
     ...fontStyles.monospace,
     position: 'relative'
   },
   debuggerHistory: {
-    height: `calc(20vh - ${pagePadding}px - ${promptHeight}px)`
+    height: `calc(20vh - ${pagePadding}px - ${promptHeight}px - 1px)`
   },
   debuggerPrompt: {
     height: promptHeight
