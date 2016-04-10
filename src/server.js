@@ -61,7 +61,7 @@ wsServer.on('connection', function(ws) {
     }));
   }
 
-  sendMessage();
+  sendMessage(fixtureInitialState, {initial: true});
 
   // Canned responses!
   // See expected meta/payload message structure in views/App.js
@@ -69,8 +69,6 @@ wsServer.on('connection', function(ws) {
   ws.on('message', (json) => {
     const message = JSON.parse(json);
     switch (message.command.toLowerCase()) {
-      case 'get initial state':
-        return sendMessage(fixtureInitialState, {initial: true});
       case 'attack hiro':
         return sendMessage(fixtureAttackEnemySuccess);
       case 'attack raven':
