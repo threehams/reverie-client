@@ -15,7 +15,6 @@ const store = configureStore(Map());
 
 socket.onopen = function() {
   store.dispatch(socketActions.reconnected());
-  socket.send(JSON.stringify({ command: 'get initial state' }));
 };
 
 socket.onclose = function() {
