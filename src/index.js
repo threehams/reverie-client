@@ -1,5 +1,8 @@
 import './style.scss';
 
+// Import only needed polyfills - saves lots of space and bundling time
+import './polyfills';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Map } from 'immutable';
