@@ -10,6 +10,7 @@ import DebuggerHistory from './DebuggerHistory';
 import DebuggerPrompt from './DebuggerPrompt';
 import Loader from '../components/Loader';
 import EntityRecord from '../records/entityRecord';
+import LocationRecord from '../records/locationRecord';
 
 import TabContainer from '../components/TabContainer';
 import Tab from '../components/Tab';
@@ -26,14 +27,14 @@ export class Layout extends React.Component {
   static propTypes = {
     activePlayerView: PropTypes.string,
     alert: PropTypes.string,
-    locationId: PropTypes.string,
+    location: PropTypes.instanceOf(LocationRecord),
     player: PropTypes.instanceOf(EntityRecord),
     setActiveView: PropTypes.func
   };
 
   render() {
-    const { activePlayerView, player, locationId, setActiveView, alert } = this.props;
-    if (!player || !locationId) {
+    const { activePlayerView, player, location, setActiveView, alert } = this.props;
+    if (!player || !location) {
       return <Loader />;
     }
 
@@ -53,7 +54,7 @@ export class Layout extends React.Component {
                   <Icon name="user" before /> Character
                 </Tab>
               </TabContainer>
-              { activePlayerView === 'inventory' && <Inventory id={player.id} /> }
+              { activePlayerView === 'inventory' && <Inventory ids={player.entities} /> }
               { activePlayerView === 'character' && <Player player={player} /> }
             </div>
             <div style={[styles.sidebarSection, { borderTop: panelStyles.border}]}>
@@ -62,7 +63,7 @@ export class Layout extends React.Component {
                   Floor
                 </Tab>
               </TabContainer>
-              <Inventory id={locationId} />
+              <Inventory ids={location.entities} />
             </div>
           </aside>
 
@@ -91,7 +92,7 @@ export class Layout extends React.Component {
 export default connect((state) => {
   return {
     player: state.getIn(['entities', state.getIn(['ui', 'player'])]),
-    locationId: state.getIn(['ui', 'location']),
+    location: state.get('location'),
     alert: state.getIn(['ui', 'alert']),
     activePlayerView: state.getIn(['ui', 'activePlayerView'])
   };

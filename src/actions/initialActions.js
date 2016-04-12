@@ -1,43 +1,53 @@
-import {fromJS, List, Map} from 'immutable';
+import {fromJS, List } from 'immutable';
+import { normalize, arrayOf, Schema } from 'normalizr';
+import LocationRecord from '../records/locationRecord';
+import EntityRecord from '../records/entityRecord';
+
 import {
   SET_STATE
 } from './actionTypes';
 
-function filterPlayer(player, location, entities) {
-  if (!location) {
-    return entities;
-  }
-  return entities.updateIn([location.get('id'), 'entities'], (subEntities) => {
-    return subEntities.filter(entity => entity !== player);
-  });
-}
 
-export function setState(state) {
-  return (dispatch, getState) => {
-    const prevState = getState();
-    const player = state.player || prevState.getIn(['ui', 'player']);
-    const newEntities = fromJS(state.entities) || Map();
-    const location = newEntities.find(entity => entity.get('entities') && entity.get('entities').contains(player));
-    const withoutPlayer = filterPlayer(player, location, newEntities);
+export function setState(message) {
+  const state = transform(message.payload);
 
-    dispatch({
-      type: SET_STATE,
-      payload: {
-        player: state.player,
-        location: location && location.get('id'),
-        entities: withoutPlayer,
-        entitiesToRemove: fromJS(state.entitiesToRemove) || List(),
-        message: state.message || ''
-      }
-    });
+  return {
+    type: SET_STATE,
+    payload: {
+      player: state.player,
+      location: state.location ? new LocationRecord(state.location) : undefined,
+      entities: state.entities ? state.entities.map(entity => new EntityRecord(entity)) : List(),
+      entitiesToRemove: fromJS(state.entitiesToRemove) || List(),
+      message: state.message || ''
+    }
   };
 }
 
-export function setInitialState(state) {
+export function setInitialState(message) {
   return (dispatch, getState) => {
     const currentState = getState();
     if (currentState.getIn(['ui', 'player'])) return;
 
-    dispatch(setState(state));
+    dispatch(setState(message));
+  };
+}
+
+const entitySchema = new Schema('entities');
+entitySchema.define({
+  entities: arrayOf(entitySchema)
+});
+
+function transform(data) {
+  const normalized = normalize(data, {
+    entities: arrayOf(entitySchema),
+    location: {
+      entities: arrayOf(entitySchema)
+    }
+  });
+  return {
+    player: normalized.result.player,
+    location: fromJS(normalized.result.location),
+    message: normalized.result.message,
+    entities: fromJS(normalized.entities.entities)
   };
 }
