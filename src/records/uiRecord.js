@@ -2,6 +2,7 @@ import {Record, Set, OrderedSet} from 'immutable';
 
 export default Record({
   activeEditorView: '0',
+  autocompleteOpen: false,
   alert: null,
   currentCommand: '',
   activePlayerView: 'inventory',
@@ -9,5 +10,6 @@ export default Record({
   inventoryExpandedById: Set(),
   player: null,
   location: null,
-  selectedItems: OrderedSet()
+  selectedAutocompleteIndex: 0,
+  selectedItems: OrderedSet(),
 });

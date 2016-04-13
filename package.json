@@ -22,7 +22,7 @@
       }
     },
     "coverage": {
-      "command": "nyc --require babel-core/register node_modules/.bin/mocha --require babel-register --require babel-polyfill --require ./src/__test__/testHelper.js --timeout=200 src/**/*.spec.js && nyc  --require babel-core/register report --reporter=lcov",
+      "command": "nyc --require babel-core/register node_modules/.bin/mocha --require babel-register --require ./src/__test__/testHelper.js --timeout=200 src/**/*.spec.js && nyc  --require babel-core/register report --reporter=lcov",
       "env": {
         "NODE_ENV": "test"
       }
@@ -41,13 +41,13 @@
       }
     },
     "test": {
-      "command": "mocha --require babel-register --require babel-polyfill --require ./src/__test__/testHelper.js --timeout=200 --reporter min src/**/*.spec.js",
+      "command": "mocha --require babel-register --require ./src/__test__/testHelper.js --timeout=200 --reporter min src/**/*.spec.js",
       "env": {
         "NODE_ENV": "test"
       }
     },
     "test:ci": {
-      "command": "mocha --require babel-register --require babel-polyfill --require ./src/__test__/testHelper.js --reporter mocha-junit-reporter src/**/*.spec.js",
+      "command": "mocha --require babel-register --require ./src/__test__/testHelper.js --reporter mocha-junit-reporter src/**/*.spec.js",
       "env": {
         "NODE_ENV": "test"
       }

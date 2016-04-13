@@ -2,17 +2,18 @@ import {OrderedSet, Map} from 'immutable';
 
 import UiRecord from '../records/uiRecord';
 import {
+  AUTOCOMPLETE_SET_INDEX,
   COMMAND_SEND,
-  SET_STATE,
-  INVENTORY_TOGGLE_EXPAND,
   COMMAND_SET_CURRENT,
   EDITOR_ADD_VIEW,
-  INVENTORY_TOGGLE_SELECT,
+  INVENTORY_TOGGLE_EXPAND,
   INVENTORY_EXPAND_ITEMS,
-  EDITOR_SET_ACTIVE_VIEW,
-  EDITOR_SELECT_ITEMS,
+  INVENTORY_TOGGLE_SELECT,
   EDITOR_REMOVE_VIEW,
+  EDITOR_SELECT_ITEMS,
+  EDITOR_SET_ACTIVE_VIEW,
   PLAYER_SET_ACTIVE_VIEW,
+  SET_STATE,
   SOCKET_STATUS
 } from '../actions/actionTypes';
 
@@ -24,10 +25,14 @@ const ALERTS = {
 
 export default function uiReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case AUTOCOMPLETE_SET_INDEX:
+      return state.set('selectedAutocompleteIndex', action.payload.index);
     case COMMAND_SEND:
-      return state.set('currentCommand', '');
+      return state.set('currentCommand', '')
+        .set('autocompleteOpen', false);
     case COMMAND_SET_CURRENT:
-      return state.set('currentCommand', action.payload.command);
+      return state.set('currentCommand', action.payload.command)
+        .set('autocompleteOpen', !!(action.payload.command.length > 1 && !action.payload.closeAutocomplete));
     case EDITOR_ADD_VIEW:
       return addView(state, action.payload.id);
     case EDITOR_REMOVE_VIEW:
