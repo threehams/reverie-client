@@ -1,6 +1,6 @@
 import {OrderedSet, Map} from 'immutable';
 
-import UiRecord from '../records/uiRecord';
+import UiRecord from '../records/UiRecord';
 import {
   AUTOCOMPLETE_SET_INDEX,
   COMMAND_SEND,
@@ -28,11 +28,9 @@ export default function uiReducer(state = INITIAL_STATE, action) {
     case AUTOCOMPLETE_SET_INDEX:
       return state.set('selectedAutocompleteIndex', action.payload.index);
     case COMMAND_SEND:
-      return state.set('currentCommand', '')
-        .set('autocompleteOpen', false);
+      return state.set('currentCommand', '');
     case COMMAND_SET_CURRENT:
-      return state.set('currentCommand', action.payload.command)
-        .set('autocompleteOpen', !!(action.payload.command.length > 1 && !action.payload.closeAutocomplete));
+      return setCurrentCommand(state, action);
     case EDITOR_ADD_VIEW:
       return addView(state, action.payload.id);
     case EDITOR_REMOVE_VIEW:
@@ -70,6 +68,16 @@ function toggleSetItem(state, id) {
 function removeView(state, id) {
   const newState = state.update('editorViews', tabs => tabs.remove(id));
   return newState.update('activeEditorView', view => view === id ? newState.get('editorViews').last() : view);
+}
+
+function setCurrentCommand(state, action) {
+  const commandSet = state.set('currentCommand', action.payload.command);
+  if (action.payload.command.length > 1 && !action.payload.closeAutocomplete) {
+    return commandSet.set('autocompleteOpen', true);
+  }
+
+  return commandSet.set('autocompleteOpen', false)
+    .set('selectedAutocompleteIndex', 0);
 }
 
 function setState(state, action) {
