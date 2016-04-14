@@ -1,18 +1,19 @@
 import {OrderedSet, Map} from 'immutable';
 
-import UiRecord from '../records/uiRecord';
+import UiRecord from '../records/UiRecord';
 import {
+  AUTOCOMPLETE_SET_INDEX,
   COMMAND_SEND,
-  SET_STATE,
-  INVENTORY_TOGGLE_EXPAND,
   COMMAND_SET_CURRENT,
   EDITOR_ADD_VIEW,
-  INVENTORY_TOGGLE_SELECT,
+  INVENTORY_TOGGLE_EXPAND,
   INVENTORY_EXPAND_ITEMS,
-  EDITOR_SET_ACTIVE_VIEW,
-  EDITOR_SELECT_ITEMS,
+  INVENTORY_TOGGLE_SELECT,
   EDITOR_REMOVE_VIEW,
+  EDITOR_SELECT_ITEMS,
+  EDITOR_SET_ACTIVE_VIEW,
   PLAYER_SET_ACTIVE_VIEW,
+  SET_STATE,
   SOCKET_STATUS
 } from '../actions/actionTypes';
 
@@ -24,10 +25,12 @@ const ALERTS = {
 
 export default function uiReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case AUTOCOMPLETE_SET_INDEX:
+      return state.set('selectedAutocompleteIndex', action.payload.index);
     case COMMAND_SEND:
       return state.set('currentCommand', '');
     case COMMAND_SET_CURRENT:
-      return state.set('currentCommand', action.payload.command);
+      return setCurrentCommand(state, action);
     case EDITOR_ADD_VIEW:
       return addView(state, action.payload.id);
     case EDITOR_REMOVE_VIEW:
@@ -65,6 +68,16 @@ function toggleSetItem(state, id) {
 function removeView(state, id) {
   const newState = state.update('editorViews', tabs => tabs.remove(id));
   return newState.update('activeEditorView', view => view === id ? newState.get('editorViews').last() : view);
+}
+
+function setCurrentCommand(state, action) {
+  const commandSet = state.set('currentCommand', action.payload.command);
+  if (action.payload.command.length > 1 && !action.payload.closeAutocomplete) {
+    return commandSet.set('autocompleteOpen', true);
+  }
+
+  return commandSet.set('autocompleteOpen', false)
+    .set('selectedAutocompleteIndex', 0);
 }
 
 function setState(state, action) {

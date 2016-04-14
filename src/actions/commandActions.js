@@ -19,11 +19,12 @@ export function sendCommand(command) {
   };
 }
 
-export function setCurrentCommand(command) {
+export function setCurrentCommand(command, closeAutocomplete) {
   return {
     type: COMMAND_SET_CURRENT,
     payload: {
-      command: command
+      command: command,
+      closeAutocomplete: closeAutocomplete
     }
   };
 }

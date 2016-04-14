@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+import { List } from 'immutable';
 import { connect } from 'react-redux';
 import Radium from 'radium';
 import shallowCompare from 'react-addons-shallow-compare';
 
 import * as commandActions from '../actions/commandActions';
+import * as autocompleteActions from '../actions/autocompleteActions';
 import Autocomplete from './Autocomplete';
 import panelStyles from '../styles/panel';
 
@@ -13,26 +15,60 @@ export class DebuggerPrompt extends React.Component {
   }
 
   static propTypes = {
-    sendCommand: React.PropTypes.func,
-    setCurrentCommand: React.PropTypes.func,
-    currentCommand: React.PropTypes.string
+    autocompleteOpen: PropTypes.bool,
+    autocompleteOptions: PropTypes.instanceOf(List),
+    currentCommand: PropTypes.string,
+    sendCommand: PropTypes.func,
+    selectedAutocompleteIndex: PropTypes.number,
+    selectNext: PropTypes.func,
+    selectPrevious: PropTypes.func,
+    setCurrentCommand: PropTypes.func,
   };
 
+  setCommandFromInput(event) {
+    const { autocompleteOpen, currentCommand, setCurrentCommand } = this.props;
+    setCurrentCommand(event.target.value, !autocompleteOpen && event.target.value.length < currentCommand.length);
+  }
+
+  selectOption(event) {
+    const { autocompleteOptions, selectNext, selectedAutocompleteIndex, selectPrevious } = this.props;
+    if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      selectNext(autocompleteOptions, selectedAutocompleteIndex);
+    } else if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      selectPrevious(autocompleteOptions, selectedAutocompleteIndex);
+    }
+  }
+
   submit(event) {
+    const { autocompleteOptions, autocompleteOpen, setCurrentCommand, currentCommand, selectedAutocompleteIndex, sendCommand} = this.props;
     event.preventDefault();
-    this.props.sendCommand(this.props.currentCommand);
+    if (autocompleteOpen) {
+      const option = autocompleteOptions.get(selectedAutocompleteIndex);
+      const newCommand = currentCommand.replace(new RegExp(`${currentCommand}$`), option.name);
+      setCurrentCommand(newCommand, true);
+    } else {
+      sendCommand(currentCommand);
+    }
   }
 
   render() {
-    const { currentCommand, setCurrentCommand } = this.props;
+    const { autocompleteOptions, autocompleteOpen, currentCommand, selectedAutocompleteIndex } = this.props;
     return (
       <form onSubmit={::this.submit}>
-        { currentCommand && currentCommand.length > 1 ? <Autocomplete command={currentCommand} /> : null }
+        {
+          autocompleteOpen &&
+            <Autocomplete command={currentCommand}
+                          options={autocompleteOptions}
+                          selectedIndex={selectedAutocompleteIndex} />
+        }
         <input id="prompt"
                type="text"
                value={currentCommand}
                style={styles}
-               onChange={(event) => { setCurrentCommand(event.target.value); } } />
+               onKeyDown={::this.selectOption}
+               onChange={::this.setCommandFromInput} />
       </form>
     );
   }
@@ -48,8 +84,21 @@ const styles = {
   outline: 0
 };
 
-export default connect((state) => {
+export const mapStateToProps = (state) => {
+  const currentCommand = state.getIn(['ui', 'currentCommand']);
   return {
-    currentCommand: state.getIn(['ui', 'currentCommand'])
+    autocompleteOpen: state.getIn(['ui', 'autocompleteOpen']),
+    currentCommand: currentCommand,
+    autocompleteOptions: state.get('entities')
+      .toList()
+      .filter(item => item.name.includes(currentCommand) && item.type === 'executable'),
+    selectedAutocompleteIndex: state.getIn(['ui', 'selectedAutocompleteIndex'])
   };
-}, commandActions)(Radium(DebuggerPrompt));
+};
+
+export default connect(mapStateToProps, {
+  sendCommand: commandActions.sendCommand,
+  setCurrentCommand: commandActions.setCurrentCommand,
+  selectNext: autocompleteActions.selectNext,
+  selectPrevious: autocompleteActions.selectPrevious,
+})(Radium(DebuggerPrompt));

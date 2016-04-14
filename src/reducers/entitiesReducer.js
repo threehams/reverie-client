@@ -1,5 +1,5 @@
 import {Map} from 'immutable';
-import EntityRecord from '../records/entityRecord';
+import EntityRecord from '../records/EntityRecord';
 
 import {
   SET_STATE
