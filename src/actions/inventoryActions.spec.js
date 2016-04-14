@@ -1,8 +1,8 @@
 import {List, Map, OrderedSet} from 'immutable';
 
 import * as inventoryActions from './inventoryActions';
-import UiRecord from '../records/uiRecord';
-import EntityRecord from '../records/entityRecord';
+import UiRecord from '../records/UiRecord';
+import EntityRecord from '../records/EntityRecord';
 import expect from '../__test__/configureExpect';
 import { EDITOR_SELECT_ITEMS } from './actionTypes';
 

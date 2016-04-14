@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import Radium from 'radium';
 
 import Icon from '../components/Icon';
-import EntityRecord from '../records/entityRecord';
+import EntityRecord from '../records/EntityRecord';
 
 export class Player extends React.Component {
   static propTypes = {

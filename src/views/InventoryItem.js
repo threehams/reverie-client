@@ -8,7 +8,7 @@ import Icon from '../components/Icon';
 import DropdownArrow from '../components/DropdownArrow';
 import * as inventoryActions from '../actions/inventoryActions';
 import * as editorActions from '../actions/editorActions';
-import EntityRecord from '../records/entityRecord';
+import EntityRecord from '../records/EntityRecord';
 
 const TYPE_ICONS = {
   executable: 'file-code-o',

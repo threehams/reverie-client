@@ -7,7 +7,7 @@ import * as editorActions from '../actions/editorActions';
 import { COMMAND_SEND, SET_STATE } from '../actions/actionTypes';
 import * as commandActions from '../actions/commandActions';
 import * as socketActions from '../actions/socketActions';
-import UiRecord from '../records/uiRecord';
+import UiRecord from '../records/UiRecord';
 
 describe('uiReducer', function() {
   describe('COMMAND_SEND', function() {

@@ -3,8 +3,8 @@ import {fromJS, List} from 'immutable';
 import expect from '../__test__/configureExpect';
 
 import { mapStateToProps } from './DebuggerPrompt';
-import EntityRecord from '../records/entityRecord';
-import UiRecord from '../records/uiRecord';
+import EntityRecord from '../records/EntityRecord';
+import UiRecord from '../records/UiRecord';
 
 describe('DebuggerPrompt', function() {
   describe('mapStateToProps', function() {

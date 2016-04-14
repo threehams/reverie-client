@@ -9,7 +9,7 @@ import Editor from './Editor';
 import DebuggerHistory from './DebuggerHistory';
 import DebuggerPrompt from './DebuggerPrompt';
 import Loader from '../components/Loader';
-import EntityRecord from '../records/entityRecord';
+import EntityRecord from '../records/EntityRecord';
 
 import TabContainer from '../components/TabContainer';
 import Tab from '../components/Tab';
