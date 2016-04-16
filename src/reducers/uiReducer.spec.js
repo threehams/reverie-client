@@ -4,37 +4,11 @@ import expect from '../__test__/configureExpect';
 import uiReducer from './uiReducer';
 import * as inventoryActions from '../actions/inventoryActions';
 import * as editorActions from '../actions/editorActions';
-import { COMMAND_SEND, SET_STATE } from '../actions/actionTypes';
-import * as commandActions from '../actions/commandActions';
+import { SET_STATE } from '../actions/actionTypes';
 import * as socketActions from '../actions/socketActions';
 import UiRecord from '../records/UiRecord';
 
 describe('uiReducer', function() {
-  describe('COMMAND_SEND', function() {
-    it('clears the current command', function() {
-      const initial = new UiRecord({
-        currentCommand: 'get inventory'
-      });
-      const action = {
-        type: COMMAND_SEND,
-        payload: {
-          command: 'do something else'
-        }
-      };
-      expect(uiReducer(initial, action).currentCommand).to.equal('');
-    });
-  });
-
-  describe('COMMAND_SET_CURRENT', function() {
-    it('sets the current command', function() {
-      const initial = new UiRecord({
-        currentCommand: 'get inv'
-      });
-      const action = commandActions.setCurrentCommand('get inve');
-      expect(uiReducer(initial, action).currentCommand).to.equal('get inve');
-    });
-  });
-
   describe('EDITOR_ADD_VIEW', function() {
     it('adds a new view and sets it as active', function() {
       const initial = new UiRecord({

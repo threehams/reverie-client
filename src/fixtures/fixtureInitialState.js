@@ -105,7 +105,7 @@ export default {
       id: '19',
       name: 'mydoom.js',
       type: 'executable',
-      description: 'andy; I’m just doing my job, nothing personal, sorry,'
+      description: '```andy; I’m just doing my job, nothing personal, sorry,```'
     },
     '74': {
       id: '74',

@@ -1,6 +1,7 @@
-import {List, Record} from 'immutable';
+import {Record} from 'immutable';
 
 export default Record({
+  id: null,
   name: '',
-  relevance: List()
+  pattern: ''
 });

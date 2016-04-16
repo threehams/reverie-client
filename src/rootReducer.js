@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux-immutable';
 
-import commandHistoryReducer from './reducers/commandHistoryReducer';
+import commandReducer from './reducers/commandReducer';
 import editorHistoryReducer from './reducers/editorHistoryReducer';
 import entitiesReducer from './reducers/entitiesReducer';
 import uiReducer from './reducers/uiReducer';
 
 export default combineReducers({
   editorHistory: editorHistoryReducer,
-  commandHistory: commandHistoryReducer,
+  command: commandReducer,
   entities: entitiesReducer,
   ui: uiReducer
 });

@@ -64,6 +64,20 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0;
   }
 
+  code {
+    color: $string-color;
+    display: inline-block;
+    position: relative;
+    padding: 0 0 0 15px;
+
+    &:before {
+      content: "|";
+      display: inline-block;
+      position: absolute;
+      left: 0;
+    }
+  }
+
   blockquote {
     color: $variable-color;
     display: inline-block;
