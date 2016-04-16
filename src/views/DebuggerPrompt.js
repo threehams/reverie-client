@@ -1,13 +1,16 @@
 import React, { PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import { List } from 'immutable';
 import { connect } from 'react-redux';
 import Radium from 'radium';
 import shallowCompare from 'react-addons-shallow-compare';
 
+import * as autocompleteSelectors from '../selectors/autocompleteSelectors';
 import * as commandActions from '../actions/commandActions';
-import * as autocompleteActions from '../actions/autocompleteActions';
 import Autocomplete from './Autocomplete';
 import panelStyles from '../styles/panel';
+import EntityRecord from '../records/EntityRecord';
+import CommandRecord from '../records/CommandRecord';
 
 export class DebuggerPrompt extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
@@ -15,56 +18,71 @@ export class DebuggerPrompt extends React.Component {
   }
 
   static propTypes = {
+    autocompleteFragment: PropTypes.string,
     autocompleteOpen: PropTypes.bool,
     autocompleteOptions: PropTypes.instanceOf(List),
+    autocompleteSelectedItem: PropTypes.oneOfType([
+      PropTypes.instanceOf(CommandRecord),
+      PropTypes.instanceOf(EntityRecord)
+    ]),
+    completeCommand: PropTypes.func,
     currentCommand: PropTypes.string,
+    selectNextAutocompleteItem: PropTypes.func,
+    selectPreviousAutocompleteItem: PropTypes.func,
     sendCommand: PropTypes.func,
-    selectedAutocompleteIndex: PropTypes.number,
-    selectNext: PropTypes.func,
-    selectPrevious: PropTypes.func,
     setCurrentCommand: PropTypes.func,
   };
 
+  // This does:
   setCommandFromInput(event) {
-    const { autocompleteOpen, currentCommand, setCurrentCommand } = this.props;
-    setCurrentCommand(event.target.value, !autocompleteOpen && event.target.value.length < currentCommand.length);
+    const cursorIndex = ReactDOM.findDOMNode(this.input).selectionStart;
+    this.props.setCurrentCommand(event.target.value, cursorIndex);
   }
 
+  // This does:
+  // Decide, based on event, whether to select next or previous.
+  // Keep here, but change. Index is unreliable.
   selectOption(event) {
-    const { autocompleteOptions, selectNext, selectedAutocompleteIndex, selectPrevious } = this.props;
+    const { autocompleteOptions, selectNextAutocompleteItem, autocompleteSelectedItem, selectPreviousAutocompleteItem } = this.props;
     if (event.key === 'ArrowUp') {
       event.preventDefault();
-      selectNext(autocompleteOptions, selectedAutocompleteIndex);
+      selectPreviousAutocompleteItem(autocompleteOptions, autocompleteSelectedItem);
     } else if (event.key === 'ArrowDown') {
       event.preventDefault();
-      selectPrevious(autocompleteOptions, selectedAutocompleteIndex);
+      selectNextAutocompleteItem(autocompleteOptions, autocompleteSelectedItem);
     }
   }
 
+  // This does:
+  // Based on current autocomplete open state:
+  // - Open:   Based on the current command, fill in the command fragment with the selected autocomplete option.
+  // - Closed: Send the command to the server.
+  //
+  // Keep 'if autocompleteOpen' conditional, move everything else into action creator.
   submit(event) {
-    const { autocompleteOptions, autocompleteOpen, setCurrentCommand, currentCommand, selectedAutocompleteIndex, sendCommand} = this.props;
     event.preventDefault();
+    const { autocompleteOpen, completeCommand, currentCommand, autocompleteSelectedItem, sendCommand} = this.props;
+    const cursorIndex = ReactDOM.findDOMNode(this.input).selectionStart;
     if (autocompleteOpen) {
-      const option = autocompleteOptions.get(selectedAutocompleteIndex);
-      const newCommand = currentCommand.replace(new RegExp(`${currentCommand}$`), option.name);
-      setCurrentCommand(newCommand, true);
+      completeCommand(currentCommand, cursorIndex, autocompleteSelectedItem);
     } else {
       sendCommand(currentCommand);
     }
   }
 
   render() {
-    const { autocompleteOptions, autocompleteOpen, currentCommand, selectedAutocompleteIndex } = this.props;
+    const { autocompleteFragment, autocompleteOptions, autocompleteOpen, currentCommand, autocompleteSelectedItem } = this.props;
     return (
       <form onSubmit={::this.submit}>
         {
           autocompleteOpen &&
-            <Autocomplete command={currentCommand}
+            <Autocomplete fragment={autocompleteFragment}
                           options={autocompleteOptions}
-                          selectedIndex={selectedAutocompleteIndex} />
+                          selectedItem={autocompleteSelectedItem} />
         }
         <input id="prompt"
                type="text"
+               ref={(input) => { this.input = input; }}
                value={currentCommand}
                style={styles}
                onKeyDown={::this.selectOption}
@@ -85,20 +103,13 @@ const styles = {
 };
 
 export const mapStateToProps = (state) => {
-  const currentCommand = state.getIn(['ui', 'currentCommand']);
   return {
-    autocompleteOpen: state.getIn(['ui', 'autocompleteOpen']),
-    currentCommand: currentCommand,
-    autocompleteOptions: state.get('entities')
-      .toList()
-      .filter(item => item.name.includes(currentCommand) && item.type === 'executable'),
-    selectedAutocompleteIndex: state.getIn(['ui', 'selectedAutocompleteIndex'])
+    autocompleteFragment: state.getIn(['command', 'autocompleteFragment']),
+    autocompleteOpen: state.getIn(['command', 'autocompleteOpen']),
+    currentCommand: state.getIn(['command', 'current']),
+    autocompleteOptions: autocompleteSelectors.availableOptions(state),
+    autocompleteSelectedItem: autocompleteSelectors.selectedOption(state)
   };
 };
 
-export default connect(mapStateToProps, {
-  sendCommand: commandActions.sendCommand,
-  setCurrentCommand: commandActions.setCurrentCommand,
-  selectNext: autocompleteActions.selectNext,
-  selectPrevious: autocompleteActions.selectPrevious,
-})(Radium(DebuggerPrompt));
+export default connect(mapStateToProps, commandActions)(Radium(DebuggerPrompt));

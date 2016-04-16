@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react';
 import {List} from 'immutable';
 import Radium from 'radium';
 import shallowCompare from 'react-addons-shallow-compare';
+import EntityRecord from '../records/EntityRecord';
+import CommandRecord from '../records/CommandRecord';
 
 export class Autocomplete extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
@@ -10,33 +12,36 @@ export class Autocomplete extends React.Component {
 
   static propTypes = {
     bottom: PropTypes.number,
-    command: PropTypes.string,
+    fragment: PropTypes.string,
     focused: PropTypes.bool,
     left: PropTypes.number,
     options: PropTypes.instanceOf(List),
-    selectedIndex: PropTypes.number,
+    selectedItem: PropTypes.oneOfType([
+      PropTypes.instanceOf(CommandRecord),
+      PropTypes.instanceOf(EntityRecord)
+    ]),
     onKeyDown: PropTypes.func
   };
 
-  splitOption(option, command) {
-    const parts = option.split(command);
-    return [parts[0], command, parts.slice(1).join(command)];
+  splitOption(option, fragment) {
+    const parts = option.split(fragment);
+    return [parts[0], fragment, parts.slice(1).join(fragment)];
   }
 
   render() {
-    const { command, focused, options, selectedIndex } = this.props;
+    const { fragment, focused, options, selectedItem } = this.props;
     if (!options || !options.size) return <div></div>;
     return (
       <ul style={[styles.panel.global, focused ? styles.panel.focused : styles.panel.unfocused]}>
         {
           options.map((option, i) => {
-            const optionSplit = this.splitOption(option.name, command);
+            const optionSplit = this.splitOption(option.name, fragment);
             return <li
               key={i}
               style={[
                 styles.item.global,
                 focused ? styles.item.focused : styles.item.unfocused,
-                i === selectedIndex ? styles.itemSelected.unfocused : null
+                option === selectedItem ? styles.itemSelected.unfocused : null
               ]}
             >
               <span>

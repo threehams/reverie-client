@@ -5,11 +5,10 @@ var path = require('path');
 var webpack = require('webpack');
 
 var ENTRY_POINTS = {
-  development: [
-    'eventsource-polyfill', // necessary for hot reloading with IE
-    'webpack-hot-middleware/client',
-    './src/index'
-  ],
+  development: {
+    bundle: ['eventsource-polyfill', 'webpack-hot-middleware/client', './src/index'],
+    vendor: ['eventsource-polyfill', 'webpack-hot-middleware/client', 'react', 'redux', 'react-redux']
+  },
   production: [
     './src/index'
   ]
@@ -25,7 +24,8 @@ var PLUGINS = {
       'process.env': {
         NODE_ENV: '\'development\''
       }
-    })
+    }),
+    new webpack.optimize.CommonsChunkPlugin('vendor.js', 'vendor.bundle.js', Infinity)
   ],
   production: [
     new webpack.optimize.DedupePlugin(),
@@ -42,7 +42,7 @@ var PLUGINS = {
   ]
 };
 var DEV_TOOLS = {
-  development: 'source-map',
+  development: 'eval',
   production: 'source-map'
 };
 
@@ -51,7 +51,7 @@ module.exports = {
   entry: ENTRY_POINTS[ENV],
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: '[name].js',
     publicPath: '/dist/'
   },
   plugins: PLUGINS[ENV],

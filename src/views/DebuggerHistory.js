@@ -35,7 +35,7 @@ const styles = {
 
 export default connect((state) => {
   return {
-    history: state.get('commandHistory')
+    history: state.get('command').history
   };
 })(Radium(DebuggerHistory));
 
