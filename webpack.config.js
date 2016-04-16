@@ -4,14 +4,36 @@
 var path = require('path');
 var webpack = require('webpack');
 
+var EXTERNAL = [
+  'core-js',
+  'immutable',
+  'radium',
+  'react',
+  'react-addons-shallow-compare',
+  'react-dnd',
+  'react-dnd-html5-backend',
+  'react-dom',
+  'react-markdown',
+  'react-redux',
+  'reconnectingwebsocket',
+  'redux',
+  'redux-immutable',
+  'redux-thunk',
+  'reselect'
+];
+var DEV_EXTERNAL = [
+  'babel-preset-react-hmre'
+];
+
 var ENTRY_POINTS = {
   development: {
     bundle: ['eventsource-polyfill', 'webpack-hot-middleware/client', './src/index'],
-    vendor: ['eventsource-polyfill', 'webpack-hot-middleware/client', 'react', 'redux', 'react-redux']
+    vendor: ['eventsource-polyfill', 'webpack-hot-middleware/client'].concat(EXTERNAL).concat(DEV_EXTERNAL)
   },
-  production: [
-    './src/index'
-  ]
+  production: {
+    bundle: ['./src/index'],
+    vendor: EXTERNAL
+  }
 };
 
 var ENV = process.env.NODE_ENV || 'development';
@@ -25,7 +47,7 @@ var PLUGINS = {
         NODE_ENV: '\'development\''
       }
     }),
-    new webpack.optimize.CommonsChunkPlugin('vendor.js', 'vendor.bundle.js', Infinity)
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js', Infinity)
   ],
   production: [
     new webpack.optimize.DedupePlugin(),
@@ -38,7 +60,8 @@ var PLUGINS = {
       'process.env': {
         NODE_ENV: '\'production\''
       }
-    })
+    }),
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js', Infinity)
   ]
 };
 var DEV_TOOLS = {
