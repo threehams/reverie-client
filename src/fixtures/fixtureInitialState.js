@@ -126,6 +126,62 @@ export default {
       currentHealth: 400
     }
   },
+  availableCommands: [
+    {
+      name: 'take',
+      parts: [
+        {
+          allowed: [
+            {
+              type: ['item'],
+              owners: ['location']
+            }
+          ]
+        }
+      ]
+    },
+    {
+      name: 'drop',
+      parts: [
+        {
+          allowed: [
+            {
+              type: ['item'],
+              owners: ['player']
+            }
+          ]
+        }
+      ]
+    },
+    {
+      name: 'transfer',
+      parts: [
+        {
+          allowed: [
+            {
+              type: ['item', 'container'],
+              owners: ['player', 'location']
+            }
+          ]
+        },
+        {
+          allowed: [
+            {
+              name: 'to'
+            }
+          ]
+        },
+        {
+          allowed: [
+            {
+              type: ['container'],
+              owners: ['player', 'location']
+            }
+          ]
+        }
+      ]
+    }
+  ],
   message: `# West of House
 
   You are standing in an open field west of a white house, with a boarded front door.

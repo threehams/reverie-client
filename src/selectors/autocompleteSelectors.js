@@ -8,7 +8,7 @@ export const availableOptions = createSelector(
   (entities, command) => {
     return entities
       .toList()
-      .filter(item => item.name.includes(command) && item.type === 'executable');
+      .filter(item => item.name.includes(command));
   }
 );
 

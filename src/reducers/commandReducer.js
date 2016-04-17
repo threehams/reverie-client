@@ -4,8 +4,10 @@ import {
   COMMAND_COMPLETE,
   COMMAND_SEND,
   COMMAND_HISTORY_CLEAR,
-  COMMAND_SET_CURRENT
+  COMMAND_SET_CURRENT,
+  SET_STATE,
 } from '../actions/actionTypes';
+import CommandRecord from '../records/CommandRecord';
 import CommandStateRecord from '../records/CommandStateRecord';
 
 export default function commandReducer(state = new CommandStateRecord(), action) {
@@ -24,6 +26,12 @@ export default function commandReducer(state = new CommandStateRecord(), action)
       return setCurrentCommand(state, action.payload);
     case COMMAND_SET_CURSOR_INDEX:
       return setCursorIndex(state, action.payload.cursorIndex);
+    case SET_STATE:
+      return state.update('available', available => {
+        if (!action.payload.availableCommands.size) return available;
+        const newAvailable = action.payload.availableCommands.map(command => new CommandRecord(command));
+        return available.union(new Set(newAvailable));
+      });
     default:
       return state;
   }

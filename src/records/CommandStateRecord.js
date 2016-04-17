@@ -1,10 +1,11 @@
-import {List, Record} from 'immutable';
+import {List, Record, Set} from 'immutable';
 
 export default Record({
-  cursorIndex: 0,
-  current: '',
-  history: List(),
+  autocompleteFragment: '',
   autocompleteOpen: false,
   autocompleteSelectedItem: null,
-  autocompleteFragment: ''
+  available: Set(),
+  current: '',
+  cursorIndex: 0,
+  history: List(),
 });

@@ -8,56 +8,26 @@ import CommandStateRecord from '../records/CommandStateRecord';
 
 describe('autocompleteSelectors', function() {
   describe('availableOptions', function() {
-    context('executables', function() {
-      it('matches all scripts', function() {
-        const rmRecord = new EntityRecord({
-          id: '1',
-          name: 'rm',
-          type: 'executable'
-        });
-        const rmHackRecord = new EntityRecord({
-          id: '2',
-          name: 'rm-hack',
-          type: 'executable'
-        });
-        const state = fromJS({
-          entities: {
-            '1': rmRecord,
-            '2': rmHackRecord
-          },
-          command: new CommandStateRecord({
-            current: 'rm'
-          })
-        });
-
-        expect(autocompleteSelectors.availableOptions(state)).to.equal(List([rmRecord, rmHackRecord]));
+    it('matches all entities', function() {
+      const rmRecord = new EntityRecord({
+        id: '1',
+        name: 'rm',
       });
-    });
-
-    context('other items', function() {
-      it('does not match files', function() {
-        const rmRecord = new EntityRecord({
-          id: '1',
-          name: 'rm',
-          type: 'text'
-        });
-        const rmRfRecord = new EntityRecord({
-          id: '2',
-          name: 'rm-rf',
-          type: 'executable'
-        });
-        const state = fromJS({
-          entities: {
-            '1': rmRecord,
-            '2': rmRfRecord
-          },
-          command: new CommandStateRecord({
-            autocompleteFragment: 'rm'
-          })
-        });
-
-        expect(autocompleteSelectors.availableOptions(state)).to.equal(List([rmRfRecord]));
+      const rmHackRecord = new EntityRecord({
+        id: '2',
+        name: 'rm-hack',
       });
+      const state = fromJS({
+        entities: {
+          '1': rmRecord,
+          '2': rmHackRecord
+        },
+        command: new CommandStateRecord({
+          current: 'rm'
+        })
+      });
+
+      expect(autocompleteSelectors.availableOptions(state)).to.equal(List([rmRecord, rmHackRecord]));
     });
   });
 
@@ -67,12 +37,10 @@ describe('autocompleteSelectors', function() {
         const rmRecord = new EntityRecord({
           id: '1',
           name: 'rm',
-          type: 'executable'
         });
         const rmRfRecord = new EntityRecord({
           id: '2',
           name: 'rm-rf',
-          type: 'executable'
         });
         const state = fromJS({
           entities: {
@@ -94,12 +62,10 @@ describe('autocompleteSelectors', function() {
         const selectorRecord = new EntityRecord({
           id: '1',
           name: 'selector',
-          type: 'executable'
         });
         const selectionRecord = new EntityRecord({
           id: '2',
           name: 'selection',
-          type: 'executable'
         });
         const state = fromJS({
           entities: {

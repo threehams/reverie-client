@@ -1,4 +1,4 @@
-import {fromJS, List, Map} from 'immutable';
+import { fromJS, List, Map } from 'immutable';
 import {
   SET_STATE
 } from './actionTypes';
@@ -27,7 +27,8 @@ export function setState(state) {
         location: location && location.get('id'),
         entities: withoutPlayer,
         entitiesToRemove: fromJS(state.entitiesToRemove) || List(),
-        message: state.message || ''
+        message: state.message || '',
+        availableCommands: List(state.availableCommands) || List()
       }
     });
   };
