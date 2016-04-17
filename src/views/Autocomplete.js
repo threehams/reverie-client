@@ -67,6 +67,7 @@ const styles = {
       border: '1px solid #c0c0c0',
       maxHeight: '10vh',
       maxWidth: '20vw',
+      overflowY: 'scroll',
       backgroundColor: '#ebf4fe'
     }
   },
