@@ -3,13 +3,13 @@ export default {
     '18': {
       id: '18',
       name: 'usb-drive',
-      type: 'container',
+      components: ['container'],
       entities: ['19', '10']
     },
     '9': {
       id: '9',
       name: 'docs',
-      type: 'container',
+      components: ['container'],
       entities: ['11']
     }
   },

@@ -11,8 +11,11 @@ import * as editorActions from '../actions/editorActions';
 import EntityRecord from '../records/EntityRecord';
 
 const TYPE_ICONS = {
-  executable: 'file-code-o',
   container: 'folder-o',
+  creature: 'github-alt',
+  executable: 'file-code-o',
+  player: 'user',
+  room: 'photo',
   text: 'file-text-o'
 };
 
@@ -63,6 +66,23 @@ export class InventoryItem extends React.Component {
     }
   }
 
+  // TODO pretty obviously temp code
+  iconFor(item) {
+    if (item.components.contains('Container')) {
+      return TYPE_ICONS.container;
+    }
+    if (item.components.contains('Player')) {
+      return TYPE_ICONS.player;
+    }
+    if (item.components.contains('Room')) {
+      return TYPE_ICONS.room;
+    }
+    if (item.components.contains('Creature')) {
+      return TYPE_ICONS.creature;
+    }
+    return TYPE_ICONS.text;
+  }
+
   render() {
     const { indent, item, canDrop, isOver, connectDragSource, connectDropTarget, containerId, expanded, selected } = this.props;
     return connectDragSource(
@@ -76,7 +96,7 @@ export class InventoryItem extends React.Component {
                                onMouseDown={(event) => this.expandItem(event, item)}/> :
                 <span style={{ paddingLeft: 18 }}/>
             }
-            <Icon name={TYPE_ICONS[item.type] || 'file-text-o'} color={styles[item.type]} before/>
+            <Icon name={this.iconFor(item)} color={styles[item.type]} before/>
             <span style={[{cursor: 'default'}, isOver && canDrop && styles.canDrop]}>
               { item.name + (item.quantity > 1 ? ` (${item.quantity})` : '') }
             </span>
@@ -109,7 +129,7 @@ const inventoryItemTarget = {
   },
   canDrop(props, monitor) {
     const item = monitor.getItem();
-    return props.item.type === 'container' && item.id !== props.item.id;
+    return props.item.components.contains('Container') && item.id !== props.item.id;
   }
 };
 

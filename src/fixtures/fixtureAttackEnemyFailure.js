@@ -2,7 +2,8 @@ export default {
   entities: {
     '17': {
       id: '17',
-      name: 'Player',
+      components: ['player'],
+      name: 'Big McLargeHuge',
       entities: ['1', '4', '9'],
       currentHealth: 60,
       currentMemory: 100,

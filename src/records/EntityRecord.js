@@ -1,8 +1,9 @@
-import {List, Record} from 'immutable';
+import {List, Record, Set} from 'immutable';
 
 export default Record({
   id: null,
   name: '',
+  components: Set(),
   description: '',
   type: null,
   executable: false,

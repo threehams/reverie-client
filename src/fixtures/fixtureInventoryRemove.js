@@ -3,12 +3,13 @@ export default {
     '1': {
       id: '1',
       name: 'scripts',
-      type: 'container',
+      components: ['container'],
       entities: ['3']
     },
     '17': {
       id: '17',
-      name: 'Player',
+      components: ['player'],
+      name: 'Big McLargeHuge',
       location: '12',
       entities: ['1', '4', '9']
     }

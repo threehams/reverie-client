@@ -2,14 +2,15 @@ export default {
   entities: {
     '17': {
       id: '17',
-      name: 'Player',
+      name: 'Big McLargeHuge',
+      components: ['player'],
       location: '12',
       entities: ['1', '4', '9', '35']
     },
     '35': {
       id: '35',
+      components: ['container'],
       name: 'tmp',
-      type: 'container',
       entities: ['36']
     },
     '36': {

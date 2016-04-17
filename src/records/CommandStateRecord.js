@@ -1,7 +1,6 @@
 import {List, Record, Set} from 'immutable';
 
 export default Record({
-  autocompleteFragment: '',
   autocompleteOpen: false,
   autocompleteSelectedItem: null,
   available: Set(),

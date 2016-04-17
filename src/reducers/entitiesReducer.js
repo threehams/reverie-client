@@ -1,4 +1,4 @@
-import {Map} from 'immutable';
+import {Map, Set} from 'immutable';
 import EntityRecord from '../records/EntityRecord';
 
 import {
@@ -8,7 +8,10 @@ import {
 export default function entitiesReducer(state = Map(), action) {
   switch (action.type) {
     case SET_STATE:
-      const entities = state.merge(action.payload.entities.map(entity => new EntityRecord(entity)));
+      const entities = state.merge(action.payload.entities.map(entity => {
+        const newEntity = entity.update('components', components => Set(components));
+        return new EntityRecord(newEntity);
+      }));
       return action.payload.entitiesToRemove.reduce((newEntities, toRemove) => {
         return newEntities.remove(toRemove);
       }, entities);

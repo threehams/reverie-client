@@ -104,11 +104,11 @@ const styles = {
 
 export const mapStateToProps = (state) => {
   return {
-    autocompleteFragment: state.getIn(['command', 'autocompleteFragment']),
+    autocompleteFragment: autocompleteSelectors.autocompleteFragment(state),
     autocompleteOpen: state.getIn(['command', 'autocompleteOpen']),
-    currentCommand: state.getIn(['command', 'current']),
     autocompleteOptions: autocompleteSelectors.availableOptions(state),
-    autocompleteSelectedItem: autocompleteSelectors.selectedOption(state)
+    autocompleteSelectedItem: autocompleteSelectors.selectedOption(state),
+    currentCommand: state.getIn(['command', 'current']),
   };
 };
 

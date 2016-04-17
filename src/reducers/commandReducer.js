@@ -43,12 +43,7 @@ function setCursorIndex(state, index) {
   if (!state.autocompleteOpen || Math.abs(currentIndex - index) > 1 || state.current[index] === ' ') {
     return closeAutocomplete(indexSet);
   }
-  return indexSet.set('autocompleteFragment', getAutocompleteFragment(state.current, index));
-}
-
-function getAutocompleteFragment(command, index) {
-  // Get the text which exists between the last space before the index and the index.
-  return command.slice(0, index).split(' ').pop();
+  return indexSet;
 }
 
 function completeCommand(state, { command, cursorIndex, autocompleteItem }) {
@@ -65,7 +60,7 @@ function replaceCommand(command, index, replacement) {
 }
 
 function closeAutocomplete(state) {
-  return state.merge({ autocompleteOpen: false, autocompleteSelectedItem: null, autocompleteFragment: '' });
+  return state.merge({ autocompleteOpen: false, autocompleteSelectedItem: null });
 }
 
 function setCurrentCommand(state, { command, cursorIndex }) {
@@ -75,7 +70,6 @@ function setCurrentCommand(state, { command, cursorIndex }) {
     return closeAutocomplete(newState);
   }
   return newState.merge({
-    autocompleteOpen: true,
-    autocompleteFragment: getAutocompleteFragment(command, cursorIndex)
+    autocompleteOpen: true
   });
 }

@@ -110,12 +110,11 @@ describe('commandReducer', function() {
           expect(newState.current).to.equal('get inv ');
           expect(newState.cursorIndex).to.equal(8);
           expect(newState.autocompleteOpen).to.be.false();
-          expect(newState.autocompleteFragment).to.equal('');
         });
       });
 
       context('when new command ends with a non-space character', function() {
-        it('opens autocomplete and sets the autocomplete fragment', function() {
+        it('opens autocomplete and sets the autocomplete item', function() {
           const initial = new CommandStateRecord({
             current: 'get inv',
             cursorIndex: 6
@@ -125,7 +124,6 @@ describe('commandReducer', function() {
           expect(newState.current).to.equal('get inve');
           expect(newState.cursorIndex).to.equal(8);
           expect(newState.autocompleteOpen).to.be.true();
-          expect(newState.autocompleteFragment).to.equal('inve');
         });
       });
     });
@@ -133,20 +131,18 @@ describe('commandReducer', function() {
 
   describe('COMMAND_SET_CURSOR_INDEX', function() {
     context('when cursor index jumps more than one character', function() {
-      it('closes autocomplete and clears the autocomplete fragment', function() {
+      it('closes autocomplete and clears the autocomplete item', function() {
         const initial = new CommandStateRecord({
           current: 'first second third',
           cursorIndex: 6,
           autocompleteOpen: true,
-          autocompleteSelectedItem: 'thing',
-          autocompleteFragment: 'second'
+          autocompleteSelectedItem: 'thing'
         });
         const action = commandActions.setCursorIndex(8);
         const newState = commandReducer(initial, action);
         expect(newState.cursorIndex).to.equal(8);
         expect(newState.autocompleteOpen).to.be.false();
         expect(newState.autocompleteSelectedItem).to.be.null();
-        expect(newState.autocompleteFragment).to.equal('');
       });
     });
 
@@ -163,42 +159,37 @@ describe('commandReducer', function() {
           expect(newState.cursorIndex).to.equal(8);
           expect(newState.autocompleteOpen).to.be.false();
           expect(newState.autocompleteSelectedItem).to.be.null();
-          expect(newState.autocompleteFragment).to.equal('');
         });
       });
 
       context('when autocomplete is open', function() {
         context('when cursor moves outside the current command', function() {
-          it('closes autocomplete and clears the autocomplete fragment', function() {
+          it('closes autocomplete and clears the autocomplete item', function() {
             const initial = new CommandStateRecord({
               current: 'first second third',
               cursorIndex: 6,
               autocompleteOpen: true,
-              autocompleteSelectedItem: 'thing',
-              autocompleteFragment: 's'
+              autocompleteSelectedItem: 'thing'
             });
             const action = commandActions.setCursorIndex(5);
             const newState = commandReducer(initial, action);
             expect(newState.cursorIndex).to.equal(5);
             expect(newState.autocompleteOpen).to.be.false();
             expect(newState.autocompleteSelectedItem).to.be.null();
-            expect(newState.autocompleteFragment).to.equal('');
           });
         });
 
         context('when cursor stays within the current command', function() {
-          it('sets the current autocomplete fragment', function() {
+          it('keeps autocomplete open', function() {
             const initial = new CommandStateRecord({
               current: 'first second third',
               cursorIndex: 7,
-              autocompleteOpen: true,
-              autocompleteFragment: 's'
+              autocompleteOpen: true
             });
             const action = commandActions.setCursorIndex(8);
             const newState = commandReducer(initial, action);
             expect(newState.cursorIndex).to.equal(8);
             expect(newState.autocompleteOpen).to.be.true();
-            expect(newState.autocompleteFragment).to.equal('se');
           });
         });
       });

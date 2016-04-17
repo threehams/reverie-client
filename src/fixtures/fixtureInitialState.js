@@ -3,15 +3,14 @@ export default {
   entities: {
     '1': {
       id: '1',
+      components: ['container'],
       name: 'scripts',
-      type: 'container',
       entities: ['2', '3']
     },
     '2': {
       id: '2',
       name: 'rm.js',
-      description: 'Remove a file',
-      type: 'executable'
+      description: 'Remove a file'
     },
     '3': {
       id: '3',
@@ -19,64 +18,59 @@ export default {
 
         > The Ares Technology Portscanner is designed for performance, but has some security and reliability concerns.`,
       name: 'portscan.js',
-      quantity: 4,
-      type: 'executable'
+      quantity: 4
     },
     '4': {
       id: '4',
+      components: ['container'],
       name: 'hacks',
-      type: 'container',
       entities: ['5', '6']
     },
     '5': {
       id: '5',
       name: 'portscan1.js',
-      type: 'executable'
     },
     '6': {
       id: '6',
+      components: ['container'],
       name: 'portscans',
-      type: 'container',
-      entities: ['7', '8']
+      entities: ['7', '8'],
     },
     '7': {
       id: '7',
       name: 'hack.js',
       description: 'Hacks a thing',
-      type: 'executable'
     },
     '8': {
       id: '8',
       name: 'hack-more.js',
-      type: 'executable'
     },
     '9': {
       id: '9',
+      components: ['container'],
       name: 'docs',
-      type: 'container',
       entities: ['10', '11']
     },
     '10': {
       id: '10',
       name: 'readme.txt',
-      type: 'text'
     },
     '11': {
       id: '11',
       name: 'commands.txt',
-      type: 'text'
     },
     '12': {
       id: '12',
       name: 'Field',
+      components: ['Room'],
       description: 'This is a field. No big deal.',
       entities: ['13', '17', '18'],
       exits: ['20', '21']
     },
     '13': {
       id: '13',
+      components: ['container'],
       name: 'small mailbox',
-      type: 'container',
       entities: ['14']
     },
     '14': {
@@ -86,7 +80,8 @@ export default {
     },
     '17': {
       id: '17',
-      name: 'Player',
+      components: ['player'],
+      name: 'Big McLargeHuge',
       entities: ['1', '4', '9'],
       currentHealth: 100,
       currentMemory: 100,
@@ -97,14 +92,13 @@ export default {
     },
     '18': {
       id: '18',
+      components: ['container'],
       name: 'usb-drive',
-      type: 'container',
       entities: ['19']
     },
     '19': {
       id: '19',
       name: 'mydoom.js',
-      type: 'executable',
       description: '```andy; I’m just doing my job, nothing personal, sorry,```'
     },
     '74': {
@@ -133,8 +127,8 @@ export default {
         {
           allowed: [
             {
-              type: ['item'],
-              owners: ['location']
+              components: ['item'],
+              owners: ['room']
             }
           ]
         }
@@ -146,7 +140,7 @@ export default {
         {
           allowed: [
             {
-              type: ['item'],
+              components: ['item'],
               owners: ['player']
             }
           ]
@@ -159,8 +153,8 @@ export default {
         {
           allowed: [
             {
-              type: ['item', 'container'],
-              owners: ['player', 'location']
+              components: ['item', 'container'],
+              owners: ['player', 'room']
             }
           ]
         },
@@ -174,8 +168,8 @@ export default {
         {
           allowed: [
             {
-              type: ['container'],
-              owners: ['player', 'location']
+              components: ['container'],
+              owners: ['player', 'room']
             }
           ]
         }
