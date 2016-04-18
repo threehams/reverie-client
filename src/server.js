@@ -68,12 +68,12 @@ wsServer.on('connection', function(ws) {
   // Follow Flux Standard Action, minus 'type'
   ws.on('message', (json) => {
     const message = JSON.parse(json);
-    switch (message.command.toLowerCase()) {
+    switch (message.command.toLowerCase().trim()) {
       case 'attack hiro':
         return sendMessage(fixtureAttackEnemySuccess);
       case 'attack raven':
         return sendMessage(fixtureAttackEnemyFailure);
-      case 'move readme.txt to usb-drive':
+      case 'transfer readme.txt to usb-drive':
         return sendMessage(fixtureMoveItemToContainer);
       case 'n':
       case 'north':
@@ -86,7 +86,7 @@ wsServer.on('connection', function(ws) {
           message: `Available commands:
             attack hiro
             attack raven
-            move readme.txt to usb-drive
+            transfer readme.txt to usb-drive
             north || n
             run tmp
             take tmp

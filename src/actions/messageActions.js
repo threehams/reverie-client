@@ -28,7 +28,7 @@ export function setState(state) {
         entities: withoutPlayer,
         entitiesToRemove: fromJS(state.entitiesToRemove) || List(),
         message: state.message || '',
-        availableCommands: List(state.availableCommands) || List()
+        availableCommands: fromJS(state.availableCommands) || List()
       }
     });
   };

@@ -5,6 +5,7 @@ import expect from '../__test__/configureExpect';
 
 import EntityRecord from '../records/EntityRecord';
 import CommandStateRecord from '../records/CommandStateRecord';
+import CommandPartRecord from '../records/CommandPartRecord';
 import CommandRecord from '../records/CommandRecord';
 import AllowedRecord from '../records/AllowedRecord';
 
@@ -87,7 +88,7 @@ describe('autocompleteSelectors', function() {
           entities: {
             '1': new EntityRecord({
               id: '1',
-              name: 'transfer.js'
+              name: 'readme.txt'
             })
           }
         });
@@ -99,7 +100,39 @@ describe('autocompleteSelectors', function() {
     context('with a current command', function() {
       context('when the part filters by type', function() {
         it('returns the filtered and sorted list', function() {
+          const commandTransfer = new CommandRecord({
+            name: 'transfer',
+            parts: List([
+              new CommandPartRecord({
+                allowed: List([
+                  new AllowedRecord({
+                    types: Set(['entity'])
+                  })
+                ])
+              })
+            ])
+          });
 
+          const entity = new EntityRecord({
+            id: '1',
+            name: 'readme.txt'
+          });
+          const state = fromJS({
+            command: new CommandStateRecord({
+              autocompleteOpen: true,
+              current: 'transfer re',
+              cursorIndex: 9,
+              available: Set([
+                commandTransfer
+              ])
+            }),
+            entities: {
+              '1': entity
+            }
+          });
+          expect(autocompleteSelectors.availableOptions(state)).to.equal(List([
+            entity
+          ]));
         });
       });
 

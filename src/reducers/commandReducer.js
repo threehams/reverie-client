@@ -1,3 +1,5 @@
+import { Set } from 'immutable';
+
 import {
   COMMAND_SELECT_AUTOCOMPLETE_ITEM,
   COMMAND_SET_CURSOR_INDEX,
@@ -8,6 +10,8 @@ import {
   SET_STATE,
 } from '../actions/actionTypes';
 import CommandRecord from '../records/CommandRecord';
+import CommandPartRecord from '../records/CommandPartRecord';
+import AllowedRecord from '../records/AllowedRecord';
 import CommandStateRecord from '../records/CommandStateRecord';
 
 export default function commandReducer(state = new CommandStateRecord(), action) {
@@ -29,12 +33,31 @@ export default function commandReducer(state = new CommandStateRecord(), action)
     case SET_STATE:
       return state.update('available', available => {
         if (!action.payload.availableCommands.size) return available;
-        const newAvailable = action.payload.availableCommands.map(command => new CommandRecord(command));
+        const newAvailable = action.payload.availableCommands.map(command => createCommandRecord(command));
         return available.union(new Set(newAvailable));
       });
     default:
       return state;
   }
+}
+
+function createCommandRecord(command) {
+  const nestedRecord = command.update('parts', parts => {
+    return parts.map(part => {
+      const allowedRecord = part.update('allowed', allowed => {
+        return allowed.map(allow => {
+          return new AllowedRecord({
+            types: Set(allow.get('types')),
+            components: Set(allow.get('components')),
+            owners: Set(allow.get('owners')),
+            names: Set(allow.get('names')),
+          });
+        });
+      });
+      return new CommandPartRecord(allowedRecord);
+    });
+  });
+  return new CommandRecord(nestedRecord);
 }
 
 function setCursorIndex(state, index) {
@@ -56,7 +79,7 @@ function replaceCommand(command, index, replacement) {
   const tail = command.slice(index);
   const head = command.slice(0, index);
   // Remove the expected autocomplete fragment from head, replace with replacement, tack on tail
-  return head.slice(0, head.lastIndexOf(' ') + 1) + replacement + tail;
+  return head.slice(0, head.lastIndexOf(' ') + 1) + replacement + (tail[0] === ' ' ? '' : ' ') + tail;
 }
 
 function closeAutocomplete(state) {

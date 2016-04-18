@@ -32,6 +32,28 @@ describe('commandReducer', function() {
         });
       });
 
+      context('when cursor is at the end of the command', function() {
+        it('adds a space', function() {
+          const initial = new CommandStateRecord({
+            autocompleteOpen: true
+          });
+          const action = commandActions.completeCommand('first sec third', 9, { name: 'second.js' });
+          const newState = commandReducer(initial, action);
+          expect(newState.current).to.equal('first second.js third');
+        });
+      });
+
+      context('when cursor is at the end of a part', function() {
+        it('replaces that part of the command', function() {
+          const initial = new CommandStateRecord({
+            autocompleteOpen: true
+          });
+          const action = commandActions.completeCommand('first sec third', 9, { name: 'second.js' });
+          const newState = commandReducer(initial, action);
+          expect(newState.current).to.equal('first second.js third');
+        });
+      });
+
       context('when cursor is in the middle of a part', function() {
         it('replaces only the part of the command up to the cursor', function() {
           const initial = new CommandStateRecord({
@@ -39,7 +61,7 @@ describe('commandReducer', function() {
           });
           const action = commandActions.completeCommand('first second third', 7, { name: 'second' });
           const newState = commandReducer(initial, action);
-          expect(newState.current).to.equal('first secondecond third');
+          expect(newState.current).to.equal('first second econd third');
         });
       });
     });

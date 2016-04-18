@@ -9,11 +9,13 @@ export default {
     },
     '2': {
       id: '2',
+      components: ['item'],
       name: 'rm.js',
       description: 'Remove a file'
     },
     '3': {
       id: '3',
+      components: ['item'],
       description: `Scans the target system for open ports.
 
         > The Ares Technology Portscanner is designed for performance, but has some security and reliability concerns.`,
@@ -28,6 +30,7 @@ export default {
     },
     '5': {
       id: '5',
+      components: ['item'],
       name: 'portscan1.js',
     },
     '6': {
@@ -38,11 +41,13 @@ export default {
     },
     '7': {
       id: '7',
+      components: ['item'],
       name: 'hack.js',
       description: 'Hacks a thing',
     },
     '8': {
       id: '8',
+      components: ['item'],
       name: 'hack-more.js',
     },
     '9': {
@@ -53,10 +58,12 @@ export default {
     },
     '10': {
       id: '10',
+      components: ['item'],
       name: 'readme.txt',
     },
     '11': {
       id: '11',
+      components: ['item'],
       name: 'commands.txt',
     },
     '12': {
@@ -75,6 +82,7 @@ export default {
     },
     '14': {
       id: '14',
+      components: ['item'],
       name: 'leaflet.txt',
       description: 'WELCOME TO **REVERIE FORGE**!'
     },
@@ -98,11 +106,13 @@ export default {
     },
     '19': {
       id: '19',
+      components: ['item'],
       name: 'mydoom.js',
       description: '```andy; I’m just doing my job, nothing personal, sorry,```'
     },
     '74': {
       id: '74',
+      components: ['item'],
       name: 'Hiro',
       description: `Last of the freelance hackers
         Greatest sword fighter in the world
@@ -114,6 +124,7 @@ export default {
     },
     '75': {
       id: '75',
+      components: ['item'],
       name: 'Raven',
       description: 'A large man with a tattoo on his forehead which reads "Poor Impulse Control"',
       maxHealth: 400,
@@ -154,14 +165,14 @@ export default {
           allowed: [
             {
               components: ['item', 'container'],
-              owners: ['player', 'room']
+              // owners: ['player', 'room']
             }
           ]
         },
         {
           allowed: [
             {
-              name: 'to'
+              names: ['to']
             }
           ]
         },
@@ -169,7 +180,7 @@ export default {
           allowed: [
             {
               components: ['container'],
-              owners: ['player', 'room']
+              // owners: ['player', 'room']
             }
           ]
         }

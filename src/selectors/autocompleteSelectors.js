@@ -1,10 +1,13 @@
-import { List, Map } from 'immutable';
+import { List, Map, Set } from 'immutable';
 import { createSelector } from 'reselect';
 import AllowedRecord from '../records/AllowedRecord';
+import CommandRecord from '../records/CommandRecord';
 
-const defaultFilter = new AllowedRecord({
-  types: List(['command', 'exit'])
-});
+const defaultFilters = List([
+  new AllowedRecord({
+    types: Set(['command', 'exit'])
+  })
+]);
 
 function applyAllowedOwners(objects, owners) {
   if (!owners.size) {
@@ -35,6 +38,14 @@ function applyAllowedTypes(objects, types) {
  *
  */
 export function applyAllowed(objects, allowed) {
+  if (allowed.names.size) {
+    return Set(allowed.names.map(name => {
+      return new CommandRecord({
+        name
+      });
+    }));
+  }
+
   return applyAllowedOwners(
     applyAllowedComponents(
       // filter by type, then flatten and combine to a single list
@@ -48,6 +59,19 @@ export function applyAllowed(objects, allowed) {
   );
 }
 
+function currentPart(parts, cursorIndex) {
+  let totalLength = 0;
+  let index = 0;
+  for (let part of parts) {
+    totalLength += part.length + 1;
+    if (cursorIndex <= totalLength) {
+      return index - 1;
+    }
+    index++;
+  }
+  return Infinity;
+}
+
 /*
  * Get a list of filters to apply to autocomplete by identifying the current command
  * (the first word) and determining the index of the currently-selected part by cursor location.
@@ -59,15 +83,15 @@ const commandAllowed = createSelector(
   ({ current, available, cursorIndex }) => {
     const parts = current.split(' ');
     if (parts.length === 1) {
-      return defaultFilter;
+      return defaultFilters;
     }
-    const rootCommand = available.filter(command => {
+    const rootCommand = available.find(command => {
       return command.name === parts[0];
     });
-    if (!rootCommand) return null;
-    
+    if (!rootCommand || !rootCommand.parts.size) return null;
+
     // now figure out what part we're in and return the "allowed" for that part
-    
+    return rootCommand.getIn(['parts', currentPart(parts, cursorIndex), 'allowed']);
   }
 );
 
@@ -88,13 +112,13 @@ export const availableOptions = createSelector(
     state => state.get('command').available,
   ],
   (fragment, allowed, entities, commands) => {
-    if (!allowed) return List();
+    if (!allowed || !allowed.size) return List();
 
     // All possible objects usable by autocomplete, keyed by type
     const objects = Map({ entity: entities, command: commands });
+    const filtered = allowed.flatMap(allow => applyAllowed(objects, allow));
 
-    return applyAllowed(objects, allowed)
-      .filter(item => item.name.includes(fragment))
+    return filtered.filter(item => item.name.includes(fragment))
       .sortBy(item => item.name.indexOf(fragment));
   }
 );
