@@ -19,7 +19,7 @@ export default {
 
   You are standing in an open field west of a white house, with a boarded front door.
 
-  - There is a [small mailbox](/items/13) here.
+  - There is a [small-mailbox](/items/13) here.
   - There is a [usb-drive](/items/18) here.
 
   - [Hiro](/characters/74) is here.

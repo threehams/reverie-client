@@ -1,5 +1,7 @@
 import { List, Map, Set } from 'immutable';
 import { createSelector } from 'reselect';
+
+import * as entitySelectors from './entitySelectors';
 import AllowedRecord from '../records/AllowedRecord';
 import CommandRecord from '../records/CommandRecord';
 
@@ -14,7 +16,7 @@ function applyAllowedOwners(objects, owners) {
     return objects;
   }
 
-  return objects.filter(object => object.owners.contains('player'));
+  return objects.filter(object => owners.contains(object.owner));
 }
 
 function applyAllowedComponents(objects, components) {
@@ -59,12 +61,14 @@ export function applyAllowed(objects, allowed) {
   );
 }
 
+// TODO gotta be a way to refactor this error-prone imperative code
+// also apparently it's broken when trying to do immediate autocomplete after complete
 function currentPart(parts, cursorIndex) {
   let totalLength = 0;
   let index = 0;
-  for (let part of parts) {
+  for (const part of parts) {
     totalLength += part.length + 1;
-    if (cursorIndex <= totalLength) {
+    if (cursorIndex <= totalLength - 1) {
       return index - 1;
     }
     index++;
@@ -108,18 +112,18 @@ export const availableOptions = createSelector(
   [
     autocompleteFragment,
     commandAllowed,
-    state => state.get('entities').toList(),
+    entitySelectors.entitiesWithPath,
     state => state.get('command').available,
   ],
   (fragment, allowed, entities, commands) => {
     if (!allowed || !allowed.size) return List();
 
     // All possible objects usable by autocomplete, keyed by type
-    const objects = Map({ entity: entities, command: commands });
+    const objects = Map({ entity: entities.toList(), command: commands });
     const filtered = allowed.flatMap(allow => applyAllowed(objects, allow));
 
     return filtered.filter(item => item.name.includes(fragment))
-      .sortBy(item => item.name.indexOf(fragment));
+      .sortBy(item => fragment.length ? item.name.indexOf(fragment) : item.name);
   }
 );
 

@@ -1,6 +1,7 @@
 import { Set } from 'immutable';
 
 import {
+  COMMAND_CLOSE_AUTOCOMPLETE,
   COMMAND_SELECT_AUTOCOMPLETE_ITEM,
   COMMAND_SET_CURSOR_INDEX,
   COMMAND_COMPLETE,
@@ -16,6 +17,8 @@ import CommandStateRecord from '../records/CommandStateRecord';
 
 export default function commandReducer(state = new CommandStateRecord(), action) {
   switch (action.type) {
+    case COMMAND_CLOSE_AUTOCOMPLETE:
+      return closeAutocomplete(state);
     case COMMAND_COMPLETE:
       if (!state.autocompleteOpen) return state;
       return completeCommand(state, action.payload);
@@ -24,8 +27,8 @@ export default function commandReducer(state = new CommandStateRecord(), action)
     case COMMAND_SELECT_AUTOCOMPLETE_ITEM:
       return state.set('autocompleteSelectedItem', action.payload.item);
     case COMMAND_SEND:
-      return state.update('history', history => history.push(action.payload.command))
-        .merge({ current: '', cursorIndex: 0 });
+      return closeAutocomplete(state.update('history', history => history.push(action.payload.command))
+        .merge({ current: '', cursorIndex: 0 }));
     case COMMAND_SET_CURRENT:
       return setCurrentCommand(state, action.payload);
     case COMMAND_SET_CURSOR_INDEX:
@@ -70,16 +73,19 @@ function setCursorIndex(state, index) {
 }
 
 function completeCommand(state, { command, cursorIndex, autocompleteItem }) {
-  const newCommand = state.set('current', replaceCommand(command, cursorIndex, autocompleteItem));
-  return closeAutocomplete(newCommand);
+  return replaceCommand(state, command, cursorIndex, autocompleteItem);
 }
 
-function replaceCommand(command, index, replacement) {
+function replaceCommand(state, command, index, replacement) {
   // Slice in half at index
   const tail = command.slice(index);
   const head = command.slice(0, index);
+  const lastSpace = head.lastIndexOf(' ') + 1;
   // Remove the expected autocomplete fragment from head, replace with replacement, tack on tail
-  return head.slice(0, head.lastIndexOf(' ') + 1) + replacement + (tail[0] === ' ' ? '' : ' ') + tail;
+  return state.merge({
+    current: head.slice(0, lastSpace) + replacement + (tail[0] === ' ' ? '' : ' ') + tail,
+    cursorIndex: lastSpace + replacement.length + 1
+  });
 }
 
 function closeAutocomplete(state) {

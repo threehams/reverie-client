@@ -67,13 +67,13 @@ wsServer.on('connection', function(ws) {
   // See expected meta/payload message structure in views/App.js
   // Follow Flux Standard Action, minus 'type'
   ws.on('message', (json) => {
-    const message = JSON.parse(json);
-    switch (message.command.toLowerCase().trim()) {
+    const command = JSON.parse(json).command.trim();
+    switch (command.toLowerCase().trim()) {
       case 'attack hiro':
         return sendMessage(fixtureAttackEnemySuccess);
       case 'attack raven':
         return sendMessage(fixtureAttackEnemyFailure);
-      case 'transfer readme.txt to usb-drive':
+      case 'transfer player/docs/readme.txt to floor/usb-drive':
         return sendMessage(fixtureMoveItemToContainer);
       case 'n':
       case 'north':
@@ -102,7 +102,7 @@ wsServer.on('connection', function(ws) {
       case 'take tmp':
         return sendMessage(fixtureInventoryAdd);
       default:
-        return sendMessage({ message: `I don't know how to ${message.command}.`});
+        return sendMessage({ message: `I don't know how to ${command}.`});
     }
   });
 });

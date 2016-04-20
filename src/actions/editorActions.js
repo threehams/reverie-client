@@ -9,7 +9,7 @@ export function setActiveView(id) {
   return {
     type: EDITOR_SET_ACTIVE_VIEW,
     payload: {
-      id: id
+      id
     }
   };
 }
@@ -18,7 +18,7 @@ export function addView(id) {
   return {
     type: EDITOR_ADD_VIEW,
     payload: {
-      id: id
+      id
     }
   };
 }
@@ -27,7 +27,7 @@ export function removeView(id) {
   return {
     type: EDITOR_REMOVE_VIEW,
     payload: {
-      id: id
+      id
     }
   };
 }

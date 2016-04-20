@@ -6,5 +6,8 @@ export default {
   default: {
     fontFamily: '"Open Sans", sans-serif',
     fontSize: 13
+  },
+  widths: {
+    monospace: 7.5
   }
 };

@@ -49,7 +49,7 @@ describe('Tab', function() {
       const onClickClose = sinon.spy();
       const stopPropagation = sinon.spy();
       const element = shallow(<Tab onClickClose={onClickClose}>Stuff</Tab>);
-      const event = { stopPropagation: stopPropagation };
+      const event = { stopPropagation };
       element.find(Icon).props().onClick(event);
       expect(onClickClose).to.have.been.called();
       expect(stopPropagation).to.have.been.called();

@@ -11,6 +11,8 @@ export default Record({
   currentHealth: 0,
   currentMemory: 0,
   currentStorage: 0,
+  owner: null,
+  path: '',
   quantity: 1,
   maxHealth: 0,
   maxMemory: 0,

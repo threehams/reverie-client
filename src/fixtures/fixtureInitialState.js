@@ -77,7 +77,7 @@ export default {
     '13': {
       id: '13',
       components: ['container'],
-      name: 'small mailbox',
+      name: 'small-mailbox',
       entities: ['14']
     },
     '14': {
@@ -112,7 +112,7 @@ export default {
     },
     '74': {
       id: '74',
-      components: ['item'],
+      components: ['creature'],
       name: 'Hiro',
       description: `Last of the freelance hackers
         Greatest sword fighter in the world
@@ -124,7 +124,7 @@ export default {
     },
     '75': {
       id: '75',
-      components: ['item'],
+      components: ['creature'],
       name: 'Raven',
       description: 'A large man with a tattoo on his forehead which reads "Poor Impulse Control"',
       maxHealth: 400,
@@ -138,8 +138,8 @@ export default {
         {
           allowed: [
             {
-              components: ['item'],
-              owners: ['room']
+              components: ['item', 'container'],
+              owners: ['floor']
             }
           ]
         }
@@ -151,7 +151,7 @@ export default {
         {
           allowed: [
             {
-              components: ['item'],
+              components: ['item', 'container'],
               owners: ['player']
             }
           ]
@@ -165,7 +165,7 @@ export default {
           allowed: [
             {
               components: ['item', 'container'],
-              // owners: ['player', 'room']
+              owners: ['player', 'floor']
             }
           ]
         },
@@ -180,7 +180,7 @@ export default {
           allowed: [
             {
               components: ['container'],
-              // owners: ['player', 'room']
+              owners: ['player', 'floor']
             }
           ]
         }
@@ -191,7 +191,7 @@ export default {
 
   You are standing in an open field west of a white house, with a boarded front door.
 
-  - There is a [small mailbox](/items/13) here.
+  - There is a [small-mailbox](/items/13) here.
   - There is a [usb-drive](/items/18) here.
 
   - [Hiro](/characters/74) is here.
