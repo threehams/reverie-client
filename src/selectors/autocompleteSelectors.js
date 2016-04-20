@@ -123,7 +123,27 @@ export const availableOptions = createSelector(
     const filtered = allowed.flatMap(allow => applyAllowed(objects, allow));
 
     return filtered.filter(item => item.name.includes(fragment))
-      .sortBy(item => fragment.length ? item.name.indexOf(fragment) : item.name);
+    .sort((a, b) => {
+      // If there's no fragment, sort by path, then name.
+      if (!fragment.length) {
+        if (a.path > b.path) return 1;
+        if (a.path < b.path) return -1;
+        if (a.name > b.name) return 1;
+        if (a.name < b.name) return -1;
+        return 0;
+      }
+
+      // If there's a fragment, sort by first character with that fragment, then path, then name.
+      const aIndex = a.name.indexOf(fragment);
+      const bIndex = b.name.indexOf(fragment);
+      if (aIndex > bIndex) return 1;
+      if (aIndex < bIndex) return -1;
+      if (a.path > b.path) return 1;
+      if (a.path < b.path) return -1;
+      if (a.name > b.name) return 1;
+      if (a.name < b.name) return -1;
+      return 0;
+    });
   }
 );
 
