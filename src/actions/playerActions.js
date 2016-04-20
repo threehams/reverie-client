@@ -14,7 +14,7 @@ export function setActiveView(name) {
   return {
     type: PLAYER_SET_ACTIVE_VIEW,
     payload: {
-      name: name
+      name
     }
   };
 }
@@ -39,13 +39,13 @@ export function locateItem(id) {
     dispatch({
       type: INVENTORY_EXPAND_ITEMS,
       payload: {
-        ids: ids
+        ids
       }
     });
     dispatch({
       type: EDITOR_SELECT_ITEMS,
       payload: {
-        ids: ids
+        ids
       }
     });
   };

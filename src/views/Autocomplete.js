@@ -4,14 +4,20 @@ import Radium from 'radium';
 import shallowCompare from 'react-addons-shallow-compare';
 import EntityRecord from '../records/EntityRecord';
 import CommandRecord from '../records/CommandRecord';
+import fontStyles from '../styles/font';
 
 export class Autocomplete extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
   }
 
+  componentDidUpdate() {
+    if (this.selectedItem) {
+      this.selectedItem.scrollIntoView(false);
+    }
+  }
+
   static propTypes = {
-    bottom: PropTypes.number,
     fragment: PropTypes.string,
     focused: PropTypes.bool,
     left: PropTypes.number,
@@ -19,8 +25,7 @@ export class Autocomplete extends React.Component {
     selectedItem: PropTypes.oneOfType([
       PropTypes.instanceOf(CommandRecord),
       PropTypes.instanceOf(EntityRecord)
-    ]),
-    onKeyDown: PropTypes.func
+    ])
   };
 
   splitOption(option, fragment) {
@@ -31,6 +36,7 @@ export class Autocomplete extends React.Component {
   render() {
     const { fragment, focused, options, selectedItem } = this.props;
     if (!options || !options.size) return <div></div>;
+    const maxOptionLength = Math.max(...options.map(option => option.name.length));
     return (
       <ul style={[styles.panel.global, focused ? styles.panel.focused : styles.panel.unfocused]}>
         {
@@ -43,12 +49,20 @@ export class Autocomplete extends React.Component {
                 focused ? styles.item.focused : styles.item.unfocused,
                 option === selectedItem ? styles.itemSelected.unfocused : null
               ]}
+              ref={(item) => {
+                if (option === selectedItem) this.selectedItem = item;
+              }}
             >
-              <span>
+              <span style={{display: 'inline-block', width: fontStyles.widths.monospace * (maxOptionLength + 1) }}>
                 { optionSplit[0] }
                 <span style={styles.selectedPart.unfocused}>{ optionSplit[1] }</span>
                 { optionSplit[2] }
               </span>
+              {
+                option.path && <span>
+                  { `(${option.path})` }
+                </span>
+              }
             </li>;
           })
         }
@@ -66,7 +80,8 @@ const styles = {
       bottom: 30,
       border: '1px solid #c0c0c0',
       maxHeight: '10vh',
-      maxWidth: '20vw',
+      maxWidth: '50vw',
+      overflowY: 'scroll',
       backgroundColor: '#ebf4fe'
     }
   },

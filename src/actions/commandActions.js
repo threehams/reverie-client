@@ -1,5 +1,6 @@
 import socket from '../socket';
 import {
+  COMMAND_CLOSE_AUTOCOMPLETE,
   COMMAND_COMPLETE,
   COMMAND_SELECT_AUTOCOMPLETE_ITEM,
   COMMAND_SEND,
@@ -17,7 +18,7 @@ export function clear() {
 export function sendCommand(command) {
   return (dispatch) => {
     socket.send(JSON.stringify({
-      command: command
+      command
     }));
     dispatch({
       type: COMMAND_SEND,
@@ -32,9 +33,9 @@ export function completeCommand(command, cursorIndex, autocompleteItem) {
   return {
     type: COMMAND_COMPLETE,
     payload: {
-      command: command,
+      command,
       cursorIndex,
-      autocompleteItem: autocompleteItem.name
+      autocompleteItem: autocompleteItem.path || autocompleteItem.name
     }
   };
 }
@@ -64,7 +65,7 @@ export function selectNextAutocompleteItem(options, current) {
   return {
     type: COMMAND_SELECT_AUTOCOMPLETE_ITEM,
     payload: {
-      item: item
+      item
     }
   };
 }
@@ -75,7 +76,13 @@ export function selectPreviousAutocompleteItem(options, current) {
   return {
     type: COMMAND_SELECT_AUTOCOMPLETE_ITEM,
     payload: {
-      item: item
+      item
     }
+  };
+}
+
+export function closeAutocomplete() {
+  return {
+    type: COMMAND_CLOSE_AUTOCOMPLETE
   };
 }

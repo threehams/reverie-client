@@ -63,8 +63,8 @@ class MarkdownLink extends React.Component {
   onClick(event) {
     event.preventDefault();
     const { href } = this.props;
-    const [type, id] = href.split('/').slice(1);
-    switch (type) {
+    const [route, id] = href.split('/').slice(1);
+    switch (route) {
       case 'exits':
         return this.props.move(id);
       case 'characters':
@@ -72,7 +72,7 @@ class MarkdownLink extends React.Component {
       case 'items':
         return this.props.locateItem(id);
       default:
-        throw new Error('Cannot handle type: ', type); // eslint-disable-line no-console
+        throw new Error('Cannot handle route: ', route); // eslint-disable-line no-console
     }
   }
 

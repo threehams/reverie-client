@@ -25,6 +25,7 @@ export class DebuggerPrompt extends React.Component {
       PropTypes.instanceOf(CommandRecord),
       PropTypes.instanceOf(EntityRecord)
     ]),
+    closeAutocomplete: PropTypes.func,
     completeCommand: PropTypes.func,
     currentCommand: PropTypes.string,
     selectNextAutocompleteItem: PropTypes.func,
@@ -43,13 +44,22 @@ export class DebuggerPrompt extends React.Component {
   // Decide, based on event, whether to select next or previous.
   // Keep here, but change. Index is unreliable.
   selectOption(event) {
-    const { autocompleteOptions, selectNextAutocompleteItem, autocompleteSelectedItem, selectPreviousAutocompleteItem } = this.props;
+    const {
+      autocompleteOptions,
+      selectNextAutocompleteItem,
+      autocompleteSelectedItem,
+      selectPreviousAutocompleteItem,
+      closeAutocomplete
+    } = this.props;
     if (event.key === 'ArrowUp') {
       event.preventDefault();
       selectPreviousAutocompleteItem(autocompleteOptions, autocompleteSelectedItem);
     } else if (event.key === 'ArrowDown') {
       event.preventDefault();
       selectNextAutocompleteItem(autocompleteOptions, autocompleteSelectedItem);
+    } else if (event.key === 'Escape') {
+      event.preventDefault();
+      closeAutocomplete();
     }
   }
 
@@ -61,9 +71,9 @@ export class DebuggerPrompt extends React.Component {
   // Keep 'if autocompleteOpen' conditional, move everything else into action creator.
   submit(event) {
     event.preventDefault();
-    const { autocompleteOpen, completeCommand, currentCommand, autocompleteSelectedItem, sendCommand} = this.props;
+    const { autocompleteOpen, autocompleteOptions, completeCommand, currentCommand, autocompleteSelectedItem, sendCommand } = this.props;
     const cursorIndex = ReactDOM.findDOMNode(this.input).selectionStart;
-    if (autocompleteOpen) {
+    if (autocompleteOpen && autocompleteOptions.size) {
       completeCommand(currentCommand, cursorIndex, autocompleteSelectedItem);
     } else {
       sendCommand(currentCommand);
@@ -76,9 +86,9 @@ export class DebuggerPrompt extends React.Component {
       <form onSubmit={::this.submit}>
         {
           autocompleteOpen &&
-            <Autocomplete fragment={autocompleteFragment}
-                          options={autocompleteOptions}
-                          selectedItem={autocompleteSelectedItem} />
+          <Autocomplete fragment={autocompleteFragment}
+                        options={autocompleteOptions}
+                        selectedItem={autocompleteSelectedItem}/>
         }
         <input id="prompt"
                type="text"
@@ -104,11 +114,11 @@ const styles = {
 
 export const mapStateToProps = (state) => {
   return {
-    autocompleteFragment: state.getIn(['command', 'autocompleteFragment']),
+    autocompleteFragment: autocompleteSelectors.autocompleteFragment(state),
     autocompleteOpen: state.getIn(['command', 'autocompleteOpen']),
-    currentCommand: state.getIn(['command', 'current']),
     autocompleteOptions: autocompleteSelectors.availableOptions(state),
-    autocompleteSelectedItem: autocompleteSelectors.selectedOption(state)
+    autocompleteSelectedItem: autocompleteSelectors.selectedOption(state),
+    currentCommand: state.getIn(['command', 'current']),
   };
 };
 

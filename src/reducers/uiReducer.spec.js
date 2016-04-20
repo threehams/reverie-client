@@ -4,7 +4,7 @@ import expect from '../__test__/configureExpect';
 import uiReducer from './uiReducer';
 import * as inventoryActions from '../actions/inventoryActions';
 import * as editorActions from '../actions/editorActions';
-import { SET_STATE } from '../actions/actionTypes';
+import { SET_STATE, EDITOR_SELECT_ITEMS } from '../actions/actionTypes';
 import * as socketActions from '../actions/socketActions';
 import UiRecord from '../records/UiRecord';
 
@@ -63,7 +63,7 @@ describe('uiReducer', function() {
     it('sets the items to the list given', function() {
       const initial = new UiRecord({});
       const action = {
-        type: 'EDITOR_SELECT_ITEMS',
+        type: EDITOR_SELECT_ITEMS,
         payload: {
           ids: List(['2', '3', '4'])
         }

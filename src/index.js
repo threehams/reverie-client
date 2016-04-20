@@ -11,7 +11,7 @@ import App from './views/App';
 import configureStore from './configureStore';
 import socket from './socket';
 
-import * as initialActions from './actions/initialActions';
+import * as messageActions from './actions/messageActions';
 import * as socketActions from './actions/socketActions';
 
 const store = configureStore(Map());
@@ -43,7 +43,7 @@ socket.onmessage = function(event) {
 
   // If this is an initial state message, and we're reconnecting, don't apply it.
   // Otherwise, it'll duplicate the location message.
-  const actionCreator = message.meta.initial ? initialActions.setInitialState : initialActions.setState;
+  const actionCreator = message.meta.initial ? messageActions.setInitialState : messageActions.setState;
   store.dispatch(actionCreator(message.payload));
 };
 

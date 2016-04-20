@@ -10,7 +10,7 @@ export function toggleExpand(id) {
   return {
     type: INVENTORY_TOGGLE_EXPAND,
     payload: {
-      id: id
+      id
     }
   };
 }
@@ -29,6 +29,7 @@ export function selectItem(selectId, containerId, options = {}) {
   return (dispatch, getState) => {
 
     // this is the poster child for TDD
+    // TODO replace let with function call
     let ids;
     if (options.multiple) {
       const state = getState();
@@ -66,7 +67,7 @@ export function toggleItem(id) {
   return {
     type: INVENTORY_TOGGLE_SELECT,
     payload: {
-      id: id
+      id
     }
   };
 }
