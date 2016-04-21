@@ -2,9 +2,11 @@ import React, { PropTypes } from 'react';
 import {List} from 'immutable';
 import Radium from 'radium';
 import shallowCompare from 'react-addons-shallow-compare';
-import EntityRecord from '../records/EntityRecord';
-import CommandRecord from '../records/CommandRecord';
 import fontStyles from '../styles/font';
+
+import CommandRecord from '../records/CommandRecord';
+import EntityRecord from '../records/EntityRecord';
+import ExitRecord from '../records/ExitRecord';
 
 export class Autocomplete extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
@@ -24,7 +26,8 @@ export class Autocomplete extends React.Component {
     options: PropTypes.instanceOf(List),
     selectedItem: PropTypes.oneOfType([
       PropTypes.instanceOf(CommandRecord),
-      PropTypes.instanceOf(EntityRecord)
+      PropTypes.instanceOf(EntityRecord),
+      PropTypes.instanceOf(ExitRecord)
     ])
   };
 

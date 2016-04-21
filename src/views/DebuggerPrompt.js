@@ -9,8 +9,9 @@ import * as autocompleteSelectors from '../selectors/autocompleteSelectors';
 import * as commandActions from '../actions/commandActions';
 import Autocomplete from './Autocomplete';
 import panelStyles from '../styles/panel';
-import EntityRecord from '../records/EntityRecord';
 import CommandRecord from '../records/CommandRecord';
+import EntityRecord from '../records/EntityRecord';
+import ExitRecord from '../records/ExitRecord';
 
 export class DebuggerPrompt extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
@@ -23,7 +24,8 @@ export class DebuggerPrompt extends React.Component {
     autocompleteOptions: PropTypes.instanceOf(List),
     autocompleteSelectedItem: PropTypes.oneOfType([
       PropTypes.instanceOf(CommandRecord),
-      PropTypes.instanceOf(EntityRecord)
+      PropTypes.instanceOf(EntityRecord),
+      PropTypes.instanceOf(ExitRecord)
     ]),
     closeAutocomplete: PropTypes.func,
     completeCommand: PropTypes.func,

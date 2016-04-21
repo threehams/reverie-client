@@ -1,4 +1,4 @@
-import { Set } from 'immutable';
+import { List, Set } from 'immutable';
 
 import {
   COMMAND_CLOSE_AUTOCOMPLETE,
@@ -46,6 +46,7 @@ export default function commandReducer(state = new CommandStateRecord(), action)
 
 function createCommandRecord(command) {
   const nestedRecord = command.update('parts', parts => {
+    if (!parts) return List();
     return parts.map(part => {
       const allowedRecord = part.update('allowed', allowed => {
         return allowed.map(allow => {

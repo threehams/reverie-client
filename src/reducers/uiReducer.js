@@ -68,6 +68,6 @@ function setState(state, action) {
   }, state);
 
   // If player or location are provided, merge them into the state
-  const newState = Map({ player: action.payload.player, location: action.payload.location});
+  const newState = Map({ player: action.payload.player });
   return entitiesRemoved.mergeWith((prev, next) => next || prev, newState);
 }

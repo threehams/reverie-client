@@ -1,5 +1,11 @@
 export default {
   player: '17',
+  location: {
+    name: 'Field',
+    description: 'This is a field. No big deal.',
+    entities: ['13', '18'],
+    exits: ['north']
+  },
   entities: {
     '1': {
       id: '1',
@@ -65,14 +71,6 @@ export default {
       id: '11',
       components: ['item'],
       name: 'commands.txt',
-    },
-    '12': {
-      id: '12',
-      name: 'Field',
-      components: ['Room'],
-      description: 'This is a field. No big deal.',
-      entities: ['13', '17', '18'],
-      exits: ['20', '21']
     },
     '13': {
       id: '13',
@@ -185,7 +183,96 @@ export default {
           ]
         }
       ]
-    }
+    },
+    {
+      name: 'move',
+      parts: [
+        {
+          allowed: [
+            {
+              components: ['item', 'container'],
+              owners: ['player', 'floor']
+            }
+          ]
+        },
+        {
+          allowed: [
+            {
+              names: ['to']
+            }
+          ]
+        },
+        {
+          allowed: [
+            {
+              components: ['container'],
+              owners: ['player', 'floor']
+            }
+          ]
+        }
+      ]
+    },
+    {
+      name: 'say'
+    },
+    {
+      name: 'help'
+    },
+    {
+      name: 'look',
+      parts: [
+        {
+          allowed: [
+            {
+              types: ['entity'],
+              owners: ['player', 'floor']
+            },
+            {
+              types: ['exit']
+            }
+          ]
+        }
+      ]
+    },
+    {
+      name: 'tell',
+      parts: [
+        {
+          allowed: [
+            {
+              types: ['entity'],
+              components: ['creature', 'player']
+            }
+          ]
+        }
+      ]
+    },
+    {
+      name: 'attack',
+      parts: [
+        {
+          allowed: [
+            {
+              types: ['entity'],
+              components: ['creature', 'player']
+            }
+          ]
+        }
+      ]
+    },
+    {
+      name: 'kill',
+      parts: [
+        {
+          allowed: [
+            {
+              types: ['entity'],
+              components: ['creature', 'player']
+            }
+          ]
+        }
+      ]
+    },
   ],
   message: `# West of House
 

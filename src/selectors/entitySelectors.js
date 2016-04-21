@@ -14,19 +14,18 @@ export const entitiesWithPath = createSelector(
   [
     state => state.get('entities'),
     state => state.getIn(['ui', 'player']),
-    state => state.getIn(['ui', 'location'])
+    state => state.get('location')
   ],
   (entities, player, location) => {
     const playerEntity = entities.get(player);
-    const locationEntity = entities.get(location);
     let newEntities = entities;
     if (playerEntity) {
       playerEntity.entities.forEach(entityId => {
         newEntities = addPaths(newEntities.get(entityId), newEntities, 'player', 'player');
       });
     }
-    if (locationEntity) {
-      locationEntity.entities.forEach(entityId => {
+    if (location) {
+      location.entities.forEach(entityId => {
         newEntities = addPaths(newEntities.get(entityId), newEntities, 'floor', 'floor');
       });
     }

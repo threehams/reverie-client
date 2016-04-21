@@ -3,6 +3,7 @@ export default {
     '74': {
       id: '74',
       name: 'Hiro',
+      components: ['creature'],
       description: `Last of the freelance hackers
         Greatest sword fighter in the world
         Stringer, Central Intelligence Corporation
