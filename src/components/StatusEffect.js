@@ -50,6 +50,9 @@ export class StatusEffect extends React.Component {
         return child;
       }
       return child.split(' ').map(word => {
+        if (Math.random() < 0.05) {
+          return 'a'.repeat(word.length);
+        }
         if (word[word.length - 1] !== '.') return word;
         return word.substr(0, word.length - 1) + '!';
       }).join(' ');
