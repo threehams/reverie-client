@@ -7,6 +7,5 @@ export default Record({
   editorViews: OrderedSet(['0']),
   inventoryExpandedById: Set(),
   player: null,
-  location: null,
   selectedItems: OrderedSet(),
 });

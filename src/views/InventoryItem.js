@@ -9,6 +9,7 @@ import DropdownArrow from '../components/DropdownArrow';
 import * as inventoryActions from '../actions/inventoryActions';
 import * as editorActions from '../actions/editorActions';
 import EntityRecord from '../records/EntityRecord';
+import * as entitySelectors from '../selectors/entitySelectors';
 
 const TYPE_ICONS = {
   container: 'folder-o',
@@ -117,7 +118,8 @@ export class InventoryItem extends React.Component {
 const inventoryItemSource = {
   beginDrag(props) {
     return {
-      id: props.item.id
+      id: props.item.id,
+      path: props.item.path
     };
   }
 };
@@ -125,11 +127,11 @@ const inventoryItemSource = {
 const inventoryItemTarget = {
   drop(props, monitor) {
     const item = monitor.getItem();
-    props.moveItem(item.id, props.item.id);
+    props.moveItem(item.path, props.item.path);
   },
   canDrop(props, monitor) {
     const item = monitor.getItem();
-    return props.item.components.contains('Container') && item.id !== props.item.id;
+    return props.item.components.contains('container') && item.id !== props.item.id;
   }
 };
 
@@ -154,7 +156,7 @@ const DraggableInventoryItem = DragSource('INVENTORY_ITEM', inventoryItemSource,
 const InventoryItemContainer = connect(
   (state, props) => {
     return {
-      item: state.getIn(['entities', props.id]),
+      item: entitySelectors.entitiesWithPath(state).get(props.id),
       selected: state.getIn(['ui', 'selectedItems']).contains(props.id),
       expanded: props.expanded || !!state.getIn(['ui', 'inventoryExpandedById']).contains(props.id)
     };

@@ -22,7 +22,7 @@ export default class Loader extends React.Component {
         </div>
       );
     }
-    return this.props.children;
+    return <div>{ this.props.children }</div>;
   }
 }
 

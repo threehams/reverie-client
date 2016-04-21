@@ -4,6 +4,7 @@ import { createSelector } from 'reselect';
 import * as entitySelectors from './entitySelectors';
 import AllowedRecord from '../records/AllowedRecord';
 import CommandRecord from '../records/CommandRecord';
+import ExitRecord from '../records/ExitRecord';
 
 const defaultFilters = List([
   new AllowedRecord({
@@ -62,7 +63,6 @@ export function applyAllowed(objects, allowed) {
 }
 
 // TODO gotta be a way to refactor this error-prone imperative code
-// also apparently it's broken when trying to do immediate autocomplete after complete
 function currentPart(parts, cursorIndex) {
   let totalLength = 0;
   let index = 0;
@@ -99,6 +99,16 @@ const commandAllowed = createSelector(
   }
 );
 
+/*
+ * Determine the part of the command which should be considered for autocomplete,
+ * which is the current whitespace-separated part up to the cursor.
+ * Example:
+ *
+ * command:      get inven
+ * cursor index: 6
+ * fragment:     in
+ *
+ */
 export const autocompleteFragment = createSelector(
   [
     state => state.get('command')
@@ -108,23 +118,38 @@ export const autocompleteFragment = createSelector(
   }
 );
 
+/*
+ * Creates a list of available options for autocomplete based on the rules for the command.
+ * Current command is derived from command + cursor location.
+ *
+ */
 export const availableOptions = createSelector(
   [
     autocompleteFragment,
     commandAllowed,
     entitySelectors.entitiesWithPath,
     state => state.get('command').available,
+    state => state.getIn(['location', 'exits']) || List()
   ],
-  (fragment, allowed, entities, commands) => {
+  (fragment, allowed, entities, commands, exits) => {
     if (!allowed || !allowed.size) return List();
 
     // All possible objects usable by autocomplete, keyed by type
-    const objects = Map({ entity: entities.toList(), command: commands });
+    const objects = Map({
+      entity: entities.toList(),
+      command: commands,
+      exit: exits.map(exit => { return new ExitRecord({ name: exit }); })
+    });
     const filtered = allowed.flatMap(allow => applyAllowed(objects, allow));
 
     return filtered.filter(item => item.name.includes(fragment))
     .sort((a, b) => {
-      // If there's no fragment, sort by path, then name.
+      // reminder:
+      // Return 0 if the elements should not be swapped.
+      // Return -1 (or any negative number) if valueA comes before valueB
+      // Return 1 (or any positive number) if valueA comes after valueB
+
+      // If there's no fragment, sort by exit first, then path, then name.
       if (!fragment.length) {
         if (a.path > b.path) return 1;
         if (a.path < b.path) return -1;
@@ -133,11 +158,16 @@ export const availableOptions = createSelector(
         return 0;
       }
 
-      // If there's a fragment, sort by first character with that fragment, then path, then name.
+      // TODO this can be refactored - subtrack aIndex and bIndex. don't know the order.
+      // If there's a fragment, sort by first character with that fragment, then exits first, then path, then name.
       const aIndex = a.name.indexOf(fragment);
       const bIndex = b.name.indexOf(fragment);
       if (aIndex > bIndex) return 1;
       if (aIndex < bIndex) return -1;
+      const aExit = (a instanceof ExitRecord);
+      const bExit = (b instanceof ExitRecord);
+      if (!aExit && bExit) return 1;
+      if (aExit && !bExit) return -1;
       if (a.path > b.path) return 1;
       if (a.path < b.path) return -1;
       if (a.name > b.name) return 1;

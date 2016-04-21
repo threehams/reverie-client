@@ -15,32 +15,28 @@ export function toggleExpand(id) {
   };
 }
 
-export function moveItem(sourceId, targetId) {
-  return (dispatch, getState) => {
-    const entities = getState().get('entities');
-    const source = entities.get(sourceId);
-    const target = entities.get(targetId);
-    dispatch(commandActions.sendCommand(`move ${source.name} to ${target.name}`));
-  };
+export function moveItem(sourcePath, targetPath) {
+  return commandActions.sendCommand(`transfer ${sourcePath} to ${targetPath}`);
 }
 
 // options: { multiple: true/false }
 export function selectItem(selectId, containerId, options = {}) {
   return (dispatch, getState) => {
 
-    // this is the poster child for TDD
-    // TODO replace let with function call
-    let ids;
-    if (options.multiple) {
+    /*
+     * Build a list of item IDs for selection based on the first item selected in state
+     * and the one currently being selected.
+     */
+    function createIdRange() {
       const state = getState();
       const selectedId = state.getIn(['ui', 'selectedItems']).first();
       const entityList = getEntityChildren(containerId, state.get('entities'));
       const first = entityList.findIndex(id => id === selectedId);
       const last = entityList.findIndex(id => id === selectId);
-      ids = List(entityList.slice(Math.min(first, last), Math.max(first, last) + 1));
-    } else {
-      ids = List([selectId]);
+      return List(entityList.slice(Math.min(first, last), Math.max(first, last) + 1));
     }
+
+    const ids = options.multiple ? createIdRange() : List([selectId]);
 
     dispatch({
       type: EDITOR_SELECT_ITEMS,
