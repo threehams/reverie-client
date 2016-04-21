@@ -1,10 +1,16 @@
 import React, { PropTypes } from 'react';
 import Radium from 'radium';
+import shallowCompare from 'react-addons-shallow-compare';
 
 import Icon from '../components/Icon';
+import StatusEffect from '../components/StatusEffect';
 import EntityRecord from '../records/EntityRecord';
 
 export class Player extends React.Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
+
   static propTypes = {
     player: PropTypes.instanceOf(EntityRecord)
   };
@@ -15,13 +21,13 @@ export class Player extends React.Component {
       <div style={styles.container}>
         <ul style={styles.left}>
           <li>
-            Health
+            <StatusEffect>Health</StatusEffect>
           </li>
           <li>
-            Memory
+            <StatusEffect>Memory</StatusEffect>
           </li>
           <li>
-            Storage
+            <StatusEffect>Storage</StatusEffect>
           </li>
         </ul>
         <ul style={styles.right}>

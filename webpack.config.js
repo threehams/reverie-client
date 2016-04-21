@@ -1,5 +1,6 @@
 /* eslint-env node */
 /* eslint no-process-env:0 */
+/* eslint no-var:0 */
 
 var path = require('path');
 var webpack = require('webpack');

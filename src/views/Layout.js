@@ -11,6 +11,7 @@ import DebuggerPrompt from './DebuggerPrompt';
 import Loader from '../components/Loader';
 import EntityRecord from '../records/EntityRecord';
 import LocationRecord from '../records/LocationRecord';
+import StatusEffect from '../components/StatusEffect';
 
 import TabContainer from '../components/TabContainer';
 import Tab from '../components/Tab';
@@ -47,11 +48,11 @@ export class Layout extends React.Component {
               <TabContainer equalWidth>
                 <Tab onClick={() => setActiveView('inventory') }
                      active={activePlayerView === 'inventory'}>
-                  <Icon name="folder-o" before /> Inventory
+                  <StatusEffect><Icon name="folder-o" before /> <StatusEffect>Inventory</StatusEffect></StatusEffect>
                 </Tab>
                 <Tab onClick={() => setActiveView('character') }
                      active={activePlayerView === 'character'}>
-                  <Icon name="user" before /> Character
+                  <StatusEffect><Icon name="user" before /> <StatusEffect>Character</StatusEffect></StatusEffect>
                 </Tab>
               </TabContainer>
               { activePlayerView === 'inventory' && <Inventory ids={player.entities} /> }
@@ -60,7 +61,7 @@ export class Layout extends React.Component {
             <div style={[styles.sidebarSection, { borderTop: panelStyles.border}]}>
               <TabContainer>
                 <Tab active>
-                  Floor
+                  <StatusEffect>Floor</StatusEffect>
                 </Tab>
               </TabContainer>
               <Inventory ids={location.entities} />

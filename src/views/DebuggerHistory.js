@@ -4,6 +4,8 @@ import {List} from 'immutable';
 import Radium from 'radium';
 import shallowCompare from 'react-addons-shallow-compare';
 
+import StatusEffect from '../components/StatusEffect';
+
 export class DebuggerHistory extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
@@ -19,7 +21,7 @@ export class DebuggerHistory extends React.Component {
       <ul style={styles.main}>
         {
           history.map((command, index) => {
-            return <li style={styles.item} key={index}>{command}</li>;
+            return <li style={styles.item} key={index}><StatusEffect>{command}</StatusEffect></li>;
           })
         }
       </ul>

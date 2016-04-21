@@ -1,5 +1,6 @@
 /* eslint-env node */
 /* eslint no-process-env:0 no-console:0 */
+/* eslint no-var:0 */
 'use strict';
 var deploy = process.env.DEPLOY;
 

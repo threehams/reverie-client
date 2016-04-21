@@ -285,5 +285,6 @@ export default {
   - [Raven](/characters/75) is here.
 
   Exits:
-  - [North](/exits/north)`
+  - [North](/exits/north)`,
+  statusEffects: ['panic'],
 };

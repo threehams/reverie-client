@@ -8,4 +8,5 @@ export default Record({
   inventoryExpandedById: Set(),
   player: null,
   selectedItems: OrderedSet(),
+  statusEffects: Set(),
 });
