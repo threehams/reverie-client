@@ -67,8 +67,15 @@ function setState(state, action) {
       .update('inventoryExpandedById', expanded => expanded.remove(id));
   }, state);
 
-  const withEffects = entitiesRemoved.set('statusEffects', action.payload.statusEffects);
+  const withEffects = setStatusEffects(entitiesRemoved, action);
   // If player or location are provided, merge them into the state
   const newState = Map({ player: action.payload.player });
   return withEffects.mergeWith((prev, next) => next || prev, newState);
+}
+
+function setStatusEffects(state, action) {
+  if (action.payload.statusEffects) {
+    return state.set('statusEffects', action.payload.statusEffects);
+  }
+  return state;
 }
