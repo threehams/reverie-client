@@ -1,5 +1,6 @@
 import React, { Children, PropTypes } from 'react';
 import Radium from 'radium';
+import { connect } from 'react-redux';
 import { Set } from 'immutable';
 import shallowCompare from 'react-addons-shallow-compare';
 
@@ -24,10 +25,7 @@ export class StatusEffect extends React.Component {
   }
 
   static propTypes = {
-    children: PropTypes.node
-  };
-
-  static contextTypes = {
+    children: PropTypes.node,
     statusEffects: PropTypes.instanceOf(Set)
   };
 
@@ -59,8 +57,7 @@ export class StatusEffect extends React.Component {
   }
 
   render() {
-    console.log(this.context.statusEffects);
-    const { statusEffects } = this.context;
+    const { statusEffects } = this.props;
     const panicking = statusEffects.includes('panic');
     const onFire = statusEffects.includes('fire');
     const confused = statusEffects.includes('confusion');
@@ -77,7 +74,11 @@ export class StatusEffect extends React.Component {
   }
 }
 
-export default Radium(StatusEffect);
+export default connect(state => {
+  return {
+    statusEffects: state.getIn(['ui', 'statusEffects'])
+  };
+})(Radium(StatusEffect));
 
 const styles = {
   fire: {

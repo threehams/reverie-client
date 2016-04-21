@@ -10,8 +10,9 @@ export default {
         Specializing in software-related intel
         (music, movies & microcode)`,
       maxHealth: 200,
-      currentHealth: 199
+      currentHealth: 200
     }
   },
-  message: 'While flailing around, you manage to scratch Hiro.'
+  message: 'Hiro smacks you with his redneck katana! You stagger...',
+  statusEffects: ['confusion']
 };

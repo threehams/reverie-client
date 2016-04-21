@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import { Provider } from 'react-redux';
 import Html5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
-import StatusEffectRoot from './StatusEffectRoot';
 
 import Layout from './Layout';
 
@@ -14,9 +13,7 @@ class App extends React.Component {
   render() {
     return (
       <Provider store={this.props.store}>
-        <StatusEffectRoot>
-          <Layout />
-        </StatusEffectRoot>
+        <Layout />
       </Provider>
     );
   }

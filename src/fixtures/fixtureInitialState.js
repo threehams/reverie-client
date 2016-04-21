@@ -286,5 +286,4 @@ export default {
 
   Exits:
   - [North](/exits/north)`,
-  statusEffects: ['panic'],
 };
