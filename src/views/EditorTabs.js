@@ -5,6 +5,7 @@ import shallowCompare from 'react-addons-shallow-compare';
 import Loader from '../components/Loader';
 import TabContainer from '../components/TabContainer';
 import Tab from '../components/Tab';
+import StatusEffect from '../components/StatusEffect';
 
 export default class EditorTabs extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
@@ -29,7 +30,7 @@ export default class EditorTabs extends React.Component {
             if (view === '0') {
               return (
                 <Tab key={index} active={activeView === '0'} onClick={ () => setActiveView('0') }>
-                  index.js
+                  <StatusEffect>index.js</StatusEffect>
                 </Tab>
               );
             }
@@ -38,7 +39,7 @@ export default class EditorTabs extends React.Component {
                    active={view === activeView}
                    onClick={ () => setActiveView(view) }
                    onClickClose={ () => removeView(view)}>
-                {entity.name}
+                <StatusEffect>{entity.name}</StatusEffect>
               </Tab> :
               <Loader key={index} />;
           })

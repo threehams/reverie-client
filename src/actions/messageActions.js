@@ -1,4 +1,4 @@
-import { fromJS, List, Map } from 'immutable';
+import { fromJS, List, Map, Set } from 'immutable';
 import {
   SET_STATE
 } from './actionTypes';
@@ -16,7 +16,8 @@ export function setState(state) {
         entities: fromJS(state.entities) || Map(),
         entitiesToRemove: fromJS(state.entitiesToRemove) || List(),
         message: state.message || '',
-        availableCommands: fromJS(state.availableCommands) || List()
+        statusEffects: state.statusEffects && Set(state.statusEffects),
+        availableCommands: fromJS(state.availableCommands) || List(),
       }
     });
   };

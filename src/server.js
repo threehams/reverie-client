@@ -11,10 +11,15 @@ import fixtureInventoryAdd from './fixtures/fixtureInventoryAdd';
 import fixtureInventoryRemove from './fixtures/fixtureInventoryRemove';
 import fixtureAttackEnemySuccess from './fixtures/fixtureAttackEnemySuccess';
 import fixtureAttackEnemyFailure from './fixtures/fixtureAttackEnemyFailure';
+import fixtureEnemyAttack from './fixtures/fixtureEnemyAttack';
 import fixtureMovePlayer from './fixtures/fixtureMovePlayer';
 import fixtureMovePlayerBack from './fixtures/fixtureMovePlayerBack';
 import fixtureMoveItemToContainer from './fixtures/fixtureMoveItemToContainer';
+import fixtureNotOnFire from './fixtures/fixtureNotOnFire';
+import fixtureNotConfused from './fixtures/fixtureNotConfused';
+import fixtureNotPanicking from './fixtures/fixtureNotPanicking';
 import fixtureOtherPlayerSay from './fixtures/fixtureOtherPlayerSay';
+import fixturePanicking from './fixtures/fixturePanicking';
 import fixturePlayerSay from './fixtures/fixturePlayerSay';
 import compression from 'compression';
 
@@ -24,8 +29,8 @@ const app = express();
 
 if (config.development) {
   const compiler = webpack(webpackConfig);
-  var webpackDevMiddleware = require('webpack-dev-middleware');
-  var webpackHotMiddleware = require('webpack-hot-middleware');
+  const webpackDevMiddleware = require('webpack-dev-middleware');
+  const webpackHotMiddleware = require('webpack-hot-middleware');
   app.use(webpackDevMiddleware(compiler, {
     noInfo: true,
     publicPath: webpackConfig.output.publicPath
@@ -70,9 +75,24 @@ wsServer.on('connection', function(ws) {
     const command = JSON.parse(json).command.trim();
     switch (command.toLowerCase().trim()) {
       case 'attack hiro':
-        return sendMessage(fixtureAttackEnemySuccess);
+        sendMessage(fixtureAttackEnemySuccess);
+        return setTimeout(() => {
+          sendMessage(fixtureEnemyAttack);
+          setTimeout(() => {
+            sendMessage(fixtureNotConfused);
+          }, 15000);
+        }, 2000);
       case 'attack raven':
-        return sendMessage(fixtureAttackEnemyFailure);
+        sendMessage(fixtureAttackEnemyFailure);
+        return setTimeout(() => {
+          sendMessage(fixturePanicking);
+          setTimeout(() => {
+            sendMessage(fixtureNotOnFire);
+            setTimeout(() => {
+              sendMessage(fixtureNotPanicking);
+            }, 10000);
+          }, 10000);
+        }, 5000);
       case 'transfer player/docs/readme.txt to floor/usb-drive':
         return sendMessage(fixtureMoveItemToContainer);
       case 'n':

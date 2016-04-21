@@ -5,6 +5,7 @@ import Radium from 'radium';
 import shallowCompare from 'react-addons-shallow-compare';
 import ReactMarkdown from 'react-markdown';
 
+import StatusEffect from '../components/StatusEffect';
 import * as playerActions from '../actions/playerActions';
 
 class EditorPanel extends React.Component {
@@ -28,7 +29,11 @@ class EditorPanel extends React.Component {
       skipHtml: true,
       className: 'markdown',
       renderers: {
-        Link: MarkdownLinkContainer
+        Link: MarkdownLinkContainer,
+        Heading: MarkdownHeading,
+        Paragraph: MarkdownParagraph,
+        List: MarkdownList,
+        Item: MarkdownItem,
       }
     };
     const items = history.map((item, index) => {
@@ -36,7 +41,7 @@ class EditorPanel extends React.Component {
       return (
         <li key={index}>
           <span style={[styles.counter, {width: marginLeft + 4}]}>{index}</span>
-          { trimmed ? <ReactMarkdown source={trimmed} {...markdownProps} /> : '\u00a0' }
+          { trimmed ? <ReactMarkdown source={ trimmed } {...markdownProps} /> : '\u00a0' }
         </li>
       );
     });
@@ -51,6 +56,10 @@ class EditorPanel extends React.Component {
 }
 
 class MarkdownLink extends React.Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
+
   static propTypes = {
     children: PropTypes.node,
     href: PropTypes.string,
@@ -79,7 +88,54 @@ class MarkdownLink extends React.Component {
   render() {
     const { href, children } = this.props;
     return (
-      <a href={href} onClick={::this.onClick}>{ children }</a>
+      <a href={href} onClick={::this.onClick}>{ <StatusEffect>{ children }</StatusEffect> }</a>
+    );
+  }
+}
+
+class MarkdownHeading extends React.Component {
+  static propTypes = {
+    children: PropTypes.node,
+    level: PropTypes.number // currently unused, but could be good!
+  };
+
+  render() {
+    return <StatusEffect>{ [this.props.children, <div>---------------</div>] }</StatusEffect>;
+  }
+}
+
+class MarkdownParagraph extends React.Component {
+  static propTypes = {
+    children: PropTypes.node
+  };
+
+  render() {
+    return (
+      <StatusEffect>{ this.props.children }</StatusEffect>
+    );
+  }
+}
+
+class MarkdownList extends React.Component {
+  static propTypes = {
+    children: PropTypes.node
+  };
+
+  render() {
+    return (
+      <StatusEffect>{ this.props.children }</StatusEffect>
+    );
+  }
+}
+
+class MarkdownItem extends React.Component {
+  static propTypes = {
+    children: PropTypes.node
+  };
+
+  render() {
+    return (
+      <StatusEffect>{ this.props.children }</StatusEffect>
     );
   }
 }

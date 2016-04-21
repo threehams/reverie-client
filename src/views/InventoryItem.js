@@ -5,6 +5,7 @@ import shallowCompare from 'react-addons-shallow-compare';
 import { DragSource, DropTarget } from 'react-dnd';
 
 import Icon from '../components/Icon';
+import StatusEffect from '../components/StatusEffect';
 import DropdownArrow from '../components/DropdownArrow';
 import * as inventoryActions from '../actions/inventoryActions';
 import * as editorActions from '../actions/editorActions';
@@ -97,9 +98,9 @@ export class InventoryItem extends React.Component {
                                onMouseDown={(event) => this.expandItem(event, item)}/> :
                 <span style={{ paddingLeft: 18 }}/>
             }
-            <Icon name={this.iconFor(item)} color={styles[item.type]} before/>
+            <StatusEffect><Icon name={this.iconFor(item)} color={styles[item.type]} before/></StatusEffect>
             <span style={[{cursor: 'default'}, isOver && canDrop && styles.canDrop]}>
-              { item.name + (item.quantity > 1 ? ` (${item.quantity})` : '') }
+              <StatusEffect>{ item.name + (item.quantity > 1 ? ` (${item.quantity})` : '') }</StatusEffect>
             </span>
           </div>
           {

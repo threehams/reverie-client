@@ -13,5 +13,8 @@ export default {
       maxStorage: 100
     }
   },
-  message: 'Raven ignores your puny threats.'
+  statusEffects: ['fire'],
+  message: `Raven sets you on fire.
+  
+  You are on fire!`
 };

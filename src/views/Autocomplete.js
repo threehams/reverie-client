@@ -8,6 +8,8 @@ import CommandRecord from '../records/CommandRecord';
 import EntityRecord from '../records/EntityRecord';
 import ExitRecord from '../records/ExitRecord';
 
+import StatusEffect from '../components/StatusEffect';
+
 export class Autocomplete extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
@@ -57,13 +59,13 @@ export class Autocomplete extends React.Component {
               }}
             >
               <span style={{display: 'inline-block', width: fontStyles.widths.monospace * (maxOptionLength + 1) }}>
-                { optionSplit[0] }
-                <span style={styles.selectedPart.unfocused}>{ optionSplit[1] }</span>
-                { optionSplit[2] }
+                <StatusEffect>{ optionSplit[0] }</StatusEffect>
+                <span style={styles.selectedPart.unfocused}><StatusEffect>{ optionSplit[1] }</StatusEffect></span>
+                <StatusEffect>{ optionSplit[2] }</StatusEffect>
               </span>
               {
                 option.path && <span>
-                  { `(${option.path})` }
+                  <StatusEffect>{ `(${option.path})` }</StatusEffect>
                 </span>
               }
             </li>;
