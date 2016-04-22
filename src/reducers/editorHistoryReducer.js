@@ -11,7 +11,7 @@ export default function editorHistoryReducer(state = List(), action) {
       return state.clear();
     case SET_STATE:
       if (!action.payload.message) return state;
-      return state.concat(`\n${action.payload.message}`.split('\n'));
+      return state.concat(`${state.size ? '\n' : ''}${action.payload.message}`.split('\n'));
     default:
       return state;
   }

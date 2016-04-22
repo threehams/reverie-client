@@ -70,16 +70,16 @@ export class InventoryItem extends React.Component {
 
   // TODO pretty obviously temp code
   iconFor(item) {
-    if (item.components.contains('Container')) {
+    if (item.components.contains('container')) {
       return TYPE_ICONS.container;
     }
-    if (item.components.contains('Player')) {
+    if (item.components.contains('player')) {
       return TYPE_ICONS.player;
     }
-    if (item.components.contains('Room')) {
+    if (item.components.contains('room')) {
       return TYPE_ICONS.room;
     }
-    if (item.components.contains('Creature')) {
+    if (item.components.contains('creature')) {
       return TYPE_ICONS.creature;
     }
     return TYPE_ICONS.text;

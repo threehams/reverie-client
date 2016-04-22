@@ -10,6 +10,11 @@ import fixtureInitialState from './fixtures/fixtureInitialState';
 import fixtureInventoryAdd from './fixtures/fixtureInventoryAdd';
 import fixtureInventoryRemove from './fixtures/fixtureInventoryRemove';
 import fixtureAttackEnemySuccess from './fixtures/fixtureAttackEnemySuccess';
+import fixtureAttackBees from './fixtures/fixtureAttackBees';
+import fixtureAttackedByBees from './fixtures/fixtureAttackedByBees';
+import fixtureBeesPanic from './fixtures/fixtureBeesPanic';
+import fixtureBeesGone from './fixtures/fixtureBeesGone';
+import fixtureBeesPanicGone from './fixtures/fixtureBeesPanicGone';
 import fixtureAttackEnemyFailure from './fixtures/fixtureAttackEnemyFailure';
 import fixtureEnemyAttack from './fixtures/fixtureEnemyAttack';
 import fixtureMovePlayer from './fixtures/fixtureMovePlayer';
@@ -93,6 +98,20 @@ wsServer.on('connection', function(ws) {
             }, 10000);
           }, 10000);
         }, 5000);
+      case 'attack bees':
+        sendMessage(fixtureAttackBees);
+        return setTimeout(() => {
+          sendMessage(fixtureAttackedByBees);
+          setTimeout(() => {
+            sendMessage(fixtureBeesPanic);
+            setTimeout(() => {
+              sendMessage(fixtureBeesGone);
+              setTimeout(() => {
+                sendMessage(fixtureBeesPanicGone);
+              }, 15000);
+            }, 15000);
+          }, 5000);
+        }, 3000);
       case 'transfer player/docs/readme.txt to floor/usb-drive':
         return sendMessage(fixtureMoveItemToContainer);
       case 'n':

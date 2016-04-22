@@ -127,7 +127,15 @@ export default {
       description: 'A large man with a tattoo on his forehead which reads "Poor Impulse Control"',
       maxHealth: 400,
       currentHealth: 400
-    }
+    },
+    '76': {
+      id: '76',
+      components: ['creature'],
+      name: 'Bees',
+      description: 'A large swarm of bees. They seem uninterested in your presence.',
+      maxHealth: 40,
+      currentHealth: 40
+    },
   },
   availableCommands: [
     {
@@ -281,8 +289,9 @@ export default {
   - There is a [small-mailbox](/items/13) here.
   - There is a [usb-drive](/items/18) here.
 
-  - [Hiro](/characters/74) is here.
-  - [Raven](/characters/75) is here.
+  - [Hiro](/creatures/74) is here.
+  - [Raven](/creatures/75) is here.
+  - A swarm of [Bees](/creatures/76) is here.
 
   Exits:
   - [North](/exits/north)`,

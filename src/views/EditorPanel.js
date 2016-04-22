@@ -4,8 +4,18 @@ import { List } from 'immutable';
 import Radium from 'radium';
 import shallowCompare from 'react-addons-shallow-compare';
 import ReactMarkdown from 'react-markdown';
+import {
+  MarkdownLink,
+  MarkdownHeading,
+  MarkdownParagraph,
+  MarkdownList,
+  MarkdownItem,
+  MarkdownCode,
+  MarkdownEmphasis,
+  MarkdownStrong,
+  MarkdownBlockQuote,
+} from '../components/Markdown';
 
-import StatusEffect from '../components/StatusEffect';
 import * as playerActions from '../actions/playerActions';
 
 class EditorPanel extends React.Component {
@@ -34,6 +44,10 @@ class EditorPanel extends React.Component {
         Paragraph: MarkdownParagraph,
         List: MarkdownList,
         Item: MarkdownItem,
+        Code: MarkdownCode,
+        Emph: MarkdownEmphasis,
+        Strong: MarkdownStrong,
+        BlockQuote: MarkdownBlockQuote,
       }
     };
     const items = history.map((item, index) => {
@@ -51,91 +65,6 @@ class EditorPanel extends React.Component {
           { items }
         </ol>
       </div>
-    );
-  }
-}
-
-class MarkdownLink extends React.Component {
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
-  }
-
-  static propTypes = {
-    children: PropTypes.node,
-    href: PropTypes.string,
-    title: PropTypes.string,
-    move: PropTypes.func,
-    attack: PropTypes.func,
-    locateItem: PropTypes.func
-  };
-
-  onClick(event) {
-    event.preventDefault();
-    const { href } = this.props;
-    const [route, id] = href.split('/').slice(1);
-    switch (route) {
-      case 'exits':
-        return this.props.move(id);
-      case 'characters':
-        return this.props.attack(id);
-      case 'items':
-        return this.props.locateItem(id);
-      default:
-        throw new Error('Cannot handle route: ', route); // eslint-disable-line no-console
-    }
-  }
-
-  render() {
-    const { href, children } = this.props;
-    return (
-      <a href={href} onClick={::this.onClick}>{ <StatusEffect>{ children }</StatusEffect> }</a>
-    );
-  }
-}
-
-class MarkdownHeading extends React.Component {
-  static propTypes = {
-    children: PropTypes.node,
-    level: PropTypes.number // currently unused, but could be good!
-  };
-
-  render() {
-    return <StatusEffect>{ [this.props.children, <div>---------------</div>] }</StatusEffect>;
-  }
-}
-
-class MarkdownParagraph extends React.Component {
-  static propTypes = {
-    children: PropTypes.node
-  };
-
-  render() {
-    return (
-      <StatusEffect>{ this.props.children }</StatusEffect>
-    );
-  }
-}
-
-class MarkdownList extends React.Component {
-  static propTypes = {
-    children: PropTypes.node
-  };
-
-  render() {
-    return (
-      <StatusEffect>{ this.props.children }</StatusEffect>
-    );
-  }
-}
-
-class MarkdownItem extends React.Component {
-  static propTypes = {
-    children: PropTypes.node
-  };
-
-  render() {
-    return (
-      <StatusEffect>{ this.props.children }</StatusEffect>
     );
   }
 }
