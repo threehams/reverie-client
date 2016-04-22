@@ -26,7 +26,7 @@ export class MarkdownLink extends React.Component {
     switch (route) {
       case 'exits':
         return this.props.move(id);
-      case 'characters':
+      case 'creatures':
         return this.props.attack(id);
       case 'items':
         return this.props.locateItem(id);

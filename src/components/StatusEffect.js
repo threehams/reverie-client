@@ -4,6 +4,13 @@ import { connect } from 'react-redux';
 import { Set } from 'immutable';
 import shallowCompare from 'react-addons-shallow-compare';
 
+const BEE_PHRASES = [
+  'noooo not the bees!',
+  'getem off me getem off me',
+  'aaaaaaghghghghhh',
+  'ohhh no my eyes my eyes aggggghhhh',
+];
+
 function shuffle(string) {
   if (string.length < 3) return string;
   const head = string[0];
@@ -59,11 +66,29 @@ export class StatusEffect extends React.Component {
     });
   }
 
+  bees(children) {
+    return Children.map(children, child => {
+      if (typeof child !== 'string') {
+        return child;
+      }
+      return child.split(' ').map(word => {
+        if (Math.random() < 0.1 && word.length > 1) {
+          return 'b' + 'z'.repeat(word.length - 1);
+        }
+        if (Math.random() < 0.06) {
+          return `${word} ${BEE_PHRASES[Math.floor(Math.random() * BEE_PHRASES.length)]}`;
+        }
+        return word;
+      }).join(' ');
+    });
+  }
+
   render() {
     const { statusEffects } = this.props;
     const panicking = statusEffects.includes('panic');
     const onFire = statusEffects.includes('fire');
     const confused = statusEffects.includes('confusion');
+    const bees = statusEffects.includes('bees');
     let result = this.props.children;
     if (confused) {
       result = this.confuse(result);
@@ -71,8 +96,18 @@ export class StatusEffect extends React.Component {
     if (panicking) {
       result = this.panic(result);
     }
+    if (bees) {
+      result = this.bees(result);
+    }
     return (
-      <span style={[onFire && styles.fire, panicking && styles.panic]}>{ result }</span>
+      <span
+        style={[
+          onFire && styles.fire,
+          panicking && styles.panic,
+        ]}
+      >
+        { result }
+      </span>
     );
   }
 }
