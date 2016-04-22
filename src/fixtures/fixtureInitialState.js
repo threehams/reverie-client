@@ -158,7 +158,7 @@ export default {
           allowed: [
             {
               components: ['item', 'container'],
-              owners: ['player']
+              owners: ['self']
             }
           ]
         }
@@ -171,7 +171,7 @@ export default {
           allowed: [
             {
               components: ['item', 'container'],
-              owners: ['player', 'floor']
+              owners: ['self', 'floor']
             }
           ]
         },
@@ -186,7 +186,7 @@ export default {
           allowed: [
             {
               components: ['container'],
-              owners: ['player', 'floor']
+              owners: ['self', 'floor']
             }
           ]
         }
@@ -199,7 +199,7 @@ export default {
           allowed: [
             {
               components: ['item', 'container'],
-              owners: ['player', 'floor']
+              owners: ['self', 'floor']
             }
           ]
         },
@@ -214,7 +214,7 @@ export default {
           allowed: [
             {
               components: ['container'],
-              owners: ['player', 'floor']
+              owners: ['self', 'floor']
             }
           ]
         }
@@ -233,7 +233,7 @@ export default {
           allowed: [
             {
               types: ['entity'],
-              owners: ['player', 'floor']
+              owners: ['self', 'floor']
             },
             {
               types: ['exit']

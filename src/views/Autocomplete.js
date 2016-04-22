@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import {List} from 'immutable';
 import Radium from 'radium';
 import shallowCompare from 'react-addons-shallow-compare';
-import fontStyles from '../styles/font';
 
 import CommandRecord from '../records/CommandRecord';
 import EntityRecord from '../records/EntityRecord';
@@ -41,7 +40,6 @@ export class Autocomplete extends React.Component {
   render() {
     const { fragment, focused, options, selectedItem } = this.props;
     if (!options || !options.size) return <div></div>;
-    const maxOptionLength = Math.max(...options.map(option => option.name.length));
     return (
       <ul style={[styles.panel.global, focused ? styles.panel.focused : styles.panel.unfocused]}>
         {
@@ -58,14 +56,12 @@ export class Autocomplete extends React.Component {
                 if (option === selectedItem) this.selectedItem = item;
               }}
             >
-              <span style={{display: 'inline-block', width: fontStyles.widths.monospace * (maxOptionLength + 1) }}>
-                <StatusEffect>{ optionSplit[0] }</StatusEffect>
-                <span style={styles.selectedPart.unfocused}><StatusEffect>{ optionSplit[1] }</StatusEffect></span>
-                <StatusEffect>{ optionSplit[2] }</StatusEffect>
-              </span>
+              <StatusEffect>{ optionSplit[0] }</StatusEffect>
+              <span style={styles.selectedPart.unfocused}><StatusEffect>{ optionSplit[1] }</StatusEffect></span>
+              <StatusEffect>{ optionSplit[2] }</StatusEffect>
               {
                 option.path && <span>
-                  <StatusEffect>{ `(${option.path})` }</StatusEffect>
+                  &nbsp;(<StatusEffect>{ option.path }</StatusEffect>)
                 </span>
               }
             </li>;
@@ -85,7 +81,7 @@ const styles = {
       bottom: 30,
       border: '1px solid #c0c0c0',
       maxHeight: '10vh',
-      maxWidth: '50vw',
+      maxWidth: '70vw',
       overflowY: 'scroll',
       backgroundColor: '#ebf4fe'
     }

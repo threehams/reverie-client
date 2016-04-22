@@ -37,15 +37,15 @@ describe('entitySelectors', function() {
         '2': new EntityRecord({
           id: '2',
           name: 'container',
-          owner: 'player',
-          path: 'player/container',
+          owner: 'self',
+          path: 'self/container',
           entities: List(['3'])
         }),
         '3': new EntityRecord({
           id: '3',
           name: 'item',
-          owner: 'player',
-          path: 'player/container/item'
+          owner: 'self',
+          path: 'self/container/item'
         }),
       }));
     });

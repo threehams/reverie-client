@@ -21,7 +21,7 @@ export const entitiesWithPath = createSelector(
     let newEntities = entities;
     if (playerEntity) {
       playerEntity.entities.forEach(entityId => {
-        newEntities = addPaths(newEntities.get(entityId), newEntities, 'player', 'player');
+        newEntities = addPaths(newEntities.get(entityId), newEntities, 'self', 'self');
       });
     }
     if (location) {

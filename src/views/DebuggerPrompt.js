@@ -38,6 +38,7 @@ export class DebuggerPrompt extends React.Component {
 
   // This does:
   setCommandFromInput(event) {
+    event.preventDefault();
     const cursorIndex = ReactDOM.findDOMNode(this.input).selectionStart;
     this.props.setCurrentCommand(event.target.value, cursorIndex);
   }
@@ -98,7 +99,8 @@ export class DebuggerPrompt extends React.Component {
                value={currentCommand}
                style={styles}
                onKeyDown={::this.selectOption}
-               onChange={::this.setCommandFromInput} />
+               onChange={::this.setCommandFromInput}
+               autoComplete="off" />
       </form>
     );
   }
