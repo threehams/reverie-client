@@ -28,8 +28,8 @@ class EditorPanel extends React.Component {
   }
 
   static propTypes = {
-    history: React.PropTypes.instanceOf(List),
-    height: React.PropTypes.string
+    history: PropTypes.instanceOf(List),
+    height: PropTypes.string
   };
 
   render() {
