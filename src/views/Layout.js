@@ -42,49 +42,47 @@ export class Layout extends React.Component {
     return (
       <div>
         { alert && <div style={styles.alert}>{ alert }</div> }
-        <div style={styles.container}>
-          <aside style={styles.sidebar}>
-            <div style={styles.sidebarSection}>
-              <TabContainer equalWidth>
-                <Tab onClick={() => setActiveView('inventory') }
-                     active={activePlayerView === 'inventory'}>
-                  <StatusEffect><Icon name="folder-o" before /> <StatusEffect>Inventory</StatusEffect></StatusEffect>
-                </Tab>
-                <Tab onClick={() => setActiveView('character') }
-                     active={activePlayerView === 'character'}>
-                  <StatusEffect><Icon name="user" before /> <StatusEffect>Character</StatusEffect></StatusEffect>
-                </Tab>
-              </TabContainer>
-              { activePlayerView === 'inventory' && <Inventory ids={player.entities} /> }
-              { activePlayerView === 'character' && <Player player={player} /> }
-            </div>
-            <div style={[styles.sidebarSection, { borderTop: panelStyles.border}]}>
-              <TabContainer>
-                <Tab active>
-                  <StatusEffect>Floor</StatusEffect>
-                </Tab>
-              </TabContainer>
-              <Inventory ids={location.entities} />
-            </div>
-          </aside>
+        <aside style={styles.sidebar}>
+          <div style={styles.sidebarSection}>
+            <TabContainer equalWidth>
+              <Tab onClick={() => setActiveView('inventory') }
+                   active={activePlayerView === 'inventory'}>
+                <StatusEffect><Icon name="folder-o" before /> <StatusEffect>Inventory</StatusEffect></StatusEffect>
+              </Tab>
+              <Tab onClick={() => setActiveView('character') }
+                   active={activePlayerView === 'character'}>
+                <StatusEffect><Icon name="user" before /> <StatusEffect>Character</StatusEffect></StatusEffect>
+              </Tab>
+            </TabContainer>
+            { activePlayerView === 'inventory' && <Inventory ids={player.entities} /> }
+            { activePlayerView === 'character' && <Player player={player} /> }
+          </div>
+          <div style={[styles.sidebarSection, { borderTop: panelStyles.border}]}>
+            <TabContainer>
+              <Tab active>
+                <StatusEffect>Floor</StatusEffect>
+              </Tab>
+            </TabContainer>
+            <Inventory ids={location.entities} />
+          </div>
+        </aside>
 
-          <main style={styles.main}>
-            <section style={styles.editor}>
-              <Editor height={`calc(80vh - ${pagePadding}px - 24px)`} />
-            </section>
-          </main>
+        <main style={styles.main}>
+          <section style={styles.editor}>
+            <Editor height={'calc(80vh - 24px)'} />
+          </section>
+        </main>
 
-          <footer style={styles.footer}>
-            <section style={styles.debugger}>
-              <div style={styles.debuggerHistory}>
-                <DebuggerHistory />
-              </div>
-              <div style={styles.debuggerPrompt}>
-                <DebuggerPrompt />
-              </div>
-            </section>
-          </footer>
-        </div>
+        <footer style={styles.footer}>
+          <section style={styles.debugger}>
+            <div style={styles.debuggerHistory}>
+              <DebuggerHistory />
+            </div>
+            <div style={styles.debuggerPrompt}>
+              <DebuggerPrompt />
+            </div>
+          </section>
+        </footer>
       </div>
     );
   }
@@ -101,12 +99,8 @@ export default connect((state) => {
   setActiveView: playerActions.setActiveView
 })(Radium(Layout));
 
-const pagePadding = 0;
 const promptHeight = 30;
 const styles = {
-  container: {
-    padding: pagePadding,
-  },
   alert: {
     backgroundColor: 'red',
     color: 'white',
@@ -120,26 +114,26 @@ const styles = {
     backgroundColor: panelStyles.backgroundColor,
     borderRight: panelStyles.border,
     display: 'inline-block',
-    height: `calc(80vh - ${pagePadding}px)`,
+    height: '80vh',
     width: '25%',
     verticalAlign: 'top'
   },
   sidebarSection: {
-    height: `calc(40vh - ${pagePadding}px)`
+    height: '40vh'
   },
   main: {
     borderBottom: panelStyles.border,
     display: 'inline-block',
     width: '75%',
     verticalAlign: 'top',
-    height: `calc(80vh - ${pagePadding}px)`
+    height: '80vh'
   },
   editor: {
-    height: `calc(80vh - ${pagePadding}px)`
+    height: '80vh'
   },
   footer: {
     backgroundColor: panelStyles.backgroundColor,
-    height: `calc(20vh - ${pagePadding}px - 2px)`
+    height: 'calc(20vh - 2px)'
   },
   debugger: {
     borderTop: panelStyles.border,
@@ -147,7 +141,7 @@ const styles = {
     position: 'relative'
   },
   debuggerHistory: {
-    height: `calc(20vh - ${pagePadding}px - ${promptHeight}px - 1px)`
+    height: `calc(20vh - ${promptHeight}px - 1px)`
   },
   debuggerPrompt: {
     height: promptHeight
