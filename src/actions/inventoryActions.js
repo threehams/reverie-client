@@ -1,4 +1,5 @@
 import { List } from 'immutable';
+import * as inventorySelectors from '../selectors/inventorySelectors';
 import * as commandActions from './commandActions';
 import {
   INVENTORY_TOGGLE_EXPAND,
@@ -20,7 +21,7 @@ export function moveItem(sourcePath, targetPath) {
 }
 
 // options: { multiple: true/false }
-export function selectItem(selectId, containerId, options = {}) {
+export function selectItem(selectId, owner, options = {}) {
   return (dispatch, getState) => {
 
     /*
@@ -29,11 +30,12 @@ export function selectItem(selectId, containerId, options = {}) {
      */
     function createIdRange() {
       const state = getState();
+      const entityList = inventorySelectors.list(state, { owner }).map(item => item.id);
       const selectedId = state.getIn(['ui', 'selectedItems']).first();
-      const entityList = getEntityChildren(containerId, state.get('entities'));
       const first = entityList.findIndex(id => id === selectedId);
       const last = entityList.findIndex(id => id === selectId);
-      return List(entityList.slice(Math.min(first, last), Math.max(first, last) + 1));
+      const result = List(entityList.slice(Math.min(first, last), Math.max(first, last) + 1));
+      return first < last ? result : result.reverse();
     }
 
     const ids = options.multiple ? createIdRange() : List([selectId]);
@@ -42,21 +44,10 @@ export function selectItem(selectId, containerId, options = {}) {
       type: EDITOR_SELECT_ITEMS,
       payload: {
         ids,
-        containerId
+        owner
       }
     });
   };
-}
-
-function getEntityChildren(id, entities) {
-  const entity = entities.get(id);
-  if (!entity.entities || !entity.entities.size) {
-    return List([id]);
-  }
-
-  return List([id]).concat(entity.entities.flatMap(entityId => {
-    return getEntityChildren(entityId, entities);
-  }));
 }
 
 export function toggleItem(id) {

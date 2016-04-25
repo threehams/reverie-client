@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
 import Radium from 'radium';
 import shallowCompare from 'react-addons-shallow-compare';
 import { DragSource, DropTarget } from 'react-dnd';
@@ -7,10 +6,7 @@ import { DragSource, DropTarget } from 'react-dnd';
 import Icon from '../components/Icon';
 import StatusEffect from '../components/StatusEffect';
 import DropdownArrow from '../components/DropdownArrow';
-import * as inventoryActions from '../actions/inventoryActions';
-import * as editorActions from '../actions/editorActions';
 import EntityRecord from '../records/EntityRecord';
-import * as entitySelectors from '../selectors/entitySelectors';
 
 const TYPE_ICONS = {
   container: 'folder-o',
@@ -31,20 +27,12 @@ export class InventoryItem extends React.Component {
     canDrop: PropTypes.bool.isRequired,
     connectDragSource: PropTypes.func,
     connectDropTarget: PropTypes.func,
-    containerId: PropTypes.string,
-    expanded: PropTypes.bool,
     isOver: PropTypes.bool.isRequired,
     item: PropTypes.instanceOf(EntityRecord).isRequired,
-    indent: PropTypes.number,
     moveItem: PropTypes.func,
-    selected: PropTypes.bool,
     selectItem: PropTypes.func,
     toggleExpand: PropTypes.func,
     toggleItem: PropTypes.func
-  };
-
-  static defaultProps = {
-    indent: 1
   };
 
   expandItem(event, item) {
@@ -57,14 +45,14 @@ export class InventoryItem extends React.Component {
     }
   }
 
-  selectItem(event, item, containerId) {
+  selectItem(event, item) {
     event.stopPropagation();
     if (event.ctrlKey) {
-      this.props.toggleItem(item.id, containerId);
+      this.props.toggleItem(item.id, item.owner);
     } else if (event.shiftKey) {
-      this.props.selectItem(item.id, containerId, { multiple: true });
+      this.props.selectItem(item.id, item.owner, { multiple: true });
     } else {
-      this.props.selectItem(item.id, containerId);
+      this.props.selectItem(item.id, item.owner);
     }
   }
 
@@ -86,15 +74,15 @@ export class InventoryItem extends React.Component {
   }
 
   render() {
-    const { indent, item, canDrop, isOver, connectDragSource, connectDropTarget, containerId, expanded, selected } = this.props;
+    const { item, canDrop, isOver, connectDragSource, connectDropTarget } = this.props;
     return connectDragSource(
       connectDropTarget(
-        <div onMouseDown={(event) => this.selectItem(event, item, containerId)}
-             onDoubleClick={(event) => this.expandItem(event, item, containerId)}>
-          <div style={[styles.item, selected && styles.selected, { paddingLeft: styles.indent * indent }]}>
+        <div onMouseDown={(event) => this.selectItem(event, item)}
+             onDoubleClick={(event) => this.expandItem(event, item)}>
+          <div style={[styles.item, item.selected && styles.selected, { paddingLeft: styles.indent * item.indent }]}>
             {
               item.entities.size ?
-                <DropdownArrow expanded={expanded}
+                <DropdownArrow expanded={item.expanded}
                                onMouseDown={(event) => this.expandItem(event, item)}/> :
                 <span style={{ paddingLeft: 18 }}/>
             }
@@ -103,13 +91,6 @@ export class InventoryItem extends React.Component {
               <StatusEffect>{ item.name + (item.quantity > 1 ? ` (${item.quantity})` : '') }</StatusEffect>
             </span>
           </div>
-          {
-            expanded && item.entities.map(id => {
-              return <div key={id}>
-                <InventoryItemContainer id={id} indent={indent + 1} containerId={containerId}/>
-              </div>;
-            })
-          }
         </div>
       )
     );
@@ -154,24 +135,7 @@ const DraggableInventoryItem = DragSource('INVENTORY_ITEM', inventoryItemSource,
   DropTarget('INVENTORY_ITEM', inventoryItemTarget, collectDrop)(Radium(InventoryItem))
 );
 
-const InventoryItemContainer = connect(
-  (state, props) => {
-    return {
-      item: entitySelectors.entitiesWithPath(state).get(props.id),
-      selected: state.getIn(['ui', 'selectedItems']).contains(props.id),
-      expanded: props.expanded || !!state.getIn(['ui', 'inventoryExpandedById']).contains(props.id)
-    };
-  },
-  {
-    addView: editorActions.addView,
-    moveItem: inventoryActions.moveItem,
-    selectItem: inventoryActions.selectItem,
-    toggleExpand: inventoryActions.toggleExpand,
-    toggleItem: inventoryActions.toggleItem
-  }
-)(DraggableInventoryItem);
-
-export default InventoryItemContainer;
+export default DraggableInventoryItem;
 
 const styles = {
   indent: 16,

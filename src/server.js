@@ -112,7 +112,7 @@ wsServer.on('connection', function(ws) {
             }, 15000);
           }, 5000);
         }, 3000);
-      case 'transfer player/docs/readme.txt to floor/usb-drive':
+      case 'transfer self/docs/readme.txt to floor/usb-drive':
         return sendMessage(fixtureMoveItemToContainer);
       case 'n':
       case 'north':

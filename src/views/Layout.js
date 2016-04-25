@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import Radium from 'radium';
 import {connect} from 'react-redux';
 import shallowCompare from 'react-addons-shallow-compare';
+import { List } from 'immutable';
 
 import Inventory from './Inventory';
 import Player from './Player';
@@ -34,8 +35,8 @@ export class Layout extends React.Component {
   };
 
   render() {
-    const { activePlayerView, player, location, setActiveView, alert } = this.props;
-    if (!player || !location) {
+    const { activePlayerView, player, setActiveView, alert } = this.props;
+    if (!player) {
       return <Loader />;
     }
 
@@ -54,7 +55,7 @@ export class Layout extends React.Component {
                 <StatusEffect><Icon name="user" before /> <StatusEffect>Character</StatusEffect></StatusEffect>
               </Tab>
             </TabContainer>
-            { activePlayerView === 'inventory' && <Inventory ids={player.entities} /> }
+            { activePlayerView === 'inventory' && <Inventory owner={'self'} /> }
             { activePlayerView === 'character' && <Player player={player} /> }
           </div>
           <div style={[styles.sidebarSection, { borderTop: panelStyles.border}]}>
@@ -63,7 +64,7 @@ export class Layout extends React.Component {
                 <StatusEffect>Floor</StatusEffect>
               </Tab>
             </TabContainer>
-            <Inventory ids={location.entities} />
+            <Inventory owner={'floor'} />
           </div>
         </aside>
 
@@ -93,7 +94,7 @@ export default connect((state) => {
     player: state.getIn(['entities', state.getIn(['ui', 'player'])]),
     location: state.get('location'),
     alert: state.getIn(['ui', 'alert']),
-    activePlayerView: state.getIn(['ui', 'activePlayerView'])
+    activePlayerView: state.getIn(['ui', 'activePlayerView']),
   };
 }, {
   setActiveView: playerActions.setActiveView
