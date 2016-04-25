@@ -1,4 +1,4 @@
-import {List, Map, OrderedSet} from 'immutable';
+import { List, Map, OrderedSet, Set } from 'immutable';
 
 import * as inventoryActions from './inventoryActions';
 import UiRecord from '../records/UiRecord';
@@ -19,7 +19,7 @@ describe('inventoryActions', function() {
         thunk(dispatch, getState);
         expect(result.type).to.equal(EDITOR_SELECT_ITEMS);
         expect(result.payload.ids).to.equal(List(['4']));
-        expect(result.payload.containerId).to.equal('6');
+        expect(result.payload.owner).to.equal('6');
       });
     });
 
@@ -28,6 +28,7 @@ describe('inventoryActions', function() {
         it('selects each of the items in order', function() {
           const state = Map({
             ui: new UiRecord({
+              player: '6',
               selectedItems: OrderedSet(['1'])
             }),
             entities: Map({
@@ -52,7 +53,7 @@ describe('inventoryActions', function() {
               })
             })
           });
-          const thunk = inventoryActions.selectItem('4', '6', {multiple: true});
+          const thunk = inventoryActions.selectItem('4', 'self', { multiple: true });
           let result;
           const getState = () => state;
           const dispatch = (action) => {
@@ -61,7 +62,7 @@ describe('inventoryActions', function() {
           thunk(dispatch, getState);
           expect(result.type).to.equal(EDITOR_SELECT_ITEMS);
           expect(result.payload.ids).to.equal(List(['1', '2', '4']));
-          expect(result.payload.containerId).to.equal('6');
+          expect(result.payload.owner).to.equal('self');
         });
       });
 
@@ -69,16 +70,18 @@ describe('inventoryActions', function() {
         it('selects each of the items in order', function() {
           const state = Map({
             ui: new UiRecord({
-              selectedItems: OrderedSet(['1'])
+              player: '6',
+              selectedItems: OrderedSet(['1']),
+              inventoryExpandedById: Set(['1', '2'])
             }),
             entities: Map({
               '1': new EntityRecord({
                 id: '1',
-                entities: List('2')
+                entities: List(['2'])
               }),
               '2': new EntityRecord({
                 id: '2',
-                entities: List('3')
+                entities: List(['3'])
               }),
               '3': new EntityRecord({
                 id: '3'
@@ -92,7 +95,7 @@ describe('inventoryActions', function() {
               })
             })
           });
-          const thunk = inventoryActions.selectItem('4', '6', {multiple: true});
+          const thunk = inventoryActions.selectItem('4', 'self', { multiple: true });
           let result;
           const getState = () => state;
           const dispatch = (action) => {
@@ -101,7 +104,7 @@ describe('inventoryActions', function() {
           thunk(dispatch, getState);
           expect(result.type).to.equal(EDITOR_SELECT_ITEMS);
           expect(result.payload.ids).to.equal(List(['1', '2', '3', '4']));
-          expect(result.payload.containerId).to.equal('6');
+          expect(result.payload.owner).to.equal('self');
         });
       });
 
@@ -109,7 +112,9 @@ describe('inventoryActions', function() {
         it('selects each of the items in order', function() {
           const state = Map({
             ui: new UiRecord({
-              selectedItems: OrderedSet(['3'])
+              player: '6',
+              selectedItems: OrderedSet(['3']),
+              inventoryExpandedById: Set(['1', '2'])
             }),
             entities: Map({
               '1': new EntityRecord({
@@ -132,7 +137,7 @@ describe('inventoryActions', function() {
               })
             })
           });
-          const thunk = inventoryActions.selectItem('1', '6', {multiple: true});
+          const thunk = inventoryActions.selectItem('1', 'self', { multiple: true });
           let result;
           const getState = () => state;
           const dispatch = (action) => {
@@ -140,16 +145,18 @@ describe('inventoryActions', function() {
           };
           thunk(dispatch, getState);
           expect(result.type).to.equal(EDITOR_SELECT_ITEMS);
-          expect(result.payload.ids).to.equal(List(['1', '2', '3']));
-          expect(result.payload.containerId).to.equal('6');
+          expect(result.payload.ids).to.equal(List(['3', '2', '1']));
+          expect(result.payload.owner).to.equal('self');
         });
       });
 
       context('large nested structure going backwards', function() {
-        it('selects each of the items in order', function() {
+        it('selects each of the items in reverse order', function() {
           const state = Map({
             ui: new UiRecord({
-              selectedItems: OrderedSet(['4'])
+              player: '6',
+              selectedItems: OrderedSet(['4']),
+              inventoryExpandedById: Set(['1', '2', '4'])
             }),
             entities: Map({
               '1': new EntityRecord({
@@ -165,7 +172,7 @@ describe('inventoryActions', function() {
               }),
               '4': new EntityRecord({
                 id: '4',
-                entities: ['7']
+                entities: List(['7'])
               }),
               '5': new EntityRecord({
                 id: '5'
@@ -180,7 +187,7 @@ describe('inventoryActions', function() {
               })
             })
           });
-          const thunk = inventoryActions.selectItem('1', '6', {multiple: true});
+          const thunk = inventoryActions.selectItem('1', 'self', { multiple: true });
           let result;
           const getState = () => state;
           const dispatch = (action) => {
@@ -188,8 +195,8 @@ describe('inventoryActions', function() {
           };
           thunk(dispatch, getState);
           expect(result.type).to.equal(EDITOR_SELECT_ITEMS);
-          expect(result.payload.ids).to.equal(List(['1', '2', '3', '4']));
-          expect(result.payload.containerId).to.equal('6');
+          expect(result.payload.ids).to.equal(List(['4', '3', '2', '1']));
+          expect(result.payload.owner).to.equal('self');
         });
       });
 

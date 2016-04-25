@@ -6,5 +6,6 @@ import sinonChai from 'sinon-chai';
 chai.use(chaiImmutable);
 chai.use(dirtyChai);
 chai.use(sinonChai);
+chai.config.truncateThreshold = 0;
 
 export default expect;
