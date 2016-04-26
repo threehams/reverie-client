@@ -47,7 +47,7 @@ socket.onmessage = function(event) {
   store.dispatch(actionCreator(message.payload));
 };
 
-// Focus on debugger prompt on all keypresses.
+// Focus on terminal prompt on all keypresses.
 // This will have to change once keyboard navigation is set up.
 document.onkeypress = function() {
   document.getElementById('prompt').focus();

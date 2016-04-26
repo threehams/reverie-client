@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import Radium from 'radium';
+import {connect} from 'react-redux';
 import shallowCompare from 'react-addons-shallow-compare';
 
 import Icon from '../components/Icon';
@@ -49,7 +50,13 @@ export class Player extends React.Component {
   }
 }
 
-export default Radium(Player);
+export default connect(
+  (state) => {
+    return {
+      player: state.getIn(['entities', state.getIn(['ui', 'player'])])
+    };
+  }
+)(Radium(Player));
 
 const styles = {
   container: {

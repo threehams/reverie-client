@@ -79,6 +79,9 @@ export default Radium(EditorPanel);
 
 const styles = {
   container: {
+    display: 'flex',
+    flex: '1 1 auto',
+    flexFlow: 'row nowrap',
     backgroundColor: '#f0f0f0',
     overflowY: 'auto',
     position: 'relative'
@@ -92,6 +95,7 @@ const styles = {
     textAlign: 'right'
   },
   list: {
+    flex: '1 1 auto',
     backgroundColor: 'white',
     paddingLeft: 4
   }

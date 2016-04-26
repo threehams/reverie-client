@@ -5,8 +5,9 @@ import Radium from 'radium';
 import shallowCompare from 'react-addons-shallow-compare';
 
 import StatusEffect from '../components/StatusEffect';
+import fontStyles from '../styles/font';
 
-export class DebuggerHistory extends React.Component {
+export class TerminalHistory extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
   }
@@ -31,7 +32,8 @@ export class DebuggerHistory extends React.Component {
 
 const styles = {
   main: {
-    padding: 10
+    padding: 10,
+    ...fontStyles.monospace
   }
 };
 
@@ -39,5 +41,5 @@ export default connect((state) => {
   return {
     history: state.get('command').history
   };
-})(Radium(DebuggerHistory));
+})(Radium(TerminalHistory));
 
