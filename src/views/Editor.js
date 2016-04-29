@@ -19,7 +19,6 @@ export class Editor extends React.Component {
     activeView: React.PropTypes.string,
     editorHistory: React.PropTypes.instanceOf(List),
     entities: React.PropTypes.instanceOf(Map),
-    height: React.PropTypes.string,
     log: React.PropTypes.instanceOf(List),
     removeView: React.PropTypes.func,
     setActiveView: React.PropTypes.func,
@@ -35,15 +34,15 @@ export class Editor extends React.Component {
   }
 
   render() {
-    const { activeView, editorHistory, entities, height, removeView, setActiveView, views} = this.props;
+    const { activeView, editorHistory, entities, removeView, setActiveView, views} = this.props;
     const tabProps = {activeView, entities, setActiveView, removeView, views};
     return (
-      <div style={fontStyles.monospace}>
+      <div style={styles.container}>
         <EditorTabs {...tabProps} />
         {
           activeView !== '0' ?
-            <EditorPanel history={this.createHistory(entities.get(activeView))} height={height} /> :
-            <EditorPanel history={editorHistory} height={height} />
+            <EditorPanel history={this.createHistory(entities.get(activeView))} /> :
+            <EditorPanel history={editorHistory} />
         }
       </div>
     );
@@ -58,3 +57,12 @@ export default connect((state) => {
     views: state.getIn(['ui', 'editorViews'])
   };
 }, editorActions)(Radium(Editor));
+
+const styles = {
+  container: {
+    display: 'flex',
+    flexFlow: 'column nowrap',
+    height: '100%',
+    ...fontStyles.monospace
+  }
+};

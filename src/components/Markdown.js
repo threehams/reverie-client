@@ -54,7 +54,7 @@ export class MarkdownHeading extends React.Component {
   };
 
   render() {
-    return <StatusEffect>{ [this.props.children, <div>---------------</div>] }</StatusEffect>;
+    return <StatusEffect>{ [this.props.children, <div key="underline">---------------</div>] }</StatusEffect>;
   }
 }
 

@@ -13,7 +13,9 @@ import CommandRecord from '../records/CommandRecord';
 import EntityRecord from '../records/EntityRecord';
 import ExitRecord from '../records/ExitRecord';
 
-export class DebuggerPrompt extends React.Component {
+import fontStyles from '../styles/font';
+
+export class TerminalPrompt extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
   }
@@ -97,23 +99,26 @@ export class DebuggerPrompt extends React.Component {
                type="text"
                ref={(input) => { this.input = input; }}
                value={currentCommand}
-               style={styles}
+               style={styles.input}
                onKeyDown={::this.selectOption}
                onChange={::this.setCommandFromInput}
-               autoComplete="off" />
+               autoComplete="off"/>
       </form>
     );
   }
 }
 
 const styles = {
-  width: '100%',
-  borderBottom: 0,
-  borderLeft: 0,
-  borderRight: 0,
-  borderTop: panelStyles.border,
-  padding: 4,
-  outline: 0
+  input: {
+    width: '100%',
+    borderBottom: 0,
+    borderLeft: 0,
+    borderRight: 0,
+    borderTop: panelStyles.border,
+    padding: 4,
+    outline: 0,
+    ...fontStyles.monospace,
+  }
 };
 
 export const mapStateToProps = (state) => {
@@ -126,4 +131,4 @@ export const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, commandActions)(Radium(DebuggerPrompt));
+export default connect(mapStateToProps, commandActions)(Radium(TerminalPrompt));
