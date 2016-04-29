@@ -4,11 +4,9 @@ import Radium from 'radium';
 import TerminalHistory from './TerminalHistory';
 import TerminalPrompt from './TerminalPrompt';
 
+import fontStyles from '../styles/font';
+
 export class Terminal extends React.Component {
-  static propTypes = {
-
-  };
-
   render() {
     return (
       <div style={styles.terminal}>
@@ -25,12 +23,12 @@ export class Terminal extends React.Component {
 
 export default Radium(Terminal);
 
-
 const styles = {
   terminal: {
     display: 'flex',
     flexFlow: 'column nowrap',
-    height: '100%'
+    height: '100%',
+    ...fontStyles.monospace,
   },
   terminalHistory: {
     flex: '1 1 auto'
