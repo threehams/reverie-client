@@ -5,7 +5,7 @@ export class Panel extends React.Component {
   static propTypes = {
     type: PropTypes.string,
     children: PropTypes.node,
-    style: PropTypes.object
+    style: PropTypes.oneOf(PropTypes.object, PropTypes.array)
   };
 
   render() {
