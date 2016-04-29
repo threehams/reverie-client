@@ -5,7 +5,6 @@ import Radium from 'radium';
 import shallowCompare from 'react-addons-shallow-compare';
 
 import StatusEffect from '../components/StatusEffect';
-import fontStyles from '../styles/font';
 
 export class TerminalHistory extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
@@ -32,8 +31,7 @@ export class TerminalHistory extends React.Component {
 
 const styles = {
   main: {
-    padding: 10,
-    ...fontStyles.monospace
+    padding: 10
   }
 };
 
