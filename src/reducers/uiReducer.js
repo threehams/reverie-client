@@ -10,6 +10,7 @@ import {
   EDITOR_SELECT_ITEMS,
   EDITOR_SET_ACTIVE_VIEW,
   PLAYER_SET_ACTIVE_VIEW,
+  RESIZE_PANEL,
   SET_STATE,
   SOCKET_STATUS
 } from '../actions/actionTypes';
@@ -42,6 +43,8 @@ export default function uiReducer(state = INITIAL_STATE, action) {
       return state.set('alert', ALERTS[action.payload.status]);
     case PLAYER_SET_ACTIVE_VIEW:
       return state.set('activePlayerView', action.payload.name);
+    case RESIZE_PANEL:
+      return state.set(action.payload.property, action.payload.size);
     default:
       return state;
   }
