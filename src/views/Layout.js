@@ -16,6 +16,7 @@ import Tab from '../components/Tab';
 import Icon from '../components/Icon';
 
 import * as playerActions from '../actions/playerActions';
+import * as layoutActions from '../actions/layoutActions';
 
 export class Layout extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
@@ -25,16 +26,24 @@ export class Layout extends React.Component {
   static propTypes = {
     activePlayerView: PropTypes.string,
     alert: PropTypes.string,
-    setActiveView: PropTypes.func
+    footerHeight: PropTypes.number,
+    setActiveView: PropTypes.func,
+    sidebarHeight: PropTypes.number,
+    sidebarWidth: PropTypes.number,
+    resizePanel: PropTypes.func,
   };
 
   render() {
-    const { activePlayerView, setActiveView, alert } = this.props;
+    const { activePlayerView, alert, footerHeight, resizePanel, setActiveView, sidebarHeight, sidebarWidth } = this.props;
 
     return (
       <div>
         { alert && <div style={styles.alert}>{ alert }</div> }
-        <PanelContainer>
+        <PanelContainer footerHeight={footerHeight}
+                        sidebarHeight={sidebarHeight}
+                        sidebarWidth={sidebarWidth}
+                        resizePanel={resizePanel}
+        >
           <Panel type="sidebar" key="sidebar-upper">
             <TabContainer equalWidth>
               <Tab onClick={() => setActiveView('inventory') }
@@ -81,9 +90,13 @@ export default connect((state) => {
   return {
     alert: state.getIn(['ui', 'alert']),
     activePlayerView: state.getIn(['ui', 'activePlayerView']),
+    footerHeight: state.getIn(['ui', 'footerHeight']),
+    sidebarWidth: state.getIn(['ui', 'sidebarWidth']),
+    sidebarHeight: state.getIn(['ui', 'sidebarHeight']),
   };
 }, {
-  setActiveView: playerActions.setActiveView
+  setActiveView: playerActions.setActiveView,
+  resizePanel: layoutActions.resizePanel
 })(Radium(Layout));
 
 const styles = {

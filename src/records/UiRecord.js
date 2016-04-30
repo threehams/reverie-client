@@ -9,4 +9,7 @@ export default Record({
   player: null,
   selectedItems: OrderedSet(),
   statusEffects: Set(),
+  sidebarWidth: 300,
+  footerHeight: 300,
+  sidebarHeight: 300,
 });
