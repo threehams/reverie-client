@@ -1,7 +1,12 @@
 import React, { PropTypes } from 'react';
 import Radium from 'radium';
+import shallowCompare from 'react-addons-shallow-compare';
 
 export class Panel extends React.Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
+
   static propTypes = {
     type: PropTypes.string,
     children: PropTypes.node,

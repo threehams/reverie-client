@@ -29,6 +29,8 @@ export class PanelContainer extends React.Component {
 
   onPanelResize(property, delta, done) {
     if (done) {
+      if (!this.state[property]) return;
+
       this.props.resizePanel(property, this.state[property]);
       this.setState({[property]: null});
     } else if (this.state[property] !== this.props[property] + delta) {
@@ -60,7 +62,7 @@ export class PanelContainer extends React.Component {
     const sidebar = this.wrapSidebars(sidebars, sidebarWidth, topHeightStyle);
     const mainWidth = sidebar ? `calc(100% - ${sidebarWidth}px)` : '100%';
     return [
-      sidebar && <div style={[styles.resizable, { display: 'inline-block' }]}>
+      sidebar && <div key="sidebar-resizable" style={[styles.resizable, { display: 'inline-block' }]}>
         { sidebar }
         <PanelResizer key="sidebar-resizer"
                       property="sidebarWidth"
@@ -68,7 +70,7 @@ export class PanelContainer extends React.Component {
                       onResize={::this.onPanelResize } />
       </div>,
       main && cloneElement(main, { style: [styles.main, { width: mainWidth, height: topHeightStyle}]}),
-      footer && <div style={styles.resizable}>
+      footer && <div key="footer-resizable" style={styles.resizable}>
         <PanelResizer key="footer-resizer"
                       property="footerHeight"
                       position="top"

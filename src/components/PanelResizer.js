@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import Radium from 'radium';
+import shallowCompare from 'react-addons-shallow-compare';
 
 const coords = {
   bottom: 'clientY',
@@ -16,6 +17,10 @@ const multiplier = {
 };
 
 export class PanelResizer extends React.Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
+
   static propTypes = {
     onResize: PropTypes.func,
     position: PropTypes.oneOf(['top', 'bottom', 'left', 'right']),
@@ -51,20 +56,17 @@ export class PanelResizer extends React.Component {
     if (!this.state.resizing) return;
 
     event.preventDefault();
-    clearTimeout(this.timeout);
-    this.timeout = setTimeout(() => {
-      this.props.onResize(
-        this.props.property,
-        (event[coords[this.props.position]] - this.state.initial) * multiplier[this.props.position]
-      );
-    });
+    this.props.onResize(
+      this.props.property,
+      (event[coords[this.props.position]] - this.state.initial) * multiplier[this.props.position]
+    );
   }
 
   endResize(event) {
     if (!this.state.resizing) return;
 
     event.preventDefault();
-    this.props.onResize(this.props.property, event[coords[this.props.position]] - this.state.initial, true);
+    this.props.onResize(this.props.property, null, true);
     this.setState({ resizing: false, initial: 0 });
   }
 
