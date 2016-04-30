@@ -92,6 +92,7 @@ const styles = {
     position: 'absolute',
     top: -5,
     width: '100%',
+    zIndex: 1,
   },
   right: {
     cursor: 'ew-resize',
@@ -100,5 +101,6 @@ const styles = {
     right: -5,
     top: 0,
     width: 11,
+    zIndex: 1,
   }
 };

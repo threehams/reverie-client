@@ -1,5 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
+import shallowCompare from 'react-addons-shallow-compare';
 
 import TerminalHistory from './TerminalHistory';
 import TerminalPrompt from './TerminalPrompt';
@@ -7,6 +8,10 @@ import TerminalPrompt from './TerminalPrompt';
 import fontStyles from '../styles/font';
 
 export class Terminal extends React.Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
+  
   render() {
     return (
       <div style={styles.terminal}>
