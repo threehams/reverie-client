@@ -53,7 +53,7 @@ class EditorPanel extends React.Component {
     const items = history.map((item, index) => {
       const trimmed = item ? item.trim() : '';
       return (
-        <li key={index}>
+        <li key={index} style={styles.item}>
           <span style={[styles.counter, {width: marginLeft + 4}]}>{index}</span>
           { trimmed ? <ReactMarkdown source={ trimmed } {...markdownProps} /> : '\u00a0' }
         </li>
@@ -97,6 +97,9 @@ const styles = {
   list: {
     flex: '1 1 auto',
     backgroundColor: 'white',
-    paddingLeft: 4
+  },
+  item: {
+    paddingLeft: 4,
+    backgroundColor: 'white',
   }
 };

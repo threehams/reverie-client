@@ -11,13 +11,11 @@ export class Terminal extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
   }
-  
+
   render() {
     return (
       <div style={styles.terminal}>
-        <div style={styles.terminalHistory}>
-          <TerminalHistory />
-        </div>
+        <TerminalHistory />
         <div style={styles.terminalPrompt}>
           <TerminalPrompt />
         </div>
@@ -35,10 +33,8 @@ const styles = {
     height: '100%',
     ...fontStyles.monospace,
   },
-  terminalHistory: {
-    flex: '1 1 auto'
-  },
   terminalPrompt: {
-    flex: '0 0 30px'
+    flex: '0 0 30px',
+    position: 'relative',
   }
 };
