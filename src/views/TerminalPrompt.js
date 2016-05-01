@@ -24,6 +24,7 @@ export class TerminalPrompt extends React.Component {
     autocompleteFragment: PropTypes.string,
     autocompleteOpen: PropTypes.bool,
     autocompleteOptions: PropTypes.instanceOf(List),
+    autocompletePosition: PropTypes.number,
     autocompleteSelectedItem: PropTypes.oneOfType([
       PropTypes.instanceOf(CommandRecord),
       PropTypes.instanceOf(EntityRecord),
@@ -76,7 +77,14 @@ export class TerminalPrompt extends React.Component {
   // Keep 'if autocompleteOpen' conditional, move everything else into action creator.
   submit(event) {
     event.preventDefault();
-    const { autocompleteOpen, autocompleteOptions, completeCommand, currentCommand, autocompleteSelectedItem, sendCommand } = this.props;
+    const {
+      autocompleteOpen,
+      autocompleteOptions,
+      completeCommand,
+      currentCommand,
+      autocompleteSelectedItem,
+      sendCommand
+    } = this.props;
     const cursorIndex = ReactDOM.findDOMNode(this.input).selectionStart;
     if (autocompleteOpen && autocompleteOptions.size) {
       completeCommand(currentCommand, cursorIndex, autocompleteSelectedItem);
@@ -86,14 +94,29 @@ export class TerminalPrompt extends React.Component {
   }
 
   render() {
-    const { autocompleteFragment, autocompleteOptions, autocompleteOpen, currentCommand, autocompleteSelectedItem } = this.props;
+    const {
+      autocompleteFragment,
+      autocompleteOptions,
+      autocompleteOpen,
+      autocompletePosition,
+      autocompleteSelectedItem,
+      currentCommand,
+    } = this.props;
+
+    const autocompleteStyles = {
+      bottom: 30,
+      left: Math.floor(autocompletePosition * fontStyles.widths.monospace)
+    };
     return (
       <form onSubmit={::this.submit}>
         {
           autocompleteOpen &&
-          <Autocomplete fragment={autocompleteFragment}
-                        options={autocompleteOptions}
-                        selectedItem={autocompleteSelectedItem}/>
+            <div style={[styles.autocompleteContainer, autocompleteStyles]}>
+              <Autocomplete fragment={autocompleteFragment}
+                            options={autocompleteOptions}
+                            selectedItem={autocompleteSelectedItem}
+                            autocompletePosition={autocompletePosition} />
+            </div>
         }
         <input id="prompt"
                type="text"
@@ -110,14 +133,22 @@ export class TerminalPrompt extends React.Component {
 
 const styles = {
   input: {
-    width: '100%',
     borderBottom: 0,
     borderLeft: 0,
     borderRight: 0,
     borderTop: panelStyles.border,
-    padding: 4,
     outline: 0,
+    padding: 4,
+    width: '100%',
     ...fontStyles.monospace,
+  },
+  autocompleteContainer: {
+    border: '1px solid #c0c0c0',
+    maxHeight: 300,
+    // maxWidth: '70vw',
+    overflowY: 'scroll',
+    position: 'absolute',
+    zIndex: 2,
   }
 };
 
@@ -126,6 +157,7 @@ export const mapStateToProps = (state) => {
     autocompleteFragment: autocompleteSelectors.autocompleteFragment(state),
     autocompleteOpen: state.getIn(['command', 'autocompleteOpen']),
     autocompleteOptions: autocompleteSelectors.availableOptions(state),
+    autocompletePosition: state.getIn(['command', 'autocompletePosition']),
     autocompleteSelectedItem: autocompleteSelectors.selectedOption(state),
     currentCommand: state.getIn(['command', 'current']),
   };

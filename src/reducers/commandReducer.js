@@ -83,14 +83,16 @@ function replaceCommand(state, command, index, replacement) {
   const head = command.slice(0, index);
   const lastSpace = head.lastIndexOf(' ') + 1;
   // Remove the expected autocomplete fragment from head, replace with replacement, tack on tail
+  const cursorIndex = lastSpace + replacement.length + 1;
   return state.merge({
     current: head.slice(0, lastSpace) + replacement + (tail[0] === ' ' ? '' : ' ') + tail,
-    cursorIndex: lastSpace + replacement.length + 1
+    cursorIndex,
+    autocompletePosition: cursorIndex
   });
 }
 
 function closeAutocomplete(state) {
-  return state.merge({ autocompleteOpen: false, autocompleteSelectedItem: null });
+  return state.merge({ autocompleteOpen: false, autocompleteSelectedItem: null, autocompletePosition: null });
 }
 
 function setCurrentCommand(state, { command, cursorIndex }) {
@@ -99,7 +101,10 @@ function setCurrentCommand(state, { command, cursorIndex }) {
   if (command[cursorIndex - 1] === ' ' || currentCommand.length > command.length) {
     return closeAutocomplete(newState);
   }
+
+  const position = state.get('autocompletePosition');
   return newState.merge({
-    autocompleteOpen: true
+    autocompleteOpen: true,
+    autocompletePosition: position ? position : cursorIndex
   });
 }

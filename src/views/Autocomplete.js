@@ -77,21 +77,16 @@ export default Radium(Autocomplete);
 const styles = {
   panel: {
     global: {
-      position: 'absolute',
-      bottom: 30,
-      border: '1px solid #c0c0c0',
-      maxHeight: '10vh',
-      maxWidth: '70vw',
-      overflowY: 'scroll',
-      backgroundColor: '#ebf4fe'
+      backgroundColor: '#ebf4fe',
     }
   },
   item: {
     global: {
-      padding: '6px 8px 3px'
+      cursor: 'default',
+      padding: '6px 8px 3px',
     },
     focused: {
-      color: 'black'
+      color: 'black',
     },
     unfocused: {
       color: '#5e6266',
