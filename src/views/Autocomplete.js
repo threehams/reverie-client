@@ -23,8 +23,8 @@ export class Autocomplete extends React.Component {
   static propTypes = {
     fragment: PropTypes.string,
     focused: PropTypes.bool,
-    left: PropTypes.number,
     options: PropTypes.instanceOf(List),
+    onClickItem: PropTypes.func,
     selectedItem: PropTypes.oneOfType([
       PropTypes.instanceOf(CommandRecord),
       PropTypes.instanceOf(EntityRecord),
@@ -38,10 +38,10 @@ export class Autocomplete extends React.Component {
   }
 
   render() {
-    const { fragment, focused, options, selectedItem } = this.props;
+    const { fragment, focused, onClickItem, options, selectedItem } = this.props;
     if (!options || !options.size) return <div></div>;
     return (
-      <ul style={[styles.panel.global, focused ? styles.panel.focused : styles.panel.unfocused]}>
+      <ul style={[styles.panel.global]} tabIndex={1000}>
         {
           options.map((option, i) => {
             const optionSplit = this.splitOption(option.name, fragment);
@@ -55,6 +55,7 @@ export class Autocomplete extends React.Component {
               ref={(item) => {
                 if (option === selectedItem) this.selectedItem = item;
               }}
+              onClick={ () => onClickItem(option) }
             >
               <StatusEffect>{ optionSplit[0] }</StatusEffect>
               <span style={styles.selectedPart.unfocused}><StatusEffect>{ optionSplit[1] }</StatusEffect></span>
@@ -78,7 +79,10 @@ const styles = {
   panel: {
     global: {
       backgroundColor: '#ebf4fe',
-    }
+      ':focus': {
+        outline: 0,
+      }
+    },
   },
   item: {
     global: {

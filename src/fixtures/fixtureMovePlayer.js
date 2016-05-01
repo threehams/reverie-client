@@ -1,6 +1,7 @@
 export default {
   location: {
     name: 'North of House',
+    // eslint-disable-next-line max-len
     description: 'You are facing the north side of a white house. There is no door here, and all the windows are barred.',
     exits: ['south']
   },

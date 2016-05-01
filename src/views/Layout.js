@@ -34,7 +34,15 @@ export class Layout extends React.Component {
   };
 
   render() {
-    const { activePlayerView, alert, footerHeight, resizePanel, setActiveView, sidebarHeight, sidebarWidth } = this.props;
+    const {
+      activePlayerView,
+      alert,
+      footerHeight,
+      resizePanel,
+      setActiveView,
+      sidebarHeight,
+      sidebarWidth
+    } = this.props;
 
     return (
       <div>

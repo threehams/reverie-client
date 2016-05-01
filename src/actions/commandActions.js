@@ -62,17 +62,16 @@ export function setCurrentCommand(command, cursorIndex) {
 export function selectNextAutocompleteItem(options, current) {
   const index = options.findIndex(option => option === current);
   const item = index === options.size - 1 ? options.first() : options.get(index + 1);
-  return {
-    type: COMMAND_SELECT_AUTOCOMPLETE_ITEM,
-    payload: {
-      item
-    }
-  };
+  return selectAutocompleteItem(item);
 }
 
 export function selectPreviousAutocompleteItem(options, current) {
   const index = options.findIndex(option => option === current);
   const item = index === 0 ? options.last() : options.get(index - 1);
+  return selectAutocompleteItem(item);
+}
+
+export function selectAutocompleteItem(item) {
   return {
     type: COMMAND_SELECT_AUTOCOMPLETE_ITEM,
     payload: {

@@ -171,7 +171,9 @@ export class MarkdownBlockQuote extends React.Component {
 
   render() {
     return (
-      <blockquote style={{...styles.all, ...styles.blockquote}}><StatusEffect>"{ this.props.children }"</StatusEffect></blockquote>
+      <blockquote style={{...styles.all, ...styles.blockquote}}>
+        <StatusEffect>"{ this.props.children }"</StatusEffect>
+      </blockquote>
     );
   }
 }
