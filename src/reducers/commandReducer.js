@@ -55,6 +55,7 @@ function createCommandRecord(command) {
             components: Set(allow.get('components')),
             owners: Set(allow.get('owners')),
             names: Set(allow.get('names')),
+            states: Set(allow.get('states')),
           });
         });
       });

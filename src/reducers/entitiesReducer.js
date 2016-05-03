@@ -9,7 +9,9 @@ export default function entitiesReducer(state = Map(), action) {
   switch (action.type) {
     case SET_STATE:
       const entities = state.merge(action.payload.entities.map(entity => {
-        const newEntity = entity.update('components', components => Set(components));
+        const newEntity = entity
+          .update('components', components => Set(components))
+          .update('states', states => Set(states));
         return new EntityRecord(newEntity);
       }));
       return action.payload.entitiesToRemove.reduce((newEntities, toRemove) => {
