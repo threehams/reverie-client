@@ -33,6 +33,7 @@ export class TerminalPrompt extends React.Component {
     closeAutocomplete: PropTypes.func,
     completeCommand: PropTypes.func,
     currentCommand: PropTypes.string,
+    selectAutocompleteItem: PropTypes.func,
     selectNextAutocompleteItem: PropTypes.func,
     selectPreviousAutocompleteItem: PropTypes.func,
     sendCommand: PropTypes.func,
@@ -46,9 +47,7 @@ export class TerminalPrompt extends React.Component {
     this.props.setCurrentCommand(event.target.value, cursorIndex);
   }
 
-  // This does:
-  // Decide, based on event, whether to select next or previous.
-  // Keep here, but change. Index is unreliable.
+  // Intercept specific keystrokes and add special handling for autocomplete, or override browser defaults.
   selectOption(event) {
     const {
       autocompleteOptions,
@@ -73,8 +72,6 @@ export class TerminalPrompt extends React.Component {
   // Based on current autocomplete open state:
   // - Open:   Based on the current command, fill in the command fragment with the selected autocomplete option.
   // - Closed: Send the command to the server.
-  //
-  // Keep 'if autocompleteOpen' conditional, move everything else into action creator.
   submit(event) {
     event.preventDefault();
     const {
@@ -101,6 +98,7 @@ export class TerminalPrompt extends React.Component {
       autocompletePosition,
       autocompleteSelectedItem,
       currentCommand,
+      selectAutocompleteItem,
     } = this.props;
 
     const autocompleteStyles = {
@@ -115,7 +113,8 @@ export class TerminalPrompt extends React.Component {
               <Autocomplete fragment={autocompleteFragment}
                             options={autocompleteOptions}
                             selectedItem={autocompleteSelectedItem}
-                            autocompletePosition={autocompletePosition} />
+                            autocompletePosition={autocompletePosition}
+                            onClickItem={selectAutocompleteItem} />
             </div>
         }
         <input id="prompt"
@@ -125,7 +124,7 @@ export class TerminalPrompt extends React.Component {
                style={styles.input}
                onKeyDown={::this.selectOption}
                onChange={::this.setCommandFromInput}
-               autoComplete="off"/>
+               autoComplete="off" />
       </form>
     );
   }
@@ -145,7 +144,7 @@ const styles = {
   autocompleteContainer: {
     border: '1px solid #c0c0c0',
     maxHeight: 300,
-    // maxWidth: '70vw',
+    maxWidth: '70vw',
     overflowY: 'scroll',
     position: 'absolute',
     zIndex: 2,

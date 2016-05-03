@@ -20,6 +20,14 @@ function applyAllowedOwners(objects, owners) {
   return objects.filter(object => owners.contains(object.owner));
 }
 
+function applyAllowedStates(objects, states) {
+  if (!states.size) {
+    return objects;
+  }
+
+  return objects.filter(object => states.intersect(object.states).size);
+}
+
 function applyAllowedComponents(objects, components) {
   if (!components.size) {
     return objects;
@@ -51,11 +59,14 @@ export function applyAllowed(objects, allowed) {
 
   return applyAllowedOwners(
     applyAllowedComponents(
-      // filter by type, then flatten and combine to a single list
-      applyAllowedTypes(
-        objects,
-        allowed.types
-      ).toList().flatMap(item => item),
+      applyAllowedStates(
+        // filter by type, then flatten and combine to a single list
+        applyAllowedTypes(
+          objects,
+          allowed.types
+        ).toList().flatMap(item => item),
+        allowed.states,
+      ),
       allowed.components
     ),
     allowed.owners

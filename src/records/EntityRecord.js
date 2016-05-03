@@ -17,5 +17,6 @@ export default Record({
   owner: null,
   path: '',
   quantity: 1,
-  selected: false
+  selected: false,
+  states: Set(),
 });

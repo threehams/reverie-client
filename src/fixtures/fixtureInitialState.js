@@ -74,9 +74,9 @@ export default {
     },
     '13': {
       id: '13',
-      components: ['container'],
+      components: ['container', 'openable'],
       name: 'small-mailbox',
-      entities: ['14']
+      states: ['closed'],
     },
     '14': {
       id: '14',
@@ -98,15 +98,9 @@ export default {
     },
     '18': {
       id: '18',
-      components: ['container'],
+      components: ['container', 'lockable'],
       name: 'usb-drive',
-      entities: ['19']
-    },
-    '19': {
-      id: '19',
-      components: ['item'],
-      name: 'mydoom.js',
-      description: '```andy; I’m just doing my job, nothing personal, sorry,```'
+      states: ['locked', 'closed'],
     },
     '74': {
       id: '74',
@@ -276,6 +270,34 @@ export default {
             {
               types: ['entity'],
               components: ['creature', 'player']
+            }
+          ]
+        }
+      ]
+    },
+    {
+      name: 'open',
+      parts: [
+        {
+          allowed: [
+            {
+              types: ['entity'],
+              components: ['container'],
+              states: ['closed'],
+            }
+          ]
+        }
+      ]
+    },
+    {
+      name: 'unlock',
+      parts: [
+        {
+          allowed: [
+            {
+              types: ['entity'],
+              components: ['container', 'lockable'],
+              states: ['locked'],
             }
           ]
         }

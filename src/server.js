@@ -23,9 +23,12 @@ import fixtureMoveItemToContainer from './fixtures/fixtureMoveItemToContainer';
 import fixtureNotOnFire from './fixtures/fixtureNotOnFire';
 import fixtureNotConfused from './fixtures/fixtureNotConfused';
 import fixtureNotPanicking from './fixtures/fixtureNotPanicking';
+import fixtureOpenContainer from './fixtures/fixtureOpenContainer';
+import fixtureOpenUnlockedContainer from './fixtures/fixtureOpenUnlockedContainer';
 import fixtureOtherPlayerSay from './fixtures/fixtureOtherPlayerSay';
 import fixturePanicking from './fixtures/fixturePanicking';
 import fixturePlayerSay from './fixtures/fixturePlayerSay';
+import fixtureUnlockContainer from './fixtures/fixtureUnlockContainer';
 import compression from 'compression';
 
 const webpackConfig = require('../webpack.config');
@@ -120,6 +123,10 @@ wsServer.on('connection', function(ws) {
       case 's':
       case 'south':
         return sendMessage(fixtureMovePlayerBack);
+      case 'open floor/small-mailbox':
+        return sendMessage(fixtureOpenContainer);
+      case 'open floor/usb-drive':
+        return sendMessage(fixtureOpenUnlockedContainer);
       case 'help':
         return sendMessage({
           message: `Available commands:
@@ -140,6 +147,8 @@ wsServer.on('connection', function(ws) {
         }, 1000);
       case 'take tmp':
         return sendMessage(fixtureInventoryAdd);
+      case 'unlock floor/usb-drive':
+        return sendMessage(fixtureUnlockContainer);
       default:
         return sendMessage({ message: `I don't know how to ${command}.`});
     }

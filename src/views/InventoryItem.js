@@ -3,19 +3,10 @@ import Radium from 'radium';
 import shallowCompare from 'react-addons-shallow-compare';
 import { DragSource, DropTarget } from 'react-dnd';
 
-import Icon from '../components/Icon';
+import EntityIcon from '../components/EntityIcon';
 import StatusEffect from '../components/StatusEffect';
 import DropdownArrow from '../components/DropdownArrow';
 import EntityRecord from '../records/EntityRecord';
-
-const TYPE_ICONS = {
-  container: 'folder-o',
-  creature: 'github-alt',
-  executable: 'file-code-o',
-  player: 'user',
-  room: 'photo',
-  text: 'file-text-o'
-};
 
 export class InventoryItem extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
@@ -32,12 +23,11 @@ export class InventoryItem extends React.Component {
     moveItem: PropTypes.func,
     selectItem: PropTypes.func,
     toggleExpand: PropTypes.func,
-    toggleItem: PropTypes.func
+    toggleItem: PropTypes.func,
   };
 
   expandItem(event, item) {
     event.stopPropagation();
-    if (event.shiftKey || event.ctrlKey) return;
     if (item.entities.size) {
       this.props.toggleExpand(item.id);
     } else {
@@ -56,41 +46,25 @@ export class InventoryItem extends React.Component {
     }
   }
 
-  // TODO pretty obviously temp code
-  iconFor(item) {
-    if (item.components.contains('container')) {
-      return TYPE_ICONS.container;
-    }
-    if (item.components.contains('player')) {
-      return TYPE_ICONS.player;
-    }
-    if (item.components.contains('room')) {
-      return TYPE_ICONS.room;
-    }
-    if (item.components.contains('creature')) {
-      return TYPE_ICONS.creature;
-    }
-    return TYPE_ICONS.text;
-  }
-
   render() {
     const { item, canDrop, isOver, connectDragSource, connectDropTarget } = this.props;
     return connectDragSource(
       connectDropTarget(
-        <div onMouseDown={(event) => this.selectItem(event, item)}
+        <div style={[styles.item, item.selected && styles.selected, { paddingLeft: styles.indent * item.indent }]}
+             onMouseDown={(event) => this.selectItem(event, item)}
              onDoubleClick={(event) => this.expandItem(event, item)}>
-          <div style={[styles.item, item.selected && styles.selected, { paddingLeft: styles.indent * item.indent }]}>
-            {
-              item.entities.size ?
-                <DropdownArrow expanded={item.expanded}
-                               onMouseDown={(event) => this.expandItem(event, item)}/> :
-                <span style={{ paddingLeft: 18 }}/>
-            }
-            <StatusEffect><Icon name={this.iconFor(item)} color={styles[item.type]} before/></StatusEffect>
-            <span style={[{cursor: 'default'}, isOver && canDrop && styles.canDrop]}>
-              <StatusEffect>{ item.name + (item.quantity > 1 ? ` (${item.quantity})` : '') }</StatusEffect>
-            </span>
-          </div>
+          {
+            item.entities.size ?
+              <DropdownArrow expanded={item.expanded}
+                             onMouseDown={(event) => this.expandItem(event, item)}/> :
+              <span style={{ paddingLeft: 18 }}/>
+          }
+          <StatusEffect>
+            <EntityIcon entity={item} color={styles[item.type]} before/>
+          </StatusEffect>
+          <span style={[{cursor: 'default'}, isOver && canDrop && styles.canDrop]}>
+            <StatusEffect>{ item.name + (item.quantity > 1 ? ` (${item.quantity})` : '') }</StatusEffect>
+          </span>
         </div>
       )
     );
