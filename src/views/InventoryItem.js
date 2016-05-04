@@ -55,8 +55,10 @@ export class InventoryItem extends React.Component {
              onDoubleClick={(event) => this.expandItem(event, item)}>
           {
             item.entities.size ?
-              <DropdownArrow expanded={item.expanded}
-                             onMouseDown={(event) => this.expandItem(event, item)}/> :
+              <StatusEffect>
+                <DropdownArrow expanded={item.expanded}
+                             onMouseDown={(event) => this.expandItem(event, item)}/>
+              </StatusEffect> :
               <span style={{ paddingLeft: 18 }}/>
           }
           <StatusEffect>

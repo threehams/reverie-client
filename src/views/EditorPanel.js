@@ -14,7 +14,7 @@ import {
   MarkdownEmphasis,
   MarkdownStrong,
   MarkdownBlockQuote,
-} from '../components/Markdown';
+} from '../views/Markdown';
 
 import * as playerActions from '../actions/playerActions';
 

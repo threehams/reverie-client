@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import StatusEffect from './StatusEffect';
+import StatusEffect from '../components/StatusEffect';
 import shallowCompare from 'react-addons-shallow-compare';
 
 import fontStyles from '../styles/font';
