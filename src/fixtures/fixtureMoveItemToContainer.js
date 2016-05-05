@@ -1,10 +1,10 @@
 export default {
   entities: {
-    '18': {
-      id: '18',
-      name: 'usb-drive',
+    '4': {
+      id: '4',
       components: ['container'],
-      entities: ['19', '10']
+      name: 'hacks',
+      entities: ['5', '6', '10']
     },
     '9': {
       id: '9',
@@ -13,5 +13,5 @@ export default {
       entities: ['11']
     }
   },
-  message: 'You moved "readme.txt" to "usb-drive."'
+  message: 'You moved "readme.txt" to "hacks".'
 };

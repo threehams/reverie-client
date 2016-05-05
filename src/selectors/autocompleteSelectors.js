@@ -6,6 +6,12 @@ import AllowedRecord from '../records/AllowedRecord';
 import CommandRecord from '../records/CommandRecord';
 import ExitRecord from '../records/ExitRecord';
 
+function compare(a, b) {
+  if (a > b) return 1;
+  if (a < b) return -1;
+  return 0;
+}
+
 const defaultFilters = List([
   new AllowedRecord({
     types: Set(['command', 'exit'])
@@ -162,28 +168,14 @@ export const availableOptions = createSelector(
 
       // If there's no fragment, sort by exit first, then path, then name.
       if (!fragment.length) {
-        if (a.path > b.path) return 1;
-        if (a.path < b.path) return -1;
-        if (a.name > b.name) return 1;
-        if (a.name < b.name) return -1;
-        return 0;
+        return compare(a.path, b.path) || compare(a.name, b.name);
       }
 
-      // TODO this can be refactored - subtrack aIndex and bIndex. don't know the order.
       // If there's a fragment, sort by first character with that fragment, then exits first, then path, then name.
-      const aIndex = a.name.indexOf(fragment);
-      const bIndex = b.name.indexOf(fragment);
-      if (aIndex > bIndex) return 1;
-      if (aIndex < bIndex) return -1;
-      const aExit = (a instanceof ExitRecord);
-      const bExit = (b instanceof ExitRecord);
-      if (!aExit && bExit) return 1;
-      if (aExit && !bExit) return -1;
-      if (a.path > b.path) return 1;
-      if (a.path < b.path) return -1;
-      if (a.name > b.name) return 1;
-      if (a.name < b.name) return -1;
-      return 0;
+      return compare(a.name.indexOf(fragment), b.name.indexOf(fragment))
+        || compare(a instanceof ExitRecord, b instanceof ExitRecord)
+        || compare(a.path, b.path)
+        || compare(a.name, b.name);
     });
   }
 );

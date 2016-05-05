@@ -221,6 +221,18 @@ export default {
       name: 'help'
     },
     {
+      name: 'walk',
+      parts: [
+        {
+          allowed: [
+            {
+              types: ['exit']
+            }
+          ]
+        }
+      ]
+    },
+    {
       name: 'look',
       parts: [
         {
