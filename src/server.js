@@ -83,6 +83,7 @@ wsServer.on('connection', function(ws) {
     const command = JSON.parse(json).command.trim();
     switch (command.toLowerCase().trim()) {
       case 'attack hiro':
+      case 'kill hiro':
         sendMessage(fixtureAttackEnemySuccess);
         return setTimeout(() => {
           sendMessage(fixtureEnemyAttack);
@@ -91,6 +92,7 @@ wsServer.on('connection', function(ws) {
           }, 15000);
         }, 2000);
       case 'attack raven':
+      case 'kill raven':
         sendMessage(fixtureAttackEnemyFailure);
         return setTimeout(() => {
           sendMessage(fixturePanicking);
@@ -102,6 +104,7 @@ wsServer.on('connection', function(ws) {
           }, 10000);
         }, 5000);
       case 'attack bees':
+      case 'kill bees':
         sendMessage(fixtureAttackBees);
         return setTimeout(() => {
           sendMessage(fixtureAttackedByBees);
@@ -115,16 +118,24 @@ wsServer.on('connection', function(ws) {
             }, 15000);
           }, 5000);
         }, 3000);
-      case 'transfer self/docs/readme.txt to floor/usb-drive':
+      case 'transfer readme.txt to hacks':
+      case 'transfer self/docs/readme.txt to self/hacks':
         return sendMessage(fixtureMoveItemToContainer);
       case 'n':
       case 'north':
+      case 'walk n':
+      case 'walk north':
+      case 'run':
         return sendMessage(fixtureMovePlayer);
       case 's':
       case 'south':
+      case 'walk s':
+      case 'walk south':
         return sendMessage(fixtureMovePlayerBack);
+      case 'open small-mailbox':
       case 'open floor/small-mailbox':
         return sendMessage(fixtureOpenContainer);
+      case 'open usb-drive':
       case 'open floor/usb-drive':
         return sendMessage(fixtureOpenUnlockedContainer);
       case 'help':
@@ -132,13 +143,17 @@ wsServer.on('connection', function(ws) {
           message: `Available commands:
             attack hiro
             attack raven
-            transfer readme.txt to usb-drive
-            north || n
-            run tmp
+            attack bees
+            transfer self/docs/readme.txt to self/hacks
+            n
+            north
+            s
+            south
+            use tmp
             take tmp
             say something`
         });
-      case 'run tmp':
+      case 'use tmp':
         return sendMessage(fixtureInventoryRemove);
       case 'say something':
         sendMessage(fixturePlayerSay);
@@ -147,6 +162,7 @@ wsServer.on('connection', function(ws) {
         }, 1000);
       case 'take tmp':
         return sendMessage(fixtureInventoryAdd);
+      case 'unlock usb-drive':
       case 'unlock floor/usb-drive':
         return sendMessage(fixtureUnlockContainer);
       default:

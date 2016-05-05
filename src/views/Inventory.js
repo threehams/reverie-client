@@ -27,7 +27,7 @@ export class Inventory extends React.Component {
   render() {
     const { addView, items, moveItem, selectItem, toggleExpand, toggleItem } = this.props;
     return (
-      <Loader showUntil={!!(items && items.size)}>
+      <Loader showUntil={!!items}>
         {
           items && items.map(entity => {
             return (
