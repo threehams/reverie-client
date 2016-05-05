@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
 import Radium from 'radium';
 import shallowCompare from 'react-addons-shallow-compare';
+import { Set } from 'immutable';
 
 import Icon from '../components/Icon';
-import EntityRecord from '../records/EntityRecord';
 
 export const TYPE_ICONS = {
   containerClosed: 'folder-o',
@@ -23,21 +23,27 @@ export class EntityIcon extends React.Component {
   }
 
   static propTypes = {
-    entity: PropTypes.instanceOf(EntityRecord).isRequired
+    states: PropTypes.instanceOf(Set),
+    components: PropTypes.instanceOf(Set)
   };
 
-  iconFor(entity) {
-    if (entity.states.contains('locked')) {
+  static defaultProps = {
+    states: Set(),
+    components: Set(),
+  };
+
+  iconFor(components, states) {
+    if (states.contains('locked')) {
       return TYPE_ICONS.locked;
     }
-    if (entity.states.contains('unlocked') && entity.states.contains('closed')) {
+    if (states.contains('unlocked') && states.contains('closed')) {
       return TYPE_ICONS.unlocked;
     }
-    if (entity.components.contains('openable') && entity.states.contains('closed')) {
+    if (components.contains('openable') && states.contains('closed')) {
       return TYPE_ICONS.containerClosed;
     }
     for (const component of ['container', 'player', 'room', 'creature']) {
-      if (entity.components.contains(component)) {
+      if (components.contains(component)) {
         return TYPE_ICONS[component];
       }
     }
@@ -45,10 +51,10 @@ export class EntityIcon extends React.Component {
   }
 
   render() {
-    const { entity, ...rest } = this.props;
+    const { components, states, ...rest } = this.props;
 
     return (
-      <Icon {...rest} name={this.iconFor(entity)} />
+      <Icon {...rest} name={this.iconFor(components, states)} />
     );
   }
 }

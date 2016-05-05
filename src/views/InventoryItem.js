@@ -62,7 +62,7 @@ export class InventoryItem extends React.Component {
               <span style={{ paddingLeft: 18 }}/>
           }
           <StatusEffect>
-            <EntityIcon entity={item} color={styles[item.type]} before/>
+            <EntityIcon states={item.states} components={item.components} color={styles[item.type]} before/>
           </StatusEffect>
           <span style={[{cursor: 'default'}, isOver && canDrop && styles.canDrop]}>
             <StatusEffect>{ item.name + (item.quantity > 1 ? ` (${item.quantity})` : '') }</StatusEffect>
