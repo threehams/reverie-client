@@ -76,7 +76,8 @@ wsServer.on('connection', function(ws) {
   // Canned responses!
   // See expected meta/payload message structure in views/App.js
   // Follow Flux Standard Action, minus 'type'
-  ws.on('message', (json) => {
+  // Don't care about complexity here, it's all going away!
+  ws.on('message', (json) => { // eslint-disable-line complexity
     const command = JSON.parse(json).command.trim();
     switch (command.toLowerCase().trim()) {
       case 'attack hiro':

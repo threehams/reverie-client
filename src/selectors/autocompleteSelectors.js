@@ -62,8 +62,14 @@ export function applyAllowed(objects, allowed) {
   );
 }
 
-// TODO gotta be a way to refactor this error-prone imperative code
-function currentPart(parts, cursorIndex) {
+/*
+ * Get the index of the current part.
+ *
+ * This will break if there are multiple spaces between commands. Is that a problem? It only affects autocomplete.
+ * You decide!
+ *
+ */
+function currentPartIndex(parts, cursorIndex) {
   let totalLength = 0;
   let index = 0;
   for (const part of parts) {
@@ -95,7 +101,7 @@ const commandAllowed = createSelector(
     if (!rootCommand || !rootCommand.parts.size) return null;
 
     // now figure out what part we're in and return the "allowed" for that part
-    return rootCommand.getIn(['parts', currentPart(parts, cursorIndex), 'allowed']);
+    return rootCommand.getIn(['parts', currentPartIndex(parts, cursorIndex), 'allowed']);
   }
 );
 
