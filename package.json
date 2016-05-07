@@ -22,7 +22,7 @@
       }
     },
     "coverage": {
-      "command": "nyc --require babel-core/register node_modules/.bin/mocha --require babel-register --require ./src/__test__/testHelper.js --timeout=200 src/**/*.spec.js && nyc  --require babel-core/register report --reporter=lcov",
+      "command": "nyc --require babel-core/register --all node_modules/.bin/mocha --require babel-register --require ./src/__test__/testHelper.js --timeout=200 src/**/*.spec.js && nyc  --require babel-core/register report --reporter=lcov",
       "env": {
         "NODE_ENV": "test"
       }
@@ -114,5 +114,19 @@
     "sinon-chai": "^2.8.0",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.10.0"
+  },
+  "nyc": {
+    "include": [
+      "src/**/*.js"
+    ],
+    "exclude": [
+      "src/**/*.spec.js",
+      "src/__test__/**/*",
+      "src/fixtures/**/*",
+      "src/configureStore.js",
+      "src/index.js",
+      "src/polyfills.js",
+      "src/server.js"
+    ]
   }
 }
