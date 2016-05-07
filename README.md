@@ -1,4 +1,4 @@
-https://circleci.com/gh/threehams/reverie-client.svg?style=shield&circle-token=c21eda31e510b83c244f77f5d2e166faf12458c3
+![CircleCI](https://circleci.com/gh/threehams/reverie-client.svg?style=shield&circle-token=c21eda31e510b83c244f77f5d2e166faf12458c3)
 
 # reverie-client
 Client side for Reverie
