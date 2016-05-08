@@ -43,11 +43,13 @@ if (config.development) {
     noInfo: true,
     publicPath: webpackConfig.output.publicPath
   }));
+  app.use('/assets', express.static(path.join( __dirname, '..', 'assets')));
 
   app.use(webpackHotMiddleware(compiler));
 } else {
   app.use(compression());
   app.use('/dist', express.static(path.join( __dirname, '..', 'dist')));
+  app.use('/assets', express.static(path.join( __dirname, '..', 'assets')));
 }
 
 app.get('/', function(request, response) {
