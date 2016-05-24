@@ -1,8 +1,3 @@
-$statement-color: #0000ff;
-$property-color: #660e7a;
-$variable-color: #458383;
-$string-color: #008000;
-
 html {
   box-sizing: border-box;
 }
@@ -36,14 +31,14 @@ blockquote {
 }
 
 a {
-  color: $statement-color;
+  color: #0000ff;
   text-decoration: none;
+}
 
-  &:hover {
-    text-decoration: underline;
-  }
+a:hover {
+  text-decoration: underline;
+}
 
-  &:visited {
-    color: $statement-color;
-  }
+a:visited {
+  color: #0000ff;
 }
