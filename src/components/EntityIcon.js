@@ -6,15 +6,15 @@ import { Set } from 'immutable';
 import Icon from '../components/Icon';
 
 export const TYPE_ICONS = {
-  containerClosed: 'folder-o',
-  container: 'folder-open-o',
-  creature: 'github-alt',
-  executable: 'file-code-o',
-  locked: 'lock',
-  player: 'user',
-  room: 'photo',
-  text: 'file-text-o',
-  unlocked: 'unlock-alt',
+  containerClosed: 'icon-folder-excluded',
+  container: 'icon-folder',
+  creature: 'fa fa-github-alt',
+  executable: 'icon-file-js',
+  locked: 'icon-locked',
+  player: 'fa fa-user',
+  room: 'fa fa-photo',
+  text: 'icon-file-text',
+  unlocked: 'icon-unlocked',
 };
 
 export class EntityIcon extends React.Component {

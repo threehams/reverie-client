@@ -34,7 +34,7 @@ class Tab extends React.Component {
     return (
       <div style={[styles.global, active ? styles.active : styles.inactive]} onClick={::this.elementClicked}>
         <span style={styles.label}>{ this.props.children }</span>
-        { onClickClose && <Icon name="times" onClick={(e) => { e.stopPropagation(); onClickClose(); }} /> }
+        { onClickClose && <Icon name="fa fa-times" onClick={(e) => { e.stopPropagation(); onClickClose(); }} /> }
       </div>
     );
   }

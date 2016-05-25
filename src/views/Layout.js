@@ -58,14 +58,14 @@ export class Layout extends React.Component {
               <Tab onClick={() => setActiveView('inventory') }
                    active={activePlayerView === 'inventory'}>
                 <StatusEffect>
-                  <Icon name="folder-o" before />
+                  <Icon name="fa fa-folder-o" before />
                   <StatusEffect>Inventory</StatusEffect>
                 </StatusEffect>
               </Tab>
               <Tab onClick={() => setActiveView('character') }
                    active={activePlayerView === 'character'}>
                 <StatusEffect>
-                  <Icon name="user" before />
+                  <Icon name="fa fa-user" before />
                   <StatusEffect>Character</StatusEffect>
                 </StatusEffect>
               </Tab>

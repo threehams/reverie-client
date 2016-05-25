@@ -1,0 +1,162 @@
+/*
+Icon classes can be used entirely standalone. They are named after their original file names.
+
+Example usage in HTML:
+
+`display: block` sprite:
+<div class="icon-home"></div>
+
+To change `display` (e.g. `display: inline-block;`), we suggest using a common CSS class:
+
+// CSS
+.icon {
+  display: inline-block;
+}
+
+// HTML
+<i class="icon icon-home"></i>
+*/
+.icon-arrow-down {
+  background-image: url(./icons.png);
+  background-position: -16px 0px;
+  width: 16px;
+  height: 16px;
+}
+.icon-arrow-right {
+  background-image: url(./icons.png);
+  background-position: 0px -48px;
+  width: 16px;
+  height: 16px;
+}
+.icon-component-class {
+  background-image: url(./icons.png);
+  background-position: 0px -16px;
+  width: 16px;
+  height: 16px;
+}
+.icon-component-field {
+  background-image: url(./icons.png);
+  background-position: -16px -16px;
+  width: 16px;
+  height: 16px;
+}
+.icon-component-interface-method {
+  background-image: url(./icons.png);
+  background-position: -32px 0px;
+  width: 16px;
+  height: 16px;
+}
+.icon-component-interface {
+  background-image: url(./icons.png);
+  background-position: -32px -16px;
+  width: 16px;
+  height: 16px;
+}
+.icon-component-lambda {
+  background-image: url(./icons.png);
+  background-position: 0px -32px;
+  width: 16px;
+  height: 16px;
+}
+.icon-component-method {
+  background-image: url(./icons.png);
+  background-position: -16px -32px;
+  width: 16px;
+  height: 16px;
+}
+.icon-component-parameter {
+  background-image: url(./icons.png);
+  background-position: -32px -32px;
+  width: 16px;
+  height: 16px;
+}
+.icon-component-property {
+  background-image: url(./icons.png);
+  background-position: -48px 0px;
+  width: 16px;
+  height: 16px;
+}
+.icon-component-variable {
+  background-image: url(./icons.png);
+  background-position: -48px -16px;
+  width: 16px;
+  height: 16px;
+}
+.icon-file-css {
+  background-image: url(./icons.png);
+  background-position: -48px -32px;
+  width: 16px;
+  height: 16px;
+}
+.icon-file-html {
+  background-image: url(./icons.png);
+  background-position: 0px 0px;
+  width: 16px;
+  height: 16px;
+}
+.icon-file-image {
+  background-image: url(./icons.png);
+  background-position: -16px -48px;
+  width: 16px;
+  height: 16px;
+}
+.icon-file-js {
+  background-image: url(./icons.png);
+  background-position: -32px -48px;
+  width: 16px;
+  height: 16px;
+}
+.icon-file-json {
+  background-image: url(./icons.png);
+  background-position: -48px -48px;
+  width: 16px;
+  height: 16px;
+}
+.icon-file-text {
+  background-image: url(./icons.png);
+  background-position: -64px 0px;
+  width: 16px;
+  height: 16px;
+}
+.icon-folder-excluded {
+  background-image: url(./icons.png);
+  background-position: -64px -16px;
+  width: 16px;
+  height: 16px;
+}
+.icon-folder-source {
+  background-image: url(./icons.png);
+  background-position: -64px -32px;
+  width: 16px;
+  height: 16px;
+}
+.icon-folder-test {
+  background-image: url(./icons.png);
+  background-position: -64px -48px;
+  width: 16px;
+  height: 16px;
+}
+.icon-folder {
+  background-image: url(./icons.png);
+  background-position: 0px -64px;
+  width: 16px;
+  height: 16px;
+}
+.icon-key {
+  background-image: url(./icons.png);
+  background-position: -16px -64px;
+  width: 16px;
+  height: 16px;
+}
+.icon-locked {
+  background-image: url(./icons.png);
+  background-position: -32px -64px;
+  width: 16px;
+  height: 16px;
+}
+.icon-unlocked {
+  background-image: url(./icons.png);
+  background-position: -48px -64px;
+  width: 16px;
+  height: 16px;
+}

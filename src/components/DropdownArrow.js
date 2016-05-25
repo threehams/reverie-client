@@ -16,7 +16,7 @@ export default class DropdownArrow extends React.Component {
   render() {
     const { expanded, ...rest } = this.props;
     return (
-      <Icon {...rest} name={ expanded ? 'caret-down' : 'caret-right' } before />
+      <Icon {...rest} name={ expanded ? 'icon-arrow-down' : 'icon-arrow-right' } before />
     );
   }
 }

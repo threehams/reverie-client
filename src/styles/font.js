@@ -1,11 +1,12 @@
 export default {
   monospace: {
-    fontFamily: '"Inconsolata", "Roboto Mono", "Courier New", monospace',
-    fontSize: 15
+    fontFamily: '"Source Code Pro", "Courier New", monospace',
+    fontSize: 13,
+    fontWeight: 400,
   },
   default: {
     fontFamily: '"Open Sans", sans-serif',
-    fontSize: 13
+    fontSize: 12
   },
   widths: {
     monospace: 7.5
