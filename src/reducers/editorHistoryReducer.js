@@ -5,7 +5,9 @@ import {
   EDITOR_HISTORY_CLEAR
 } from '../actions/actionTypes';
 
-export default function editorHistoryReducer(state = List(), action) {
+export const INITIAL_STATE = List();
+
+export default function editorHistoryReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case EDITOR_HISTORY_CLEAR:
       return state.clear();

@@ -5,7 +5,9 @@ import {
   SET_STATE
 } from '../actions/actionTypes';
 
-export default function entitiesReducer(state = Map(), action) {
+export const INITIAL_STATE = Map();
+
+export default function entitiesReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case SET_STATE:
       const entities = state.merge(action.payload.entities.map(entity => {

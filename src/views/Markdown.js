@@ -7,6 +7,7 @@ import colors from '../styles/colors';
 
 export class MarkdownLink extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
+    /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }
 
@@ -45,6 +46,7 @@ export class MarkdownLink extends React.Component {
 
 export class MarkdownHeading extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
+    /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }
 
@@ -60,6 +62,7 @@ export class MarkdownHeading extends React.Component {
 
 export class MarkdownParagraph extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
+    /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }
 
@@ -76,6 +79,7 @@ export class MarkdownParagraph extends React.Component {
 
 export class MarkdownList extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
+    /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }
 
@@ -92,6 +96,7 @@ export class MarkdownList extends React.Component {
 
 export class MarkdownItem extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
+    /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }
 
@@ -110,6 +115,7 @@ export class MarkdownItem extends React.Component {
 
 export class MarkdownCode extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
+    /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }
 
@@ -130,6 +136,7 @@ export class MarkdownCode extends React.Component {
 
 export class MarkdownEmphasis extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
+    /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }
 
@@ -146,6 +153,7 @@ export class MarkdownEmphasis extends React.Component {
 
 export class MarkdownStrong extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
+    /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }
 
@@ -162,6 +170,7 @@ export class MarkdownStrong extends React.Component {
 
 export class MarkdownBlockQuote extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
+    /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }
 

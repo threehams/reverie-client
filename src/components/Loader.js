@@ -3,6 +3,7 @@ import shallowCompare from 'react-addons-shallow-compare';
 
 export default class Loader extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
+    /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }
 

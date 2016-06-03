@@ -1,5 +1,4 @@
 import React, { Children, PropTypes } from 'react';
-import Radium from 'radium';
 import { connect } from 'react-redux';
 import { Set } from 'immutable';
 import shallowCompare from 'react-addons-shallow-compare';
@@ -28,6 +27,7 @@ function shuffle(string) {
 
 export class StatusEffect extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
+    /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }
 
@@ -85,12 +85,14 @@ export class StatusEffect extends React.Component {
   }
 
   render() {
-    const { statusEffects } = this.props;
+    const { children, statusEffects } = this.props;
+    if (!statusEffects.size) return <span>{ children }</span>;
+
     const panicking = statusEffects.includes('panic');
     const onFire = statusEffects.includes('fire');
     const confused = statusEffects.includes('confusion');
     const bees = statusEffects.includes('bees');
-    let result = this.props.children;
+    let result = children;
     if (confused) {
       result = this.confuse(result);
     }
@@ -101,12 +103,7 @@ export class StatusEffect extends React.Component {
       result = this.bees(result);
     }
     return (
-      <span
-        style={[
-          onFire && styles.fire,
-          panicking && styles.panic,
-        ]}
-      >
+      <span style={ Object.assign({}, onFire && styles.fire, panicking && styles.panic) }>
         { result }
       </span>
     );
@@ -117,7 +114,7 @@ export default connect(state => {
   return {
     statusEffects: state.getIn(['ui', 'statusEffects'])
   };
-})(Radium(StatusEffect));
+})(StatusEffect);
 
 const styles = {
   fire: {

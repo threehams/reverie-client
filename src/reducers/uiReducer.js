@@ -15,7 +15,7 @@ import {
   SOCKET_STATUS
 } from '../actions/actionTypes';
 
-const INITIAL_STATE = new UiRecord();
+export const INITIAL_STATE = new UiRecord();
 const ALERTS = {
   disconnected: 'Reconnecting to server, give it a minute...',
   reconnected: ''

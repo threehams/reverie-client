@@ -5,7 +5,8 @@ import rootReducer from './rootReducer';
 export default function configureStore(initialState) {
   const finalCreateStore = compose(
     applyMiddleware(thunk),
-    window.devToolsExtension ? window.devToolsExtension() : f => f
+    // eslint-disable-next-line no-undef, no-process-env
+    window.devToolsExtension && process.env.NODE_ENV !== 'production' ? window.devToolsExtension() : f => f
   )(createStore);
   const store = finalCreateStore(rootReducer, initialState);
 

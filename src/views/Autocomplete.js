@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import {List} from 'immutable';
-import Radium from 'radium';
 import shallowCompare from 'react-addons-shallow-compare';
 
 import CommandRecord from '../records/CommandRecord';
@@ -11,6 +10,7 @@ import StatusEffect from '../components/StatusEffect';
 
 export class Autocomplete extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
+    /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }
 
@@ -41,30 +41,28 @@ export class Autocomplete extends React.Component {
     const { fragment, focused, onClickItem, options, selectedItem } = this.props;
     if (!options || !options.size) return <div></div>;
     return (
-      <ul style={[styles.panel.global]} tabIndex={1000}>
+      <ul style={styles.panel.global} tabIndex={1000}>
         {
           options.map((option, i) => {
             const optionSplit = this.splitOption(option.name, fragment);
+            const path = option.path ? ` (${option.path})` : '';
             return <li
               key={i}
-              style={[
-                styles.item.global,
-                focused ? styles.item.focused : styles.item.unfocused,
-                option === selectedItem ? styles.itemSelected.unfocused : null
-              ]}
+              style={{
+                ...styles.item.global,
+                ...(focused ? styles.item.focused : styles.item.unfocused),
+                ...(option === selectedItem ? styles.itemSelected.unfocused : {})
+              }}
               ref={(item) => {
                 if (option === selectedItem) this.selectedItem = item;
               }}
               onClick={ () => onClickItem(option) }
             >
               <StatusEffect>{ optionSplit[0] }</StatusEffect>
-              <span style={styles.selectedPart.unfocused}><StatusEffect>{ optionSplit[1] }</StatusEffect></span>
-              <StatusEffect>{ optionSplit[2] }</StatusEffect>
-              {
-                option.path && <span>
-                  &nbsp;(<StatusEffect>{ option.path }</StatusEffect>)
-                </span>
-              }
+              <span style={focused ? styles.selectedPart.focused : styles.selectedPart.unfocused}>
+                <StatusEffect>{ optionSplit[1] }</StatusEffect>
+              </span>
+              <StatusEffect>{ `${optionSplit[2]}${path}` }</StatusEffect>
             </li>;
           })
         }
@@ -73,15 +71,12 @@ export class Autocomplete extends React.Component {
   }
 }
 
-export default Radium(Autocomplete);
+export default Autocomplete;
 
 const styles = {
   panel: {
     global: {
       backgroundColor: '#ebf4fe',
-      ':focus': {
-        outline: 0,
-      }
     },
   },
   item: {

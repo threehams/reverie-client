@@ -1,10 +1,10 @@
-import {Set, List, OrderedSet, fromJS} from 'immutable';
+import { Set, List, OrderedSet, fromJS } from 'immutable';
 import expect from '../__test__/configureExpect';
 
-import uiReducer from './uiReducer';
+import uiReducer, { INITIAL_STATE } from './uiReducer';
 import * as inventoryActions from '../actions/inventoryActions';
 import * as editorActions from '../actions/editorActions';
-import { SET_STATE, EDITOR_SELECT_ITEMS } from '../actions/actionTypes';
+import { SET_STATE, EDITOR_SELECT_ITEMS, INVENTORY_EXPAND_ITEMS } from '../actions/actionTypes';
 import * as socketActions from '../actions/socketActions';
 import UiRecord from '../records/UiRecord';
 
@@ -73,6 +73,21 @@ describe('uiReducer', function() {
     });
   });
 
+  describe('INVENTORY_EXPAND_ITEMS', function() {
+    it('sets the item as expanded', function() {
+      const initial = new UiRecord();
+      const action = {
+        type: INVENTORY_EXPAND_ITEMS,
+        payload: {
+          ids: List(['1', '2'])
+        }
+      };
+      expect(uiReducer(initial, action)).to.equal(new UiRecord({
+        inventoryExpandedById: Set(['1', '2'])
+      }));
+    });
+  });
+
   describe('INVENTORY_TOGGLE_EXPAND', function() {
     it('toggles the expanded state', function() {
       const initial = new UiRecord();
@@ -103,6 +118,18 @@ describe('uiReducer', function() {
     });
   });
 
+  describe('PLAYER_SET_ACTIVE_VIEW', function() {
+    it('sets the active view', function() {
+
+    });
+  });
+
+  describe('RESIZE_PANEL', function() {
+    it('sets the size for the given property', function() {
+
+    });
+  });
+
   describe('SET_STATE', function() {
     context('with a player', function() {
       it('replaces the player', function() {
@@ -114,7 +141,7 @@ describe('uiReducer', function() {
             player: '1'
           }
         };
-        expect(uiReducer(initial, action)).to.equal(new UiRecord({player: '1'}));
+        expect(uiReducer(initial, action)).to.equal(new UiRecord({ player: '1' }));
       });
     });
 
@@ -128,7 +155,7 @@ describe('uiReducer', function() {
             player: '1'
           }
         };
-        expect(uiReducer(initial, action)).to.equal(new UiRecord({player: '1'}));
+        expect(uiReducer(initial, action)).to.equal(new UiRecord({ player: '1' }));
       });
     });
 
@@ -143,7 +170,21 @@ describe('uiReducer', function() {
             location: undefined
           }
         };
-        expect(uiReducer(initial, action)).to.equal(new UiRecord({player: '1', location: '2'}));
+        expect(uiReducer(initial, action)).to.equal(new UiRecord({ player: '1', location: '2' }));
+      });
+    });
+
+    context('with status effects', function() {
+      it('replacing the existing effects', function() {
+        const initial = new UiRecord({ statusEffects: Set(['bees']) });
+        const action = {
+          type: SET_STATE,
+          payload: {
+            entitiesToRemove: List(),
+            statusEffects: Set(['fire'])
+          }
+        };
+        expect(uiReducer(initial, action)).to.equal(new UiRecord({ statusEffects: Set(['fire']) }));
       });
     });
 
@@ -183,6 +224,12 @@ describe('uiReducer', function() {
       expect(uiReducer(undefined, action).alert).to.equal(
         'Reconnecting to server, give it a minute...'
       );
+    });
+  });
+
+  describe('default', function() {
+    it('returns the state', function() {
+      expect(uiReducer(undefined, {})).to.equal(INITIAL_STATE);
     });
   });
 });

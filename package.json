@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "benchmark": "node ./scripts/benchmark.js",
     "build": "better-npm-run build",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -11,6 +12,7 @@
     "test": "better-npm-run test --watch",
     "test:ci": "better-npm-run test",
     "test:coverage": "better-npm-run coverage",
+    "test:coverage:open": "opener ./coverage/lcov-report/index.html",
     "start": "better-npm-run start",
     "server": "better-npm-run server"
   },
@@ -107,6 +109,8 @@
     "mocha-junit-reporter": "^1.11.1",
     "nodemon": "^1.9.1",
     "nyc": "^6.4.0",
+    "opener": "^1.4.1",
+    "react-addons-perf": "^15.0.2",
     "react-addons-test-utils": "^15.0.1",
     "sinon": "^1.17.3",
     "sinon-chai": "^2.8.0",
@@ -121,10 +125,7 @@
       "src/**/*.spec.js",
       "src/__test__/**/*",
       "src/fixtures/**/*",
-      "src/configureStore.js",
-      "src/index.js",
-      "src/polyfills.js",
-      "src/server.js"
+      "src/*.js"
     ]
   }
 }
