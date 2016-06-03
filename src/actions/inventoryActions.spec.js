@@ -3,6 +3,7 @@ import { List, Map, OrderedSet, Set } from 'immutable';
 import * as inventoryActions from './inventoryActions';
 import UiRecord from '../records/UiRecord';
 import EntityRecord from '../records/EntityRecord';
+import LocationRecord from '../records/LocationRecord';
 import expect from '../__test__/configureExpect';
 import { EDITOR_SELECT_ITEMS } from './actionTypes';
 
@@ -27,6 +28,7 @@ describe('inventoryActions', function() {
       context('when no items contain other items', function() {
         it('selects each of the items in order', function() {
           const state = Map({
+            location: new LocationRecord(),
             ui: new UiRecord({
               player: '6',
               selectedItems: OrderedSet(['1'])
@@ -69,6 +71,7 @@ describe('inventoryActions', function() {
       context('when an item contains other items', function() {
         it('selects each of the items in order', function() {
           const state = Map({
+            location: new LocationRecord(),
             ui: new UiRecord({
               player: '6',
               selectedItems: OrderedSet(['1']),
@@ -111,6 +114,7 @@ describe('inventoryActions', function() {
       context('when the first item occurs after the second item', function() {
         it('selects each of the items in order', function() {
           const state = Map({
+            location: new LocationRecord(),
             ui: new UiRecord({
               player: '6',
               selectedItems: OrderedSet(['3']),
@@ -153,6 +157,7 @@ describe('inventoryActions', function() {
       context('large nested structure going backwards', function() {
         it('selects each of the items in reverse order', function() {
           const state = Map({
+            location: new LocationRecord(),
             ui: new UiRecord({
               player: '6',
               selectedItems: OrderedSet(['4']),

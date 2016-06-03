@@ -1,12 +1,32 @@
-import {List, fromJS} from 'immutable';
+import {List, Set, fromJS} from 'immutable';
 import expect from '../__test__/configureExpect';
 
-import commandReducer from './commandReducer';
+import commandReducer, { INITIAL_STATE } from './commandReducer';
+import { COMMAND_SEND, SET_STATE } from '../actions/actionTypes';
 import * as commandActions from '../actions/commandActions';
+import CommandRecord from '../records/CommandRecord';
+import CommandPartRecord from '../records/CommandPartRecord';
+import AllowedRecord from '../records/AllowedRecord';
+
 import CommandStateRecord from '../records/CommandStateRecord';
-import { COMMAND_SEND } from '../actions/actionTypes';
 
 describe('commandReducer', function() {
+  describe('COMMAND_CLOSE_AUTOCOMPLETE', function() {
+    it('resets autocomplete properties', function() {
+      const initial = new CommandStateRecord({
+        autocompleteOpen: true,
+        autocompleteSelectedItem: 'a thing!',
+        autocompletePosition: 1
+      });
+      const action = commandActions.closeAutocomplete();
+      const expected = new CommandStateRecord({
+        autocompleteOpen: false,
+        autocompleteSelectedItem: null,
+        autocompletePosition: null
+      });
+      expect(commandReducer(initial, action)).to.equal(expected);
+    });
+  });
   describe('COMMAND_COMPLETE', function() {
     context('when autocomplete is closed', function() {
       it('returns the current command', function() {
@@ -72,6 +92,18 @@ describe('commandReducer', function() {
       const initial = new CommandStateRecord({history: List(['git status'])});
       const action = commandActions.clear();
       expect(commandReducer(initial, action).history).to.equal(List());
+    });
+  });
+
+  describe('COMMAND_SELECT_AUTOCOMPLETE_ITEM', function() {
+    it('sets the item', function() {
+      const initial = undefined;
+      const item = { name: 'oh hai mark' };
+      const action = commandActions.selectAutocompleteItem(item);
+      const expected = new CommandStateRecord({
+        autocompleteSelectedItem: item
+      });
+      expect(commandReducer(initial, action)).to.equal(expected);
     });
   });
 
@@ -215,6 +247,71 @@ describe('commandReducer', function() {
           });
         });
       });
+    });
+  });
+
+  describe('SET_STATE', function() {
+    context('when availableCommands is empty', function() {
+      it('returns the initial state', function() {
+        const initial = new CommandStateRecord({
+          available: { unrelated: 'stuff' }
+        });
+        const action = {
+          type: SET_STATE,
+          payload: {
+            availableCommands: List()
+          }
+        };
+        expect(commandReducer(initial, action)).to.equal(initial);
+      });
+    });
+
+    context('when availableCommands contains commands', function() {
+      it('merges existing commands with new commands', function() {
+        const initial = new CommandStateRecord();
+        const action = {
+          type: SET_STATE,
+          payload: {
+            availableCommands: fromJS([
+              {
+                name: 'move',
+                parts: [
+                  {
+                    allowed: [
+                      {
+                        components: ['container']
+                      }
+                    ]
+                  }
+                ]
+              }
+            ])
+          }
+        };
+        const expected = new CommandStateRecord({
+          available: Set([
+            new CommandRecord({
+              name: 'move',
+              parts: List([
+                new CommandPartRecord({
+                  allowed: List([
+                    new AllowedRecord({
+                      components: Set(['container'])
+                    })
+                  ])
+                })
+              ])
+            })
+          ])
+        });
+        expect(commandReducer(initial, action)).to.equal(expected);
+      });
+    });
+  });
+
+  describe('default', function() {
+    it('return default state', function() {
+      expect(commandReducer(undefined, {})).to.equal(INITIAL_STATE);
     });
   });
 });

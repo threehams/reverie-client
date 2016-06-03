@@ -10,6 +10,7 @@ import EntityRecord from '../records/EntityRecord';
 
 export class InventoryItem extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
+    /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }
 
@@ -55,10 +56,7 @@ export class InventoryItem extends React.Component {
              onDoubleClick={(event) => this.expandItem(event, item)}>
           {
             item.entities.size ?
-              <StatusEffect>
-                <DropdownArrow expanded={item.expanded}
-                             onMouseDown={(event) => this.expandItem(event, item)}/>
-              </StatusEffect> :
+              <DropdownArrow expanded={item.expanded} onMouseDown={(event) => this.expandItem(event, item)}/> :
               <span style={{ paddingLeft: 18 }}/>
           }
           <StatusEffect>

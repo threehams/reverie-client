@@ -19,6 +19,7 @@ export const TYPE_ICONS = {
 
 export class EntityIcon extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
+    /* istanbul ignore next */
     return shallowCompare(this, nextProps, nextState);
   }
 

@@ -12,6 +12,7 @@ import * as inventorySelectors from '../selectors/inventorySelectors';
 
 export class Inventory extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
+    /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }
 
@@ -27,22 +28,24 @@ export class Inventory extends React.Component {
   render() {
     const { addView, items, moveItem, selectItem, toggleExpand, toggleItem } = this.props;
     return (
-      <Loader showUntil={!!items}>
-        {
-          items && items.map(entity => {
-            return (
-              <InventoryItem key={entity.id}
-                             item={entity}
-                             addView={addView}
-                             moveItem={moveItem}
-                             selectItem={selectItem}
-                             toggleExpand={toggleExpand}
-                             toggleItem={toggleItem}
-              />
-            );
-          })
-        }
-      </Loader>
+      <div style={styles.container}>
+        <Loader showUntil={!!items}>
+          {
+            items && items.map(entity => {
+              return (
+                <InventoryItem key={entity.id}
+                               item={entity}
+                               addView={addView}
+                               moveItem={moveItem}
+                               selectItem={selectItem}
+                               toggleExpand={toggleExpand}
+                               toggleItem={toggleItem}
+                />
+              );
+            })
+          }
+        </Loader>
+      </div>
     );
   }
 }
@@ -50,7 +53,7 @@ export class Inventory extends React.Component {
 export default connect(
   (state, props) => {
     return {
-      items: inventorySelectors.list(state, props)
+      items: inventorySelectors.list(state).get(props.owner)
     };
   },
   {
@@ -61,3 +64,9 @@ export default connect(
     toggleItem: inventoryActions.toggleItem
   }
 )(Radium(Inventory));
+
+const styles = {
+  container: {
+    overflowY: 'auto',
+  }
+};

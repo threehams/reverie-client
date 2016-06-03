@@ -6,6 +6,7 @@ import panelStyles from '../styles/panel';
 
 export class TabContainer extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
+    /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }
 

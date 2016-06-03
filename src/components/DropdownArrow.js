@@ -5,6 +5,7 @@ import Icon from '../components/Icon';
 
 export default class DropdownArrow extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
+    /* istanbul ignore next */
     return shallowCompare(this, nextProps, nextState);
   }
 

@@ -1,5 +1,5 @@
 import * as autocompleteSelectors from './autocompleteSelectors';
-import {fromJS, List, Map, Set} from 'immutable';
+import {fromJS, List, Set} from 'immutable';
 
 import expect from '../__test__/configureExpect';
 
@@ -13,29 +13,35 @@ describe('autocompleteSelectors', function() {
   describe('applyAllowed', function() {
     context('when types are specified', function() {
       it('restricts the objects to the given types', function() {
-        const objects = Map({
-          command: List(['command1', 'command2']),
-          entity: List(['entity1', 'entity2'])
-        });
+        const commands = List([
+          new CommandRecord({ name: 'command1' }),
+          new CommandRecord({ name: 'command2' }),
+        ]);
+        const objects = commands.concat(List([
+          new EntityRecord({ name: 'entity1' }),
+          new EntityRecord({ name: 'entity2' }),
+        ]));
         const allowed = new AllowedRecord({
           types: Set(['command'])
         });
         const filtered = autocompleteSelectors.applyAllowed(objects, allowed);
-        expect(filtered).to.equal(List(['command1', 'command2']));
+        expect(filtered).to.equal(commands);
       });
     });
 
     context('when types are not specified', function() {
       it('returns a flat map of all objects', function() {
-        const objects = Map({
-          command: List(['command1', 'command2']),
-          entity: List(['entity1', 'entity2'])
-        });
+        const objects = List([
+          new CommandRecord({ name: 'command1' }),
+          new CommandRecord({ name: 'command2' }),
+          new EntityRecord({ name: 'entity1' }),
+          new EntityRecord({ name: 'entity2' }),
+        ]);
         const allowed = new AllowedRecord({
           types: Set()
         });
         const filtered = autocompleteSelectors.applyAllowed(objects, allowed);
-        expect(filtered).to.equal(List(['command1', 'command2', 'entity1', 'entity2']));
+        expect(filtered).to.equal(objects);
       });
     });
 
@@ -56,9 +62,7 @@ describe('autocompleteSelectors', function() {
           name: 'container',
           components: Set(['container'])
         });
-        const objects = Map({
-          entity: List([creature, item, container])
-        });
+        const objects = List([creature, item, container]);
         const allowed = new AllowedRecord({
           types: Set(['entity']),
           components: Set(['item', 'creature'])

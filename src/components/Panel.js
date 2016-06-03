@@ -4,6 +4,7 @@ import shallowCompare from 'react-addons-shallow-compare';
 
 export class Panel extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
+    /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }
 

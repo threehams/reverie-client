@@ -1,5 +1,6 @@
 import { Map, List, Set } from 'immutable';
 import EntityRecord from '../records/EntityRecord';
+import LocationRecord from '../records/LocationRecord';
 import UiRecord from '../records/UiRecord';
 
 import expect from '../__test__/configureExpect';
@@ -16,6 +17,7 @@ describe('inventorySelectors', function() {
           entities: List(['2'])
         });
         const state = Map({
+          location: new LocationRecord(),
           entities: Map({
             '1': player,
             '2': new EntityRecord({
@@ -37,26 +39,28 @@ describe('inventorySelectors', function() {
             inventoryExpandedById: Set('2')
           })
         });
-        const props = { owner: 'self' };
-        const entities = inventorySelectors.list(state, props);
-        expect(entities.toJS()).to.eql(List([
-          new EntityRecord({
-            id: '2',
-            expanded: true,
-            name: 'container',
-            owner: 'self',
-            path: 'self/container',
-            entities: List(['3']),
-            indent: 1
-          }),
-          new EntityRecord({
-            id: '3',
-            name: 'item',
-            owner: 'self',
-            path: 'self/container/item',
-            indent: 2
-          })
-        ]).toJS());
+        const entities = inventorySelectors.list(state);
+        expect(entities.toJS()).to.eql(Map({
+          self: List([
+            new EntityRecord({
+              id: '2',
+              expanded: true,
+              name: 'container',
+              owner: 'self',
+              path: 'self/container',
+              entities: List(['3']),
+              indent: 1
+            }),
+            new EntityRecord({
+              id: '3',
+              name: 'item',
+              owner: 'self',
+              path: 'self/container/item',
+              indent: 2
+            })
+          ]),
+          floor: List([])
+        }).toJS());
       });
     });
 
@@ -68,6 +72,7 @@ describe('inventorySelectors', function() {
           entities: List(['2'])
         });
         const state = Map({
+          location: new LocationRecord(),
           entities: Map({
             '1': player,
             '2': new EntityRecord({
@@ -90,16 +95,19 @@ describe('inventorySelectors', function() {
         });
         const props = { owner: 'self' };
         const entities = inventorySelectors.list(state, props);
-        expect(entities.toJS()).to.eql(List([
-          new EntityRecord({
-            id: '2',
-            name: 'container',
-            owner: 'self',
-            path: 'self/container',
-            entities: List(['3']),
-            indent: 1
-          })
-        ]).toJS());
+        expect(entities.toJS()).to.eql(Map({
+          self: List([
+            new EntityRecord({
+              id: '2',
+              name: 'container',
+              owner: 'self',
+              path: 'self/container',
+              entities: List(['3']),
+              indent: 1
+            })
+          ]),
+          floor: List([])
+        }).toJS());
       });
     });
   });

@@ -9,6 +9,7 @@ import StatusEffect from '../components/StatusEffect';
 
 export default class EditorTabs extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
+    /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }
 

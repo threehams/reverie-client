@@ -65,6 +65,29 @@ const server = app.listen(config.port || 8080, function(err) {
   console.log('Listening at http://localhost, port', config.port); //eslint-disable-line no-console
 });
 
+function getInitialState() { // eslint-disable-line no-unused-vars
+  const itemCount = 1000;
+  const ids = Array.from(new Array(itemCount).keys()).map(i => (i + itemCount).toString());
+  return {
+    ...fixtureInitialState,
+    entities: {
+      ...fixtureInitialState.entities,
+      ...ids.reduce((result, id) => {
+        result[id] = {
+          id,
+          name: `item-#${id}`,
+          components: ['item'],
+        };
+        return result;
+      }, {}),
+      [9]: {
+        ...fixtureInitialState.entities[9],
+        entities: [...fixtureInitialState.entities[9].entities, ...ids]
+      }
+    }
+  };
+}
+
 const wsServer = new WebSocket.Server({ server });
 wsServer.on('connection', function(ws) {
   function sendMessage(message, opts = {}) {
@@ -76,6 +99,8 @@ wsServer.on('connection', function(ws) {
     }));
   }
 
+  // Uncomment for performance testing against lots of items.
+  // sendMessage(getInitialState(), {initial: true});
   sendMessage(fixtureInitialState, {initial: true});
 
   // Canned responses!

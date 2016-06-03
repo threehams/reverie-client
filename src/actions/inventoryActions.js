@@ -30,7 +30,7 @@ export function selectItem(selectId, owner, options = {}) {
      */
     function createIdRange() {
       const state = getState();
-      const entityList = inventorySelectors.list(state, { owner }).map(item => item.id);
+      const entityList = inventorySelectors.list(state).get(owner).map(item => item.id);
       const selectedId = state.getIn(['ui', 'selectedItems']).first();
       const first = entityList.findIndex(id => id === selectedId);
       const last = entityList.findIndex(id => id === selectId);

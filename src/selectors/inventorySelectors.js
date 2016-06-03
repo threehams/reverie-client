@@ -1,16 +1,18 @@
-import { List } from 'immutable';
+import { Map, List } from 'immutable';
 import { createSelector } from 'reselect';
 import * as entitySelectors from './entitySelectors';
 
 export const list = createSelector(
   [
     entitySelectors.entitiesWithPath,
-    (state, props) => props.owner,
     state => state.get('ui'),
     state => state.get('location')
   ],
-  (entities, owner, ui, location) => {
-    return entityIds(owner, entities).flatMap(entityId => addUiData(entityId, 1));
+  (entities, ui, location) => {
+    return Map({
+      self: entityIds('self').flatMap(entityId => addUiData(entityId, 1)),
+      floor: entityIds('floor').flatMap(entityId => addUiData(entityId, 1))
+    });
 
     function addUiData(entityId, indent) {
       const expanded = ui.inventoryExpandedById.contains(entityId);
@@ -25,7 +27,7 @@ export const list = createSelector(
       return List([newEntity]).concat(newEntity.entities.flatMap(id => addUiData(id, indent + 1)));
     }
 
-    function entityIds() {
+    function entityIds(owner) {
       if (owner === 'self') {
         return entities.getIn([ui.player, 'entities']) || List([]);
       } else if (owner === 'floor') {

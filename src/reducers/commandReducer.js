@@ -15,7 +15,9 @@ import CommandPartRecord from '../records/CommandPartRecord';
 import AllowedRecord from '../records/AllowedRecord';
 import CommandStateRecord from '../records/CommandStateRecord';
 
-export default function commandReducer(state = new CommandStateRecord(), action) {
+export const INITIAL_STATE = new CommandStateRecord();
+
+export default function commandReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case COMMAND_CLOSE_AUTOCOMPLETE:
       return closeAutocomplete(state);

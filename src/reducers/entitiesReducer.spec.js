@@ -1,7 +1,7 @@
 import {Map, fromJS, List} from 'immutable';
 import expect from '../__test__/configureExpect';
 
-import entitiesReducer from './entitiesReducer';
+import entitiesReducer, { INITIAL_STATE } from './entitiesReducer';
 import EntityRecord from '../records/EntityRecord';
 import { SET_STATE } from '../actions/actionTypes';
 
@@ -42,6 +42,12 @@ describe('entitiesReducer', function() {
           id: '2'
         })})
       );
+    });
+  });
+
+  describe('default', function() {
+    it('returns the state', function() {
+      expect(entitiesReducer(undefined, {})).to.equal(INITIAL_STATE);
     });
   });
 });

@@ -1,10 +1,17 @@
-import { List, Map, Set } from 'immutable';
+import { List, Set } from 'immutable';
 import { createSelector } from 'reselect';
 
 import * as entitySelectors from './entitySelectors';
 import AllowedRecord from '../records/AllowedRecord';
 import CommandRecord from '../records/CommandRecord';
+import EntityRecord from '../records/EntityRecord';
 import ExitRecord from '../records/ExitRecord';
+
+const INSTANCE_TYPES = {
+  entity: EntityRecord,
+  exit: ExitRecord,
+  command: CommandRecord,
+};
 
 function compare(a, b) {
   if (a > b) return 1;
@@ -40,7 +47,20 @@ function applyAllowedComponents(objects, components) {
   }
 
   // Allow object if it contains any of the expected components.
-  return objects.filter(object => components.intersect(object.components).size);
+  return objects.filter(object => {
+    if (!object.components || !object.components.size) return false;
+
+    let found = false;
+    // returning false has special meaning to forEach, and this is a necessary performance improvement
+    // eslint-disable-next-line consistent-return
+    components.forEach((component) => {
+      if (object.components.includes(component)) {
+        found = true;
+        return false;
+      }
+    });
+    return found;
+  });
 }
 
 function applyAllowedTypes(objects, types) {
@@ -48,11 +68,18 @@ function applyAllowedTypes(objects, types) {
     return objects;
   }
 
-  return objects.filter((value, key) => types.contains(key));
+  return objects.filter(object => {
+    for (const type of types) {
+      if (object instanceof INSTANCE_TYPES[type]) {
+        return true;
+      }
+    }
+    return false;
+  });
 }
 
 /*
- *
+ * Filter objects based on different attributes within records.
  */
 export function applyAllowed(objects, allowed) {
   if (allowed.names.size) {
@@ -70,7 +97,7 @@ export function applyAllowed(objects, allowed) {
         applyAllowedTypes(
           objects,
           allowed.types
-        ).toList().flatMap(item => item),
+        ),
         allowed.states,
       ),
       allowed.components
@@ -105,9 +132,11 @@ function currentPartIndex(parts, cursorIndex) {
  */
 const commandAllowed = createSelector(
   [
-    state => state.get('command')
+    state => state.getIn(['command', 'current']),
+    state => state.getIn(['command', 'available']),
+    state => state.getIn(['command', 'cursorIndex']),
   ],
-  ({ current, available, cursorIndex }) => {
+  (current, available, cursorIndex) => {
     const parts = current.split(' ');
     if (parts.length === 1) {
       return defaultFilters;
@@ -134,10 +163,35 @@ const commandAllowed = createSelector(
  */
 export const autocompleteFragment = createSelector(
   [
-    state => state.get('command')
+    state => state.getIn(['command', 'current']),
+    state => state.getIn(['command', 'cursorIndex']),
   ],
-  ({ current, cursorIndex }) => {
+  (current, cursorIndex) => {
     return current.slice(0, cursorIndex).split(' ').pop();
+  }
+);
+
+const sortedOptions = createSelector(
+  [
+    entitySelectors.entitiesWithPath,
+    state => state.get('command').available,
+    state => state.getIn(['location', 'exits']) || List()
+  ],
+  (entities, commands, exits) => {
+    return entities.toSetSeq()
+    .concat(commands)
+    .concat(exits.map(exit => new ExitRecord({ name: exit })))
+    .sort((a, b) => {
+      // reminder:
+      // Return 0 if the elements should not be swapped.
+      // Return -1 (or any negative number) if valueA comes before valueB
+      // Return 1 (or any positive number) if valueA comes after valueB
+
+      // Sort exits first, then path, then name.
+      return compare(b instanceof ExitRecord, a instanceof ExitRecord)
+        || compare(a.path, b.path)
+        || compare(a.name, b.name);
+    });
   }
 );
 
@@ -150,39 +204,22 @@ export const availableOptions = createSelector(
   [
     autocompleteFragment,
     commandAllowed,
-    entitySelectors.entitiesWithPath,
-    state => state.get('command').available,
-    state => state.getIn(['location', 'exits']) || List()
+    sortedOptions
   ],
-  (fragment, allowed, entities, commands, exits) => {
+  (fragment, allowed, options) => {
     if (!allowed || !allowed.size) return List();
 
     // All possible objects usable by autocomplete, keyed by type
-    const objects = Map({
-      entity: entities.toList(),
-      command: commands,
-      exit: exits.map(exit => { return new ExitRecord({ name: exit }); })
-    });
-    const filtered = allowed.flatMap(allow => applyAllowed(objects, allow));
+    let filteredByFragment = options;
+    if (fragment) filteredByFragment = options.filter(object => object.name.includes(fragment));
 
-    return filtered.filter(item => item.name.includes(fragment))
-    .sort((a, b) => {
-      // reminder:
-      // Return 0 if the elements should not be swapped.
-      // Return -1 (or any negative number) if valueA comes before valueB
-      // Return 1 (or any positive number) if valueA comes after valueB
-
-      // If there's no fragment, sort by exit first, then path, then name.
-      if (!fragment.length) {
-        return compare(a.path, b.path) || compare(a.name, b.name);
+    const filtered = allowed.flatMap(allow => applyAllowed(filteredByFragment, allow));
+    return filtered.sort((a, b) => {
+      if (fragment) {
+        return compare(a.name.indexOf(fragment), b.name.indexOf(fragment));
       }
-
-      // If there's a fragment, sort by first character with that fragment, then exits first, then path, then name.
-      return compare(a.name.indexOf(fragment), b.name.indexOf(fragment))
-        || compare(a instanceof ExitRecord, b instanceof ExitRecord)
-        || compare(a.path, b.path)
-        || compare(a.name, b.name);
-    });
+      return compare(a.path, b.path) || compare(a.name, b.name);
+    }).slice(0, 20);
   }
 );
 
