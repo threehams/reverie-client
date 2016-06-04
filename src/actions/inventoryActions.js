@@ -26,7 +26,7 @@ export const selectItem = (selectId, owner, options = {}) => {
      * Build a list of item IDs for selection based on the first item selected in state
      * and the one currently being selected.
      */
-    function createIdRange() {
+    const createIdRange = () => {
       const state = getState();
       const entityList = inventorySelectors.list(state).get(owner).map(item => item.id);
       const selectedId = state.getIn(['ui', 'selectedItems']).first();
@@ -34,7 +34,7 @@ export const selectItem = (selectId, owner, options = {}) => {
       const last = entityList.findIndex(id => id === selectId);
       const result = List(entityList.slice(Math.min(first, last), Math.max(first, last) + 1));
       return first < last ? result : result.reverse();
-    }
+    };
 
     const ids = options.multiple ? createIdRange() : List([selectId]);
 

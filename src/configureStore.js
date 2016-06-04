@@ -2,7 +2,7 @@ import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './rootReducer';
 
-export default function configureStore(initialState) {
+const configureStore = (initialState) => {
   const finalCreateStore = compose(
     applyMiddleware(thunk),
     // eslint-disable-next-line no-undef, no-process-env
@@ -18,4 +18,6 @@ export default function configureStore(initialState) {
   }
 
   return store;
-}
+};
+
+export default configureStore;

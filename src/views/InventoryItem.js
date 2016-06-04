@@ -91,19 +91,15 @@ const inventoryItemTarget = {
   }
 };
 
-function collectDrag(dragConnect) {
-  return {
-    connectDragSource: dragConnect.dragSource()
-  };
-}
+const collectDrag = (dragConnect) => ({
+  connectDragSource: dragConnect.dragSource()
+});
 
-function collectDrop(dropConnect, monitor) {
-  return {
-    connectDropTarget: dropConnect.dropTarget(),
-    isOver: monitor.isOver(),
-    canDrop: monitor.canDrop()
-  };
-}
+const collectDrop = (dropConnect, monitor) => ({
+  connectDropTarget: dropConnect.dropTarget(),
+  isOver: monitor.isOver(),
+  canDrop: monitor.canDrop()
+});
 
 const DraggableInventoryItem = DragSource('INVENTORY_ITEM', inventoryItemSource, collectDrag)(
   DropTarget('INVENTORY_ITEM', inventoryItemTarget, collectDrop)(Radium(InventoryItem))

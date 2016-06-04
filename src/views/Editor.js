@@ -50,14 +50,12 @@ export class Editor extends React.Component {
   }
 }
 
-export default connect((state) => {
-  return {
-    activeView: state.getIn(['ui', 'activeEditorView']),
-    entities: state.get('entities'),
-    editorHistory: state.get('editorHistory'),
-    views: state.getIn(['ui', 'editorViews'])
-  };
-}, editorActions)(Radium(Editor));
+export default connect((state) => ({
+  activeView: state.getIn(['ui', 'activeEditorView']),
+  entities: state.get('entities'),
+  editorHistory: state.get('editorHistory'),
+  views: state.getIn(['ui', 'editorViews'])
+}), editorActions)(Radium(Editor));
 
 const styles = {
   container: {

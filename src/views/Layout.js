@@ -95,15 +95,13 @@ export class Layout extends React.Component {
   }
 }
 
-export default connect((state) => {
-  return {
-    alert: state.getIn(['ui', 'alert']),
-    activePlayerView: state.getIn(['ui', 'activePlayerView']),
-    footerHeight: state.getIn(['ui', 'footerHeight']),
-    sidebarWidth: state.getIn(['ui', 'sidebarWidth']),
-    sidebarHeight: state.getIn(['ui', 'sidebarHeight']),
-  };
-}, {
+export default connect((state) => ({
+  alert: state.getIn(['ui', 'alert']),
+  activePlayerView: state.getIn(['ui', 'activePlayerView']),
+  footerHeight: state.getIn(['ui', 'footerHeight']),
+  sidebarWidth: state.getIn(['ui', 'sidebarWidth']),
+  sidebarHeight: state.getIn(['ui', 'sidebarHeight']),
+}), {
   setActiveView: playerActions.setActiveView,
   resizePanel: layoutActions.resizePanel
 })(Radium(Layout));

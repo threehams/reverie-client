@@ -51,13 +51,9 @@ export class Player extends React.Component {
   }
 }
 
-export default connect(
-  (state) => {
-    return {
-      player: state.getIn(['entities', state.getIn(['ui', 'player'])])
-    };
-  }
-)(Radium(Player));
+export default connect((state) => ({
+  player: state.getIn(['entities', state.getIn(['ui', 'player'])])
+}))(Radium(Player));
 
 const styles = {
   container: {

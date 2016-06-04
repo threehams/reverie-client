@@ -65,7 +65,7 @@ const server = app.listen(config.port || 8080, function(err) {
   console.log('Listening at http://localhost, port', config.port); //eslint-disable-line no-console
 });
 
-function getInitialState() { // eslint-disable-line no-unused-vars
+const getInitialState = () => { // eslint-disable-line no-unused-vars
   const itemCount = 1000;
   const ids = Array.from(new Array(itemCount).keys()).map(i => (i + itemCount).toString());
   return {
@@ -86,18 +86,18 @@ function getInitialState() { // eslint-disable-line no-unused-vars
       }
     }
   };
-}
+};
 
 const wsServer = new WebSocket.Server({ server });
 wsServer.on('connection', function(ws) {
-  function sendMessage(message, opts = {}) {
+  const sendMessage = (message, opts = {}) => {
     ws.send(JSON.stringify({
       payload: message,
       meta: {
         initial: opts.initial
       }
     }));
-  }
+  };
 
   // Uncomment for performance testing against lots of items.
   // sendMessage(getInitialState(), {initial: true});
