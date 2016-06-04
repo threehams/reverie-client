@@ -4,7 +4,7 @@ import {
 } from './actionTypes';
 import LocationRecord from '../records/LocationRecord';
 
-export function setState(state) {
+export const setState = (state) => {
   return (dispatch, getState) => {
     const prevState = getState();
 
@@ -21,13 +21,13 @@ export function setState(state) {
       }
     });
   };
-}
+};
 
-export function setInitialState(state) {
+export const setInitialState = (state) => {
   return (dispatch, getState) => {
     const currentState = getState();
     if (currentState.getIn(['ui', 'player'])) return;
 
     dispatch(setState(state));
   };
-}
+};

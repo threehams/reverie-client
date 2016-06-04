@@ -6,34 +6,27 @@ import {
   EDITOR_SELECT_ITEMS
 } from './actionTypes';
 
-function buildExpandList(entities, id) {
-  return List([id]);
-}
+export const setActiveView = (name) => ({
+  type: PLAYER_SET_ACTIVE_VIEW,
+  payload: {
+    name
+  }
+});
 
-export function setActiveView(name) {
-  return {
-    type: PLAYER_SET_ACTIVE_VIEW,
-    payload: {
-      name
-    }
-  };
-}
-
-export function move(direction) {
+export const move = (direction) => {
   return commandActions.sendCommand(direction.toString());
-}
+};
 
-export function attack(id) {
+export const attack = (id) => {
   return (dispatch, getState) => {
     const entity = getState().getIn(['entities', id]);
     dispatch(commandActions.sendCommand(`attack ${entity.name}`));
   };
-}
+};
 
-export function locateItem(id) {
-  return (dispatch, getState) => {
-    const entities = getState().get('entities');
-    const ids = buildExpandList(entities, id);
+export const locateItem = (id) => {
+  return (dispatch) => {
+    const ids = List([id]);
 
     // dispatch one action to expand a number of containers
     dispatch({
@@ -49,4 +42,4 @@ export function locateItem(id) {
       }
     });
   };
-}
+};

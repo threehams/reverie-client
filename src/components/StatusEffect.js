@@ -10,7 +10,7 @@ const BEE_PHRASES = [
   'ohhh no my eyes my eyes aggggghhhh',
 ];
 
-function shuffle(string) {
+const shuffle = (string) => {
   if (string.length < 3) return string;
   const head = string[0];
   const tail = string[string.length - 1];
@@ -23,7 +23,7 @@ function shuffle(string) {
     body[j] = a;
   }
   return head + body.join('') + tail;
-}
+};
 
 export class StatusEffect extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
@@ -110,11 +110,9 @@ export class StatusEffect extends React.Component {
   }
 }
 
-export default connect(state => {
-  return {
-    statusEffects: state.getIn(['ui', 'statusEffects'])
-  };
-})(StatusEffect);
+export default connect((state) => ({
+  statusEffects: state.getIn(['ui', 'statusEffects'])
+}))(StatusEffect);
 
 const styles = {
   fire: {

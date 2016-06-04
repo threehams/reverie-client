@@ -51,11 +51,9 @@ export class Inventory extends React.Component {
 }
 
 export default connect(
-  (state, props) => {
-    return {
-      items: inventorySelectors.list(state).get(props.owner)
-    };
-  },
+  (state, props) => ({
+    items: inventorySelectors.list(state).get(props.owner)
+  }),
   {
     addView: editorActions.addView,
     moveItem: inventoryActions.moveItem,

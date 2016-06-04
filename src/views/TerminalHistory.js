@@ -46,9 +46,7 @@ const styles = {
   }
 };
 
-export default connect((state) => {
-  return {
-    history: state.get('command').history
-  };
-})(Radium(TerminalHistory));
+export default connect((state) => ({
+  history: state.get('command').history
+}))(Radium(TerminalHistory));
 

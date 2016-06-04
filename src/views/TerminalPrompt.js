@@ -152,15 +152,11 @@ const styles = {
   }
 };
 
-export const mapStateToProps = (state) => {
-  return {
-    autocompleteFragment: autocompleteSelectors.autocompleteFragment(state),
-    autocompleteOpen: state.getIn(['command', 'autocompleteOpen']),
-    autocompleteOptions: autocompleteSelectors.availableOptions(state),
-    autocompletePosition: state.getIn(['command', 'autocompletePosition']),
-    autocompleteSelectedItem: autocompleteSelectors.selectedOption(state),
-    currentCommand: state.getIn(['command', 'current']),
-  };
-};
-
-export default connect(mapStateToProps, commandActions)(Radium(TerminalPrompt));
+export default connect((state) => ({
+  autocompleteFragment: autocompleteSelectors.autocompleteFragment(state),
+  autocompleteOpen: state.getIn(['command', 'autocompleteOpen']),
+  autocompleteOptions: autocompleteSelectors.availableOptions(state),
+  autocompletePosition: state.getIn(['command', 'autocompletePosition']),
+  autocompleteSelectedItem: autocompleteSelectors.selectedOption(state),
+  currentCommand: state.getIn(['command', 'current']),
+}), commandActions)(Radium(TerminalPrompt));
