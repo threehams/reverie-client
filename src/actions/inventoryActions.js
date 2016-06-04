@@ -7,21 +7,19 @@ import {
   EDITOR_SELECT_ITEMS
 } from './actionTypes';
 
-export function toggleExpand(id) {
-  return {
-    type: INVENTORY_TOGGLE_EXPAND,
-    payload: {
-      id
-    }
-  };
-}
+export const toggleExpand = (id) => ({
+  type: INVENTORY_TOGGLE_EXPAND,
+  payload: {
+    id
+  }
+});
 
-export function moveItem(sourcePath, targetPath) {
+export const moveItem = (sourcePath, targetPath) => {
   return commandActions.sendCommand(`transfer ${sourcePath} to ${targetPath}`);
-}
+};
 
 // options: { multiple: true/false }
-export function selectItem(selectId, owner, options = {}) {
+export const selectItem = (selectId, owner, options = {}) => {
   return (dispatch, getState) => {
 
     /*
@@ -48,13 +46,11 @@ export function selectItem(selectId, owner, options = {}) {
       }
     });
   };
-}
+};
 
-export function toggleItem(id) {
-  return {
-    type: INVENTORY_TOGGLE_SELECT,
-    payload: {
-      id
-    }
-  };
-}
+export const toggleItem = (id) => ({
+  type: INVENTORY_TOGGLE_SELECT,
+  payload: {
+    id
+  }
+});

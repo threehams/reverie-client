@@ -23,11 +23,11 @@ export function setState(state) {
   };
 }
 
-export function setInitialState(state) {
+export const setInitialState = (state) => {
   return (dispatch, getState) => {
     const currentState = getState();
     if (currentState.getIn(['ui', 'player'])) return;
 
     dispatch(setState(state));
   };
-}
+};
