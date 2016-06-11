@@ -56,13 +56,20 @@ export class InventoryItem extends React.Component {
              onDoubleClick={(event) => this.expandItem(event, item)}>
           {
             item.entities.size ?
-              <DropdownArrow expanded={item.expanded} onMouseDown={(event) => this.expandItem(event, item)}/> :
-              <span style={{ paddingLeft: 18 }}/>
+              <DropdownArrow expanded={item.expanded}
+                           onMouseDown={(event) => this.expandItem(event, item)}
+                           style={{ display: 'inline-block', verticalAlign: 'middle' }}
+              /> :
+              <span style={{ paddingLeft: 22 }}/>
           }
-          <StatusEffect>
-            <EntityIcon states={item.states} components={item.components} color={styles[item.type]} before/>
-          </StatusEffect>
-          <span style={[{cursor: 'default'}, isOver && canDrop && styles.canDrop]}>
+          <EntityIcon
+            style={{ verticalAlign: 'middle' }}
+            states={item.states}
+            components={item.components}
+            color={styles[item.type]}
+            before
+          />
+          <span style={[{cursor: 'default'}, isOver && canDrop && styles.canDrop, { verticalAlign: 'middle' }]}>
             <StatusEffect>{ item.name + (item.quantity > 1 ? ` (${item.quantity})` : '') }</StatusEffect>
           </span>
         </div>
@@ -111,8 +118,8 @@ const styles = {
   indent: 16,
   item: {
     display: 'block',
-    paddingBottom: 2,
-    paddingTop: 2,
+    paddingBottom: 1,
+    paddingTop: 1,
     userSelect: 'none'
   },
   selected: {

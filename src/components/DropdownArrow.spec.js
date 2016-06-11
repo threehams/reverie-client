@@ -9,11 +9,11 @@ import Icon from './Icon';
 describe('DropdownArrow', function() {
   it('shows a right arrow when not expanded', function() {
     const element = shallow(<DropdownArrow />);
-    expect(element.find(Icon).props().name).to.equal('caret-right');
+    expect(element.find(Icon).props().name).to.equal('icon-arrow-right');
   });
 
   it('shows a down arrow when expanded', function() {
     const element = shallow(<DropdownArrow expanded />);
-    expect(element.find(Icon).props().name).to.equal('caret-down');
+    expect(element.find(Icon).props().name).to.equal('icon-arrow-down');
   });
 });

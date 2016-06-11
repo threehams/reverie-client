@@ -85,7 +85,7 @@ export class StatusEffect extends React.Component {
   }
 
   render() {
-    const { children, statusEffects } = this.props;
+    const { children, statusEffects, ...rest } = this.props;
     if (!statusEffects.size) return <span>{ children }</span>;
 
     const panicking = statusEffects.includes('panic');
@@ -103,7 +103,12 @@ export class StatusEffect extends React.Component {
       result = this.bees(result);
     }
     return (
-      <span style={ Object.assign({}, onFire && styles.fire, panicking && styles.panic) }>
+      <span
+        { ...rest }
+        style={
+          Object.assign({}, onFire && styles.fire, panicking && styles.panic)
+        }
+      >
         { result }
       </span>
     );

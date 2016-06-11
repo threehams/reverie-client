@@ -4,36 +4,14 @@
 
 var path = require('path');
 var webpack = require('webpack');
-
-var EXTERNAL = [
-  'core-js',
-  'immutable',
-  'radium',
-  'react',
-  'react-addons-shallow-compare',
-  'react-dnd',
-  'react-dnd-html5-backend',
-  'react-dom',
-  'react-markdown',
-  'react-redux',
-  'reconnectingwebsocket',
-  'redux',
-  'redux-immutable',
-  'redux-thunk',
-  'reselect'
-];
-var DEV_EXTERNAL = [
-  'babel-preset-react-hmre'
-];
+var SpritesmithPlugin = require('webpack-spritesmith');
 
 var ENTRY_POINTS = {
   development: {
     bundle: ['eventsource-polyfill', 'webpack-hot-middleware/client', './src/index'],
-    vendor: ['eventsource-polyfill', 'webpack-hot-middleware/client'].concat(EXTERNAL).concat(DEV_EXTERNAL)
   },
   production: {
     bundle: ['./src/index'],
-    vendor: EXTERNAL
   }
 };
 
@@ -48,10 +26,26 @@ var PLUGINS = {
         NODE_ENV: '\'development\''
       }
     }),
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js', Infinity)
+    new SpritesmithPlugin({
+      src: {
+        cwd: './assets/icons',
+        glob: '*.png'
+      },
+      target: {
+        image: 'assets/icons.png',
+        css: 'assets/icons.css'
+      },
+      apiOptions: {
+        cssImageRef: './icons.png'
+      },
+    }),
   ],
   production: [
     new webpack.optimize.DedupePlugin(),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
+    }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
@@ -62,12 +56,29 @@ var PLUGINS = {
         NODE_ENV: '\'production\''
       }
     }),
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js', Infinity)
+    new SpritesmithPlugin({
+      src: {
+        cwd: path.resolve(__dirname, 'assets/icons'),
+        glob: '*.png'
+      },
+      target: {
+        image: path.resolve(__dirname, 'assets/icons.png'),
+        css: path.resolve(__dirname, 'assets/icons.css')
+      },
+      apiOptions: {
+        cssImageRef: './icons.png'
+      },
+    }),
   ]
 };
 var DEV_TOOLS = {
   development: 'eval',
   production: 'source-map'
+};
+
+var BABEL_PRESETS = {
+  development: ['react', 'es2015-webpack', 'stage-0', 'react-hmre'],
+  production: ['react', 'es2015-webpack', 'stage-0']
 };
 
 module.exports = {
@@ -79,12 +90,16 @@ module.exports = {
     publicPath: '/dist/'
   },
   plugins: PLUGINS[ENV],
+  resolve: ['dist', 'node_modules'],
   module: {
     loaders: [
       {
         test: /\.js/,
         loader: 'babel',
-        include: path.join(__dirname, 'src')
+        include: path.join(__dirname, 'src'),
+        query: {
+          presets: BABEL_PRESETS[ENV]
+        }
       },
       {
         test: /\.css$/,

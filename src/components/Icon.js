@@ -10,14 +10,15 @@ export class Icon extends React.Component {
 
   static propTypes = {
     name: React.PropTypes.string.isRequired,
-    before: React.PropTypes.bool
+    before: React.PropTypes.bool,
+    style: React.PropTypes.object,
   };
 
   render() {
-    const { name, before, ...rest } = this.props;
+    const { name, before, style, ...rest } = this.props;
 
     return (
-      <i {...rest} className={`fa fa-${name}`} style={[styles.all, before && styles.before]} />
+      <i {...rest} className={`${name}`} style={[style, styles.all, before && styles.before]} />
     );
   }
 }
@@ -25,11 +26,9 @@ export class Icon extends React.Component {
 const styles = {
   all: {
     display: 'inline-block',
-    height: 15,
-    width: 15
   },
   before: {
-    marginRight: 2
+    marginRight: 6
   }
 };
 
