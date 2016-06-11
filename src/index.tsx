@@ -1,10 +1,11 @@
+/// <reference path="../typings/index.d.ts" />
 import './style.css';
 
 // Import only needed polyfills - saves lots of space and bundling time
 import './polyfills';
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import { Map } from 'immutable';
 
 import App from './views/App';
@@ -43,8 +44,11 @@ socket.onmessage = function(event) {
 
   // If this is an initial state message, and we're reconnecting, don't apply it.
   // Otherwise, it'll duplicate the location message.
-  const actionCreator = message.meta.initial ? messageActions.setInitialState : messageActions.setState;
-  store.dispatch(actionCreator(message.payload));
+  if (message.meta.initial) {
+    messageActions.setInitialState(message.payload);
+  } else {
+    messageActions.setState(message.payload);
+  }
 };
 
 // Focus on terminal prompt on all keypresses.

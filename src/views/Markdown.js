@@ -39,7 +39,7 @@ export class MarkdownLink extends React.Component {
   render() {
     const { href, children } = this.props;
     return (
-      <a href={href} onClick={::this.onClick}>{ <StatusEffect>{ children }</StatusEffect> }</a>
+      <a href={href} onClick={this.onClick.bind(this)}>{ <StatusEffect>{ children }</StatusEffect> }</a>
     );
   }
 }
@@ -125,7 +125,7 @@ export class MarkdownCode extends React.Component {
 
   render() {
     return (
-      <code style={{...styles.all, ...styles.code}}>
+      <code style={Object.assign({}, styles.all, styles.code)}>
         <StatusEffect>
           <span style={styles.codeMarker}>|</span> { this.props.children }
         </StatusEffect>
@@ -146,7 +146,7 @@ export class MarkdownEmphasis extends React.Component {
 
   render() {
     return (
-      <em style={{...styles.all, ...styles.em}}><StatusEffect>{ this.props.children }</StatusEffect></em>
+      <em style={Object.assign({}, styles.all, styles.em)}><StatusEffect>{ this.props.children }</StatusEffect></em>
     );
   }
 }
@@ -163,7 +163,7 @@ export class MarkdownStrong extends React.Component {
 
   render() {
     return (
-      <strong style={{...styles.all, ...styles.strong}}><StatusEffect>{ this.props.children }</StatusEffect></strong>
+      <strong style={Object.assign({}, styles.all, styles.strong)}><StatusEffect>{ this.props.children }</StatusEffect></strong>
     );
   }
 }
@@ -180,7 +180,7 @@ export class MarkdownBlockQuote extends React.Component {
 
   render() {
     return (
-      <blockquote style={{...styles.all, ...styles.blockquote}}>
+      <blockquote style={Object.assign({}, styles.all, styles.blockquote)}>
         <StatusEffect>"{ this.props.children }"</StatusEffect>
       </blockquote>
     );

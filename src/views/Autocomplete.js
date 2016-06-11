@@ -48,11 +48,12 @@ export class Autocomplete extends React.Component {
             const path = option.path ? ` (${option.path})` : '';
             return <li
               key={i}
-              style={{
-                ...styles.item.global,
-                ...(focused ? styles.item.focused : styles.item.unfocused),
-                ...(option === selectedItem ? styles.itemSelected.unfocused : {})
-              }}
+              style={Object.assign(
+                {},
+                styles.item.global,
+                (focused ? styles.item.focused : styles.item.unfocused),
+                (option === selectedItem ? styles.itemSelected.unfocused : {})
+              )}
               ref={(item) => {
                 if (option === selectedItem) this.selectedItem = item;
               }}

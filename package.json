@@ -89,6 +89,8 @@
     "redux-thunk": "^2.0.1",
     "reselect": "^2.4.0",
     "style-loader": "^0.13.1",
+    "ts-loader": "^0.8.2",
+    "typescript": "^1.8.10",
     "webpack": "webpack/webpack",
     "webpack-spritesmith": "^0.2.0",
     "ws": "^1.1.0"
@@ -115,6 +117,7 @@
     "react-addons-test-utils": "^15.0.1",
     "sinon": "^1.17.3",
     "sinon-chai": "^2.8.0",
+    "typings": "^1.0.5",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.10.0"
   },

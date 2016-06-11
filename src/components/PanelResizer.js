@@ -75,7 +75,7 @@ export class PanelResizer extends React.Component {
     const { position } = this.props;
     return (
       <div style={styles[position]}
-           onMouseDown={::this.startResize}
+           onMouseDown={this.startResize.bind(this)}
            onMouseMove={this.resize}
            onMouseUp={this.endResize}
       ></div>

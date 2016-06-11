@@ -32,7 +32,7 @@ class Tab extends React.Component {
   render() {
     const { active, onClickClose } = this.props;
     return (
-      <div style={[styles.global, active ? styles.active : styles.inactive]} onClick={::this.elementClicked}>
+      <div style={[styles.global, active ? styles.active : styles.inactive]} onClick={this.elementClicked.bind(this)}>
         <span style={styles.label}>{ this.props.children }</span>
         { onClickClose && <Icon name="fa fa-times" onClick={(e) => { e.stopPropagation(); onClickClose(); }} /> }
       </div>
@@ -41,15 +41,17 @@ class Tab extends React.Component {
 }
 
 export const styles = {
-  global: {
-    cursor: 'default',
-    color: '#333333',
-    padding: '3px 3px 3px 15px',
-    borderRight: panelStyles.border,
-    display: 'inline-block',
-    ...fontStyles.default,
-    flex: '1 1 auto'
-  },
+  global: Object.assign(
+    {
+      cursor: 'default',
+      color: '#333333',
+      padding: '3px 3px 3px 15px',
+      borderRight: panelStyles.border,
+      display: 'inline-block',
+      flex: '1 1 auto'
+    },
+    fontStyles.default,
+  ),
   inactive: {
     backgroundColor: '#d4d4d4'
   },

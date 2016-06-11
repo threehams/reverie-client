@@ -107,7 +107,7 @@ export class TerminalPrompt extends React.Component {
       left: Math.floor(autocompletePosition * fontStyles.widths.monospace)
     };
     return (
-      <form onSubmit={::this.submit}>
+      <form onSubmit={this.submit.bind(this)}>
         {
           autocompleteOpen &&
             <div style={[styles.autocompleteContainer, autocompleteStyles]}>
@@ -123,8 +123,8 @@ export class TerminalPrompt extends React.Component {
                ref={(input) => { this.input = input; }}
                value={currentCommand}
                style={styles.input}
-               onKeyDown={::this.selectOption}
-               onChange={::this.setCommandFromInput}
+               onKeyDown={this.selectOption.bind(this)}
+               onChange={this.setCommandFromInput.bind(this)}
                autoComplete="off" />
       </form>
     );
@@ -132,16 +132,18 @@ export class TerminalPrompt extends React.Component {
 }
 
 const styles = {
-  input: {
-    borderBottom: 0,
-    borderLeft: 0,
-    borderRight: 0,
-    borderTop: panelStyles.border,
-    outline: 0,
-    padding: 4,
-    width: '100%',
-    ...fontStyles.monospace,
-  },
+  input: Object.assign(
+    {
+      borderBottom: 0,
+      borderLeft: 0,
+      borderRight: 0,
+      borderTop: panelStyles.border,
+      outline: 0,
+      padding: 4,
+      width: '100%'
+    },
+    fontStyles.monospace
+  ),
   autocompleteContainer: {
     border: '1px solid #c0c0c0',
     maxHeight: 300,

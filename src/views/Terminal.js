@@ -28,12 +28,14 @@ export class Terminal extends React.Component {
 export default Radium(Terminal);
 
 const styles = {
-  terminal: {
-    display: 'flex',
-    flexFlow: 'column nowrap',
-    height: '100%',
-    ...fontStyles.monospace,
-  },
+  terminal: Object.assign(
+    {
+      display: 'flex',
+      flexFlow: 'column nowrap',
+      height: '100%',
+    },
+    fontStyles.monospace
+  ),
   terminalPrompt: {
     flex: '0 0 30px',
     position: 'relative',

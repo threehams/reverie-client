@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "jsx": "preserve",
+    "outDir": "tsDist",
+    "module": "es6",
+    "target": "es6"
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "tsDist",
+    "polyfills.js",
+    "server.js",
+    "serverConfig.js",
+    "webpack.config.js"
+  ]
+}

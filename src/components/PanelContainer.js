@@ -45,7 +45,7 @@ export class PanelContainer extends React.Component {
       <div style={[styles.sidebar, { width, height }]} key="sidebar-wrapper">
         {
           sidebars.map((side, index) => {
-            const style = index < sidebars.length - 1 ? { ...styles.sidebarSection, height: sidebarHeight } : {};
+            const style = index < sidebars.length - 1 ? [styles.sidebarSection, { height: sidebarHeight }] : [];
             return cloneElement(side, { style });
           })
         }
@@ -68,14 +68,14 @@ export class PanelContainer extends React.Component {
         <PanelResizer key="sidebar-resizer"
                       property="sidebarWidth"
                       position="right"
-                      onResize={::this.onPanelResize } />
+                      onResize={this.onPanelResize.bind(this) } />
       </div>,
       main && cloneElement(main, { style: [styles.main, { width: mainWidth, height: topHeightStyle}]}),
       footer && <div key="footer-resizable" style={styles.resizable}>
         <PanelResizer key="footer-resizer"
                       property="footerHeight"
                       position="top"
-                      onResize={::this.onPanelResize } />
+                      onResize={this.onPanelResize.bind(this) } />
         { cloneElement(footer, { style: [styles.footer, { height: footerHeight }]}) }
       </div>
     ];
