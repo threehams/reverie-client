@@ -1,7 +1,7 @@
-import React, { PropTypes } from 'react';
-import Radium from 'radium';
-import shallowCompare from 'react-addons-shallow-compare';
+import * as React from 'react';
+import Radium = require('radium');
 import { Set } from 'immutable';
+import * as _ from 'lodash';
 
 import Icon from '../components/Icon';
 
@@ -17,20 +17,15 @@ export const TYPE_ICONS = {
   unlocked: 'icon-unlocked',
 };
 
-export class EntityIcon extends React.Component {
-  shouldComponentUpdate(nextProps, nextState) {
-    /* istanbul ignore next */
-    return shallowCompare(this, nextProps, nextState);
-  }
+interface IEntityIconProps {
+  components: any,
+  states: any
+}
 
-  static propTypes = {
-    states: PropTypes.instanceOf(Set),
-    components: PropTypes.instanceOf(Set)
-  };
-
+export class EntityIcon extends React.Component<IEntityIconProps, {}> {
   static defaultProps = {
-    states: Set(),
     components: Set(),
+    states: Set(),
   };
 
   iconFor(components, states) {
@@ -52,7 +47,8 @@ export class EntityIcon extends React.Component {
   }
 
   render() {
-    const { components, states, ...rest } = this.props;
+    const { components, states } = this.props;
+    const rest = _.omit(this.props, ['components', 'states']);
 
     return (
       <Icon {...rest} name={this.iconFor(components, states)} />

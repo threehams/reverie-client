@@ -1,10 +1,14 @@
 {
   "globalDependencies": {
     "immutable": "registry:dt/immutable#3.8.1+20160608070634",
+    "radium": "registry:dt/radium#0.17.1+20160414124459",
     "react": "registry:dt/react#0.14.0+20160602151522",
+    "react-addons-shallow-compare": "registry:dt/react-addons-shallow-compare#0.14.0+20160316155526",
     "react-dom": "registry:dt/react-dom#0.14.0+20160412154040"
   },
   "dependencies": {
-    "immutable": "registry:npm/immutable#3.7.6+20160411060006"
+    "immutable": "registry:npm/immutable#3.7.6+20160411060006",
+    "radium": "registry:npm/radium#0.16.6+20160310030142",
+    "react-redux": "registry:npm/react-redux#4.4.0+20160207114942"
   }
 }

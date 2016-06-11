@@ -7,7 +7,7 @@ var webpack = require('webpack');
 var SpritesmithPlugin = require('webpack-spritesmith');
 
 var ENTRY_POINTS = {
-  development: ['eventsource-polyfill', 'webpack-hot-middleware/client', './src/index.tsx'],
+  development: ['webpack-hot-middleware/client', './src/index.tsx'],
   production: ['./src/index.tsx'],
 };
 
@@ -39,10 +39,6 @@ var PLUGINS = {
   production: [
     new webpack.NoErrorsPlugin(),
     new webpack.optimize.DedupePlugin(),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true,
-      debug: false
-    }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
@@ -87,7 +83,10 @@ module.exports = {
     publicPath: '/dist/'
   },
   plugins: PLUGINS[ENV],
-  resolve: ['dist', 'node_modules'],
+  resolve: {
+    root: [path.resolve('src')],
+    extensions: ['', '.jsx', '.js', '.tsx', '.ts']
+  },
   module: {
     loaders: [
       {

@@ -75,6 +75,8 @@
     "express": "^4.13.4",
     "immutable": "^3.8.0",
     "json-loader": "^0.5.4",
+    "lodash": "^4.13.1",
+    "object.omit": "^2.0.0",
     "radium": "^0.17.1",
     "react": "^15.0.1",
     "react-addons-shallow-compare": "^15.0.1",
@@ -91,7 +93,7 @@
     "style-loader": "^0.13.1",
     "ts-loader": "^0.8.2",
     "typescript": "^1.8.10",
-    "webpack": "webpack/webpack",
+    "webpack": "^1.12.15",
     "webpack-spritesmith": "^0.2.0",
     "ws": "^1.1.0"
   },
@@ -118,8 +120,8 @@
     "sinon": "^1.17.3",
     "sinon-chai": "^2.8.0",
     "typings": "^1.0.5",
-    "webpack-dev-middleware": "^1.6.1",
-    "webpack-hot-middleware": "^2.10.0"
+    "webpack-dev-middleware": "^1.5.1",
+    "webpack-hot-middleware": "^2.6.4"
   },
   "nyc": {
     "include": [

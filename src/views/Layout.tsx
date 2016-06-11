@@ -1,7 +1,6 @@
-import React, {PropTypes} from 'react';
-import Radium from 'radium';
+import * as React from 'react';
+import Radium = require('radium');
 import {connect} from 'react-redux';
-import shallowCompare from 'react-addons-shallow-compare';
 
 import Inventory from './Inventory';
 import Player from './Player';
@@ -18,22 +17,17 @@ import Icon from '../components/Icon';
 import * as playerActions from '../actions/playerActions';
 import * as layoutActions from '../actions/layoutActions';
 
-export class Layout extends React.Component {
-  shouldComponentUpdate(nextProps, nextState) {
-    /* istanbul-ignore-next */
-    return shallowCompare(this, nextProps, nextState);
-  }
+interface ILayoutProps {
+  activePlayerView: any,
+  alert: any,
+  footerHeight: any,
+  resizePanel: any,
+  setActiveView: any,
+  sidebarHeight: any,
+  sidebarWidth: any
+}
 
-  static propTypes = {
-    activePlayerView: PropTypes.string,
-    alert: PropTypes.string,
-    footerHeight: PropTypes.number,
-    setActiveView: PropTypes.func,
-    sidebarHeight: PropTypes.number,
-    sidebarWidth: PropTypes.number,
-    resizePanel: PropTypes.func,
-  };
-
+export class Layout extends React.Component<ILayoutProps, {}> {
   render() {
     const {
       activePlayerView,
@@ -94,6 +88,8 @@ export class Layout extends React.Component {
     );
   }
 }
+
+console.log(Radium);
 
 export default connect((state) => ({
   alert: state.getIn(['ui', 'alert']),

@@ -1,7 +1,7 @@
-import React, { Children, PropTypes } from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
+import * as _ from 'lodash';
 import { Set } from 'immutable';
-import shallowCompare from 'react-addons-shallow-compare';
 
 const BEE_PHRASES = [
   'noooo not the bees!',
@@ -25,19 +25,13 @@ const shuffle = (string) => {
   return head + body.join('') + tail;
 };
 
-export class StatusEffect extends React.Component {
-  shouldComponentUpdate(nextProps, nextState) {
-    /* istanbul-ignore-next */
-    return shallowCompare(this, nextProps, nextState);
-  }
+interface IStatusEffectProps {
+  statusEffects: Set<string>
+}
 
-  static propTypes = {
-    children: PropTypes.node,
-    statusEffects: PropTypes.instanceOf(Set)
-  };
-
+export class StatusEffect extends React.Component<IStatusEffectProps, {}> {
   confuse(children) {
-    return Children.map(children, child => {
+    return React.Children.map(children, (child: any) => {
       if (typeof child !== 'string') {
         return child;
       }
@@ -52,7 +46,7 @@ export class StatusEffect extends React.Component {
   }
 
   panic(children) {
-    return Children.map(children, child => {
+    return React.Children.map(children, (child:any) => {
       if (typeof child !== 'string') {
         return child;
       }
@@ -67,7 +61,7 @@ export class StatusEffect extends React.Component {
   }
 
   bees(children) {
-    return Children.map(children, child => {
+    return React.Children.map(children, (child: any) => {
       if (typeof child !== 'string') {
         return child;
       }
@@ -85,7 +79,8 @@ export class StatusEffect extends React.Component {
   }
 
   render() {
-    const { children, statusEffects, ...rest } = this.props;
+    const { children, statusEffects } = this.props;
+    const rest = _.omit(this.props, ['children', 'statusEffects']);
     if (!statusEffects.size) return <span>{ children }</span>;
 
     const panicking = statusEffects.includes('panic');
