@@ -2,14 +2,16 @@ import * as React from 'react';
 import Radium = require('radium');
 import * as _ from 'lodash';
 
-interface IIconProps {
-  name: string,
-  before?: boolean,
-  style?: Object
+interface IconProps {
+  name: string;
+  before?: boolean;
+  style?: Object;
+  onClick?: Function;
 }
 
-export class Icon extends React.Component<IIconProps, {}> {
-  render() {
+@Radium
+export class Icon extends React.Component<IconProps, {}> {
+  public render() {
     const { name, before, style } = this.props;
     const rest = _.omit(this.props, ['name', 'before', 'style']);
 
@@ -24,8 +26,6 @@ const styles = {
     display: 'inline-block',
   },
   before: {
-    marginRight: 6
-  }
+    marginRight: 6,
+  },
 };
-
-export default Radium(Icon);

@@ -90,7 +90,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.(tsx|js)/,
+        test: /\.(tsx|ts|js)/,
         loaders: ['babel', 'ts'],
         include: path.join(__dirname, 'src')
       },

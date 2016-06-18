@@ -4,11 +4,14 @@
     "radium": "registry:dt/radium#0.17.1+20160414124459",
     "react": "registry:dt/react#0.14.0+20160602151522",
     "react-addons-shallow-compare": "registry:dt/react-addons-shallow-compare#0.14.0+20160316155526",
-    "react-dom": "registry:dt/react-dom#0.14.0+20160412154040"
+    "react-dnd": "registry:dt/react-dnd#1.1.4+20160316155526",
+    "react-dom": "registry:dt/react-dom#0.14.0+20160412154040",
+    "reselect": "registry:dt/reselect#2.0.2+20160319031821"
   },
   "dependencies": {
     "immutable": "registry:npm/immutable#3.7.6+20160411060006",
     "radium": "registry:npm/radium#0.16.6+20160310030142",
-    "react-redux": "registry:npm/react-redux#4.4.0+20160207114942"
+    "react-redux": "registry:npm/react-redux#4.4.0+20160207114942",
+    "redux-immutable": "registry:npm/redux-immutable#3.0.6+20160310030142"
   }
 }

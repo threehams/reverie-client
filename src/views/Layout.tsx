@@ -1,34 +1,31 @@
 import * as React from 'react';
 import Radium = require('radium');
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 import Inventory from './Inventory';
 import Player from './Player';
 import Editor from './Editor';
-import Terminal from './Terminal';
+import { Terminal } from './Terminal';
 
+import { Icon, PanelContainer, Panel, TabContainer, Tab } from '../components/';
 import StatusEffect from '../components/StatusEffect';
-import PanelContainer from '../components/PanelContainer';
-import Panel from '../components/Panel';
-import TabContainer from '../components/TabContainer';
-import Tab from '../components/Tab';
-import Icon from '../components/Icon';
 
 import * as playerActions from '../actions/playerActions';
 import * as layoutActions from '../actions/layoutActions';
 
-interface ILayoutProps {
-  activePlayerView: any,
-  alert: any,
-  footerHeight: any,
-  resizePanel: any,
-  setActiveView: any,
-  sidebarHeight: any,
-  sidebarWidth: any
+interface LayoutProps {
+  activePlayerView: any;
+  alert: any;
+  footerHeight: any;
+  resizePanel: any;
+  setActiveView: any;
+  sidebarHeight: any;
+  sidebarWidth: any;
 }
 
-export class Layout extends React.Component<ILayoutProps, {}> {
-  render() {
+@Radium
+export class Layout extends React.Component<LayoutProps, {}> {
+  public render() {
     const {
       activePlayerView,
       alert,
@@ -36,7 +33,7 @@ export class Layout extends React.Component<ILayoutProps, {}> {
       resizePanel,
       setActiveView,
       sidebarHeight,
-      sidebarWidth
+      sidebarWidth,
     } = this.props;
 
     return (
@@ -89,18 +86,16 @@ export class Layout extends React.Component<ILayoutProps, {}> {
   }
 }
 
-console.log(Radium);
-
 export default connect((state) => ({
-  alert: state.getIn(['ui', 'alert']),
   activePlayerView: state.getIn(['ui', 'activePlayerView']),
+  alert: state.getIn(['ui', 'alert']),
   footerHeight: state.getIn(['ui', 'footerHeight']),
-  sidebarWidth: state.getIn(['ui', 'sidebarWidth']),
   sidebarHeight: state.getIn(['ui', 'sidebarHeight']),
+  sidebarWidth: state.getIn(['ui', 'sidebarWidth']),
 }), {
+  resizePanel: layoutActions.resizePanel,
   setActiveView: playerActions.setActiveView,
-  resizePanel: layoutActions.resizePanel
-})(Radium(Layout));
+})(Layout);
 
 const styles = {
   alert: {
@@ -110,6 +105,6 @@ const styles = {
     position: 'absolute',
     textAlign: 'center',
     width: '100%',
-    zIndex: 1
-  }
+    zIndex: 1,
+  },
 };

@@ -3,11 +3,11 @@ import Radium = require('radium');
 import { Set } from 'immutable';
 import * as _ from 'lodash';
 
-import Icon from '../components/Icon';
+import { Icon } from '../components/Icon';
 
 export const TYPE_ICONS = {
-  containerClosed: 'icon-folder-excluded',
   container: 'icon-folder',
+  containerClosed: 'icon-folder-excluded',
   creature: 'fa fa-github-alt',
   executable: 'icon-file-js',
   locked: 'icon-locked',
@@ -17,18 +17,30 @@ export const TYPE_ICONS = {
   unlocked: 'icon-unlocked',
 };
 
-interface IEntityIconProps {
-  components: any,
-  states: any
+interface EntityIconProps {
+  components: Set<string>;
+  states: Set<string>;
+  style?: Object;
+  before?: boolean;
 }
 
-export class EntityIcon extends React.Component<IEntityIconProps, {}> {
-  static defaultProps = {
+@Radium
+export class EntityIcon extends React.Component<EntityIconProps, {}> {
+  private static defaultProps = {
     components: Set(),
     states: Set(),
   };
 
-  iconFor(components, states) {
+  public render() {
+    const { components, states } = this.props;
+    const rest = _.omit(this.props, ['components', 'states']);
+
+    return (
+      <Icon {...rest} name={this.iconFor(components, states)} />
+    );
+  }
+
+  private iconFor(components, states) {
     if (states.contains('locked')) {
       return TYPE_ICONS.locked;
     }
@@ -45,15 +57,4 @@ export class EntityIcon extends React.Component<IEntityIconProps, {}> {
     }
     return TYPE_ICONS.text;
   }
-
-  render() {
-    const { components, states } = this.props;
-    const rest = _.omit(this.props, ['components', 'states']);
-
-    return (
-      <Icon {...rest} name={this.iconFor(components, states)} />
-    );
-  }
 }
-
-export default Radium(EntityIcon);

@@ -1,4 +1,3 @@
-/// <reference path="../typings/index.d.ts" />
 import './style.css';
 
 // Import only needed polyfills - saves lots of space and bundling time
@@ -8,7 +7,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Map } from 'immutable';
 
-import App from './views/App';
+import { AppContainer } from './views/App';
 import configureStore from './configureStore';
 import socket from './socket';
 
@@ -40,15 +39,19 @@ socket.onclose = function() {
 socket.onmessage = function(event) {
   // All messages are expected to be valid JSON!
   const message = JSON.parse(event.data);
-  if (!message.payload) return;
+  if (!message.payload) {
+    return;
+  }
 
   // If this is an initial state message, and we're reconnecting, don't apply it.
   // Otherwise, it'll duplicate the location message.
+  let action;
   if (message.meta.initial) {
-    messageActions.setInitialState(message.payload);
+    action = messageActions.setInitialState(message.payload);
   } else {
-    messageActions.setState(message.payload);
+    action = messageActions.setState(message.payload);
   }
+  store.dispatch(action);
 };
 
 // Focus on terminal prompt on all keypresses.
@@ -59,6 +62,6 @@ document.onkeypress = function() {
 
 
 ReactDOM.render(
-  <App store={store} />,
+  <AppContainer store={store} />,
   document.getElementById('root')
 );

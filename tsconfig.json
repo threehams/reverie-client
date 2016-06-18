@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
     "allowJs": true,
+    "experimentalDecorators": true,
     "jsx": "preserve",
     "module": "commonjs",
     "outDir": "tsDist",
-    "target": "es6",
+    "target": "es2015",
     "moduleResolution": "node"
   },
   "exclude": [
