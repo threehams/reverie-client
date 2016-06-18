@@ -1,7 +1,6 @@
 import {Record, Set, OrderedSet} from 'immutable';
-import { EntityType } from './EntityRecord';
 
-interface Ui {
+interface UiProps {
   activeEditorView?: string;
   activePlayerView?: 'inventory' | 'player';
   alert?: string;
@@ -9,15 +8,13 @@ interface Ui {
   footerHeight?: number;
   inventoryExpandedById?: Set<string>;
   player?: string;
-  selectedItems?: OrderedSet<EntityType>;
+  selectedItems?: OrderedSet<string>;
   sidebarHeight?: number;
   sidebarWidth?: number;
   statusEffects?: Set<string>;
 }
 
-export type UiType = Ui & Record.Base;
-
-export const UiRecord = Record({
+export class Ui extends Record<UiProps>({
   activeEditorView: '0',
   activePlayerView: 'inventory',
   alert: null,
@@ -27,6 +24,17 @@ export const UiRecord = Record({
   player: null,
   selectedItems: OrderedSet([]),
   sidebarHeight: 300,
-  sidebarWidth: 300,
   statusEffects: Set([]),
-});
+}) implements UiProps {
+  public activeEditorView: string;
+  public activePlayerView: 'inventory' | 'player';
+  public alert: string;
+  public editorViews: OrderedSet<string>;
+  public footerHeight: number;
+  public inventoryExpandedById: Set<string>;
+  public player: string;
+  public selectedItems: OrderedSet<string>;
+  public sidebarHeight: number;
+  public sidebarWidth: number;
+  public statusEffects: Set<string>;
+};

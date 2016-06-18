@@ -1,4 +1,4 @@
-import expect from '../__test__/configureExpect';
+import { expect } from '../__test__/configureExpect';
 
 import { Autocomplete } from './Autocomplete';
 

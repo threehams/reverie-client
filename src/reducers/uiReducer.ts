@@ -1,6 +1,6 @@
 import {OrderedSet, Map} from 'immutable';
 
-import { UiRecord, UiType } from '../records/UiRecord';
+import { Ui } from '../records';
 import {
   EDITOR_ADD_VIEW,
   INVENTORY_TOGGLE_EXPAND,
@@ -15,13 +15,13 @@ import {
   SOCKET_STATUS,
 } from '../actions/actionTypes';
 
-export const INITIAL_STATE: UiType = new UiRecord();
+export const INITIAL_STATE: Ui = new Ui();
 const ALERTS = {
   disconnected: 'Reconnecting to server, give it a minute...',
   reconnected: '',
 };
 
-export default function uiReducer(state: UiType = INITIAL_STATE, action): UiType {
+export default function uiReducer(state: Ui = INITIAL_STATE, action): Ui {
   switch (action.type) {
     case EDITOR_ADD_VIEW:
       return addView(state, action.payload.id);

@@ -7,26 +7,22 @@ import shallowCompare = require('react-addons-shallow-compare');
 import * as editorActions from '../actions/editorActions';
 import { EditorPanel } from './EditorPanel';
 import EditorTabs from './EditorTabs';
-import { EntityType } from '../records/EntityRecord';
+import { Entity, State } from '../records';
 
 import fontStyles from '../styles/font';
 
 interface EditorProps {
   activeView: string;
   editorHistory: List<string>;
-  entities: Map<string, EntityType>;
+  entities: Map<string, Entity>;
   log: List<string>;
   removeView: Function;
   setActiveView: Function;
   views: OrderedSet<string>;
 }
 
+@Radium
 export class Editor extends React.Component<EditorProps, {}> {
-  public shouldComponentUpdate(nextProps, nextState) {
-    /* istanbul-ignore-next */
-    return shallowCompare(this, nextProps, nextState);
-  }
-
   public render() {
     const { activeView, editorHistory, entities, removeView, setActiveView, views} = this.props;
     const tabProps = {activeView, entities, setActiveView, removeView, views};
@@ -51,12 +47,12 @@ export class Editor extends React.Component<EditorProps, {}> {
   }
 }
 
-export default connect((state) => ({
-  activeView: state.getIn(['ui', 'activeEditorView']),
-  editorHistory: state.get('editorHistory'),
-  entities: state.get('entities'),
-  views: state.getIn(['ui', 'editorViews']),
-}), editorActions)(Radium(Editor));
+export default connect((state: State) => ({
+  activeView: state.ui.activeEditorView,
+  editorHistory: state.editorHistory,
+  entities: state.entities,
+  views: state.ui.editorViews,
+}), editorActions)(Editor);
 
 const styles = {
   container: Object.assign(

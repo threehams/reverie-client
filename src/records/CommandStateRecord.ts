@@ -1,21 +1,17 @@
 import { List, Record, Set } from 'immutable';
-import { EntityType } from './EntityRecord';
-import { CommandType } from './CommandRecord';
-import { ExitType } from './ExitRecord';
+import { AutocompleteItem, Command } from '../records';
 
-interface CommandState {
+interface CommandStateProps {
   autocompleteOpen?: boolean;
   autocompletePosition?: number;
-  autocompleteSelectedItem?: EntityType|CommandType|ExitType;
-  available?: Set<string>;
+  autocompleteSelectedItem?: AutocompleteItem;
+  available?: Set<Command>;
   current?: string;
   cursorIndex?: number;
   history?: List<string>;
 }
 
-export type CommandStateType = CommandState & Record.Base;
-
-export const CommandStateRecord = Record<CommandState>({
+export class CommandState extends Record<CommandStateProps>({
   autocompleteOpen: false,
   autocompletePosition: null,
   autocompleteSelectedItem: null,
@@ -23,4 +19,12 @@ export const CommandStateRecord = Record<CommandState>({
   current: '',
   cursorIndex: 0,
   history: List([]),
-});
+}) implements CommandStateProps {
+  public autocompleteOpen: boolean;
+  public autocompletePosition: number;
+  public autocompleteSelectedItem: AutocompleteItem;
+  public available: Set<Command>;
+  public current: string;
+  public cursorIndex: number;
+  public history: List<string>;
+};

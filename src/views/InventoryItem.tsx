@@ -3,10 +3,9 @@ import Radium = require('radium');
 import shallowCompare = require('react-addons-shallow-compare');
 import { DragSource, DropTarget } from 'react-dnd';
 
-import { EntityIcon } from '../components/EntityIcon';
+import { DropdownArrow, EntityIcon } from '../components';
 import StatusEffect from '../components/StatusEffect';
-import { DropdownArrow } from '../components/DropdownArrow';
-import { EntityType } from '../records/EntityRecord';
+import { Entity } from '../records';
 
 interface InventoryItemProps {
   addView: Function;
@@ -14,13 +13,14 @@ interface InventoryItemProps {
   connectDragSource: Function;
   connectDropTarget: Function;
   isOver: boolean;
-  item: EntityType;
+  item: Entity;
   moveItem: Function;
   selectItem: Function;
   toggleExpand: Function;
   toggleItem: Function;
 }
 
+@Radium
 export class InventoryItem extends React.Component<InventoryItemProps, {}> {
   public shouldComponentUpdate(nextProps, nextState) {
     /* istanbul-ignore-next */
@@ -108,7 +108,7 @@ const collectDrop = (dropConnect, monitor) => ({
 });
 
 const DraggableInventoryItem = DragSource('INVENTORY_ITEM', inventoryItemSource, collectDrag)(
-  DropTarget('INVENTORY_ITEM', inventoryItemTarget, collectDrop)(Radium(InventoryItem))
+  DropTarget('INVENTORY_ITEM', inventoryItemTarget, collectDrop)(InventoryItem)
 );
 
 export default DraggableInventoryItem;

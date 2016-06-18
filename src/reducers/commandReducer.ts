@@ -10,14 +10,11 @@ import {
   COMMAND_SET_CURRENT,
   SET_STATE,
 } from '../actions/actionTypes';
-import { CommandRecord } from '../records/CommandRecord';
-import { CommandPartRecord } from '../records/CommandPartRecord';
-import { AllowedRecord } from '../records/AllowedRecord';
-import { CommandStateRecord, CommandStateType } from '../records/CommandStateRecord';
+import { Allowed, Command, CommandPart, CommandState } from '../records';
 
-export const INITIAL_STATE: CommandStateType = new CommandStateRecord();
+export const INITIAL_STATE: CommandState = new CommandState();
 
-export default function commandReducer(state: CommandStateType = INITIAL_STATE, action): CommandStateType {
+export default function commandReducer(state: CommandState = INITIAL_STATE, action): CommandState {
   switch (action.type) {
     case COMMAND_CLOSE_AUTOCOMPLETE:
       return closeAutocomplete(state);
@@ -54,7 +51,7 @@ function createCommandRecord(command) {
     return parts.map(part => {
       const allowedRecord = part.update('allowed', allowed => {
         return allowed.map(allow => {
-          return new AllowedRecord({
+          return new Allowed({
             components: Set([allow.get(['components'])]),
             names: Set([allow.get(['names'])]),
             owners: Set([allow.get(['owners'])]),
@@ -63,13 +60,13 @@ function createCommandRecord(command) {
           });
         });
       });
-      return new CommandPartRecord(allowedRecord);
+      return new CommandPart(allowedRecord);
     });
   });
-  return new CommandRecord(nestedRecord);
+  return new Command(nestedRecord);
 }
 
-function setCursorIndex(state: CommandStateType, index) {
+function setCursorIndex(state: CommandState, index) {
   const currentIndex = state.cursorIndex;
   const indexSet = state.set('cursorIndex', index);
   if (!state.autocompleteOpen || Math.abs(currentIndex - index) > 1 || state.current[index] === ' ') {
@@ -78,11 +75,11 @@ function setCursorIndex(state: CommandStateType, index) {
   return indexSet;
 }
 
-function completeCommand(state: CommandStateType, { command, cursorIndex, autocompleteItem }) {
+function completeCommand(state: CommandState, { command, cursorIndex, autocompleteItem }) {
   return replaceCommand(state, command, cursorIndex, autocompleteItem);
 }
 
-function replaceCommand(state: CommandStateType, command, index, replacement) {
+function replaceCommand(state: CommandState, command, index, replacement) {
   // Slice in half at index
   const tail = command.slice(index);
   const head = command.slice(0, index);
@@ -96,11 +93,11 @@ function replaceCommand(state: CommandStateType, command, index, replacement) {
   });
 }
 
-function closeAutocomplete(state: CommandStateType) {
+function closeAutocomplete(state: CommandState) {
   return state.merge({ autocompleteOpen: false, autocompletePosition: null, autocompleteSelectedItem: null });
 }
 
-function setCurrentCommand(state: CommandStateType, { command, cursorIndex }) {
+function setCurrentCommand(state: CommandState, { command, cursorIndex }) {
   const currentCommand = state.get('current');
   const newState = state.merge({ current: command, cursorIndex });
   if (command[cursorIndex - 1] === ' ' || currentCommand.length > command.length) {

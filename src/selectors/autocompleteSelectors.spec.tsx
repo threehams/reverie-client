@@ -1,28 +1,33 @@
 import * as autocompleteSelectors from './autocompleteSelectors';
-import {fromJS, List, Set} from 'immutable';
+import { List, Map, Set } from 'immutable';
 
-import expect from '../__test__/configureExpect';
+import { expect } from '../__test__/configureExpect';
 
-import EntityRecord from '../records/EntityRecord';
-import CommandStateRecord from '../records/CommandStateRecord';
-import CommandPartRecord from '../records/CommandPartRecord';
-import CommandRecord from '../records/CommandRecord';
-import AllowedRecord from '../records/AllowedRecord';
+import {
+  Allowed,
+  CommandPart,
+  Command,
+  CommandState,
+  Entity,
+  Location,
+  State,
+  Ui,
+} from '../records';
 
 describe('autocompleteSelectors', function() {
   describe('applyAllowed', function() {
     context('when types are specified', function() {
       it('restricts the objects to the given types', function() {
         const commands = List([
-          new CommandRecord({ name: 'command1' }),
-          new CommandRecord({ name: 'command2' }),
+          new Command({ name: 'command1' }),
+          new Command({ name: 'command2' }),
         ]);
         const objects = commands.concat(List([
-          new EntityRecord({ name: 'entity1' }),
-          new EntityRecord({ name: 'entity2' }),
+          new Entity({ id: '1', name: 'entity1' }),
+          new Entity({ id: '2', name: 'entity2' }),
         ]));
-        const allowed = new AllowedRecord({
-          types: Set(['command'])
+        const allowed = new Allowed({
+          types: Set(['command']),
         });
         const filtered = autocompleteSelectors.applyAllowed(objects, allowed);
         expect(filtered).to.equal(commands);
@@ -32,13 +37,13 @@ describe('autocompleteSelectors', function() {
     context('when types are not specified', function() {
       it('returns a flat map of all objects', function() {
         const objects = List([
-          new CommandRecord({ name: 'command1' }),
-          new CommandRecord({ name: 'command2' }),
-          new EntityRecord({ name: 'entity1' }),
-          new EntityRecord({ name: 'entity2' }),
+          new Command({ name: 'command1' }),
+          new Command({ name: 'command2' }),
+          new Entity({ id: '1', name: 'entity1' }),
+          new Entity({ id: '2', name: 'entity2' }),
         ]);
-        const allowed = new AllowedRecord({
-          types: Set()
+        const allowed = new Allowed({
+          types: Set([]),
         });
         const filtered = autocompleteSelectors.applyAllowed(objects, allowed);
         expect(filtered).to.equal(objects);
@@ -47,25 +52,25 @@ describe('autocompleteSelectors', function() {
 
     context('when components are specified', function() {
       it('returns objects where any component matches', function() {
-        const creature = new EntityRecord({
+        const creature = new Entity({
+          components: Set(['creature']),
           id: '1',
           name: 'creature',
-          components: Set(['creature'])
         });
-        const item = new EntityRecord({
+        const item = new Entity({
+          components: Set(['item']),
           id: '2',
           name: 'item',
-          components: Set(['item'])
         });
-        const container = new EntityRecord({
+        const container = new Entity({
+          components: Set(['container']),
           id: '3',
           name: 'container',
-          components: Set(['container'])
         });
         const objects = List([creature, item, container]);
-        const allowed = new AllowedRecord({
+        const allowed = new Allowed({
+          components: Set(['item', 'creature']),
           types: Set(['entity']),
-          components: Set(['item', 'creature'])
         });
         const filtered = autocompleteSelectors.applyAllowed(objects, allowed);
         expect(filtered).to.equal(List([creature, item]));
@@ -76,25 +81,27 @@ describe('autocompleteSelectors', function() {
   describe('availableOptions', function() {
     context('with no current command', function() {
       it('matches commands and exits', function() {
-        const commandTransfer = new CommandRecord({
-          name: 'transfer'
+        const commandTransfer = new Command({
+          name: 'transfer',
         });
 
-        const state = fromJS({
-          command: new CommandStateRecord({
+        const state = new State({
+          command: new CommandState({
             autocompleteOpen: true,
+            available: Set([
+              commandTransfer,
+            ]),
             current: 'tr',
             cursorIndex: 2,
-            available: Set([
-              commandTransfer
-            ])
           }),
-          entities: {
-            '1': new EntityRecord({
+          entities: Map({
+            '1': new Entity({
               id: '1',
-              name: 'readme.txt'
-            })
-          }
+              name: 'readme.txt',
+            }),
+          }),
+          location: new Location(),
+          ui: new Ui(),
         });
 
         expect(autocompleteSelectors.availableOptions(state)).to.equal(List([commandTransfer]));
@@ -104,57 +111,59 @@ describe('autocompleteSelectors', function() {
     context('with a current command', function() {
       context('when the part filters by type', function() {
         it('returns the filtered and sorted list', function() {
-          const commandTransfer = new CommandRecord({
+          const commandTransfer = new Command({
             name: 'transfer',
             parts: List([
-              new CommandPartRecord({
+              new CommandPart({
                 allowed: List([
-                  new AllowedRecord({
-                    types: Set(['entity'])
-                  })
-                ])
-              })
-            ])
+                  new Allowed({
+                    types: Set(['entity']),
+                  }),
+                ]),
+              }),
+            ]),
           });
 
-          const entity = new EntityRecord({
+          const entity = new Entity({
             id: '1',
-            name: 'readme.txt'
+            name: 'readme.txt',
           });
-          const state = fromJS({
-            command: new CommandStateRecord({
+          const state = new State({
+            command: new CommandState({
               autocompleteOpen: true,
+              available: Set([
+                commandTransfer,
+              ]),
               current: 'transfer re',
               cursorIndex: 9,
-              available: Set([
-                commandTransfer
-              ])
             }),
-            entities: {
-              '1': entity
-            }
+            entities: Map({
+              '1': entity,
+            }),
+            location: new Location(),
+            ui: new Ui(),
           });
           expect(autocompleteSelectors.availableOptions(state)).to.equal(List([
-            entity
+            entity,
           ]));
         });
       });
 
       context('when the part filters by component', function() {
         it('returns the filtered and sorted list', function() {
-
+          // derp
         });
       });
 
       context('when the part filters by owner', function() {
         it('returns the filtered and sorted list', function() {
-
+          // derp
         });
       });
 
       context('when the part contains multiple allowed lists', function() {
         it('adds all possibilities to a single sorted list', function() {
-
+          // derp
         });
       });
     });

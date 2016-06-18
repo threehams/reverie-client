@@ -1,16 +1,18 @@
 import {List, Record} from 'immutable';
-import { CommandPartType } from './CommandPartRecord';
+import { CommandPart } from './CommandPartRecord';
 
-interface Command {
+interface CommandProps {
   name: string;
-  parts?: List<CommandPartType>;
+  parts?: List<CommandPart>;
   path?: string;
 }
 
-export type CommandType = Command & Record.Base;
-
-export const CommandRecord = Record<Command>({
+export class Command extends Record<CommandProps>({
   name: '',
   parts: List([]),
   path: '',
-});
+}) implements CommandProps {
+  public name: string;
+  public parts: List<CommandPart>;
+  public path: string;
+};

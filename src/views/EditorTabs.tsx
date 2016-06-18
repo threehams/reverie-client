@@ -6,11 +6,11 @@ import { Loader } from '../components/Loader';
 import { TabContainer } from '../components/TabContainer';
 import { Tab } from '../components/Tab';
 import StatusEffect from '../components/StatusEffect';
-import { EntityType } from '../records/EntityRecord';
+import { Entity } from '../records';
 
 interface EditorTabsProps {
   activeView: string;
-  entities: Map<string, EntityType>;
+  entities: Map<string, Entity>;
   setActiveView: Function;
   removeView: Function;
   views: OrderedSet<string>;

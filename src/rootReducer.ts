@@ -3,11 +3,11 @@ import editorHistoryReducer from './reducers/editorHistoryReducer';
 import entitiesReducer from './reducers/entitiesReducer';
 import locationReducer from './reducers/locationReducer';
 import uiReducer from './reducers/uiReducer';
-import { StateRecord, StateType } from './records/StateRecord';
+import { State } from './records/StateRecord';
 
-const INITIAL_STATE: StateType = new StateRecord();
+const INITIAL_STATE: State = new State();
 
-export const rootReducer = (state = INITIAL_STATE, action): StateType => {
+export const rootReducer = (state = INITIAL_STATE, action): State => {
   return state.merge({
     command: commandReducer(state.command, action),
     editorHistory: editorHistoryReducer(state.editorHistory, action),

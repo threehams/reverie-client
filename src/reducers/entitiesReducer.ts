@@ -1,11 +1,11 @@
 import { Map, Set } from 'immutable';
-import { EntityRecord, EntityType } from '../records/EntityRecord';
+import { Entity } from '../records';
 
 import {
   SET_STATE,
 } from '../actions/actionTypes';
 
-export const INITIAL_STATE: Map<string, EntityType> = Map({});
+export const INITIAL_STATE: Map<string, Entity> = Map({});
 
 export default function entitiesReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
@@ -14,7 +14,7 @@ export default function entitiesReducer(state = INITIAL_STATE, action) {
         const newEntity = entity
           .update('components', components => Set(components))
           .update('states', states => Set(states));
-        return new EntityRecord(newEntity);
+        return new Entity(newEntity);
       }));
       return action.payload.entitiesToRemove.reduce((newEntities, toRemove) => {
         return newEntities.remove(toRemove);

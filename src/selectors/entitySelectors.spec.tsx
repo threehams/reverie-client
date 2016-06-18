@@ -1,51 +1,50 @@
 import { Map, List } from 'immutable';
-import EntityRecord from '../records/EntityRecord';
-import UiRecord from '../records/UiRecord';
+import { Entity, State, Ui } from '../records';
 
-import expect from '../__test__/configureExpect';
+import { expect } from '../__test__/configureExpect';
 
 import * as entitySelectors from './entitySelectors';
 
 describe('entitySelectors', function() {
   describe('entitiesWithPath', function() {
     it('adds the correct owner and path to records', function() {
-      const player = new EntityRecord({
+      const player = new Entity({
+        entities: List(['2']),
         id: '1',
         name: 'Big McLargeHuge',
-        entities: List(['2'])
       });
-      const state = Map({
+      const state = new State({
         entities: Map({
           '1': player,
-          '2': new EntityRecord({
+          '2': new Entity({
+            entities: List(['3']),
             id: '2',
             name: 'container',
-            entities: List(['3'])
           }),
-          '3': new EntityRecord({
+          '3': new Entity({
             id: '3',
-            name: 'item'
+            name: 'item',
           }),
         }),
-        ui: new UiRecord({
-          player: '1'
-        })
+        ui: new Ui({
+          player: '1',
+        }),
       });
       const entities = entitySelectors.entitiesWithPath(state);
       expect(entities).to.equal(Map({
         '1': player,
-        '2': new EntityRecord({
+        '2': new Entity({
+          entities: List(['3']),
           id: '2',
           name: 'container',
           owner: 'self',
           path: 'self/container',
-          entities: List(['3'])
         }),
-        '3': new EntityRecord({
+        '3': new Entity({
           id: '3',
           name: 'item',
           owner: 'self',
-          path: 'self/container/item'
+          path: 'self/container/item',
         }),
       }));
     });

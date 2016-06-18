@@ -1,16 +1,13 @@
-import { Map, List, Set } from 'immutable';
+import { List, Set } from 'immutable';
 import { createSelector } from 'reselect';
 
 import * as entitySelectors from './entitySelectors';
-import { AllowedRecord } from '../records/AllowedRecord';
-import { CommandRecord } from '../records/CommandRecord';
-import { EntityRecord } from '../records/EntityRecord';
-import { ExitRecord } from '../records/ExitRecord';
+import { Allowed, Command, Entity, Exit, State } from '../records';
 
 const INSTANCE_TYPES = {
-  command: CommandRecord,
-  entity: EntityRecord,
-  exit: ExitRecord,
+  command: Command,
+  entity: Entity,
+  exit: Exit,
 };
 
 function compare(a, b) {
@@ -20,7 +17,7 @@ function compare(a, b) {
 }
 
 const defaultFilters = List([
-  new AllowedRecord({
+  new Allowed({
     types: Set(['command', 'exit']),
   }),
 ]);
@@ -86,7 +83,7 @@ function applyAllowedTypes(objects, types) {
 export function applyAllowed(objects, allowed) {
   if (allowed.names.size) {
     return Set(allowed.names.map(name => {
-      return new CommandRecord({
+      return new Command({
         name,
       });
     }));
@@ -133,11 +130,9 @@ function currentPartIndex(parts, cursorIndex) {
  * (the first word) and determining the index of the currently-selected part by cursor location.
  */
 const commandAllowed = createSelector(
-  (state: Map<any, any>, props) => {
-    return state.getIn(['command', 'current']);
-  },
-  (state: Map<any, any>) => state.getIn(['command', 'available']),
-  (state: Map<any, any>) => state.getIn(['command', 'cursorIndex']),
+  (state: State) => state.command.current,
+  (state: State) => state.command.available,
+  (state: State) => state.command.cursorIndex,
   (current, available, cursorIndex) => {
     const parts = current.split(' ');
     if (parts.length === 1) {
@@ -166,8 +161,8 @@ const commandAllowed = createSelector(
  *
  */
 export const autocompleteFragment = createSelector(
-  (state: Map<any, any>) => state.getIn(['command', 'current']),
-  (state: Map<any, any>) => state.getIn(['command', 'cursorIndex']),
+  (state: State) => state.command.current,
+  (state: State) => state.command.cursorIndex,
   (current, cursorIndex) => {
     return current.slice(0, cursorIndex).split(' ').pop();
   }
@@ -175,12 +170,12 @@ export const autocompleteFragment = createSelector(
 
 const sortedOptions = createSelector(
   entitySelectors.entitiesWithPath,
-  (state: Map<any, any>) => state.get('command').available,
-  (state: Map<any, any>) => state.getIn(['location', 'exits']) || List(),
+  (state: State) => state.command.available,
+  (state: State) => state.location.exits || List([]),
   (entities, commands, exits) => {
     return entities.toSetSeq()
     .concat(commands)
-    .concat(exits.map(exit => new ExitRecord({ name: exit })))
+    .concat(exits.map(exit => new Exit({ name: exit })))
     .sort((a, b) => {
       // reminder:
       // Return 0 if the elements should not be swapped.
@@ -188,7 +183,7 @@ const sortedOptions = createSelector(
       // Return 1 (or any positive number) if valueA comes after valueB
 
       // Sort exits first, then path, then name.
-      return compare(b instanceof ExitRecord, a instanceof ExitRecord)
+      return compare(b instanceof Exit, a instanceof Exit)
         || compare(a.path, b.path)
         || compare(a.name, b.name);
     });
@@ -225,7 +220,7 @@ export const availableOptions = createSelector(
 
 export const selectedOption = createSelector(
   availableOptions,
-  state => state.getIn(['command', 'autocompleteSelectedItem']),
+  (state: State) => state.command.autocompleteSelectedItem,
   (options, selected) => {
     if (options.contains(selected)) { return selected; }
     return options.first();

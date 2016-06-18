@@ -1,6 +1,6 @@
 import {List, Record, Set} from 'immutable';
 
-interface Entity {
+interface EntityProps {
   components?: Set<string>;
   currentHealth?: number;
   currentMemory?: number;
@@ -21,9 +21,7 @@ interface Entity {
   states?: Set<string>;
 }
 
-export type EntityType = Entity & Record.Base;
-
-export const EntityRecord = Record<Entity>({
+export class Entity extends Record<EntityProps>({
   components: Set([]),
   currentHealth: 0,
   currentMemory: 0,
@@ -42,4 +40,23 @@ export const EntityRecord = Record<Entity>({
   quantity: 1,
   selected: false,
   states: Set([]),
-});
+}) implements EntityProps {
+  public components: Set<string>;
+  public currentHealth: number;
+  public currentMemory: number;
+  public currentStorage: number;
+  public description: string;
+  public entities: List<string>;
+  public expanded: boolean;
+  public id: string;
+  public indent: number;
+  public maxHealth: number;
+  public maxMemory: number;
+  public maxStorage: number;
+  public name: string;
+  public owner: string;
+  public path: string;
+  public quantity: number;
+  public selected: boolean;
+  public states: Set<string>;
+};

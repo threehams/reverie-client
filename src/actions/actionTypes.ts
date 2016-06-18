@@ -1,6 +1,4 @@
-import { EntityType } from '../records/EntityRecord';
-import { CommandType } from '../records/CommandRecord';
-import { ExitType } from '../records/ExitRecord';
+import { Command, Entity, Exit } from '../records';
 
 export const COMMAND_SELECT_AUTOCOMPLETE_ITEM = 'COMMAND_SELECT_AUTOCOMPLETE_ITEM';
 export const COMMAND_CLOSE_AUTOCOMPLETE = 'COMMAND_CLOSE_AUTOCOMPLETE';
@@ -22,7 +20,7 @@ export const RESIZE_PANEL = 'RESIZE_PANEL';
 export const SET_STATE = 'SET_STATE';
 export const SOCKET_STATUS = 'SOCKET_STATUS';
 
-export type AutocompleteOption = EntityType | CommandType | ExitType;
+export type AutocompleteOption = Entity | Command | Exit;
 
 export interface Action {
   type: string;

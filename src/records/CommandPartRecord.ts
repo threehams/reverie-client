@@ -1,14 +1,12 @@
-import {List, Record} from 'immutable';
-import { AllowedType } from './AllowedRecord';
+import { List, Record } from 'immutable';
+import { Allowed } from './AllowedRecord';
 
-interface CommandPart {
-  allowed?: List<AllowedType>;
-  name: string;
+interface CommandPartProps {
+  allowed?: List<Allowed>;
 }
 
-export type CommandPartType = CommandPart & Record.Base;
-
-export const CommandPartRecord = Record<CommandPart>({
+export class CommandPart extends Record<CommandPartProps>({
   allowed: List([]),
-  name: '',
-});
+}) implements CommandPartProps {
+  public allowed: List<Allowed>;
+};

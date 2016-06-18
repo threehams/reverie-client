@@ -5,12 +5,13 @@ import shallowCompare = require('react-addons-shallow-compare');
 
 import { Icon } from '../components/Icon';
 import StatusEffect from '../components/StatusEffect';
-import { EntityType } from '../records/EntityRecord';
+import { Entity, State } from '../records';
 
 interface PlayerProps {
-  player: EntityType;
+  player: Entity;
 }
 
+@Radium
 export class Player extends React.Component<PlayerProps, {}> {
   public shouldComponentUpdate(nextProps, nextState) {
     /* istanbul-ignore-next */
@@ -51,9 +52,9 @@ export class Player extends React.Component<PlayerProps, {}> {
   }
 }
 
-export default connect((state) => ({
-  player: state.getIn(['entities', state.getIn(['ui', 'player'])]),
-}))(Radium(Player));
+export default connect((state: State) => ({
+  player: state.entities.get(state.ui.player),
+}))(Player);
 
 const styles = {
   container: {

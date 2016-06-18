@@ -9,17 +9,18 @@ import { Loader } from '../components/Loader';
 import * as editorActions from '../actions/editorActions';
 import * as inventoryActions from '../actions/inventoryActions';
 import * as inventorySelectors from '../selectors/inventorySelectors';
-import { EntityType } from '../records/EntityRecord';
+import { Entity, State } from '../records';
 
 interface InventoryProps {
   addView: Function;
-  items: List<EntityType>;
+  items: List<Entity>;
   moveItem: Function;
   selectItem: Function;
   toggleExpand: Function;
   toggleItem: Function;
 }
 
+@Radium
 export class Inventory extends React.Component<InventoryProps, {}> {
   public shouldComponentUpdate(nextProps, nextState) {
     /* istanbul-ignore-next */
@@ -52,7 +53,7 @@ export class Inventory extends React.Component<InventoryProps, {}> {
 }
 
 export default connect(
-  (state, props) => ({
+  (state: State, props) => ({
     items: inventorySelectors.list(state).get(props.owner),
   }),
   {
@@ -62,7 +63,7 @@ export default connect(
     toggleExpand: inventoryActions.toggleExpand,
     toggleItem: inventoryActions.toggleItem,
   }
-)(Radium(Inventory));
+)(Inventory);
 
 const styles = {
   container: {

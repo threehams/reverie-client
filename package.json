@@ -42,13 +42,13 @@
       }
     },
     "test": {
-      "command": "mocha --require babel-register --require ./src/__test__/testHelper.js --timeout=200 --reporter min src/**/*.spec.js",
+      "command": "mocha --require ts-node/register --require ./src/__test__/testHelper.ts --timeout=200 --reporter min src/**/*.spec.tsx",
       "env": {
         "NODE_ENV": "test"
       }
     },
     "test:ci": {
-      "command": "mocha --require babel-register --require ./src/__test__/testHelper.js --reporter mocha-junit-reporter src/**/*.spec.js",
+      "command": "mocha --require ts-node/register --require ./src/__test__/testHelper.ts --reporter mocha-junit-reporter src/**/*.spec.js",
       "env": {
         "NODE_ENV": "test"
       }
@@ -117,6 +117,7 @@
     "react-addons-test-utils": "^15.0.1",
     "sinon": "^1.17.3",
     "sinon-chai": "^2.8.0",
+    "ts-node": "^0.9.1",
     "tslint": "^3.11.0",
     "typings": "^1.0.5",
     "webpack-dev-middleware": "^1.5.1",

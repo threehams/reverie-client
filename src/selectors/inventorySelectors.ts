@@ -1,14 +1,13 @@
 import { Map, List } from 'immutable';
 import { createSelector } from 'reselect';
 import * as entitySelectors from './entitySelectors';
-import { UiType } from '../records/UiRecord';
-import { LocationType } from '../records/LocationRecord';
+import { Location, Ui } from '../records';
 
 export const list = createSelector(
   entitySelectors.entitiesWithPath,
   state => state.get('ui'),
   state => state.get('location'),
-  (entities, ui: UiType, location: LocationType) => {
+  (entities, ui: Ui, location: Location) => {
     return Map({
       floor: entityIds('floor').flatMap(entityId => addUiData(entityId, 1)),
       self: entityIds('self').flatMap(entityId => addUiData(entityId, 1)),

@@ -1,5 +1,5 @@
 import {List, fromJS} from 'immutable';
-import expect from '../__test__/configureExpect';
+import { expect } from '../__test__/configureExpect';
 
 import editorHistoryReducer, { INITIAL_STATE } from './editorHistoryReducer';
 import * as editorActions from '../actions/editorActions';
@@ -11,16 +11,16 @@ describe('editorHistoryReducer', function() {
       it('adds the command to the history with a trailing blank line', function() {
         const initial = List(['Hello.']);
         const action = {
-          type: SET_STATE,
           payload: {
-            message: 'You drop the USB drive.\nCongratulations.'
-          }
+            message: 'You drop the USB drive.\nCongratulations.',
+          },
+          type: SET_STATE,
         };
         expect(editorHistoryReducer(initial, action)).to.equal(fromJS([
           'Hello.',
           '',
           'You drop the USB drive.',
-          'Congratulations.'
+          'Congratulations.',
         ]));
       });
     });
@@ -29,14 +29,14 @@ describe('editorHistoryReducer', function() {
       it('returns the state', function() {
         const initial = List(['Hello.', '']);
         const action = {
-          type: SET_STATE,
           payload: {
-            unrelated: 'Oh hai mark'
-          }
+            unrelated: 'Oh hai mark',
+          },
+          type: SET_STATE,
         };
         expect(editorHistoryReducer(initial, action)).to.equal(fromJS([
           'Hello.',
-          ''
+          '',
         ]));
       });
     });
@@ -45,10 +45,10 @@ describe('editorHistoryReducer', function() {
       it('does not prepend a blank line', function() {
         const initial = List([]);
         const action = {
-          type: SET_STATE,
           payload: {
-            message: 'Oh hai mark'
-          }
+            message: 'Oh hai mark',
+          },
+          type: SET_STATE,
         };
         expect(editorHistoryReducer(initial, action)).to.equal(fromJS(['Oh hai mark']));
       });

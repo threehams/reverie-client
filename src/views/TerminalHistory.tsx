@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { List } from 'immutable';
 import Radium = require('radium');
 import shallowCompare = require('react-addons-shallow-compare');
+import { State } from '../records';
 
 import StatusEffect from '../components/StatusEffect';
 
@@ -10,6 +11,7 @@ interface TerminalHistoryProps {
   history: List<string>;
 }
 
+@Radium
 export class TerminalHistory extends React.Component<TerminalHistoryProps, {}> {
   private container: any;
 
@@ -48,6 +50,6 @@ const styles = {
   },
 };
 
-export default connect((state) => ({
-  history: state.get('command').history,
-}))(Radium(TerminalHistory));
+export default connect((state: State) => ({
+  history: state.command.history,
+}))(TerminalHistory);

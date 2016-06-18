@@ -1,9 +1,14 @@
-
 global.WebSocket = function() {
   return {
-    send() {},
-    onopen() {},
-    onmessage() {}
+    onmessage() {
+      // stubbed
+    },
+    onopen() {
+      // stubbed
+    },
+    send() {
+      // stubbed
+    },
   };
 };
 

@@ -1,13 +1,14 @@
 import { Record } from 'immutable';
 
-interface Exit {
+interface ExitProps {
   name: string;
   path?: string;
 }
 
-export type ExitType = Exit & Record.Base;
-
-export const ExitRecord = Record<Exit>({
+export class Exit extends Record<ExitProps>({
   name: '',
   path: '',
-});
+}) implements ExitProps {
+  public name: string;
+  public path: string;
+};

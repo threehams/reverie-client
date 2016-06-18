@@ -1,20 +1,24 @@
 import { List, Map, Record } from 'immutable';
-import { CommandStateType, EntityType, LocationType, UiType } from './index';
+import { CommandState, Entity, Location, Ui } from './index';
 
-interface State {
-  command?: CommandStateType;
+interface StateProps {
+  command?: CommandState;
   editorHistory?: List<string>;
-  entities?: Map<string, EntityType>;
-  location?: LocationType;
-  ui?: UiType;
+  entities?: Map<string, Entity>;
+  location?: Location;
+  ui?: Ui;
 }
 
-export type StateType = State & Record.Base;
-
-export const StateRecord = Record<State>({
+export class State extends Record<StateProps>({
   command: undefined,
   editorHistory: undefined,
   entities: undefined,
   location: undefined,
   ui: undefined,
-});
+}) implements StateProps {
+  public command: CommandState;
+  public editorHistory: List<string>;
+  public entities: Map<string, Entity>;
+  public location: Location;
+  public ui: Ui;
+};

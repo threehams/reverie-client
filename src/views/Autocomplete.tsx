@@ -2,18 +2,16 @@ import * as React from 'react';
 import {List} from 'immutable';
 import shallowCompare = require('react-addons-shallow-compare');
 
-import { CommandType } from '../records/CommandRecord';
-import { EntityType } from '../records/EntityRecord';
-import { ExitType } from '../records/ExitRecord';
+import { Command, Entity, Exit } from '../records';
 
 import StatusEffect from '../components/StatusEffect';
 
 interface AutocompleteProps {
   fragment: string;
   focused?: boolean;
-  options: List<CommandType | EntityType | ExitType>;
+  options: List<Command | Entity | Exit>;
   onClickItem: Function;
-  selectedItem: CommandType | EntityType | ExitType;
+  selectedItem: Command | Entity | Exit;
 }
 
 export class Autocomplete extends React.Component<AutocompleteProps, {}> {
@@ -69,7 +67,7 @@ export class Autocomplete extends React.Component<AutocompleteProps, {}> {
     );
   }
 
-  private splitOption(option, fragment) {
+  public splitOption(option: string, fragment: string) {
     const parts = option.split(fragment);
     return [parts[0], fragment, parts.slice(1).join(fragment)];
   }

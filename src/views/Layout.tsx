@@ -6,9 +6,9 @@ import Inventory from './Inventory';
 import Player from './Player';
 import Editor from './Editor';
 import { Terminal } from './Terminal';
-
 import { Icon, PanelContainer, Panel, TabContainer, Tab } from '../components/';
 import StatusEffect from '../components/StatusEffect';
+import { State } from '../records';
 
 import * as playerActions from '../actions/playerActions';
 import * as layoutActions from '../actions/layoutActions';
@@ -86,12 +86,12 @@ export class Layout extends React.Component<LayoutProps, {}> {
   }
 }
 
-export default connect((state) => ({
-  activePlayerView: state.getIn(['ui', 'activePlayerView']),
-  alert: state.getIn(['ui', 'alert']),
-  footerHeight: state.getIn(['ui', 'footerHeight']),
-  sidebarHeight: state.getIn(['ui', 'sidebarHeight']),
-  sidebarWidth: state.getIn(['ui', 'sidebarWidth']),
+export default connect((state: State) => ({
+  activePlayerView: state.ui.activePlayerView,
+  alert: state.ui.alert,
+  footerHeight: state.ui.footerHeight,
+  sidebarHeight: state.ui.sidebarHeight,
+  sidebarWidth: state.ui.sidebarWidth,
 }), {
   resizePanel: layoutActions.resizePanel,
   setActiveView: playerActions.setActiveView,

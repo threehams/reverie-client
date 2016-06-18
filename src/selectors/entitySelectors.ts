@@ -1,7 +1,6 @@
 import { Map } from 'immutable';
 import { createSelector } from 'reselect';
-import { EntityType } from '../records/EntityRecord';
-import { LocationType } from '../records/LocationRecord';
+import { Entity, Location, State } from '../records';
 
 function addPaths(entity, entities, owner, path) {
   const newPath = `${path}/${entity.name}`;
@@ -14,10 +13,10 @@ function addPaths(entity, entities, owner, path) {
 }
 
 export const entitiesWithPath = createSelector(
-  (state: Map<any, any>) => state.get('entities'),
-  (state: Map<any, any>) => state.getIn(['ui', 'player']),
-  (state: Map<any, any>) => state.get('location'),
-  (entities: Map<string, EntityType>, player: string, location: LocationType) => {
+  (state: State) => state.entities,
+  (state: State) => state.ui.player,
+  (state: State) => state.location,
+  (entities: Map<string, Entity>, player: string, location: Location) => {
     const playerEntity = entities.get(player);
     let newEntities = entities;
     if (playerEntity) {

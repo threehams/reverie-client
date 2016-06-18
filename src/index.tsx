@@ -14,7 +14,7 @@ import socket from './socket';
 import * as messageActions from './actions/messageActions';
 import * as socketActions from './actions/socketActions';
 
-const store = configureStore(Map());
+const store = configureStore(undefined);
 
 socket.onopen = function() {
   store.dispatch(socketActions.reconnected());

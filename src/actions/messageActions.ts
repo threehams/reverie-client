@@ -2,7 +2,7 @@ import { fromJS, List, Map, Set } from 'immutable';
 import {
   SET_STATE,
 } from './actionTypes';
-import { LocationRecord } from '../records/LocationRecord';
+import { Location } from '../records';
 
 export const setState = (state) => {
   return (dispatch, getState) => {
@@ -13,7 +13,7 @@ export const setState = (state) => {
         availableCommands: fromJS(state.availableCommands) || List(),
         entities: fromJS(state.entities) || Map(),
         entitiesToRemove: fromJS(state.entitiesToRemove) || List(),
-        location: state.location && new LocationRecord(fromJS(state.location)),
+        location: state.location && new Location(fromJS(state.location)),
         message: state.message || '',
         player: state.player || prevState.getIn(['ui', 'player']),
         statusEffects: state.statusEffects && Set(state.statusEffects),

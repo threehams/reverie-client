@@ -9,18 +9,16 @@ import * as autocompleteSelectors from '../selectors/autocompleteSelectors';
 import * as commandActions from '../actions/commandActions';
 import { Autocomplete } from './Autocomplete';
 import panelStyles from '../styles/panel';
-import { CommandType } from '../records/CommandRecord';
-import { EntityType } from '../records/EntityRecord';
-import { ExitType } from '../records/ExitRecord';
+import { Command, Entity, Exit, State } from '../records';
 
 import fontStyles from '../styles/font';
 
 interface TerminalPromptProps {
   autocompleteFragment: string;
     autocompleteOpen: boolean;
-    autocompleteOptions: List<CommandType | EntityType | ExitType>;
+    autocompleteOptions: List<Command | Entity | Exit>;
     autocompletePosition: number;
-    autocompleteSelectedItem: CommandType | EntityType | ExitType;
+    autocompleteSelectedItem: Command | Entity | Exit;
     closeAutocomplete: Function;
     completeCommand: Function;
     currentCommand: string;
@@ -31,6 +29,7 @@ interface TerminalPromptProps {
     setCurrentCommand: Function;
 }
 
+@Radium
 export class TerminalPrompt extends React.Component<TerminalPromptProps, {}> {
   private input: any;
 
@@ -151,11 +150,11 @@ const styles = {
   ),
 };
 
-export default connect((state) => ({
+export default connect((state: State) => ({
   autocompleteFragment: autocompleteSelectors.autocompleteFragment(state),
-  autocompleteOpen: state.getIn(['command', 'autocompleteOpen']),
+  autocompleteOpen: state.command.autocompleteOpen,
   autocompleteOptions: autocompleteSelectors.availableOptions(state),
-  autocompletePosition: state.getIn(['command', 'autocompletePosition']),
+  autocompletePosition: state.command.autocompletePosition,
   autocompleteSelectedItem: autocompleteSelectors.selectedOption(state),
-  currentCommand: state.getIn(['command', 'current']),
-}), commandActions)(Radium(TerminalPrompt));
+  currentCommand: state.command.current,
+}), commandActions)(TerminalPrompt);
