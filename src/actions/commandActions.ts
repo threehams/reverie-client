@@ -3,7 +3,6 @@ import { List } from 'immutable';
 import socket from '../socket';
 import {
   Action,
-  AutocompleteOption,
   COMMAND_CLOSE_AUTOCOMPLETE,
   COMMAND_COMPLETE,
   COMMAND_HISTORY_CLEAR,
@@ -12,6 +11,7 @@ import {
   COMMAND_SET_CURRENT,
   COMMAND_SET_CURSOR_INDEX,
 } from './actionTypes';
+import { AutocompleteItem } from '../records';
 
 export const clear = (): Action => ({
   type: COMMAND_HISTORY_CLEAR,
@@ -34,7 +34,7 @@ export const sendCommand = (command: string) => {
 export const completeCommand = (
   command: string,
   cursorIndex: number,
-  autocompleteItem: AutocompleteOption
+  autocompleteItem: AutocompleteItem
 ): Action => ({
   payload: {
     command,
@@ -59,9 +59,9 @@ export const setCurrentCommand = (command, cursorIndex): Action => ({
   type: COMMAND_SET_CURRENT,
 });
 
-export const selectNextAutocompleteItem = (options: List<AutocompleteOption>, current: AutocompleteOption): Action => {
+export const selectNextAutocompleteItem = (options: List<AutocompleteItem>, current: AutocompleteItem): Action => {
   const index: number = options.findIndex(option => option === current);
-  const item: AutocompleteOption = index === options.size - 1 ? options.first() : options.get(index + 1);
+  const item: AutocompleteItem = index === options.size - 1 ? options.first() : options.get(index + 1);
   return selectAutocompleteItem(item);
 };
 

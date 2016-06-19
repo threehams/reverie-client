@@ -1,5 +1,5 @@
 import { List, Record } from 'immutable';
-import { Allowed } from './AllowedRecord';
+import { Allowed } from './';
 
 interface CommandPartProps {
   allowed?: List<Allowed>;

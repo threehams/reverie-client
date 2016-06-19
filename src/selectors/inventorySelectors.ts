@@ -5,8 +5,8 @@ import { Location, Ui } from '../records';
 
 export const list = createSelector(
   entitySelectors.entitiesWithPath,
-  state => state.get('ui'),
-  state => state.get('location'),
+  state => state.ui,
+  state => state.location,
   (entities, ui: Ui, location: Location) => {
     return Map({
       floor: entityIds('floor').flatMap(entityId => addUiData(entityId, 1)),

@@ -1,5 +1,5 @@
 import {List, Record} from 'immutable';
-import { CommandPart } from './CommandPartRecord';
+import { CommandPart } from './';
 
 interface CommandProps {
   name: string;

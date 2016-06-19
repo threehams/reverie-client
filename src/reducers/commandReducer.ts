@@ -1,4 +1,4 @@
-import { List, Set } from 'immutable';
+import { Set } from 'immutable';
 
 import {
   COMMAND_CLOSE_AUTOCOMPLETE,
@@ -10,7 +10,7 @@ import {
   COMMAND_SET_CURRENT,
   SET_STATE,
 } from '../actions/actionTypes';
-import { Allowed, Command, CommandPart, CommandState } from '../records';
+import { CommandState } from '../records';
 
 export const INITIAL_STATE: CommandState = new CommandState();
 
@@ -36,34 +36,11 @@ export default function commandReducer(state: CommandState = INITIAL_STATE, acti
       return setCursorIndex(state, action.payload.cursorIndex);
     case SET_STATE:
       return state.update('available', available => {
-        if (!action.payload.availableCommands.size) { return available; }
-        const newAvailable = action.payload.availableCommands.map(command => createCommandRecord(command));
-        return available.union(Set(newAvailable));
+        return available.union(Set(action.payload.availableCommands));
       });
     default:
       return state;
   }
-}
-
-function createCommandRecord(command) {
-  const nestedRecord = command.update('parts', parts => {
-    if (!parts) { return List(); }
-    return parts.map(part => {
-      const allowedRecord = part.update('allowed', allowed => {
-        return allowed.map(allow => {
-          return new Allowed({
-            components: Set([allow.get(['components'])]),
-            names: Set([allow.get(['names'])]),
-            owners: Set([allow.get(['owners'])]),
-            states: Set([allow.get(['states'])]),
-            types: Set([allow.get(['types'])]),
-          });
-        });
-      });
-      return new CommandPart(allowedRecord);
-    });
-  });
-  return new Command(nestedRecord);
 }
 
 function setCursorIndex(state: CommandState, index) {

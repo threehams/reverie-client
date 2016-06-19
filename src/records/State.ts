@@ -1,5 +1,5 @@
 import { List, Map, Record } from 'immutable';
-import { CommandState, Entity, Location, Ui } from './index';
+import { CommandState, Entity, Location, Ui } from './';
 
 interface StateProps {
   command?: CommandState;

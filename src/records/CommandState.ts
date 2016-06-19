@@ -1,5 +1,5 @@
 import { List, Record, Set } from 'immutable';
-import { AutocompleteItem, Command } from '../records';
+import { AutocompleteItem, Command } from './';
 
 interface CommandStateProps {
   autocompleteOpen?: boolean;

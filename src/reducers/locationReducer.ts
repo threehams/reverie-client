@@ -1,5 +1,5 @@
 import { SET_STATE } from '../actions/actionTypes';
-import { Location } from '../records/LocationRecord';
+import { Location } from '../records';
 
 export const INITIAL_STATE: Location = new Location();
 

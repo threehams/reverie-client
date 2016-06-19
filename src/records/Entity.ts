@@ -1,4 +1,4 @@
-import {List, Record, Set} from 'immutable';
+import { List, Record, Set } from 'immutable';
 
 interface EntityProps {
   components?: Set<string>;

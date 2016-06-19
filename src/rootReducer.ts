@@ -3,7 +3,7 @@ import editorHistoryReducer from './reducers/editorHistoryReducer';
 import entitiesReducer from './reducers/entitiesReducer';
 import locationReducer from './reducers/locationReducer';
 import uiReducer from './reducers/uiReducer';
-import { State } from './records/StateRecord';
+import { State } from './records';
 
 const INITIAL_STATE: State = new State();
 

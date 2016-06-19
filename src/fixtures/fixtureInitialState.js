@@ -215,10 +215,12 @@ export default {
       ]
     },
     {
-      name: 'say'
+      name: 'say',
+      parts: []
     },
     {
-      name: 'help'
+      name: 'help',
+      parts: []
     },
     {
       name: 'walk',

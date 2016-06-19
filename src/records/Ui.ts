@@ -1,4 +1,4 @@
-import {Record, Set, OrderedSet} from 'immutable';
+import { Record, Set, OrderedSet } from 'immutable';
 
 interface UiProps {
   activeEditorView?: string;
