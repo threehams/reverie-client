@@ -10,8 +10,8 @@ interface StateData {
   entitiesToRemove?: Array<string>;
   message?: string;
   player?: string;
-  location: LocationData;
-  statusEffects: Array<string>;
+  location?: LocationData;
+  statusEffects?: Array<string>;
 }
 
 interface CommandData {
@@ -38,15 +38,36 @@ interface LocationData {
   exits?: Array<string>;
 }
 
-interface EntityObjectMap {
+export interface EntityObjectMap {
   [id: string]: EntityData;
+}
+
+export interface EntityData {
+  components?: Array<string>;
+  currentHealth?: number;
+  currentMemory?: number;
+  currentStorage?: number;
+  description?: string;
+  entities?: Array<string>;
+  expanded?: boolean;
+  id: string;
+  indent?: number;
+  maxHealth?: number;
+  maxMemory?: number;
+  maxStorage?: number;
+  name: string;
+  owner?: string;
+  path?: string;
+  quantity?: number;
+  selected?: boolean;
+  states?: Array<string>;
 }
 
 interface StateDelta {
   type: string;
   payload: {
     availableCommands?: Set<Command>;
-    entities?: Map<string, Entity>;
+    entities?: EntityMap;
     entitiesToRemove?: List<string>;
     location?: Location;
     message?: string;
@@ -54,6 +75,8 @@ interface StateDelta {
     statusEffects?: Set<string>;
   };
 }
+
+type EntityMap = Map<string, Entity>;
 
 export const setState = (stateData: StateData): StateDelta => ({
   payload: {
@@ -78,29 +101,6 @@ export const setInitialState = (state) => {
     dispatch(setState(state));
   };
 };
-
-interface EntityData {
-  components?: Array<string>;
-  currentHealth?: number;
-  currentMemory?: number;
-  currentStorage?: number;
-  description?: string;
-  entities?: Array<string>;
-  expanded?: boolean;
-  id: string;
-  indent?: number;
-  maxHealth?: number;
-  maxMemory?: number;
-  maxStorage?: number;
-  name: string;
-  owner?: string;
-  path?: string;
-  quantity?: number;
-  selected?: boolean;
-  states?: Array<string>;
-}
-
-type EntityMap = Map<string, Entity>;
 
 function createEntityMap(entities: EntityObjectMap): EntityMap {
   if (!entities) {

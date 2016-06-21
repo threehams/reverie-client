@@ -1,4 +1,4 @@
-import { Map, fromJS, List } from 'immutable';
+import { Map, List } from 'immutable';
 import { expect } from '../__test__/configureExpect';
 
 import entitiesReducer, { INITIAL_STATE } from './entitiesReducer';
@@ -7,21 +7,52 @@ import { SET_STATE } from '../actions/actionTypes';
 
 describe('entitiesReducer', function() {
   describe('SET_STATE', function() {
-    xit('returns a map of records', function() {
-      const initial = undefined;
+    it('merges entity records', function() {
+      const initial = Map({
+        '1': new Entity({
+          id: '1',
+          name: 'thing1',
+        }),
+        '2': new Entity({
+          id: '2',
+          name: 'thing2',
+        }),
+      });
       const action = {
         payload: {
-          entities: fromJS({'1': {}}),
+          entities: Map({
+            '1': new Entity({
+              id: '1',
+              name: 'thing1',
+            }),
+            '3': new Entity({
+              id: '3',
+              name: 'thing3',
+            }),
+          }),
           entitiesToRemove: List(),
         },
         type: SET_STATE,
       };
       expect(entitiesReducer(initial, action)).to.equal(
-        Map({ '1': new Entity()})
+        Map({
+          '1': new Entity({
+            id: '1',
+            name: 'thing1',
+          }),
+          '2': new Entity({
+            id: '2',
+            name: 'thing2',
+          }),
+          '3': new Entity({
+            id: '3',
+            name: 'thing3',
+          }),
+        })
       );
     });
 
-    xit('removes records which are marked for deletion', function() {
+    it('removes records which are marked for deletion', function() {
       const initial = Map({
         '1': new Entity({
           id: '1',
@@ -40,10 +71,12 @@ describe('entitiesReducer', function() {
         type: SET_STATE,
       };
       expect(entitiesReducer(initial, action)).to.equal(
-        Map({ '2': new Entity({
-          id: '2',
-          name: 'a thing',
-        })})
+        Map({
+          '2': new Entity({
+            id: '2',
+            name: 'thing2',
+          })
+        })
       );
     });
   });

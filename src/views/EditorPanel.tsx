@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { List } from 'immutable';
 import Radium = require('radium');
 import shallowCompare = require('react-addons-shallow-compare');
-// import ReactMarkdown from 'react-markdown';
+import ReactMarkdown = require('react-markdown');
 import {
   MarkdownLink,
   MarkdownHeading,
@@ -58,7 +58,7 @@ export class EditorPanel extends React.Component<EditorPanelProps, {}> {
       return (
         <li key={index} style={styles.item}>
           <span style={[styles.counter, {width: marginLeft + 4}]}>{index}</span>
-          { trimmed ? <div source={ trimmed } {...markdownProps} /> : '\u00a0' }
+          { trimmed ? <ReactMarkdown source={ trimmed } {...markdownProps} /> : '\u00a0' }
         </li>
       );
     });

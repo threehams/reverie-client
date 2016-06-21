@@ -3,7 +3,7 @@ import {Set, Record} from 'immutable';
 interface AllowedProps {
   components?: Set<string>;
   names?: Set<string>;
-  owners?: Set<'self' | 'floor'>;
+  owners?: Set<string>;
   states?: Set<string>;
   types?: Set<string>;
 }
@@ -17,7 +17,7 @@ export class Allowed extends Record<AllowedProps>({
 }) implements AllowedProps {
   public components: Set<string>;
   public names: Set<string>;
-  public owners: Set<'self' | 'floor'>;
+  public owners: Set<string>;
   public states: Set<string>;
   public types: Set<string>;
 };

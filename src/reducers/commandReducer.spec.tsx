@@ -264,44 +264,22 @@ describe('commandReducer', function() {
     });
 
     context('when availableCommands contains commands', function() {
-      xit('merges existing commands with new commands', function() {
-        const initial = new CommandState();
+      it('merges existing commands with new commands', function() {
+        const transfer = new Command({ name: 'transfer' });
+        const move = new Command({ name: 'move' });
+        const initial = new CommandState({
+          available: Set([ transfer ]),
+        });
         const action = {
           payload: {
-            availableCommands: fromJS([
-              {
-                name: 'move',
-                parts: [
-                  {
-                    allowed: [
-                      {
-                        components: ['container'],
-                      },
-                    ],
-                  },
-                ],
-              },
-            ]),
+            availableCommands: Set([ move ]),
           },
           type: SET_STATE,
         };
         const expected = new CommandState({
-          available: Set([
-            new Command({
-              name: 'move',
-              parts: List([
-                new CommandPart({
-                  allowed: List([
-                    new Allowed({
-                      components: Set(['container']),
-                    }),
-                  ]),
-                }),
-              ]),
-            }),
-          ]),
+          available: Set([transfer, move]),
         });
-        expect(commandReducer(initial, action).toJS()).to.equal(expected.toJS());
+        expect(commandReducer(initial, action)).to.equal(expected);
       });
     });
   });
