@@ -2,10 +2,10 @@
   "compilerOptions": {
     "allowJs": true,
     "experimentalDecorators": true,
-    "jsx": "preserve",
+    "jsx": "react",
     "module": "commonjs",
     "outDir": "tsDist",
-    "target": "es2015",
+    "target": "es5",
     "moduleResolution": "node"
   },
   "exclude": [

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Radium = require('radium');
 import {connect} from 'react-redux';
-import shallowCompare = require('react-addons-shallow-compare');
 
 import { Icon } from '../components/Icon';
 import StatusEffect from '../components/StatusEffect';
@@ -13,11 +12,6 @@ interface PlayerProps {
 
 @Radium
 export class Player extends React.Component<PlayerProps, {}> {
-  public shouldComponentUpdate(nextProps, nextState) {
-    /* istanbul-ignore-next */
-    return shallowCompare(this, nextProps, nextState);
-  }
-
   public render() {
     const { player } = this.props;
     return (

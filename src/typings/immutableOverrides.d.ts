@@ -1,3 +1,4 @@
+// tslint:disable
 /// <reference path='../../node_modules/immutable/dist/immutable.d.ts'/>
 
 declare module Immutable {
@@ -10,7 +11,6 @@ declare module Immutable {
   export module Record {
     interface Base extends Map<string, any> {
       set(key: string, value: any): this;
-      // ...
     }
 
     interface Factory<T> {

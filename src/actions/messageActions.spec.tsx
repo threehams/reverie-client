@@ -1,7 +1,6 @@
 import { List, Map, Set } from 'immutable';
 
 import * as messageActions from './messageActions';
-import { SET_STATE } from './actionTypes';
 import { expect } from '../__test__/configureExpect';
 import { Allowed, Command, CommandPart, Entity } from '../records';
 
@@ -50,14 +49,14 @@ describe('messageActions', function() {
     });
   });
 
-  
-
   describe('entities', function() {
     it('converts entity data to a map of records', function() {
       const stateData = {
       };
       // annoying workaround for thing changed in 2.0
+      // tslint:disable
       stateData['entities'] =  {
+      // tslint:enable
         '1': {
           components: ['attackable'],
           entities: ['2'],

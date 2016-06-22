@@ -5,7 +5,6 @@ import './polyfills';
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Map } from 'immutable';
 
 import { AppContainer } from './views/App';
 import configureStore from './configureStore';
@@ -59,7 +58,6 @@ socket.onmessage = function(event) {
 document.onkeypress = function() {
   document.getElementById('prompt').focus();
 };
-
 
 ReactDOM.render(
   <AppContainer store={store} />,

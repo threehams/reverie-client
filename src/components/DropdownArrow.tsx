@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import { Icon } from './Icon';
 
 interface DropdownArrowProps {
-  expanded: boolean;
+  expanded?: boolean;
   onMouseDown?: Function;
   style?: Object;
 }

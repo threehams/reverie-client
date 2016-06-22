@@ -1,3 +1,4 @@
+/// <reference path="globals/core-js/index.d.ts" />
 /// <reference path="globals/mocha/index.d.ts" />
 /// <reference path="globals/react-addons-shallow-compare/index.d.ts" />
 /// <reference path="globals/react-dnd-html5-backend/index.d.ts" />

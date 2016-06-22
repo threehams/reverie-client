@@ -3,7 +3,6 @@ import * as ReactDOM from 'react-dom';
 import { List } from 'immutable';
 import { connect } from 'react-redux';
 import Radium = require('radium');
-import shallowCompare = require('react-addons-shallow-compare');
 
 import * as autocompleteSelectors from '../selectors/autocompleteSelectors';
 import * as commandActions from '../actions/commandActions';
@@ -32,11 +31,6 @@ interface TerminalPromptProps {
 @Radium
 export class TerminalPrompt extends React.Component<TerminalPromptProps, {}> {
   private input: any;
-
-  public shouldComponentUpdate(nextProps, nextState) {
-    /* istanbul-ignore-next */
-    return shallowCompare(this, nextProps, nextState);
-  }
 
   public render() {
     const {

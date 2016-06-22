@@ -4,7 +4,7 @@ import { expect } from '../__test__/configureExpect';
 import commandReducer, { INITIAL_STATE } from './commandReducer';
 import { COMMAND_SEND, SET_STATE } from '../actions/actionTypes';
 import * as commandActions from '../actions/commandActions';
-import { Allowed, CommandPart, Command, CommandState } from '../records';
+import { Command, CommandState } from '../records';
 
 describe('commandReducer', function() {
   describe('COMMAND_CLOSE_AUTOCOMPLETE', function() {

@@ -1,10 +1,9 @@
-import React from 'react';
+import * as React from 'react';
 import { shallow } from 'enzyme';
 
-import expect from '../__test__/configureExpect';
+import { expect } from '../__test__/configureExpect';
 
-import DropdownArrow from './DropdownArrow';
-import Icon from './Icon';
+import { DropdownArrow, Icon } from './';
 
 describe('DropdownArrow', function() {
   it('shows a right arrow when not expanded', function() {

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Map, List, OrderedSet } from 'immutable';
 import Radium = require('radium');
-import shallowCompare = require('react-addons-shallow-compare');
 
 import * as editorActions from '../actions/editorActions';
 import { EditorPanel } from './EditorPanel';

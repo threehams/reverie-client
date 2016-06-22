@@ -1,9 +1,9 @@
-import React from 'react';
+import * as React from 'react';
 import { shallow } from 'enzyme';
 
-import expect from '../__test__/configureExpect';
+import { expect } from '../__test__/configureExpect';
 
-import TabContainer from './TabContainer';
+import { TabContainer } from './TabContainer';
 
 describe('TabContainer', function() {
   describe('equalWidth', function() {

@@ -9,6 +9,7 @@ import {
   Command,
   CommandState,
   Entity,
+  Exit,
   Location,
   State,
   Ui,
@@ -82,7 +83,7 @@ describe('autocompleteSelectors', function() {
     context('with no current command', function() {
       it('matches commands and exits', function() {
         const commandTransfer = new Command({
-          name: 'transfer',
+          name: 'stash',
         });
 
         const state = new State({
@@ -91,8 +92,8 @@ describe('autocompleteSelectors', function() {
             available: Set([
               commandTransfer,
             ]),
-            current: 'tr',
-            cursorIndex: 2,
+            current: 's',
+            cursorIndex: 1,
           }),
           entities: Map({
             '1': new Entity({
@@ -100,11 +101,14 @@ describe('autocompleteSelectors', function() {
               name: 'readme.txt',
             }),
           }),
-          location: new Location(),
+          location: new Location({
+            exits: List(['south']),
+          }),
           ui: new Ui(),
         });
 
-        expect(autocompleteSelectors.availableOptions(state)).to.equal(List([commandTransfer]));
+        const exit = new Exit({ name: 'south'});
+        expect(autocompleteSelectors.availableOptions(state)).to.equal(List([exit, commandTransfer]));
       });
     });
 

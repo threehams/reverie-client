@@ -2,7 +2,6 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { List } from 'immutable';
 import Radium = require('radium');
-import shallowCompare = require('react-addons-shallow-compare');
 import { State } from '../records';
 
 import StatusEffect from '../components/StatusEffect';
@@ -17,11 +16,6 @@ export class TerminalHistory extends React.Component<TerminalHistoryProps, {}> {
 
   public componentDidUpdate() {
     this.container.scrollTop = this.container.scrollHeight;
-  }
-
-  public shouldComponentUpdate(nextProps, nextState) {
-    /* istanbul-ignore-next */
-    return shallowCompare(this, nextProps, nextState);
   }
 
   public render() {

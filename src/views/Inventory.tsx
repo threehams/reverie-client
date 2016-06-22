@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import Radium = require('radium');
-import shallowCompare = require('react-addons-shallow-compare');
 import { List } from 'immutable';
 
 import InventoryItem from './InventoryItem';
@@ -22,11 +21,6 @@ interface InventoryProps {
 
 @Radium
 export class Inventory extends React.Component<InventoryProps, {}> {
-  public shouldComponentUpdate(nextProps, nextState) {
-    /* istanbul-ignore-next */
-    return shallowCompare(this, nextProps, nextState);
-  }
-
   public render() {
     const { addView, items, moveItem, selectItem, toggleExpand, toggleItem } = this.props;
     return (

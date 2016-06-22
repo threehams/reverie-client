@@ -18,15 +18,17 @@ export const TYPE_ICONS = {
 };
 
 interface EntityIconProps {
-  components: Set<string>;
-  states: Set<string>;
+  components?: Set<string>;
+  states?: Set<string>;
   style?: Object;
   before?: boolean;
 }
 
 @Radium
 export class EntityIcon extends React.Component<EntityIconProps, {}> {
+  // tslint:disable
   private static defaultProps = {
+    // tslint:enable
     components: Set(),
     states: Set(),
   };

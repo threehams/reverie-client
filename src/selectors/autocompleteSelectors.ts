@@ -68,12 +68,13 @@ function applyAllowedTypes(objects, types) {
   }
 
   return objects.filter(object => {
-    for (const type of types) {
+    let found = false;
+    types.forEach((type) => {
       if (object instanceof INSTANCE_TYPES[type]) {
-        return true;
+        found = true;
       }
-    }
-    return false;
+    });
+    return found;
   });
 }
 
@@ -209,6 +210,7 @@ export const availableOptions = createSelector(
     }
 
     const filtered = allowed.flatMap(allow => applyAllowed(filteredByFragment, allow));
+
     return filtered.sort((a, b) => {
       if (fragment) {
         return compare(a.name.indexOf(fragment), b.name.indexOf(fragment));

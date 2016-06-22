@@ -1,11 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 import { shallow } from 'enzyme';
 import { Set } from 'immutable';
 
-import expect from '../__test__/configureExpect';
+import { expect } from '../__test__/configureExpect';
 
-import EntityIcon, { TYPE_ICONS } from './EntityIcon';
-import Icon from './Icon';
+import { EntityIcon, TYPE_ICONS } from './EntityIcon';
+import { Icon } from './Icon';
 
 describe('Icon', function() {
   describe('locked containers', function() {

@@ -75,7 +75,7 @@ describe('entitiesReducer', function() {
           '2': new Entity({
             id: '2',
             name: 'thing2',
-          })
+          }),
         })
       );
     });
