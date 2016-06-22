@@ -1,19 +1,19 @@
 {
   "globalDependencies": {
-    "immutable": "registry:dt/immutable#3.8.1+20160608070634",
+    "core-js": "registry:dt/core-js#0.0.0+20160602141332",
     "mocha": "registry:dt/mocha#2.2.5+20160317120654",
-    "radium": "registry:dt/radium#0.17.1+20160414124459",
     "react": "registry:dt/react#0.14.0+20160602151522",
     "react-addons-shallow-compare": "registry:dt/react-addons-shallow-compare#0.14.0+20160316155526",
     "react-dnd": "registry:dt/react-dnd#1.1.4+20160316155526",
-    "react-dom": "registry:dt/react-dom#0.14.0+20160412154040",
-    "reselect": "registry:dt/reselect#2.0.2+20160319031821"
+    "react-dom": "registry:dt/react-dom#0.14.0+20160412154040"
   },
   "dependencies": {
+    "chai": "registry:npm/chai#3.5.0+20160415060238",
     "enzyme": "registry:npm/enzyme#2.2.0+20160322031343",
-    "immutable": "registry:npm/immutable#3.7.6+20160411060006",
+    "lodash": "registry:npm/lodash#4.0.0+20160416211519",
     "radium": "registry:npm/radium#0.16.6+20160310030142",
     "react-redux": "registry:npm/react-redux#4.4.0+20160207114942",
-    "redux-immutable": "registry:npm/redux-immutable#3.0.6+20160310030142"
+    "sinon": "registry:npm/sinon#1.16.0+20160427193336",
+    "sinon-chai": "registry:npm/sinon-chai#2.8.0+20160310030142"
   }
 }
