@@ -1,27 +1,24 @@
-declare namespace ReactMarkdown {
-  import React = __React;
-  
-  interface MarkdownProps extends React.HTMLAttributes {
-    // Optional
+import React = __React;
 
-    renderers: {
-      BlockQuote: any;
-      Code: any;
-      Emph: any;
-      Heading: any;
-      Item: any;
-      Link: any;
-      List: any;
-      Paragraph: any;
-      Strong: any;
-    };
-    skipHtml: boolean;
-  }
+interface MarkdownProps extends React.HTMLAttributes {
+  // Optional
 
-  class Markdown extends React.Component<MarkdownProps, any> {}
+  renderers: {
+    BlockQuote: any;
+    Code: any;
+    Emph: any;
+    Heading: any;
+    Item: any;
+    Link: any;
+    List: any;
+    Paragraph: any;
+    Strong: any;
+  };
+  skipHtml: boolean;
 }
 
+declare class Markdown extends React.Component<MarkdownProps, any> {}
+
 declare module 'react-markdown' {
-  import Markdown = ReactMarkdown.Markdown;
   export = Markdown;
 }
