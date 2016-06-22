@@ -1,5 +1,3 @@
-/* This is available through webpack.config.js */
-
 // this is not a universal app, so 'window' is only undefined in tests
 let socket;
 if (typeof window !== 'undefined') {

@@ -41,7 +41,8 @@ if (config.development) {
   const webpackHotMiddleware = require('webpack-hot-middleware');
   app.use(webpackDevMiddleware(compiler, {
     noInfo: true,
-    publicPath: webpackConfig.output.publicPath
+    publicPath: webpackConfig.output.publicPath,
+    stats: { chunks: false }
   }));
   app.use('/assets', express.static(path.join( __dirname, '..', 'assets')));
 

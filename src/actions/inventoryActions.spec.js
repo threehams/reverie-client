@@ -1,9 +1,7 @@
 import { List, Map, OrderedSet, Set } from 'immutable';
 
 import * as inventoryActions from './inventoryActions';
-import UiRecord from '../records/UiRecord';
-import EntityRecord from '../records/EntityRecord';
-import LocationRecord from '../records/LocationRecord';
+import { Entity, Location, Ui } from '../records';
 import expect from '../__test__/configureExpect';
 import { EDITOR_SELECT_ITEMS } from './actionTypes';
 
@@ -28,28 +26,28 @@ describe('inventoryActions', function() {
       context('when no items contain other items', function() {
         it('selects each of the items in order', function() {
           const state = Map({
-            location: new LocationRecord(),
-            ui: new UiRecord({
+            location: new Location(),
+            ui: new Ui({
               player: '6',
               selectedItems: OrderedSet(['1'])
             }),
             entities: Map({
-              '1': new EntityRecord({
+              '1': new Entity({
                 id: '1'
               }),
-              '2': new EntityRecord({
+              '2': new Entity({
                 id: '2'
               }),
-              '3': new EntityRecord({
+              '3': new Entity({
                 id: '3'
               }),
-              '4': new EntityRecord({
+              '4': new Entity({
                 id: '4'
               }),
-              '5': new EntityRecord({
+              '5': new Entity({
                 id: '5'
               }),
-              '6': new EntityRecord({
+              '6': new Entity({
                 id: '6',
                 entities: List(['1', '2', '4', '5'])
               })
@@ -71,28 +69,28 @@ describe('inventoryActions', function() {
       context('when an item contains other items', function() {
         it('selects each of the items in order', function() {
           const state = Map({
-            location: new LocationRecord(),
-            ui: new UiRecord({
+            location: new Location(),
+            ui: new Ui({
               player: '6',
               selectedItems: OrderedSet(['1']),
               inventoryExpandedById: Set(['1', '2'])
             }),
             entities: Map({
-              '1': new EntityRecord({
+              '1': new Entity({
                 id: '1',
                 entities: List(['2'])
               }),
-              '2': new EntityRecord({
+              '2': new Entity({
                 id: '2',
                 entities: List(['3'])
               }),
-              '3': new EntityRecord({
+              '3': new Entity({
                 id: '3'
               }),
-              '4': new EntityRecord({
+              '4': new Entity({
                 id: '4'
               }),
-              '6': new EntityRecord({
+              '6': new Entity({
                 id: '6',
                 entities: List(['1', '4'])
               })
@@ -114,28 +112,28 @@ describe('inventoryActions', function() {
       context('when the first item occurs after the second item', function() {
         it('selects each of the items in order', function() {
           const state = Map({
-            location: new LocationRecord(),
-            ui: new UiRecord({
+            location: new Location(),
+            ui: new Ui({
               player: '6',
               selectedItems: OrderedSet(['3']),
               inventoryExpandedById: Set(['1', '2'])
             }),
             entities: Map({
-              '1': new EntityRecord({
+              '1': new Entity({
                 id: '1',
                 entities: List('2')
               }),
-              '2': new EntityRecord({
+              '2': new Entity({
                 id: '2',
                 entities: List('3')
               }),
-              '3': new EntityRecord({
+              '3': new Entity({
                 id: '3'
               }),
-              '4': new EntityRecord({
+              '4': new Entity({
                 id: '4'
               }),
-              '6': new EntityRecord({
+              '6': new Entity({
                 id: '6',
                 entities: List(['1', '4'])
               })
@@ -157,37 +155,37 @@ describe('inventoryActions', function() {
       context('large nested structure going backwards', function() {
         it('selects each of the items in reverse order', function() {
           const state = Map({
-            location: new LocationRecord(),
-            ui: new UiRecord({
+            location: new Location(),
+            ui: new Ui({
               player: '6',
               selectedItems: OrderedSet(['4']),
               inventoryExpandedById: Set(['1', '2', '4'])
             }),
             entities: Map({
-              '1': new EntityRecord({
+              '1': new Entity({
                 id: '1',
                 entities: List('2')
               }),
-              '2': new EntityRecord({
+              '2': new Entity({
                 id: '2',
                 entities: List(['3', '4'])
               }),
-              '3': new EntityRecord({
+              '3': new Entity({
                 id: '3'
               }),
-              '4': new EntityRecord({
+              '4': new Entity({
                 id: '4',
                 entities: List(['7'])
               }),
-              '5': new EntityRecord({
+              '5': new Entity({
                 id: '5'
               }),
-              '6': new EntityRecord({
+              '6': new Entity({
                 id: '6',
                 name: 'player',
                 entities: List(['1', '5'])
               }),
-              '7': new EntityRecord({
+              '7': new Entity({
                 id: '7'
               })
             })
