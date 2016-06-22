@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { shallow } from 'enzyme';
 
-import expect from '../__test__/configureExpect';
-import sinon from 'sinon';
+import { expect } from '../__test__/configureExpect';
+import * as sinon from 'sinon';
 
-import Tab, { styles } from './Tab';
-import Icon from './Icon';
+import { Tab, styles } from './Tab';
+import { Icon } from './Icon';
 
 describe('Tab', function() {
   describe('active', function() {
@@ -29,7 +29,7 @@ describe('Tab', function() {
         const element = shallow(<Tab onClick={onClick}>Stuff</Tab>);
         const event = { button: 0 };
         element.first().props().onClick(event);
-        expect(onClick).to.have.been.called();
+        expect(onClick).to.have.been.called;
       });
     });
 
@@ -39,7 +39,7 @@ describe('Tab', function() {
         const element = shallow(<Tab onClickClose={onClickClose}>Stuff</Tab>);
         const event = { button: 1 };
         element.first().props().onClick(event);
-        expect(onClickClose).to.have.been.called();
+        expect(onClickClose).to.have.been.called;
       });
     });
   });
@@ -51,8 +51,8 @@ describe('Tab', function() {
       const element = shallow(<Tab onClickClose={onClickClose}>Stuff</Tab>);
       const event = { stopPropagation };
       element.find(Icon).props().onClick(event);
-      expect(onClickClose).to.have.been.called();
-      expect(stopPropagation).to.have.been.called();
+      expect(onClickClose).to.have.been.called;
+      expect(stopPropagation).to.have.been.called;
     });
   });
 });
