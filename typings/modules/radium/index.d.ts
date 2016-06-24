@@ -88,10 +88,10 @@ function Radium<TElement extends Function>(config: Radium.RadiumConfig): (compon
 export = Radium;
 }
 declare module 'radium/index' {
-import alias = require('~radium/index');
-export = alias;
+import main = require('~radium/index');
+export = main;
 }
 declare module 'radium' {
-import alias = require('~radium/index');
-export = alias;
+import main = require('~radium/index');
+export = main;
 }

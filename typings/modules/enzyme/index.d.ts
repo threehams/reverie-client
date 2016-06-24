@@ -159,7 +159,7 @@ namespace Enzyme {
          *
          * NOTE: can only be called on a wrapper of a single node.
          */
-        props(): any;
+        props(): Object;
 
         /**
          * Returns the prop value for the node of the current wrapper with the provided key.

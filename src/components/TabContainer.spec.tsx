@@ -10,7 +10,7 @@ describe('TabContainer', function() {
     it('applies equalWidth styles', function() {
       // Flexbox prefixing makes this difficult to test
       const element = shallow(<TabContainer equalWidth>Stuff</TabContainer>);
-      expect(element.first().props().style.display).to.contain('flex');
+      expect(element.first().prop('style').display).to.contain('flex');
     });
   });
 });
