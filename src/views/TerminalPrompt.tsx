@@ -14,18 +14,18 @@ import fontStyles from '../styles/font';
 
 interface TerminalPromptProps {
   autocompleteFragment: string;
-    autocompleteOpen: boolean;
-    autocompleteOptions: List<Command | Entity | Exit>;
-    autocompletePosition: number;
-    autocompleteSelectedItem: Command | Entity | Exit;
-    closeAutocomplete: Function;
-    completeCommand: Function;
-    currentCommand: string;
-    selectAutocompleteItem: Function;
-    selectNextAutocompleteItem: Function;
-    selectPreviousAutocompleteItem: Function;
-    sendCommand: Function;
-    setCurrentCommand: Function;
+  autocompleteOpen: boolean;
+  autocompleteOptions: List<Command | Entity | Exit>;
+  autocompletePosition: number;
+  autocompleteSelectedItem: Command | Entity | Exit;
+  closeAutocomplete: Function;
+  completeCommand: Function;
+  currentCommand: string;
+  selectAutocompleteItem: Function;
+  selectNextAutocompleteItem: Function;
+  selectPreviousAutocompleteItem: Function;
+  sendCommand: Function;
+  setCurrentCommand: Function;
 }
 
 @Radium
