@@ -83,7 +83,7 @@ describe('entitiesReducer', function() {
 
   describe('default', function() {
     it('returns the state', function() {
-      expect(entitiesReducer(undefined, {})).to.equal(INITIAL_STATE);
+      expect(entitiesReducer(undefined, { type: 'UNRELATED' })).to.equal(INITIAL_STATE);
     });
   });
 });

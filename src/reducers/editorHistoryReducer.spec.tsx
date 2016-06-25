@@ -65,7 +65,7 @@ describe('editorHistoryReducer', function() {
 
   describe('default', function() {
     it('return default state', function() {
-      expect(editorHistoryReducer(undefined, {})).to.equal(INITIAL_STATE);
+      expect(editorHistoryReducer(undefined, { type: 'UNRELATED' })).to.equal(INITIAL_STATE);
     });
   });
 });

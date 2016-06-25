@@ -37,7 +37,7 @@ export class Editor extends React.Component<EditorProps, {}> {
     );
   }
 
-  private createHistory(item) {
+  private createHistory(item: Entity) {
     return List([
       `# ${item.name}`,
       '',

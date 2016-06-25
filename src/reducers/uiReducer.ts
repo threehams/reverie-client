@@ -2,6 +2,7 @@ import {OrderedSet, Map} from 'immutable';
 
 import { Ui } from '../records';
 import {
+  Action,
   EDITOR_ADD_VIEW,
   INVENTORY_TOGGLE_EXPAND,
   INVENTORY_EXPAND_ITEMS,
@@ -16,12 +17,12 @@ import {
 } from '../actions/actionTypes';
 
 export const INITIAL_STATE: Ui = new Ui();
-const ALERTS = {
+const ALERTS: {[key: string]: string} = {
   disconnected: 'Reconnecting to server, give it a minute...',
   reconnected: '',
 };
 
-export default function uiReducer(state: Ui = INITIAL_STATE, action): Ui {
+export default function uiReducer(state: Ui = INITIAL_STATE, action: Action): Ui {
   switch (action.type) {
     case EDITOR_ADD_VIEW:
       return addView(state, action.payload.id);
@@ -50,7 +51,7 @@ export default function uiReducer(state: Ui = INITIAL_STATE, action): Ui {
   }
 }
 
-function addView(state, id) {
+function addView(state: Ui, id: string) {
   return state.update('editorViews', views => views.add(id))
     .set('activeEditorView', id);
 }

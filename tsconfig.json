@@ -6,7 +6,8 @@
     "module": "commonjs",
     "outDir": "tsDist",
     "target": "es5",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "noImplicitAny": false
   },
   "exclude": [
     "node_modules",

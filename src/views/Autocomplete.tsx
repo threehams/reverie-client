@@ -17,7 +17,7 @@ interface AutocompleteProps {
 export class Autocomplete extends React.Component<AutocompleteProps, {}> {
   private selectedItem: any;
 
-  public shouldComponentUpdate(nextProps, nextState) {
+  public shouldComponentUpdate(nextProps: AutocompleteProps, nextState: {}) {
     /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }

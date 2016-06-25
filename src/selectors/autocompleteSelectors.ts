@@ -1,16 +1,16 @@
-import { List, Set } from 'immutable';
+import { List, Seq, Set } from 'immutable';
 import { createSelector } from 'reselect';
 
 import * as entitySelectors from './entitySelectors';
-import { Allowed, Command, Entity, Exit, State } from '../records';
+import { Allowed, AutocompleteItem, Command, Entity, Exit, State } from '../records';
 
-const INSTANCE_TYPES = {
+const INSTANCE_TYPES: { [key: string]: any } = {
   command: Command,
   entity: Entity,
   exit: Exit,
 };
 
-function compare(a, b) {
+function compare(a: string|boolean|number, b: string|boolean|number) {
   if (a > b) { return 1; }
   if (a < b) { return -1; }
   return 0;
@@ -22,7 +22,7 @@ const defaultFilters = List([
   }),
 ]);
 
-function applyAllowedOwners(objects, owners) {
+function applyAllowedOwners(objects, owners: Set<string>) {
   if (!owners.size) {
     return objects;
   }
@@ -30,15 +30,15 @@ function applyAllowedOwners(objects, owners) {
   return objects.filter(object => owners.contains(object.owner));
 }
 
-function applyAllowedStates(objects, states) {
+function applyAllowedStates(objects, states: Set<string>) {
   if (!states.size) {
     return objects;
   }
 
-  return objects.filter(object => states.intersect(object.states).size);
+  return objects.filter(object => !!states.intersect(object.states).size);
 }
 
-function applyAllowedComponents(objects, components) {
+function applyAllowedComponents(objects, components: Set<string>) {
   if (!components.size) {
     return objects;
   }
@@ -62,7 +62,7 @@ function applyAllowedComponents(objects, components) {
   });
 }
 
-function applyAllowedTypes(objects, types) {
+function applyAllowedTypes(objects: List<AutocompleteItem>, types: Set<string>) {
   if (!types.size) {
     return objects;
   }
@@ -81,9 +81,9 @@ function applyAllowedTypes(objects, types) {
 /*
  * Filter objects based on different attributes within records.
  */
-export function applyAllowed(objects, allowed) {
+export function applyAllowed(objects, allowed: Allowed) {
   if (allowed.names.size) {
-    return Set(allowed.names.map(name => {
+    return List(allowed.names.map((name: string) => {
       return new Command({
         name,
       });
@@ -113,7 +113,7 @@ export function applyAllowed(objects, allowed) {
  * You decide!
  *
  */
-function currentPartIndex(parts, cursorIndex) {
+function currentPartIndex(parts: Array<string>, cursorIndex: number) {
   let totalLength = 0;
   let index = 0;
   for (const part of parts) {
@@ -173,9 +173,9 @@ const sortedOptions = createSelector(
   entitySelectors.entitiesWithPath,
   (state: State) => state.command.available,
   (state: State) => state.location.exits || List([]),
-  (entities, commands, exits) => {
-    return entities.toSetSeq()
-    .concat(commands)
+  (entities, commands, exits): Seq.Indexed<AutocompleteItem> => {
+    return Seq.Indexed(entities.values())
+    .concat(List(commands))
     .concat(exits.map(exit => new Exit({ name: exit })))
     .sort((a, b) => {
       // reminder:
@@ -200,18 +200,18 @@ export const availableOptions = createSelector(
   autocompleteFragment,
   commandAllowed,
   sortedOptions,
-  (fragment: string, allowed, options) => {
+  (fragment: string, allowed: Allowed, options: Seq.Indexed<AutocompleteItem>) => {
     if (!allowed || !allowed.size) { return List(); }
 
     // All possible objects usable by autocomplete, keyed by type
     let filteredByFragment = options;
     if (fragment) {
-      filteredByFragment = options.filter(object => object.name.includes(fragment));
+      filteredByFragment = options.filter((object: AutocompleteItem) => object.name.includes(fragment));
     }
 
-    const filtered = allowed.flatMap(allow => applyAllowed(filteredByFragment, allow));
+    const filtered = allowed.flatMap((allow: Allowed) => applyAllowed(filteredByFragment, allow));
 
-    return filtered.sort((a, b) => {
+    return filtered.sort((a: AutocompleteItem, b: AutocompleteItem) => {
       if (fragment) {
         return compare(a.name.indexOf(fragment), b.name.indexOf(fragment));
       }

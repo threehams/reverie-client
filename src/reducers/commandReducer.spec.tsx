@@ -286,7 +286,7 @@ describe('commandReducer', function() {
 
   describe('default', function() {
     it('return default state', function() {
-      expect(commandReducer(undefined, {})).to.equal(INITIAL_STATE);
+      expect(commandReducer(undefined, { type: 'UNRELATED' })).to.equal(INITIAL_STATE);
     });
   });
 });

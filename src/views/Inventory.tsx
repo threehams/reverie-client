@@ -46,8 +46,12 @@ export class Inventory extends React.Component<InventoryProps, {}> {
   }
 }
 
+interface ConnectProps {
+  owner: string;
+}
+
 export default connect(
-  (state: State, props) => ({
+  (state: State, props: ConnectProps) => ({
     items: inventorySelectors.list(state).get(props.owner),
   }),
   {

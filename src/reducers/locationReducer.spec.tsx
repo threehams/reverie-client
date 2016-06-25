@@ -25,7 +25,7 @@ describe('locationReducer', function() {
 
   describe('default', function() {
     it('returns the state', function() {
-      expect(locationReducer(undefined, {})).to.equal(INITIAL_STATE);
+      expect(locationReducer(undefined, { type: 'UNRELATED' })).to.equal(INITIAL_STATE);
     });
   });
 });

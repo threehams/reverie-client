@@ -23,6 +23,7 @@ export const SOCKET_STATUS = 'SOCKET_STATUS';
 export type AutocompleteOption = Entity | Command | Exit;
 
 export interface Action {
+  meta?: any;
   type: string;
-  payload?: Object;
+  payload?: any;
 }

@@ -78,7 +78,7 @@ export class TerminalPrompt extends React.Component<TerminalPromptProps, {}> {
   }
 
   // Intercept specific keystrokes and add special handling for autocomplete, or override browser defaults.
-  private selectOption(event) {
+  private selectOption(event: React.KeyboardEvent) {
     const {
       autocompleteOptions,
       selectNextAutocompleteItem,
@@ -102,7 +102,7 @@ export class TerminalPrompt extends React.Component<TerminalPromptProps, {}> {
   // Based on current autocomplete open state:
   // - Open:   Based on the current command, fill in the command fragment with the selected autocomplete option.
   // - Closed: Send the command to the server.
-  private submit(event) {
+  private submit(event: React.SyntheticEvent) {
     event.preventDefault();
     const {
       autocompleteOpen,
