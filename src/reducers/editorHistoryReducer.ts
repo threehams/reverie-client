@@ -1,10 +1,10 @@
 import {List} from 'immutable';
 
-import { SET_STATE, EDITOR_HISTORY_CLEAR } from '../actions/actionTypes';
+import { Action, SET_STATE, EDITOR_HISTORY_CLEAR } from '../actions/actionTypes';
 
 export const INITIAL_STATE = List();
 
-export default function editorHistoryReducer(state = INITIAL_STATE, action): List<any> {
+export default function editorHistoryReducer(state = INITIAL_STATE, action: Action): List<any> {
   switch (action.type) {
     case EDITOR_HISTORY_CLEAR:
       return state.clear();

@@ -1,6 +1,7 @@
 import { Set } from 'immutable';
 
 import {
+  Action,
   COMMAND_CLOSE_AUTOCOMPLETE,
   COMMAND_SELECT_AUTOCOMPLETE_ITEM,
   COMMAND_SET_CURSOR_INDEX,
@@ -14,7 +15,7 @@ import { CommandState } from '../records';
 
 export const INITIAL_STATE: CommandState = new CommandState();
 
-export default function commandReducer(state: CommandState = INITIAL_STATE, action): CommandState {
+export default function commandReducer(state: CommandState = INITIAL_STATE, action: Action): CommandState {
   switch (action.type) {
     case COMMAND_CLOSE_AUTOCOMPLETE:
       return closeAutocomplete(state);
@@ -43,7 +44,7 @@ export default function commandReducer(state: CommandState = INITIAL_STATE, acti
   }
 }
 
-function setCursorIndex(state: CommandState, index) {
+function setCursorIndex(state: CommandState, index: number) {
   const currentIndex = state.cursorIndex;
   const indexSet = state.set('cursorIndex', index);
   if (!state.autocompleteOpen || Math.abs(currentIndex - index) > 1 || state.current[index] === ' ') {
@@ -56,7 +57,7 @@ function completeCommand(state: CommandState, { command, cursorIndex, autocomple
   return replaceCommand(state, command, cursorIndex, autocompleteItem);
 }
 
-function replaceCommand(state: CommandState, command, index, replacement) {
+function replaceCommand(state: CommandState, command: string, index: number, replacement: string) {
   // Slice in half at index
   const tail = command.slice(index);
   const head = command.slice(0, index);

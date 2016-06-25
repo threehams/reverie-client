@@ -30,7 +30,7 @@ export class EditorPanel extends React.Component<EditorPanelProps, {}> {
     this.container.scrollTop = this.container.scrollHeight;
   }
 
-  public shouldComponentUpdate(nextProps, nextState) {
+  public shouldComponentUpdate(nextProps: EditorPanelProps, nextState: {}) {
     /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }

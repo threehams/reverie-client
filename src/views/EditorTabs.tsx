@@ -17,7 +17,7 @@ interface EditorTabsProps {
 }
 
 export default class EditorTabs extends React.Component<EditorTabsProps, {}> {
-  public shouldComponentUpdate(nextProps, nextState) {
+  public shouldComponentUpdate(nextProps: EditorTabsProps, nextState: {}) {
     /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }

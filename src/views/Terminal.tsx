@@ -9,7 +9,7 @@ import fontStyles from '../styles/font';
 
 @Radium
 export class Terminal extends React.Component<{}, {}> {
-  public shouldComponentUpdate(nextProps, nextState) {
+  public shouldComponentUpdate(nextProps: {}, nextState: {}) {
     /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }

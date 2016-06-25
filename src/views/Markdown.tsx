@@ -15,7 +15,7 @@ interface MarkdownLinkProps {
 }
 
 export class MarkdownLink extends React.Component<MarkdownLinkProps, {}> {
-  public shouldComponentUpdate(nextProps, nextState) {
+  public shouldComponentUpdate(nextProps: MarkdownLinkProps, nextState: {}) {
     /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }
@@ -27,7 +27,7 @@ export class MarkdownLink extends React.Component<MarkdownLinkProps, {}> {
     );
   }
 
-  private onClick(event) {
+  private onClick(event: React.MouseEvent) {
     event.preventDefault();
     const { href } = this.props;
     const [route, id] = href.split('/').slice(1);
@@ -45,7 +45,7 @@ export class MarkdownLink extends React.Component<MarkdownLinkProps, {}> {
 }
 
 export class MarkdownHeading extends React.Component<{}, {}> {
-  public shouldComponentUpdate(nextProps, nextState) {
+  public shouldComponentUpdate(nextProps: {}, nextState: {}) {
     /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }
@@ -56,7 +56,7 @@ export class MarkdownHeading extends React.Component<{}, {}> {
 }
 
 export class MarkdownParagraph extends React.Component<{}, {}> {
-  public shouldComponentUpdate(nextProps, nextState) {
+  public shouldComponentUpdate(nextProps: {}, nextState: {}) {
     /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }
@@ -69,7 +69,7 @@ export class MarkdownParagraph extends React.Component<{}, {}> {
 }
 
 export class MarkdownList extends React.Component<{}, {}> {
-  public shouldComponentUpdate(nextProps, nextState) {
+  public shouldComponentUpdate(nextProps: {}, nextState: {}) {
     /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }
@@ -82,7 +82,7 @@ export class MarkdownList extends React.Component<{}, {}> {
 }
 
 export class MarkdownItem extends React.Component<{}, {}> {
-  public shouldComponentUpdate(nextProps, nextState) {
+  public shouldComponentUpdate(nextProps: {}, nextState: {}) {
     /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }
@@ -97,7 +97,7 @@ export class MarkdownItem extends React.Component<{}, {}> {
 }
 
 export class MarkdownCode extends React.Component<{}, {}> {
-  public shouldComponentUpdate(nextProps, nextState) {
+  public shouldComponentUpdate(nextProps: {}, nextState: {}) {
     /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }
@@ -114,7 +114,7 @@ export class MarkdownCode extends React.Component<{}, {}> {
 }
 
 export class MarkdownEmphasis extends React.Component<{}, {}> {
-  public shouldComponentUpdate(nextProps, nextState) {
+  public shouldComponentUpdate(nextProps: {}, nextState: {}) {
     /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }
@@ -129,7 +129,7 @@ export class MarkdownEmphasis extends React.Component<{}, {}> {
 }
 
 export class MarkdownStrong extends React.Component<{}, {}> {
-  public shouldComponentUpdate(nextProps, nextState) {
+  public shouldComponentUpdate(nextProps: {}, nextState: {}) {
     /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }
@@ -144,7 +144,7 @@ export class MarkdownStrong extends React.Component<{}, {}> {
 }
 
 export class MarkdownBlockQuote extends React.Component<{}, {}> {
-  public shouldComponentUpdate(nextProps, nextState) {
+  public shouldComponentUpdate(nextProps: {}, nextState: {}) {
     /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }

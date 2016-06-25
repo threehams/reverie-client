@@ -10,19 +10,14 @@ import { Entity } from '../records';
 
 describe('Inventory', function() {
   describe('component', function() {
-    let props;
-
-    beforeEach(function() {
-      props = {
-        addView: () => { /* stub */ },
-        // addView: () => {},
-        // addView: () => {},
-        // addView: () => {},
-        // addView: () => {},
-      };
-    });
-
     it('creates a list of Inventory components', function() {
+      const props = {
+        addView: function() { /* stub */ },
+        moveItem: function() { /* stub */ },
+        selectItem: function() { /* stub */ },
+        toggleExpand: function() { /* stub */ },
+        toggleItem: function() { /* stub */ },
+      };
       const entities = List([
         new Entity({ id: '1', name: '1' }),
         new Entity({ id: '2', name: '2' }),

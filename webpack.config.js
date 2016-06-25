@@ -69,11 +69,6 @@ var DEV_TOOLS = {
   production: 'source-map'
 };
 
-var BABEL_PRESETS = {
-  development: ['react', 'es2015-webpack', 'stage-0', 'react-hmre'],
-  production: ['react', 'es2015-webpack', 'stage-0']
-};
-
 module.exports = {
   devtool: DEV_TOOLS[ENV],
   entry: ENTRY_POINTS[ENV],

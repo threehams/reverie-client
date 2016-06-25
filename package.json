@@ -23,19 +23,19 @@
       }
     },
     "coverage": {
-      "command": "nyc --require babel-core/register --all node_modules/.bin/mocha --require babel-register --require ./src/__test__/testHelper.js --timeout=200 src/**/*.spec.js && nyc  --require babel-core/register report --reporter=lcov",
+      "command": "nyc --require ts-node/register --all node_modules/.bin/mocha --require ts-node/register --require ./src/__test__/testHelper.ts --timeout=200 src/**/*.spec.tsx && nyc  --require ts-node/register report --reporter=lcov",
       "env": {
         "NODE_ENV": "test"
       }
     },
     "server": {
-      "command": "node ./server.js",
+      "command": "ts-node ./src/server.ts",
       "env": {
         "NODE_ENV": "production"
       }
     },
     "start": {
-      "command": "nodemon ./server.js",
+      "command": "nodemon --exec ts-node src/server.ts",
       "env": {
         "NODE_ENV": "development",
         "PORT": 8080

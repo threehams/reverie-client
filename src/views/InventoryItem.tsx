@@ -22,7 +22,7 @@ interface InventoryItemProps {
 
 @Radium
 export class InventoryItem extends React.Component<InventoryItemProps, {}> {
-  public shouldComponentUpdate(nextProps, nextState) {
+  public shouldComponentUpdate(nextProps: InventoryItemProps, nextState: {}) {
     /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }
@@ -37,7 +37,7 @@ export class InventoryItem extends React.Component<InventoryItemProps, {}> {
           {
             item.entities.size ?
               <DropdownArrow expanded={item.expanded}
-                           onMouseDown={(event) => this.expandItem(event, item)}
+                           onMouseDown={(event: React.MouseEvent) => this.expandItem(event, item)}
                            style={{ display: 'inline-block', verticalAlign: 'middle' }}
               /> :
               <span style={{ paddingLeft: 22 }}/>
@@ -56,7 +56,7 @@ export class InventoryItem extends React.Component<InventoryItemProps, {}> {
     );
   }
 
-  private expandItem(event, item) {
+  private expandItem(event: React.MouseEvent, item: Entity) {
     event.stopPropagation();
     if (item.entities.size) {
       this.props.toggleExpand(item.id);
@@ -65,7 +65,7 @@ export class InventoryItem extends React.Component<InventoryItemProps, {}> {
     }
   }
 
-  private selectItem(event, item) {
+  private selectItem(event: React.MouseEvent, item: Entity) {
     event.stopPropagation();
     if (event.ctrlKey) {
       this.props.toggleItem(item.id, item.owner);

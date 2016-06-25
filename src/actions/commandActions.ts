@@ -1,6 +1,5 @@
 import { List } from 'immutable';
 
-import socket from '../socket';
 import {
   Action,
   COMMAND_CLOSE_AUTOCOMPLETE,
@@ -17,19 +16,15 @@ export const clear = (): Action => ({
   type: COMMAND_HISTORY_CLEAR,
 });
 
-export const sendCommand = (command: string) => {
-  return (dispatch) => {
-    socket.send(JSON.stringify({
-      command,
-    }));
-    dispatch({
-      payload: {
-        command,
-      },
-      type: COMMAND_SEND,
-    });
-  };
-};
+export const sendCommand = (command: string) => ({
+  meta: {
+    socket: true,
+  },
+  payload: {
+    command,
+  },
+  type: COMMAND_SEND,
+});
 
 export const completeCommand = (
   command: string,
