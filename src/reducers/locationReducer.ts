@@ -9,4 +9,3 @@ export default handleActions({
     return state.merge(action.payload.location);
   },
 }, INITIAL_STATE);
-

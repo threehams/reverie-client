@@ -3,7 +3,7 @@ import { Children, Component, cloneElement } from 'react';
 import Radium = require('radium');
 import shallowCompare = require('react-addons-shallow-compare');
 
-import { Panel, PanelResizer } from './';
+import { PanelResizer } from './';
 import panelStyles from '../styles/panel';
 
 interface PanelContainerProps {
