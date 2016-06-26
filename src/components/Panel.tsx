@@ -9,7 +9,7 @@ interface PanelProps {
 
 @Radium
 export class Panel extends React.Component<PanelProps, {}> {
-  public shouldComponentUpdate(nextProps, nextState) {
+  public shouldComponentUpdate(nextProps: PanelProps, nextState: {}) {
     /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }

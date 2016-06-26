@@ -11,7 +11,7 @@ interface DropdownArrowProps {
 }
 
 export class DropdownArrow extends React.Component<DropdownArrowProps, {}> {
-  public shouldComponentUpdate(nextProps, nextState) {
+  public shouldComponentUpdate(nextProps: DropdownArrowProps, nextState: {}) {
     /* istanbul ignore next */
     return shallowCompare(this, nextProps, nextState);
   }

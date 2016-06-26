@@ -42,7 +42,7 @@ export class EntityIcon extends React.Component<EntityIconProps, {}> {
     );
   }
 
-  private iconFor(components, states) {
+  private iconFor(components: Set<string>, states: Set<string>) {
     if (states.contains('locked')) {
       return TYPE_ICONS.locked;
     }

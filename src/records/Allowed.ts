@@ -1,4 +1,4 @@
-import {Set, Record} from 'immutable';
+import { Set, Record } from 'immutable';
 
 interface AllowedProps {
   components?: Set<string>;

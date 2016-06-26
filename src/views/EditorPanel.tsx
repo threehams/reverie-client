@@ -75,7 +75,6 @@ export class EditorPanel extends React.Component<EditorPanelProps, {}> {
 const MarkdownLinkContainer = connect(null, {
   attack: playerActions.attack,
   locateItem: playerActions.locateItem,
-  move: playerActions.move,
 })(MarkdownLink);
 
 const styles = {

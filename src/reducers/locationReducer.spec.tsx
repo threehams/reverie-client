@@ -1,6 +1,6 @@
 import { List } from 'immutable';
 
-import { SET_STATE } from '../actions/actionTypes';
+import { SET_STATE } from '../actions/messageActions';
 import locationReducer, { INITIAL_STATE } from './locationReducer';
 import { Location } from '../records';
 

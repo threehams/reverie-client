@@ -3,10 +3,10 @@ import { expect } from '../__test__/configureExpect';
 
 import editorHistoryReducer, { INITIAL_STATE } from './editorHistoryReducer';
 import * as editorActions from '../actions/editorActions';
-import { SET_STATE } from '../actions/actionTypes';
+import { SET_STATE } from '../actions/messageActions';
 
 describe('editorHistoryReducer', function() {
-  describe('sendCommand', function() {
+  describe('SET_STATE', function() {
     context('with a message', function() {
       it('adds the command to the history with a trailing blank line', function() {
         const initial = List(['Hello.']);

@@ -6,7 +6,7 @@ interface LoaderProps {
 }
 
 export class Loader extends React.Component<LoaderProps, {}> {
-  public shouldComponentUpdate(nextProps, nextState) {
+  public shouldComponentUpdate(nextProps: LoaderProps, nextState: {}) {
     /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }

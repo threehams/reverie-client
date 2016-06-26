@@ -1,4 +1,4 @@
-import { Action } from './actions/actionTypes';
+import { Action } from 'redux-actions';
 import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { rootReducer } from './rootReducer';
@@ -7,7 +7,7 @@ import { State } from './records';
 declare var module: { hot: any };
 
 const socketMiddleware = (socket) => {
-  return (store: any) => (next: Function) => (action: Action) => {
+  return (store: any) => (next: Function) => (action: Action<any>) => {
     if (action.meta && action.meta.socket) {
       socket.send(JSON.stringify(action.payload));
       return next(action);

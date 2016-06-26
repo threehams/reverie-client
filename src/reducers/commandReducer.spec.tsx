@@ -2,7 +2,7 @@ import { List, Set, fromJS } from 'immutable';
 import { expect } from '../__test__/configureExpect';
 
 import commandReducer, { INITIAL_STATE } from './commandReducer';
-import { COMMAND_SEND, SET_STATE } from '../actions/actionTypes';
+import { SET_STATE } from '../actions/messageActions';
 import * as commandActions from '../actions/commandActions';
 import { Command, CommandState } from '../records';
 
@@ -107,12 +107,7 @@ describe('commandReducer', function() {
   describe('COMMAND_SEND', function() {
     it('adds the command to the history', function() {
       const initial = new CommandState({history: List(['git status'])});
-      const action = {
-        payload: {
-          command: 'git add .',
-        },
-        type: COMMAND_SEND,
-      };
+      const action = commandActions.sendCommand('git add .');
       expect(commandReducer(initial, action).history).to.equal(fromJS(['git status', 'git add .']));
     });
 
@@ -121,12 +116,7 @@ describe('commandReducer', function() {
         current: 'get inventory',
         cursorIndex: 11,
       });
-      const action = {
-        payload: {
-          command: 'do something else',
-        },
-        type: COMMAND_SEND,
-      };
+      const action = commandActions.sendCommand('do something else');
       const newState = commandReducer(initial, action);
       expect(newState.current).to.equal('');
       expect(newState.cursorIndex).to.equal(0);

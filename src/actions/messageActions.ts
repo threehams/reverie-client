@@ -1,8 +1,21 @@
+import { Action } from 'redux-actions';
+import { Dispatch } from 'redux';
 import { fromJS, List, Map, Set } from 'immutable';
-import {
-  SET_STATE,
-} from './actionTypes';
+
 import { Allowed, Command, CommandPart, Entity, Location } from '../records';
+
+export const SET_STATE = 'SET_STATE';
+export type SET_STATE = {
+  availableCommands?: Set<Command>;
+  entities?: EntityMap;
+  entitiesToRemove?: List<string>;
+  location?: Location;
+  message?: string;
+  player?: string;
+  statusEffects?: Set<string>;
+};
+
+type EntityMap = Map<string, Entity>;
 
 interface StateData {
   availableCommands?: Array<CommandData>;
@@ -63,22 +76,7 @@ export interface EntityData {
   states?: Array<string>;
 }
 
-interface StateDelta {
-  type: string;
-  payload: {
-    availableCommands?: Set<Command>;
-    entities?: EntityMap;
-    entitiesToRemove?: List<string>;
-    location?: Location;
-    message?: string;
-    player?: string;
-    statusEffects?: Set<string>;
-  };
-}
-
-type EntityMap = Map<string, Entity>;
-
-export const setState = (stateData: StateData): StateDelta => ({
+export const setState = (stateData: StateData): Action<SET_STATE> => ({
   payload: {
     availableCommands: createCommandSet(stateData.availableCommands),
     entities: createEntityMap(stateData.entities),
@@ -91,8 +89,8 @@ export const setState = (stateData: StateData): StateDelta => ({
   type: SET_STATE,
 });
 
-export const setInitialState = (state) => {
-  return (dispatch, getState) => {
+export const setInitialState = (state: StateData) => {
+  return (dispatch: Dispatch<Action<SET_STATE>>, getState) => {
     const currentState = getState();
     if (currentState.getIn(['ui', 'player'])) {
       return;
@@ -102,13 +100,13 @@ export const setInitialState = (state) => {
   };
 };
 
+type EntityPair = [string, EntityData];
+
 function createEntityMap(entities: EntityObjectMap): EntityMap {
   if (!entities) {
     return Map({});
   }
-  return Object.entries(entities).reduce((entityMap: EntityMap, entry): EntityMap => {
-    const id: string = entry[0];
-    const entity: EntityData = entry[1];
+  return Object.entries(entities).reduce((entityMap: EntityMap, [id, entity]: EntityPair): EntityMap => {
     const entityProps: any = Object.assign(
       {},
       entity,

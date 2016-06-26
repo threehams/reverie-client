@@ -1,31 +1,32 @@
+import { Action } from 'redux-actions';
+import { Dispatch } from 'redux';
 import { List } from 'immutable';
 import * as commandActions from './commandActions';
-import {
-  EDITOR_SELECT_ITEMS,
-  INVENTORY_EXPAND_ITEMS,
-  PLAYER_SET_ACTIVE_VIEW,
-} from './actionTypes';
 
-export const setActiveView = (name) => ({
+export const INVENTORY_EXPAND_ITEMS = 'INVENTORY_EXPAND_ITEMS';
+export type INVENTORY_EXPAND_ITEMS = { ids: List<string> };
+export const INVENTORY_SELECT_ITEMS = 'INVENTORY_SELECT_ITEMS';
+export type INVENTORY_SELECT_ITEMS = { ids: List<string> };
+export const PLAYER_SET_ACTIVE_VIEW = 'PLAYER_SET_ACTIVE_VIEW';
+export type PLAYER_SET_ACTIVE_VIEW = { name: string };
+
+export const setActiveView = (name: string): Action<PLAYER_SET_ACTIVE_VIEW> => ({
   payload: {
     name,
   },
   type: PLAYER_SET_ACTIVE_VIEW,
 });
 
-export const move = (direction) => {
-  return commandActions.sendCommand(direction.toString());
-};
-
-export const attack = (id) => {
-  return (dispatch, getState) => {
+export const attack = (id: string) => {
+  return (dispatch: Dispatch<commandActions.COMMAND_SEND>, getState) => {
     const entity = getState().getIn(['entities', id]);
     dispatch(commandActions.sendCommand(`attack ${entity.name}`));
   };
 };
 
-export const locateItem = (id) => {
-  return (dispatch) => {
+// TODO don't send multiple actions from one thunk
+export const locateItem = (id: string) => {
+  return (dispatch: Dispatch<any>) => {
     const ids = List([id]);
 
     // dispatch one action to expand a number of containers
@@ -39,7 +40,7 @@ export const locateItem = (id) => {
       payload: {
         ids,
       },
-      type: EDITOR_SELECT_ITEMS,
+      type: INVENTORY_SELECT_ITEMS,
     });
   };
 };
