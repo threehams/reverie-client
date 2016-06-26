@@ -4,11 +4,12 @@ import './style.css';
 import './polyfills';
 
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 
-import { AppContainer } from './views/App';
+import { App } from './views/App';
 import configureStore from './configureStore';
 import socket from './socket';
+import { AppContainer } from 'react-hot-loader';
 
 import * as messageActions from './actions/messageActions';
 import * as socketActions from './actions/socketActions';
@@ -59,7 +60,23 @@ document.onkeypress = function() {
   document.getElementById('prompt').focus();
 };
 
-ReactDOM.render(
-  <AppContainer store={store} />,
+render(
+  <AppContainer>
+    <App store={store} />
+  </AppContainer>,
   document.getElementById('root')
 );
+
+declare var module: { hot: any };
+
+if (module.hot) {
+  module.hot.accept('./views/App', () => {
+    const App = require('./views/App').App;
+    render(
+      <AppContainer>
+        <App store={store} />
+      </AppContainer>,
+      document.getElementById('root')
+    );
+  });
+}
