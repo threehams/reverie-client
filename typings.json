@@ -1,15 +1,16 @@
 {
   "globalDependencies": {
+    "compression": "registry:dt/compression#0.0.0+20160501162003",
     "core-js": "registry:dt/core-js#0.0.0+20160602141332",
+    "express": "registry:dt/express#4.0.0+20160317120654",
+    "express-serve-static-core": "registry:dt/express-serve-static-core#0.0.0+20160617060422",
     "mocha": "registry:dt/mocha#2.2.5+20160317120654",
+    "node": "registry:dt/node#6.0.0+20160621231320",
     "react": "registry:dt/react#0.14.0+20160602151522",
     "react-addons-shallow-compare": "registry:dt/react-addons-shallow-compare#0.14.0+20160316155526",
     "react-dnd": "registry:dt/react-dnd#1.1.4+20160316155526",
     "react-dom": "registry:dt/react-dom#0.14.0+20160412154040",
-    "compression": "registry:dt/compression#0.0.0+20160501162003",
-    "express": "registry:dt/express#4.0.0+20160317120654",
-    "express-serve-static-core": "registry:dt/express-serve-static-core#0.0.0+20160617060422",
-    "node": "registry:dt/node#6.0.0+20160621231320",
+    "redux-actions": "registry:dt/redux-actions#0.8.0+20160521154116",
     "reselect": "registry:dt/reselect#2.0.2+20160319031821",
     "serve-static": "registry:dt/serve-static#0.0.0+20160606155157",
     "ws": "registry:dt/ws#0.0.0+20160405094435"
@@ -18,13 +19,13 @@
     "chai": "registry:npm/chai#3.5.0+20160415060238",
     "enzyme": "registry:npm/enzyme#2.2.0+20160322031343",
     "lodash": "registry:npm/lodash#4.0.0+20160416211519",
+    "mime": "registry:npm/mime#1.3.0+20160423043021",
     "radium": "registry:npm/radium#0.16.6+20160310030142",
     "react-redux": "registry:npm/react-redux#4.4.0+20160207114942",
-    "sinon": "registry:npm/sinon#1.16.0+20160427193336",
-    "sinon-chai": "registry:npm/sinon-chai#2.8.0+20160310030142",
-    "mime": "registry:npm/mime#1.3.0+20160423043021",
     "redux-immutable": "registry:npm/redux-immutable#3.0.6+20160310030142",
     "redux-thunk": "registry:npm/redux-thunk#2.0.0+20160525185520",
+    "sinon": "registry:npm/sinon#1.16.0+20160427193336",
+    "sinon-chai": "registry:npm/sinon-chai#2.8.0+20160310030142",
     "webpack": "registry:npm/webpack#1.12.9+20160418172948"
   }
 }

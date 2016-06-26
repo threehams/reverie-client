@@ -14,7 +14,7 @@ interface TabProps {
 
 @Radium
 export class Tab extends React.Component<TabProps, {}> {
-  public shouldComponentUpdate(nextProps, nextState) {
+  public shouldComponentUpdate(nextProps: TabProps, nextState: {}) {
     /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }
@@ -24,12 +24,14 @@ export class Tab extends React.Component<TabProps, {}> {
     return (
       <div style={[styles.global, active ? styles.active : styles.inactive]} onClick={this.elementClicked.bind(this)}>
         <span style={styles.label}>{ this.props.children }</span>
-        { onClickClose && <Icon name="fa fa-times" onClick={(e) => { e.stopPropagation(); onClickClose(); }} /> }
+        { onClickClose && <Icon name="fa fa-times" onClick={
+          (e: MouseEvent) => { e.stopPropagation(); onClickClose(); }
+        } /> }
       </div>
     );
   }
 
-  private elementClicked(event) {
+  private elementClicked(event: MouseEvent) {
     const { onClick, onClickClose } = this.props;
     // Button 1 is middle click
     if (event.button === 1 && onClickClose) {

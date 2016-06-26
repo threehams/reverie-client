@@ -1,6 +1,9 @@
-import { RESIZE_PANEL } from './actionTypes';
+import { Action } from 'redux-actions';
 
-export const resizePanel = (property, size) => ({
+export const RESIZE_PANEL = 'RESIZE_PANEL';
+export type RESIZE_PANEL = { property: string, size: number };
+
+export const resizePanel = (property: string, size: number): Action<RESIZE_PANEL> => ({
   payload: {
     property,
     size,

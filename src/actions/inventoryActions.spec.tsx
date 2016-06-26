@@ -3,7 +3,7 @@ import { List, Map, OrderedSet, Set } from 'immutable';
 import * as inventoryActions from './inventoryActions';
 import { Entity, Location, State, Ui } from '../records';
 import { expect } from '../__test__/configureExpect';
-import { EDITOR_SELECT_ITEMS } from './actionTypes';
+import { INVENTORY_SELECT_ITEMS } from './inventoryActions';
 
 describe('inventoryActions', function() {
   describe('expandItems', function() {
@@ -18,7 +18,7 @@ describe('inventoryActions', function() {
           result = action;
         };
         thunk(dispatch, getState);
-        expect(result.type).to.equal(EDITOR_SELECT_ITEMS);
+        expect(result.type).to.equal(INVENTORY_SELECT_ITEMS);
         expect(result.payload.ids).to.equal(List(['4']));
         expect(result.payload.owner).to.equal('6');
       });
@@ -68,7 +68,7 @@ describe('inventoryActions', function() {
             result = action;
           };
           thunk(dispatch, getState);
-          expect(result.type).to.equal(EDITOR_SELECT_ITEMS);
+          expect(result.type).to.equal(INVENTORY_SELECT_ITEMS);
           expect(result.payload.ids).to.equal(List(['1', '2', '4']));
           expect(result.payload.owner).to.equal('self');
         });
@@ -116,7 +116,7 @@ describe('inventoryActions', function() {
             result = action;
           };
           thunk(dispatch, getState);
-          expect(result.type).to.equal(EDITOR_SELECT_ITEMS);
+          expect(result.type).to.equal(INVENTORY_SELECT_ITEMS);
           expect(result.payload.ids).to.equal(List(['1', '2', '3', '4']));
           expect(result.payload.owner).to.equal('self');
         });
@@ -164,7 +164,7 @@ describe('inventoryActions', function() {
             result = action;
           };
           thunk(dispatch, getState);
-          expect(result.type).to.equal(EDITOR_SELECT_ITEMS);
+          expect(result.type).to.equal(INVENTORY_SELECT_ITEMS);
           expect(result.payload.ids).to.equal(List(['3', '2', '1']));
           expect(result.payload.owner).to.equal('self');
         });
@@ -221,12 +221,11 @@ describe('inventoryActions', function() {
             result = action;
           };
           thunk(dispatch, getState);
-          expect(result.type).to.equal(EDITOR_SELECT_ITEMS);
+          expect(result.type).to.equal(INVENTORY_SELECT_ITEMS);
           expect(result.payload.ids).to.equal(List(['4', '3', '2', '1']));
           expect(result.payload.owner).to.equal('self');
         });
       });
-
     });
   });
 });

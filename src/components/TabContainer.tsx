@@ -10,7 +10,7 @@ interface TabContainerProps {
 
 @Radium
 export class TabContainer extends React.Component<TabContainerProps, {}> {
-  public shouldComponentUpdate(nextProps, nextState) {
+  public shouldComponentUpdate(nextProps: TabContainerProps, nextState: {}) {
     /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }

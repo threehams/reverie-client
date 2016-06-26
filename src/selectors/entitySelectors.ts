@@ -2,7 +2,7 @@ import { Map } from 'immutable';
 import { createSelector } from 'reselect';
 import { Entity, Location, State } from '../records';
 
-function addPaths(entity, entities, owner, path) {
+function addPaths(entity: Entity, entities: Map<string, Entity>, owner: string, path: string) {
   const newPath = `${path}/${entity.name}`;
   const pathSet = entity.merge({ owner, path: newPath });
   let newEntities = entities;

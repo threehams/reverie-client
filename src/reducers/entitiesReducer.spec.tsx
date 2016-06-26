@@ -3,7 +3,7 @@ import { expect } from '../__test__/configureExpect';
 
 import entitiesReducer, { INITIAL_STATE } from './entitiesReducer';
 import { Entity } from '../records';
-import { SET_STATE } from '../actions/actionTypes';
+import { SET_STATE } from '../actions/messageActions';
 
 describe('entitiesReducer', function() {
   describe('SET_STATE', function() {
@@ -30,7 +30,7 @@ describe('entitiesReducer', function() {
               name: 'thing3',
             }),
           }),
-          entitiesToRemove: List(),
+          entitiesToRemove: List([]),
         },
         type: SET_STATE,
       };
@@ -65,7 +65,7 @@ describe('entitiesReducer', function() {
       });
       const action = {
         payload: {
-          entities: Map(),
+          entities: Map({}),
           entitiesToRemove: List(['1']),
         },
         type: SET_STATE,

@@ -14,9 +14,9 @@ import * as playerActions from '../actions/playerActions';
 import * as layoutActions from '../actions/layoutActions';
 
 interface LayoutProps {
-  activePlayerView: any;
-  alert: any;
-  footerHeight: any;
+  activePlayerView: 'inventory' | 'character';
+  alert: string;
+  footerHeight: number;
   resizePanel: any;
   setActiveView: any;
   sidebarHeight: any;

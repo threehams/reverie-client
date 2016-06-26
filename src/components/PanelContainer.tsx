@@ -3,7 +3,7 @@ import { Children, Component, cloneElement } from 'react';
 import Radium = require('radium');
 import shallowCompare = require('react-addons-shallow-compare');
 
-import { PanelResizer } from './PanelResizer';
+import { Panel, PanelResizer } from './';
 import panelStyles from '../styles/panel';
 
 interface PanelContainerProps {
@@ -30,7 +30,7 @@ export class PanelContainer extends Component<PanelContainerProps, PanelContaine
     };
   }
 
-  public shouldComponentUpdate(nextProps, nextState) {
+  public shouldComponentUpdate(nextProps: PanelContainerProps, nextState: PanelContainerState) {
     /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }
@@ -46,10 +46,9 @@ export class PanelContainer extends Component<PanelContainerProps, PanelContaine
       );
     }
 
-    const panels = this.setHeights(children);
     return (
       <div>
-        { panels }
+        { this.setHeights(children) }
       </div>
     );
   }
@@ -67,7 +66,7 @@ export class PanelContainer extends Component<PanelContainerProps, PanelContaine
     }
   }
 
-  private wrapSidebars(sidebars, width, height) {
+  private wrapSidebars(sidebars, width: number|string, height: number|string) {
     const sidebarHeight = this.state.sidebarHeight || this.props.sidebarHeight;
     return (
       <div style={[styles.sidebar, { width, height }]} key="sidebar-wrapper">
@@ -82,12 +81,12 @@ export class PanelContainer extends Component<PanelContainerProps, PanelContaine
   }
 
   private setHeights(children) {
-    const footerHeight: number = this.state.footerHeight || this.props.footerHeight;
-    const sidebarWidth: number = this.state.sidebarWidth || this.props.sidebarWidth;
+    const footerHeight = this.state.footerHeight || this.props.footerHeight;
+    const sidebarWidth = this.state.sidebarWidth || this.props.sidebarWidth;
     const sidebars = children.filter(child => child.props.type === 'sidebar');
     const main = children.filter(child => child.props.type === 'main')[0];
     const footer = children.filter(child => child.props.type === 'footer')[0];
-    const topHeightStyle: Object = footer ? `calc(100vh - ${footerHeight}px)` : '100vh';
+    const topHeightStyle = footer ? `calc(100vh - ${footerHeight}px)` : '100vh';
     const sidebar = this.wrapSidebars(sidebars, sidebarWidth, topHeightStyle);
     const mainWidth = sidebar ? `calc(100% - ${sidebarWidth}px)` : '100%';
     return [

@@ -39,7 +39,7 @@ export class PanelResizer extends React.Component<PanelResizerProps, PanelResize
     this.endResize = this.endResize.bind(this);
   }
 
-  public shouldComponentUpdate(nextProps, nextState) {
+  public shouldComponentUpdate(nextProps: PanelResizerProps, nextState: PanelResizerState) {
     /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
   }

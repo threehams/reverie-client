@@ -4,7 +4,9 @@ import { expect } from '../__test__/configureExpect';
 import uiReducer, { INITIAL_STATE } from './uiReducer';
 import * as inventoryActions from '../actions/inventoryActions';
 import * as editorActions from '../actions/editorActions';
-import { SET_STATE, EDITOR_SELECT_ITEMS, INVENTORY_EXPAND_ITEMS } from '../actions/actionTypes';
+import { SET_STATE } from '../actions/messageActions';
+import { INVENTORY_SELECT_ITEMS } from '../actions/inventoryActions';
+import { INVENTORY_EXPAND_ITEMS } from '../actions/playerActions';
 import * as socketActions from '../actions/socketActions';
 import { Ui } from '../records';
 
@@ -59,14 +61,14 @@ describe('uiReducer', function() {
     });
   });
 
-  describe('EDITOR_SELECT_ITEMS', function() {
+  describe('INVENTORY_SELECT_ITEMS', function() {
     it('sets the items to the list given', function() {
       const initial = new Ui({});
       const action = {
         payload: {
           ids: List(['2', '3', '4']),
         },
-        type: EDITOR_SELECT_ITEMS,
+        type: INVENTORY_SELECT_ITEMS,
       };
       const newState = uiReducer(initial, action);
       expect(newState.selectedItems).to.equal(OrderedSet(['2', '3', '4']));
@@ -165,8 +167,6 @@ describe('uiReducer', function() {
         const action = {
           payload: {
             entitiesToRemove: List(),
-            location: undefined,
-            player: undefined,
           },
           type: SET_STATE,
         };

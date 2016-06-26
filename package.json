@@ -86,6 +86,7 @@
     "react-redux": "^4.4.5",
     "reconnectingwebsocket": "^1.0.0",
     "redux": "^3.4.0",
+    "redux-actions": "^0.10.0",
     "redux-thunk": "^2.0.1",
     "reselect": "^2.5.1",
     "style-loader": "^0.13.1",

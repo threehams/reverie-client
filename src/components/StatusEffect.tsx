@@ -10,7 +10,7 @@ const BEE_PHRASES = [
   'ohhh no my eyes my eyes aggggghhhh',
 ];
 
-const shuffle = (phrase) => {
+const shuffle = (phrase: string) => {
   if (phrase.length < 3) {
     return phrase;
   }
@@ -43,7 +43,7 @@ class StatusEffect extends React.Component<StatusEffectProps, {}> {
     const onFire = statusEffects.includes('fire');
     const confused = statusEffects.includes('confusion');
     const bees = statusEffects.includes('bees');
-    let result = children;
+    let result: any = children;
     if (confused) {
       result = this.confuse(result);
     }
@@ -65,55 +65,55 @@ class StatusEffect extends React.Component<StatusEffectProps, {}> {
     );
   }
 
-  private confuse(children) {
-    return React.Children.map(children, (child: any) => {
-      if (typeof child !== 'string') {
-        return child;
+  private confuse(children: Array<React.ReactNode>): Array<React.ReactNode> {
+    return React.Children.map(children, (child) => {
+      if (typeof child === 'string') {
+        return child.split(' ').map(spaced => {
+          return spaced.split('.').map(dotted => {
+            return dotted.split('-').map(dashed => {
+              return shuffle(dashed);
+            }).join('-');
+          }).join('.');
+        }).join(' ');
       }
-      return child.split(' ').map(spaced => {
-        return spaced.split('.').map(dotted => {
-          return dotted.split('-').map(dashed => {
-            return shuffle(dashed);
-          }).join('-');
-        }).join('.');
-      }).join(' ');
+      return child;
     });
   }
 
-  private panic(children) {
-    return React.Children.map(children, (child: any) => {
-      if (typeof child !== 'string') {
-        return child;
+  private panic(children: Array<React.ReactNode>): Array<React.ReactNode> {
+    return React.Children.map(children, (child) => {
+      if (typeof child === 'string') {
+        return child.split(' ').map(word => {
+          if (Math.random() < 0.05) {
+            return 'a'.repeat(word.length);
+          }
+          if (word[word.length - 1] !== '.') {
+            return word;
+          }
+          return word.substr(0, word.length - 1) + '!';
+        }).join(' ');
       }
-      return child.split(' ').map(word => {
-        if (Math.random() < 0.05) {
-          return 'a'.repeat(word.length);
-        }
-        if (word[word.length - 1] !== '.') {
-          return word;
-        }
-        return word.substr(0, word.length - 1) + '!';
-      }).join(' ');
+      return child;
     });
   }
 
-  private bees(children) {
+  private bees(children: Array<React.ReactNode>): Array<React.ReactNode> {
     return React.Children.map(children, (child: any) => {
-      if (typeof child !== 'string') {
-        return child;
-      }
-      return child.split(' ').map(word => {
-        if (word.length < 3) {
+      if (typeof child === 'string') {
+        return child.split(' ').map(word => {
+          if (word.length < 3) {
+            return word;
+          }
+          if (Math.random() < 0.1) {
+            return 'b' + 'z'.repeat(word.length - 1);
+          }
+          if (Math.random() < 0.06) {
+            return `${word} ${BEE_PHRASES[Math.floor(Math.random() * BEE_PHRASES.length)]}`;
+          }
           return word;
-        }
-        if (Math.random() < 0.1) {
-          return 'b' + 'z'.repeat(word.length - 1);
-        }
-        if (Math.random() < 0.06) {
-          return `${word} ${BEE_PHRASES[Math.floor(Math.random() * BEE_PHRASES.length)]}`;
-        }
-        return word;
-      }).join(' ');
+        }).join(' ');
+      }
+      return child;
     });
   }
 }
