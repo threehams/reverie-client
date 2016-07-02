@@ -9,7 +9,7 @@ interface AppProps {
   store: any;
 }
 
-class App extends React.Component<AppProps, {}> {
+class BaseApp extends React.Component<AppProps, {}> {
   public render() {
     return (
       <Provider store={this.props.store}>
@@ -20,4 +20,4 @@ class App extends React.Component<AppProps, {}> {
 }
 
 const Html5Context = DragDropContext(Html5Backend);
-export const AppContainer: any = Html5Context(App);
+export const App: any = Html5Context(BaseApp);

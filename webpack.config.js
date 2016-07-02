@@ -7,7 +7,7 @@ var webpack = require('webpack');
 var SpritesmithPlugin = require('webpack-spritesmith');
 
 var ENTRY_POINTS = {
-  development: ['webpack-hot-middleware/client', './src/index.tsx'],
+  development: ['webpack-hot-middleware/client', 'react-hot-loader/patch', './src/index.tsx'],
   production: ['./src/index.tsx'],
 };
 
@@ -86,7 +86,7 @@ module.exports = {
     loaders: [
       {
         test: /\.(tsx|ts|js)/,
-        loaders: ['babel', 'ts'],
+        loaders: ['react-hot-loader/webpack', 'ts'],
         include: path.join(__dirname, 'src')
       },
       {
