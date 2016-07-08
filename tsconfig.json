@@ -7,12 +7,11 @@
     "outDir": "tsDist",
     "target": "es5",
     "moduleResolution": "node",
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "strictNullChecks": false
   },
   "exclude": [
     "node_modules",
-    "server.js",
-    "serverConfig.js",
     "webpack.config.js"
   ]
 }
