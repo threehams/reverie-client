@@ -7,8 +7,8 @@ var webpack = require('webpack');
 var SpritesmithPlugin = require('webpack-spritesmith');
 
 var ENTRY_POINTS = {
-  development: ['webpack-hot-middleware/client', 'react-hot-loader/patch', './src/index.tsx'],
-  production: ['./src/index.tsx'],
+  development: ['webpack-hot-middleware/client', 'react-hot-loader/patch', './client/index.tsx'],
+  production: ['./client/index.tsx'],
 };
 
 var ENV = process.env.NODE_ENV || 'development';
@@ -79,7 +79,7 @@ module.exports = {
   },
   plugins: PLUGINS[ENV],
   resolve: {
-    root: [path.resolve('src')],
+    root: [path.resolve('client')],
     extensions: ['', '.jsx', '.js', '.tsx', '.ts']
   },
   module: {
@@ -87,7 +87,7 @@ module.exports = {
       {
         test: /\.(tsx|ts|js)/,
         loaders: ['react-hot-loader/webpack', 'ts'],
-        include: path.join(__dirname, 'src')
+        include: path.join(__dirname, 'client')
       },
       {
         test: /\.css$/,
