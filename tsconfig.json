@@ -7,8 +7,7 @@
     "outDir": "tsDist",
     "target": "es5",
     "moduleResolution": "node",
-    "noImplicitAny": false,
-    "strictNullChecks": false
+    "noImplicitAny": false
   },
   "exclude": [
     "node_modules",

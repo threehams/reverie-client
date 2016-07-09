@@ -6,8 +6,6 @@ import webpackConfig = require('../webpack.config');
 import webpackDevMiddleware = require('webpack-dev-middleware');
 import webpackHotMiddleware = require('webpack-hot-middleware');
 
-import config from './config';
-
 const app = express();
 
 const compiler = webpack(webpackConfig);
@@ -24,7 +22,7 @@ app.get('/', function(request, response) {
   response.sendFile(path.join(__dirname, 'index.html'));
 });
 
-const server = app.listen(config.port || 8080, function(err: Error) {
+const server = app.listen(8080, function(err: Error) {
   if (err) {
     // tslint:disable
     console.log(err);
@@ -33,6 +31,6 @@ const server = app.listen(config.port || 8080, function(err: Error) {
   }
 
   // tslint:disable
-  console.log('Listening at http://localhost, port', config.port);
+  console.log('Listening at http://localhost, port', 8080);
   // tslint:eisable
 });

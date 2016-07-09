@@ -25,7 +25,7 @@ type Actions = SetState |
   PlayerSetActiveView |
   ResizePanel;
 
-export default (state = INITIAL_STATE, action: Actions) => {
+export default (state = INITIAL_STATE, action: any) => {
   switch (action.type) {
     case 'EDITOR_ADD_VIEW':
       return addView(state, action.payload.id);

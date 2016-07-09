@@ -35,11 +35,11 @@ if (!config.development) {
   app.use(compression());
   app.use('/build', express.static(path.join(__dirname, '..', 'build')));
   app.use('/assets', express.static(path.join(__dirname, '..', 'assets')));
-}
 
-app.get('/', function(request, response) {
-  response.sendFile(path.join(__dirname, 'index.html'));
-});
+  app.get('/', function(request, response) {
+    response.sendFile(path.join(__dirname, 'index.html'));
+  });
+}
 
 const PORT = config.port || 3000;
 
@@ -198,3 +198,5 @@ wsServer.on('connection', function(ws) {
     }
   });
 });
+
+throw new Error();

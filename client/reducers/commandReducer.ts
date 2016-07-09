@@ -15,7 +15,7 @@ import { CommandState } from '../records';
 
 export const INITIAL_STATE: CommandState = new CommandState();
 
-type CommandAction = CommandCloseAutocomplete |
+type Actions = CommandCloseAutocomplete |
   CommandComplete |
   CommandHistoryClear |
   CommandSelectAutocompleteItem |
@@ -24,7 +24,7 @@ type CommandAction = CommandCloseAutocomplete |
   CommandSetCursorIndex |
   SetState;
 
-export default (state = INITIAL_STATE, action: CommandAction) => {
+export default (state = INITIAL_STATE, action: any) => {
   switch (action.type) {
     case 'COMMAND_HISTORY_CLEAR':
       return state.update('history', history => history.clear());
