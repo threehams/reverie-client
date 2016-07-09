@@ -73,9 +73,9 @@ module.exports = {
   devtool: DEV_TOOLS[ENV],
   entry: ENTRY_POINTS[ENV],
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, 'build'),
     filename: 'bundle.js',
-    publicPath: '/dist/'
+    publicPath: '/build/'
   },
   plugins: PLUGINS[ENV],
   resolve: {
@@ -87,7 +87,7 @@ module.exports = {
       {
         test: /\.(tsx|ts|js)/,
         loaders: ['react-hot-loader/webpack', 'ts'],
-        include: path.join(__dirname, 'client')
+        include: [path.join(__dirname, 'client'), path.join(__dirname, 'common')]
       },
       {
         test: /\.css$/,

@@ -13,6 +13,7 @@
 /// <reference path="globals/ws/index.d.ts" />
 /// <reference path="modules/chai/index.d.ts" />
 /// <reference path="modules/enzyme/index.d.ts" />
+/// <reference path="modules/http-proxy/index.d.ts" />
 /// <reference path="modules/lodash/index.d.ts" />
 /// <reference path="modules/mime/index.d.ts" />
 /// <reference path="modules/radium/index.d.ts" />

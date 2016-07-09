@@ -1,12 +1,8 @@
 /* eslint-env node */
 import path = require('path');
 import express = require('express');
-import webpack = require('webpack');
 import WebSocket = require('ws');
 import compression = require('compression');
-import webpackConfig = require('../webpack.config');
-import webpackDevMiddleware = require('webpack-dev-middleware');
-import webpackHotMiddleware = require('webpack-hot-middleware');
 
 import config from './config';
 import fixtureInitialState from './fixtures/fixtureInitialState';
@@ -35,27 +31,19 @@ import fixtureUnlockContainer from './fixtures/fixtureUnlockContainer';
 
 const app = express();
 
-if (config.development) {
-  const compiler = webpack(webpackConfig);
-  app.use(webpackDevMiddleware(compiler, {
-    noInfo: true,
-    publicPath: webpackConfig.output.publicPath,
-    stats: { chunks: false },
-  }));
-  app.use('/assets', express.static(path.join( __dirname, '..', 'assets')));
-
-  app.use(webpackHotMiddleware(compiler));
-} else {
+if (!config.development) {
   app.use(compression());
-  app.use('/dist', express.static(path.join( __dirname, '..', 'dist')));
-  app.use('/assets', express.static(path.join( __dirname, '..', 'assets')));
+  app.use('/build', express.static(path.join(__dirname, '..', 'build')));
+  app.use('/assets', express.static(path.join(__dirname, '..', 'assets')));
 }
 
 app.get('/', function(request, response) {
   response.sendFile(path.join(__dirname, 'index.html'));
 });
 
-const server = app.listen(config.port || 8080, function(err: Error) {
+const PORT = config.port || 3000;
+
+const server = app.listen(PORT, function(err: Error) {
   if (err) {
     // tslint:disable
     console.log(err);
@@ -64,7 +52,7 @@ const server = app.listen(config.port || 8080, function(err: Error) {
   }
 
   // tslint:disable
-  console.log('Listening at http://localhost, port', config.port);
+  console.log('Listening at http://localhost, port', PORT);
   // tslint:eisable
 
 });

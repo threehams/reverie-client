@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "experimentalDecorators": true,
+    "jsx": "react",
+    "module": "commonjs",
+    "outDir": "tsDist",
+    "target": "es5",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "strictNullChecks": false
+  },
+  "exclude": [
+    "node_modules",
+    "webpack.config.js"
+  ]
+}

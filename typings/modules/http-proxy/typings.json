@@ -1,0 +1,11 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/typed-contrib/node-http-proxy/9ecee38ed25be2bc3fc3eb7600b91a6df4346e09/typings.json",
+    "raw": "registry:npm/http-proxy#1.12.0+20160315230223",
+    "main": "index.d.ts",
+    "global": false,
+    "name": "http-proxy",
+    "type": "typings"
+  }
+}
