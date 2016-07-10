@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "allowJs": true,
+    "allowJs": false,
     "experimentalDecorators": true,
     "jsx": "react",
     "module": "commonjs",

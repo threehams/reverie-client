@@ -69,7 +69,7 @@ var DEV_TOOLS = {
   production: 'source-map'
 };
 
-module.exports = {
+export default {
   devtool: DEV_TOOLS[ENV],
   entry: ENTRY_POINTS[ENV],
   output: {

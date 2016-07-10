@@ -4,7 +4,7 @@ import express = require('express');
 import webpack = require('webpack');
 import WebSocket = require('ws');
 import compression = require('compression');
-import webpackConfig = require('../webpack.config');
+import webpackConfig from '../webpack.config';
 import webpackDevMiddleware = require('webpack-dev-middleware');
 import webpackHotMiddleware = require('webpack-hot-middleware');
 
