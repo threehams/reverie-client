@@ -1,7 +1,6 @@
+import { Set } from 'immutable';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import * as _ from 'lodash';
-import { Set } from 'immutable';
 
 const BEE_PHRASES = [
   'noooo not the bees!',
@@ -33,8 +32,7 @@ interface StatusEffectProps {
 
 class StatusEffect extends React.Component<StatusEffectProps, {}> {
   public render() {
-    const { children, statusEffects } = this.props;
-    const rest = _.omit(this.props, ['children', 'statusEffects']);
+    const { children, statusEffects, ...rest } = this.props;
     if (!statusEffects.size) {
       return <span>{ children }</span>;
     }

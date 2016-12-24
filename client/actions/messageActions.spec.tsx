@@ -49,30 +49,30 @@ describe('messageActions', function() {
     });
   });
 
-  // describe('entities', function() {
-  //   it('converts entity data to a map of records', function() {
-  //     const stateData = {
-  //       entities: {
-  //         '1': {
-  //           components: ['attackable'],
-  //           entities: ['2'],
-  //           id: '1',
-  //           name: 'thing',
-  //           states: ['attacking'],
-  //         },
-  //       },
-  //     };
+  describe('entities', function() {
+    it('converts entity data to a map of records', function() {
+      const stateData = {
+        entities: {
+          '1': {
+            components: ['attackable'],
+            entities: ['2'],
+            id: '1',
+            name: 'thing',
+            states: ['attacking'],
+          },
+        },
+      };
 
-  //     const expected = Map({
-  //       '1': new Entity({
-  //         components: Set(['attackable']),
-  //         entities: List(['2']),
-  //         id: '1',
-  //         name: 'thing',
-  //         states: Set(['attacking']),
-  //       }),
-  //     });
-  //     expect(messageActions.setState(stateData).payload.entities).to.equal(expected);
-  //   });
-  // });
+      const expected = Map({
+        '1': new Entity({
+          components: Set(['attackable']),
+          entities: List(['2']),
+          id: '1',
+          name: 'thing',
+          states: Set(['attacking']),
+        }),
+      });
+      expect(messageActions.setState(stateData).payload.entities).to.equal(expected);
+    });
+  });
 });

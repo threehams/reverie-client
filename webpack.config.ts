@@ -2,37 +2,37 @@
 /* eslint no-process-env:0 */
 /* eslint no-var:0 */
 
-var path = require('path');
-var webpack = require('webpack');
-var SpritesmithPlugin = require('webpack-spritesmith');
+import path = require('path');
+import webpack = require('webpack');
+const SpritesmithPlugin = require('webpack-spritesmith');
 
-var ENTRY_POINTS = {
+const ENTRY_POINTS = {
   development: ['webpack-hot-middleware/client', 'react-hot-loader/patch', './client/index.tsx'],
   production: ['./client/index.tsx'],
 };
 
-var ENV = process.env.NODE_ENV || 'development';
+const ENV = process.env.NODE_ENV || 'development';
 
-var PLUGINS = {
+const PLUGINS = {
   development: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: '\'development\''
-      }
+        NODE_ENV: '\'development\'',
+      },
     }),
     new SpritesmithPlugin({
+      apiOptions: {
+        cssImageRef: './icons.png',
+      },
       src: {
         cwd: './assets/icons',
-        glob: '*.png'
+        glob: '*.png',
       },
       target: {
+        css: 'assets/icons.css',
         image: 'assets/icons.png',
-        css: 'assets/icons.css'
-      },
-      apiOptions: {
-        cssImageRef: './icons.png'
       },
     }),
   ],
@@ -41,62 +41,63 @@ var PLUGINS = {
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
-        warnings: false
-      }
+        warnings: false,
+      },
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: '\'production\''
-      }
+        NODE_ENV: '\'production\'',
+      },
     }),
     new SpritesmithPlugin({
+      apiOptions: {
+        cssImageRef: './icons.png',
+      },
       src: {
         cwd: path.resolve(__dirname, 'assets/icons'),
-        glob: '*.png'
+        glob: '*.png',
       },
       target: {
+        css: path.resolve(__dirname, 'assets/icons.css'),
         image: path.resolve(__dirname, 'assets/icons.png'),
-        css: path.resolve(__dirname, 'assets/icons.css')
-      },
-      apiOptions: {
-        cssImageRef: './icons.png'
       },
     }),
-  ]
-};
-var DEV_TOOLS = {
-  development: 'eval',
-  production: 'source-map'
+  ],
 };
 
-module.exports = {
+const DEV_TOOLS = {
+  development: 'eval',
+  production: 'source-map',
+};
+
+export default {
   devtool: DEV_TOOLS[ENV],
   entry: ENTRY_POINTS[ENV],
-  output: {
-    path: path.join(__dirname, 'build'),
-    filename: 'bundle.js',
-    publicPath: '/build/'
-  },
-  plugins: PLUGINS[ENV],
-  resolve: {
-    root: [path.resolve('client')],
-    extensions: ['', '.jsx', '.js', '.tsx', '.ts']
-  },
   module: {
     loaders: [
       {
-        test: /\.(tsx|ts|js)/,
+        include: [path.join(__dirname, 'client'), path.join(__dirname, 'common')],
         loaders: ['react-hot-loader/webpack', 'ts'],
-        include: [path.join(__dirname, 'client'), path.join(__dirname, 'common')]
+        test: /\.(tsx|ts|js)/,
       },
       {
-        test: /\.css$/,
         loader: 'style-loader!css-loader',
+        test: /\.css$/,
       },
       {
-        test: /\.json$/,
         loader: 'json',
-      }
-    ]
-  }
+        test: /\.json$/,
+      },
+    ],
+  },
+  output: {
+    filename: 'bundle.js',
+    path: path.join(__dirname, 'build'),
+    publicPath: '/build/',
+  },
+  plugins: PLUGINS[ENV],
+  resolve: {
+    extensions: ['', '.jsx', '.js', '.tsx', '.ts'],
+    root: [path.resolve('client')],
+  },
 };

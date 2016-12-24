@@ -2,7 +2,7 @@
 import path = require('path');
 import express = require('express');
 import webpack = require('webpack');
-import webpackConfig = require('../webpack.config');
+import webpackConfig from '../webpack.config';
 import webpackDevMiddleware = require('webpack-dev-middleware');
 import webpackHotMiddleware = require('webpack-hot-middleware');
 
@@ -22,7 +22,7 @@ app.get('/', function(request, response) {
   response.sendFile(path.join(__dirname, 'index.html'));
 });
 
-const server = app.listen(8080, function(err: Error) {
+app.listen(8080, function(err: Error) {
   if (err) {
     // tslint:disable
     console.log(err);

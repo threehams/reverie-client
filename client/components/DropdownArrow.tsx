@@ -1,6 +1,5 @@
 import * as React from 'react';
 import shallowCompare = require('react-addons-shallow-compare');
-import * as _ from 'lodash';
 
 import { Icon } from './Icon';
 
@@ -17,8 +16,7 @@ export class DropdownArrow extends React.Component<DropdownArrowProps, {}> {
   }
 
   public render() {
-    const { expanded } = this.props;
-    const rest = _.omit(this.props, 'expanded');
+    const { expanded, ...rest } = this.props;
     return (
       <Icon {...rest} name={ expanded ? 'icon-arrow-down' : 'icon-arrow-right' } before />
     );

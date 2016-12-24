@@ -1,18 +1,45 @@
-import { List, Map, Set } from 'immutable';
+import { Dispatch } from 'redux';
 
-import { Command, Entity, Location } from '../records';
+import { State, StateDelta } from '../records';
+import * as entityActions from '../actions/entityActions';
 
-export type SetState = {
+export interface SetState {
   type: 'SET_STATE';
-  payload: {
-    availableCommands?: Set<Command>;
-    entities?: EntityMap;
-    entitiesToRemove?: List<string>;
-    location?: Location;
-    message?: string;
-    player?: string;
-    statusEffects?: Set<string>;
-  }
+  payload: StateDelta;
 };
 
-type EntityMap = Map<string, Entity>;
+export interface SendMessage {
+  type: 'SEND_MESSAGE';
+  payload: {
+    message: string;
+  };
+}
+
+export function sendMessage(id: string, message: string): SendMessage {
+  return {
+    payload: {
+      message,
+    },
+    type: 'SEND_MESSAGE',
+  };
+}
+
+type Actions = entityActions.MoveEntity;
+
+/*
+ * Parses a command from the server.  
+ */
+export function parseCommand(command: string, userId: string) {
+  return (dispatch: Dispatch<Actions>, getState: () => State): void => {
+    const parts = command.split(' ');
+    const state = getState();
+    const root = state.command.available.find(availableCommand => availableCommand.name === parts[0]);
+    if (!root) {
+      dispatch( sendMessage(userId, `I don\'t know how to ${parts[0]}.`) );
+      return;
+    }
+
+    // delegate to other action creators?
+    dispatch(entityActions.move('1', '2'));
+  };
+}

@@ -1,16 +1,19 @@
 {
   "compilerOptions": {
-    "allowJs": true,
     "experimentalDecorators": true,
     "jsx": "react",
     "module": "commonjs",
     "outDir": "tsDist",
     "target": "es5",
     "moduleResolution": "node",
-    "noImplicitAny": false
+    "allowSyntheticDefaultImports": true,
+    "lib": ["dom", "es5", "es6", "es2016.array.include", "es2017.object"]
   },
-  "exclude": [
-    "node_modules",
-    "webpack.config.js"
+  "include": [
+    "client/**/*",
+    "common/**/*",
+    "server/**/*",
+    "typings/**/*",
+    "webpack.config.ts"
   ]
 }

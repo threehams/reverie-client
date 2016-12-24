@@ -1,5 +1,5 @@
 import { Action } from 'redux-actions';
-import { applyMiddleware, compose, createStore } from 'redux';
+import { applyMiddleware, createStore, Store } from 'redux';
 import thunk from 'redux-thunk';
 import { rootReducer } from './rootReducer';
 import { State } from './records';
@@ -17,13 +17,9 @@ const socketMiddleware = (socket: WebSocket) => {
 };
 
 const configureStore = (socket: WebSocket, initialState: State) => {
-  const win: any = window;
-  const finalCreateStore = compose(
-    applyMiddleware(thunk, socketMiddleware(socket)),
-    // eslint-disable-next-line no-undef, no-process-env
-    win.devToolsExtension && process.env.NODE_ENV !== 'production' ? win.devToolsExtension() : f => f
-  )(createStore);
-  const store = finalCreateStore(rootReducer, initialState);
+  const withMiddleware = applyMiddleware(thunk, socketMiddleware(socket))(createStore);
+  const withDevTools = window['devToolsExtension'] ? window['devToolsExtension']()(withMiddleware) : withMiddleware;
+  const store: Store<any> = withDevTools(rootReducer, initialState);
 
   if (module.hot) {
     module.hot.accept('./rootReducer', () => {

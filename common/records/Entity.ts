@@ -15,6 +15,7 @@ interface EntityProps {
   maxStorage?: number;
   name: string;
   owner?: string;
+  parentId?: string;
   path?: string;
   quantity?: number;
   selected?: boolean;
@@ -36,6 +37,7 @@ export class Entity extends Record<EntityProps>({
   maxStorage: 0,
   name: '',
   owner: null,
+  parentId: null,
   path: '',
   quantity: 1,
   selected: false,
@@ -55,6 +57,7 @@ export class Entity extends Record<EntityProps>({
   public maxStorage: number;
   public name: string;
   public owner: string;
+  public parentId: string;
   public path: string;
   public quantity: number;
   public selected: boolean;

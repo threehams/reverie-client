@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import Radium = require('radium');
 import { List } from 'immutable';
 
-import InventoryItem from './InventoryItem';
-import { Loader } from '../components/Loader';
 import * as editorActions from '../actions/editorActions';
 import * as inventoryActions from '../actions/inventoryActions';
-import * as inventorySelectors from '../selectors/inventorySelectors';
+import { Loader } from '../components/Loader';
 import { Entity, State } from '../records';
+import * as inventorySelectors from '../selectors/inventorySelectors';
+import InventoryItem from './InventoryItem';
 
 interface InventoryProps {
   addView: Function;
@@ -29,13 +29,14 @@ export class Inventory extends React.Component<InventoryProps, {}> {
           {
             items && items.map(entity => {
               return (
-                <InventoryItem key={entity.id}
-                               item={entity}
-                               addView={addView}
-                               moveItem={moveItem}
-                               selectItem={selectItem}
-                               toggleExpand={toggleExpand}
-                               toggleItem={toggleItem}
+                <InventoryItem
+                  key={entity.id}
+                  item={entity}
+                  addView={addView}
+                  moveItem={moveItem}
+                  selectItem={selectItem}
+                  toggleExpand={toggleExpand}
+                  toggleItem={toggleItem}
                 />
               );
             })

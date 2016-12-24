@@ -1,5 +1,4 @@
 import { Set } from 'immutable';
-import { handleActions } from 'redux-actions';
 
 import {
   CommandCloseAutocomplete,

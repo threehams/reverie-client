@@ -1,2 +1,5 @@
+export * from './CommandState';
 export * from './State';
-export {Allowed, Command, CommandPart, Entity, Location } from '../../common/records';
+export * from './StateDelta';
+
+export { Allowed, Command, CommandPart, Entity, Location } from '../../common/records';

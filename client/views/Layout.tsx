@@ -1,5 +1,5 @@
+import * as Radium from 'radium';
 import * as React from 'react';
-import Radium = require('radium');
 import { connect } from 'react-redux';
 
 import Inventory from './Inventory';
@@ -23,7 +23,6 @@ interface LayoutProps {
   sidebarWidth: any;
 }
 
-@Radium
 export class Layout extends React.Component<LayoutProps, {}> {
   public render() {
     const {
@@ -95,7 +94,7 @@ export default connect((state: State) => ({
 }), {
   resizePanel: layoutActions.resizePanel,
   setActiveView: playerActions.setActiveView,
-})(Layout);
+})(Radium(Layout));
 
 const styles = {
   alert: {

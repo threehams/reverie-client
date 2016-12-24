@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Radium = require('radium');
 import { Set } from 'immutable';
-import * as _ from 'lodash';
 
 import { Icon } from '../components/Icon';
 
@@ -32,8 +31,7 @@ export class EntityIcon extends React.Component<EntityIconProps, {}> {
   };
 
   public render() {
-    const { components, states } = this.props;
-    const rest = _.omit(this.props, ['components', 'states']);
+    const { components, states, ...rest } = this.props;
 
     return (
       <Icon {...rest} name={this.iconFor(components, states)} />

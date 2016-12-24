@@ -1,11 +1,13 @@
 import { Action } from 'redux-actions';
 import entitiesReducer from './reducers/entitiesReducer';
+import commandReducer from './reducers/commandReducer';
 import { State } from './records';
 
 const INITIAL_STATE: State = new State();
 
 export const rootReducer = (state = INITIAL_STATE, action: Action<any>): State => {
   return state.merge({
+    command: commandReducer(state.command, <any> action),
     entities: entitiesReducer(state.entities, <any> action),
   });
 };

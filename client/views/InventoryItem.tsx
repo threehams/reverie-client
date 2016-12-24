@@ -111,7 +111,8 @@ const DraggableInventoryItem = DragSource('INVENTORY_ITEM', inventoryItemSource,
   DropTarget('INVENTORY_ITEM', inventoryItemTarget, collectDrop)(InventoryItem)
 );
 
-export default DraggableInventoryItem;
+// TODO hackaround for "jsx cannot be a union type" error on use
+export default DraggableInventoryItem as React.ComponentClass<InventoryItemProps>;
 
 const styles = {
   canDrop: {
