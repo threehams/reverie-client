@@ -1,8 +1,9 @@
+import { applyMiddleware, compose, createStore, Store } from 'redux';
 import { Action } from 'redux-actions';
-import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
-import { rootReducer } from './rootReducer';
+
 import { State } from './records';
+import { rootReducer } from './rootReducer';
 
 declare var module: { hot: any };
 
@@ -18,12 +19,11 @@ const socketMiddleware = (socket: WebSocket) => {
 
 const configureStore = (socket: WebSocket, initialState: State) => {
   const win: any = window;
-  const finalCreateStore = compose(
-    applyMiddleware(thunk, socketMiddleware(socket)),
-    // eslint-disable-next-line no-undef, no-process-env
-    win.devToolsExtension && process.env.NODE_ENV !== 'production' ? win.devToolsExtension() : f => f
-  )(createStore);
-  const store = finalCreateStore(rootReducer, initialState);
+  const withThunk = applyMiddleware(thunk)(createStore);
+  const withSocket = applyMiddleware(socketMiddleware(socket))(withThunk);
+  // TODO figure out why this complains about async actions
+  // const withDevTools = window.devToolsExtension ? window.devToolsExtension()(withSocket) : withSocket;
+  const store: Store<any> = withSocket(rootReducer, initialState);
 
   if (module.hot) {
     module.hot.accept('./rootReducer', () => {

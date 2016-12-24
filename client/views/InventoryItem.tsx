@@ -111,7 +111,7 @@ const DraggableInventoryItem = DragSource('INVENTORY_ITEM', inventoryItemSource,
   DropTarget('INVENTORY_ITEM', inventoryItemTarget, collectDrop)(InventoryItem)
 );
 
-export default DraggableInventoryItem;
+export default DraggableInventoryItem as React.ComponentClass<InventoryItemProps>;
 
 const styles = {
   canDrop: {
