@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "allowJs": true,
+    "allowJs": false,
     "experimentalDecorators": true,
     "jsx": "react",
     "module": "commonjs",
@@ -10,8 +10,10 @@
     "noImplicitAny": false,
     "strictNullChecks": false
   },
-  "exclude": [
-    "node_modules",
-    "webpack.config.js"
+  "include": [
+    "client/**/*",
+    "server/**/*",
+    "node_modules/@types/**/*",
+    "typings/**/*"
   ]
 }

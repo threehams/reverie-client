@@ -4,7 +4,7 @@ import express = require('express');
 import webpack = require('webpack');
 import WebSocket = require('ws');
 import compression = require('compression');
-import webpackConfig = require('../webpack.config');
+import webpackConfig from './webpack.config';
 import webpackDevMiddleware = require('webpack-dev-middleware');
 import webpackHotMiddleware = require('webpack-hot-middleware');
 
@@ -47,7 +47,7 @@ if (config.development) {
   app.use(webpackHotMiddleware(compiler));
 } else {
   app.use(compression());
-  app.use('/dist', express.static(path.join( __dirname, '..', 'dist')));
+  app.use('/build', express.static(path.join( __dirname, '..', 'build')));
   app.use('/assets', express.static(path.join( __dirname, '..', 'assets')));
 }
 

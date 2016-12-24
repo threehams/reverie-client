@@ -17,7 +17,7 @@
   },
   "betterScripts": {
     "build": {
-      "command": "webpack",
+      "command": "tsc -p . && webpack --config tsDist/server/webpack.config.js",
       "env": {
         "NODE_ENV": "production"
       }
