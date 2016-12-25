@@ -78,7 +78,7 @@ export class PanelResizer extends React.Component<PanelResizerProps, PanelResize
     event.preventDefault();
     this.props.onResize(
       this.props.propertyName,
-      (event[coords[this.props.position]] - this.state.initial) * multiplier[this.props.position]
+      (event[coords[this.props.position]] - this.state.initial) * multiplier[this.props.position],
     );
   }
 

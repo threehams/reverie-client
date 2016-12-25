@@ -1,8 +1,8 @@
 import { List, Map, OrderedSet, Set } from 'immutable';
 
-import * as inventoryActions from './inventoryActions';
-import { Entity, Location, State, Ui } from '../records';
 import { expect } from '../../__test__/configureExpect';
+import { Entity, Location, State, Ui } from '../records';
+import * as inventoryActions from './inventoryActions';
 
 describe('inventoryActions', function() {
   describe('expandItems', function() {

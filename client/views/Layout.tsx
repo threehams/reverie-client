@@ -2,16 +2,16 @@ import * as React from 'react';
 import Radium = require('radium');
 import { connect } from 'react-redux';
 
+import { Icon, Panel, PanelContainer, Tab, TabContainer } from '../components/';
+import {StatusEffect} from '../components/StatusEffect';
+import { State } from '../records';
+import Editor from './Editor';
 import Inventory from './Inventory';
 import Player from './Player';
-import Editor from './Editor';
 import { Terminal } from './Terminal';
-import { Icon, PanelContainer, Panel, TabContainer, Tab } from '../components/';
-import StatusEffect from '../components/StatusEffect';
-import { State } from '../records';
 
-import * as playerActions from '../actions/playerActions';
 import * as layoutActions from '../actions/layoutActions';
+import * as playerActions from '../actions/playerActions';
 
 interface LayoutProps {
   activePlayerView: 'inventory' | 'character';
@@ -19,8 +19,8 @@ interface LayoutProps {
   footerHeight: number;
   resizePanel: any;
   setActiveView: any;
-  sidebarHeight: any;
-  sidebarWidth: any;
+  sidebarHeight: number;
+  sidebarWidth: number;
 }
 
 @Radium

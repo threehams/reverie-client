@@ -1,11 +1,11 @@
+import {Map, OrderedSet} from 'immutable';
 import * as React from 'react';
-import {OrderedSet, Map} from 'immutable';
 import shallowCompare = require('react-addons-shallow-compare');
 
 import { Loader } from '../components/Loader';
-import { TabContainer } from '../components/TabContainer';
+import {StatusEffect} from '../components/StatusEffect';
 import { Tab } from '../components/Tab';
-import StatusEffect from '../components/StatusEffect';
+import { TabContainer } from '../components/TabContainer';
 import { Entity } from '../records';
 
 interface EditorTabsProps {

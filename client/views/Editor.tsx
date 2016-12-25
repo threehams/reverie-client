@@ -1,12 +1,12 @@
+import { List, Map, OrderedSet } from 'immutable';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Map, List, OrderedSet } from 'immutable';
 import Radium = require('radium');
 
 import * as editorActions from '../actions/editorActions';
+import { Entity, State } from '../records';
 import { EditorPanel } from './EditorPanel';
 import EditorTabs from './EditorTabs';
-import { Entity, State } from '../records';
 
 import fontStyles from '../styles/font';
 
@@ -51,7 +51,10 @@ export default connect((state: State) => ({
   editorHistory: state.editorHistory,
   entities: state.entities,
   views: state.ui.editorViews,
-}), editorActions)(Editor);
+}), {
+  removeView: editorActions.removeView,
+  setActiveView: editorActions.setActiveView,
+})(Editor);
 
 const styles = {
   container: Object.assign(
@@ -60,6 +63,6 @@ const styles = {
       flexFlow: 'column nowrap',
       height: '100%',
     },
-    fontStyles.monospace
+    fontStyles.monospace,
   ),
 };

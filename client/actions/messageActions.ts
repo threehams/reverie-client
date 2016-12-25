@@ -1,5 +1,5 @@
-import { Dispatch } from 'redux';
 import { fromJS, List, Map, Set } from 'immutable';
+import { Dispatch } from 'redux';
 
 import { Allowed, Command, CommandPart, Entity, Location, State } from '../records';
 
@@ -19,37 +19,37 @@ export type SetState = {
 type EntityMap = Map<string, Entity>;
 
 interface StateData {
-  availableCommands?: Array<CommandData>;
+  availableCommands?: CommandData[];
   entities?: EntityObjectMap;
-  entitiesToRemove?: Array<string>;
+  entitiesToRemove?: string[];
   message?: string;
   player?: string;
   location?: LocationData;
-  statusEffects?: Array<string>;
+  statusEffects?: string[];
 }
 
 interface CommandData {
   name: string;
-  parts?: Array<CommandPartData>;
+  parts?: CommandPartData[];
 }
 
 interface CommandPartData {
-  allowed: Array<AllowedData>;
+  allowed: AllowedData[];
 }
 
 interface AllowedData {
-  types?: Array<string>;
-  owners?: Array<string>;
-  components?: Array<string>;
-  states?: Array<string>;
-  names?: Array<string>;
+  types?: string[];
+  owners?: string[];
+  components?: string[];
+  states?: string[];
+  names?: string[];
 }
 
 interface LocationData {
   name: string;
   description: string;
-  entities?: Array<string>;
-  exits?: Array<string>;
+  entities?: string[];
+  exits?: string[];
 }
 
 export interface EntityObjectMap {
@@ -57,12 +57,12 @@ export interface EntityObjectMap {
 }
 
 export interface EntityData {
-  components?: Array<string>;
+  components?: string[];
   currentHealth?: number;
   currentMemory?: number;
   currentStorage?: number;
   description?: string;
-  entities?: Array<string>;
+  entities?: string[];
   expanded?: boolean;
   id: string;
   indent?: number;
@@ -74,7 +74,7 @@ export interface EntityData {
   path?: string;
   quantity?: number;
   selected?: boolean;
-  states?: Array<string>;
+  states?: string[];
 }
 
 export const setState = (stateData: StateData): SetState => ({
@@ -115,13 +115,13 @@ function createEntityMap(entities: EntityObjectMap): EntityMap {
         components: Set(entity.components),
         entities: List(entity.entities),
         states: Set(entity.states),
-      }
+      },
     );
     return entityMap.set(id, new Entity(entityProps));
   }, Map<string, Entity>({}));
 }
 
-function createCommandSet(commands: Array<CommandData>): Set<Command> {
+function createCommandSet(commands: CommandData[]): Set<Command> {
   if (!commands) {
     return Set([]);
   }
@@ -150,12 +150,12 @@ function createCommandRecord(commandData: CommandData): Command {
                   owners: Set(allow.owners),
                   states: Set(allow.states),
                   types: Set(allow.types),
-                }
+                },
               ));
             })),
-          }
+          },
         ));
       })),
-    }
+    },
   ));
 }

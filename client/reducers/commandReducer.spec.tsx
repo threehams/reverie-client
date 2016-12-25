@@ -1,10 +1,10 @@
-import { List, Set, fromJS } from 'immutable';
+import { fromJS, List, Set } from 'immutable';
 import { expect } from '../../__test__/configureExpect';
 
-import commandReducer from './commandReducer';
-import { SetState } from '../actions/messageActions';
 import * as commandActions from '../actions/commandActions';
+import { SetState } from '../actions/messageActions';
 import { Command, CommandState } from '../records';
+import commandReducer from './commandReducer';
 
 describe('commandReducer', function() {
   describe('COMMAND_CLOSE_AUTOCOMPLETE', function() {

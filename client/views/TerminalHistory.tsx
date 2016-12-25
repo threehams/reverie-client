@@ -1,10 +1,10 @@
+import { List } from 'immutable';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { List } from 'immutable';
 import Radium = require('radium');
 import { State } from '../records';
 
-import StatusEffect from '../components/StatusEffect';
+import {StatusEffect} from '../components/StatusEffect';
 
 interface TerminalHistoryProps {
   history: List<string>;

@@ -4,7 +4,7 @@ import shallowCompare = require('react-addons-shallow-compare');
 import { DragSource, DropTarget } from 'react-dnd';
 
 import { DropdownArrow, EntityIcon } from '../components';
-import StatusEffect from '../components/StatusEffect';
+import {StatusEffect} from '../components/StatusEffect';
 import { Entity } from '../records';
 
 interface InventoryItemProps {
@@ -37,7 +37,7 @@ export class InventoryItem extends React.Component<InventoryItemProps, {}> {
           {
             item.entities.size ?
               <DropdownArrow expanded={item.expanded}
-                           onMouseDown={(event: React.MouseEvent) => this.expandItem(event, item)}
+                           onMouseDown={(event: React.MouseEvent<{}>) => this.expandItem(event, item)}
                            style={{ display: 'inline-block', verticalAlign: 'middle' }}
               /> :
               <span style={{ paddingLeft: 22 }}/>
@@ -51,12 +51,12 @@ export class InventoryItem extends React.Component<InventoryItemProps, {}> {
           <span style={[{cursor: 'default'}, isOver && canDrop && styles.canDrop, { verticalAlign: 'middle' }]}>
             <StatusEffect>{ item.name + (item.quantity > 1 ? ` (${item.quantity})` : '') }</StatusEffect>
           </span>
-        </div>
-      )
+        </div>,
+      ),
     );
   }
 
-  private expandItem(event: React.MouseEvent, item: Entity) {
+  private expandItem(event: React.MouseEvent<{}>, item: Entity) {
     event.stopPropagation();
     if (item.entities.size) {
       this.props.toggleExpand(item.id);
@@ -65,7 +65,7 @@ export class InventoryItem extends React.Component<InventoryItemProps, {}> {
     }
   }
 
-  private selectItem(event: React.MouseEvent, item: Entity) {
+  private selectItem(event: React.MouseEvent<{}>, item: Entity) {
     event.stopPropagation();
     if (event.ctrlKey) {
       this.props.toggleItem(item.id, item.owner);
@@ -108,7 +108,7 @@ const collectDrop = (dropConnect, monitor) => ({
 });
 
 const DraggableInventoryItem = DragSource('INVENTORY_ITEM', inventoryItemSource, collectDrag)(
-  DropTarget('INVENTORY_ITEM', inventoryItemTarget, collectDrop)(InventoryItem)
+  DropTarget('INVENTORY_ITEM', inventoryItemTarget, collectDrop)(InventoryItem),
 );
 
 export default DraggableInventoryItem as React.ComponentClass<InventoryItemProps>;

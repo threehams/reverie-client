@@ -1,11 +1,11 @@
-import { OrderedSet, Map } from 'immutable';
+import { Map, OrderedSet } from 'immutable';
 
-import { SetState } from '../actions/messageActions';
-import { SocketStatus } from '../actions/socketActions';
 import { EditorAddView, EditorRemoveView, EditorSetActiveView } from '../actions/editorActions';
-import { InventoryToggleExpand, InventoryToggleSelect, InventorySelectItems } from '../actions/inventoryActions';
-import { InventoryExpandItems, PlayerSetActiveView } from '../actions/playerActions';
+import { InventorySelectItems, InventoryToggleExpand, InventoryToggleSelect } from '../actions/inventoryActions';
 import { ResizePanel } from '../actions/layoutActions';
+import { SetState } from '../actions/messageActions';
+import { InventoryExpandItems, PlayerSetActiveView } from '../actions/playerActions';
+import { SocketStatus } from '../actions/socketActions';
 import { Ui } from '../records';
 
 export const INITIAL_STATE: Ui = new Ui();
@@ -55,19 +55,19 @@ export default (state = INITIAL_STATE, action: Actions) => {
 };
 
 function expandItems(state: Ui, action: InventoryExpandItems): Ui {
-  return state.update('inventoryExpandedById', expanded => expanded.union(action.payload.ids))
+  return state.update('inventoryExpandedById', (expanded) => expanded.union(action.payload.ids));
 }
 
 function toggleExpand(state: Ui, action: InventoryToggleExpand): Ui {
-  return state.update('inventoryExpandedById', expanded => toggleSetItem(expanded, action.payload.id));
+  return state.update('inventoryExpandedById', (expanded) => toggleSetItem(expanded, action.payload.id));
 }
 
 function toggleSelect(state: Ui, action: InventoryToggleSelect): Ui {
-  return state.update('selectedItems', items => toggleSetItem(items, action.payload.id));
+  return state.update('selectedItems', (items) => toggleSetItem(items, action.payload.id));
 }
 
 function addView(state: Ui, id: string): Ui {
-  return state.update('editorViews', views => views.add(id))
+  return state.update('editorViews', (views) => views.add(id))
     .set('activeEditorView', id);
 }
 
@@ -76,14 +76,14 @@ function toggleSetItem(state: OrderedSet<string>, id: string): OrderedSet<string
 }
 
 function removeView(state: Ui, id: string): Ui {
-  const newState = state.update('editorViews', tabs => tabs.remove(id));
-  return newState.update('activeEditorView', view => view === id ? newState.get('editorViews').last() : view);
+  const newState = state.update('editorViews', (tabs) => tabs.remove(id));
+  return newState.update('activeEditorView', (view) => view === id ? newState.get('editorViews').last() : view);
 }
 
 function setState(state: Ui, action: SetState): Ui {
   const entitiesRemoved = action.payload.entitiesToRemove.reduce((removedState, id) => {
     return removeView(removedState, id)
-      .update('inventoryExpandedById', expanded => expanded.remove(id));
+      .update('inventoryExpandedById', (expanded) => expanded.remove(id));
   }, state);
 
   const withEffects = setStatusEffects(entitiesRemoved, action);

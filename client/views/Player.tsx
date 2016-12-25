@@ -3,7 +3,7 @@ import Radium = require('radium');
 import {connect} from 'react-redux';
 
 import { Icon } from '../components/Icon';
-import StatusEffect from '../components/StatusEffect';
+import {StatusEffect} from '../components/StatusEffect';
 import { Entity, State } from '../records';
 
 interface PlayerProps {

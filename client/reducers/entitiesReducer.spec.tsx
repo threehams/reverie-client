@@ -1,8 +1,8 @@
-import { Map, List } from 'immutable';
+import { List, Map } from 'immutable';
 import { expect } from '../../__test__/configureExpect';
 
-import entitiesReducer, { INITIAL_STATE } from './entitiesReducer';
 import { Entity } from '../records';
+import entitiesReducer, { INITIAL_STATE } from './entitiesReducer';
 
 import { SetState } from '../actions/messageActions';
 
@@ -49,7 +49,7 @@ describe('entitiesReducer', function() {
             id: '3',
             name: 'thing3',
           }),
-        })
+        }),
       );
     });
 
@@ -77,7 +77,7 @@ describe('entitiesReducer', function() {
             id: '2',
             name: 'thing2',
           }),
-        })
+        }),
       );
     });
   });

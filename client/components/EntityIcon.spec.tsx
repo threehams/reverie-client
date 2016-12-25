@@ -1,6 +1,6 @@
-import * as React from 'react';
 import { shallow } from 'enzyme';
 import { Set } from 'immutable';
+import * as React from 'react';
 
 import { expect } from '../../__test__/configureExpect';
 

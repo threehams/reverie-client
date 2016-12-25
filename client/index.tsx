@@ -6,10 +6,10 @@ import './polyfills';
 import * as React from 'react';
 import { render } from 'react-dom';
 
-import { App } from './views/App';
+import { AppContainer } from 'react-hot-loader';
 import configureStore from './configureStore';
 import socket from './socket';
-import { AppContainer } from 'react-hot-loader';
+import { App } from './views/App';
 
 import * as messageActions from './actions/messageActions';
 import * as socketActions from './actions/socketActions';
@@ -64,7 +64,7 @@ render(
   <AppContainer>
     <App store={store} />
   </AppContainer>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 declare var module: { hot: any };
@@ -76,7 +76,7 @@ if (module.hot) {
       <AppContainer>
         <App store={store} />
       </AppContainer>,
-      document.getElementById('root')
+      document.getElementById('root'),
     );
   });
 }

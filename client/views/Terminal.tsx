@@ -3,7 +3,7 @@ import Radium = require('radium');
 import shallowCompare = require('react-addons-shallow-compare');
 
 import TerminalHistory from './TerminalHistory';
-import TerminalPrompt from './TerminalPrompt';
+import {TerminalPrompt} from './TerminalPrompt';
 
 import fontStyles from '../styles/font';
 
@@ -33,7 +33,7 @@ const styles = {
       flexFlow: 'column nowrap',
       height: '100%',
     },
-    fontStyles.monospace
+    fontStyles.monospace,
   ),
   terminalPrompt: {
     flex: '0 0 30px',

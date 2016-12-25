@@ -1,19 +1,19 @@
+import { List } from 'immutable';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { List } from 'immutable';
 import Radium = require('radium');
 import shallowCompare = require('react-addons-shallow-compare');
 import ReactMarkdown = require('react-markdown');
 import {
-  MarkdownLink,
-  MarkdownHeading,
-  MarkdownParagraph,
-  MarkdownList,
-  MarkdownItem,
+  MarkdownBlockQuote,
   MarkdownCode,
   MarkdownEmphasis,
+  MarkdownHeading,
+  MarkdownItem,
+  MarkdownLink,
+  MarkdownList,
+  MarkdownParagraph,
   MarkdownStrong,
-  MarkdownBlockQuote,
 } from '../views/Markdown';
 
 import * as playerActions from '../actions/playerActions';

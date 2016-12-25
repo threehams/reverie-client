@@ -6,7 +6,7 @@ function addPaths(entity: Entity, entities: Map<string, Entity>, owner: string, 
   const newPath = `${path}/${entity.name}`;
   const pathSet = entity.merge({ owner, path: newPath });
   let newEntities = entities;
-  entity.entities.forEach(entityId => {
+  entity.entities.forEach((entityId) => {
     newEntities = addPaths(newEntities.get(entityId), newEntities, owner, newPath);
   });
   return newEntities.set(entity.id, pathSet);
@@ -20,15 +20,15 @@ export const entitiesWithPath = createSelector(
     const playerEntity = entities.get(player);
     let newEntities = entities;
     if (playerEntity) {
-      playerEntity.entities.forEach(entityId => {
+      playerEntity.entities.forEach((entityId) => {
         newEntities = addPaths(newEntities.get(entityId), newEntities, 'self', 'self');
       });
     }
     if (location) {
-      location.entities.forEach(entityId => {
+      location.entities.forEach((entityId) => {
         newEntities = addPaths(newEntities.get(entityId), newEntities, 'floor', 'floor');
       });
     }
     return newEntities;
-  }
+  },
 );

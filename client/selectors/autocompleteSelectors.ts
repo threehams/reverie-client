@@ -1,8 +1,8 @@
 import { List, Seq, Set } from 'immutable';
 import { createSelector } from 'reselect';
 
-import * as entitySelectors from './entitySelectors';
 import { Allowed, AutocompleteItem, Command, Entity, Exit, State } from '../records';
+import * as entitySelectors from './entitySelectors';
 
 const INSTANCE_TYPES: { [key: string]: any } = {
   command: Command,
@@ -67,7 +67,7 @@ function applyAllowedTypes(objects: List<AutocompleteItem>, types: Set<string>) 
     return objects;
   }
 
-  return objects.filter(object => {
+  return objects.filter((object) => {
     let found = false;
     types.forEach((type) => {
       if (object instanceof INSTANCE_TYPES[type]) {
@@ -96,13 +96,13 @@ export function applyAllowed(objects, allowed: Allowed) {
         // filter by type, then flatten and combine to a single list
         applyAllowedTypes(
           objects,
-          allowed.types
+          allowed.types,
         ),
-        allowed.states
+        allowed.states,
       ),
-      allowed.components
+      allowed.components,
     ),
-    allowed.owners
+    allowed.owners,
   );
 }
 
@@ -113,7 +113,7 @@ export function applyAllowed(objects, allowed: Allowed) {
  * You decide!
  *
  */
-function currentPartIndex(parts: Array<string>, cursorIndex: number) {
+function currentPartIndex(parts: string[], cursorIndex: number) {
   let totalLength = 0;
   let index = 0;
   for (const part of parts) {
@@ -139,7 +139,7 @@ const commandAllowed = createSelector(
     if (parts.length === 1) {
       return defaultFilters;
     }
-    const rootCommand = available.find(command => {
+    const rootCommand = available.find((command) => {
       return command.name === parts[0];
     });
     if (!rootCommand || !rootCommand.parts.size) {
@@ -148,7 +148,7 @@ const commandAllowed = createSelector(
 
     // now figure out what part we're in and return the "allowed" for that part
     return rootCommand.getIn(['parts', currentPartIndex(parts, cursorIndex), 'allowed']);
-  }
+  },
 );
 
 /*
@@ -166,7 +166,7 @@ export const autocompleteFragment = createSelector(
   (state: State) => state.command.cursorIndex,
   (current, cursorIndex) => {
     return current.slice(0, cursorIndex).split(' ').pop();
-  }
+  },
 );
 
 const sortedOptions = createSelector(
@@ -176,7 +176,7 @@ const sortedOptions = createSelector(
   (entities, commands, exits): Seq.Indexed<AutocompleteItem> => {
     return Seq.Indexed(entities.values())
     .concat(List(commands))
-    .concat(exits.map(exit => new Exit({ name: exit })))
+    .concat(exits.map((exit) => new Exit({ name: exit })))
     .sort((a, b) => {
       // reminder:
       // Return 0 if the elements should not be swapped.
@@ -188,7 +188,7 @@ const sortedOptions = createSelector(
         || compare(a.path, b.path)
         || compare(a.name, b.name);
     });
-  }
+  },
 );
 
 /*
@@ -217,7 +217,7 @@ export const availableOptions = createSelector(
       }
       return compare(a.path, b.path) || compare(a.name, b.name);
     }).slice(0, 20);
-  }
+  },
 );
 
 export const selectedOption = createSelector(
@@ -226,5 +226,5 @@ export const selectedOption = createSelector(
   (options, selected) => {
     if (options.contains(selected)) { return selected; }
     return options.first();
-  }
+  },
 );

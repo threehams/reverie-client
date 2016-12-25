@@ -3,8 +3,8 @@ import Radium = require('radium');
 import shallowCompare = require('react-addons-shallow-compare');
 
 import { Icon } from '../components/Icon';
-import panelStyles from '../styles/panel';
 import fontStyles from '../styles/font';
+import panelStyles from '../styles/panel';
 
 interface TabProps {
   active?: boolean;
@@ -55,7 +55,7 @@ export const styles = {
       flex: '1 1 auto',
       padding: '3px 3px 3px 15px',
     },
-    fontStyles.default
+    fontStyles.default,
   ),
   inactive: {
     backgroundColor: '#d4d4d4',

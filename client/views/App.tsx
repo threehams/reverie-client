@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Provider } from 'react-redux';
-import * as Html5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
+import * as Html5Backend from 'react-dnd-html5-backend';
+import { Provider } from 'react-redux';
 
 import Layout from './Layout';
 

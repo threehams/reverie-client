@@ -1,7 +1,8 @@
+import { Set } from 'immutable';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import * as _ from 'lodash';
-import { Set } from 'immutable';
+
+import { State } from '../records';
 
 const BEE_PHRASES = [
   'noooo not the bees!',
@@ -28,13 +29,12 @@ const shuffle = (phrase: string) => {
 };
 
 interface StatusEffectProps {
-  statusEffects?: Set<string>;
+  statusEffects: Set<string>;
 }
 
-class StatusEffect extends React.Component<StatusEffectProps, {}> {
+class StatusEffectBase extends React.Component<StatusEffectProps, {}> {
   public render() {
-    const { children, statusEffects } = this.props;
-    const rest = _.omit(this.props, ['children', 'statusEffects']);
+    const { children, statusEffects, ...rest } = this.props;
     if (!statusEffects.size) {
       return <span>{ children }</span>;
     }
@@ -65,12 +65,12 @@ class StatusEffect extends React.Component<StatusEffectProps, {}> {
     );
   }
 
-  private confuse(children: Array<React.ReactNode>): Array<React.ReactNode> {
+  private confuse(children: React.ReactNode[]): React.ReactNode[] {
     return React.Children.map(children, (child) => {
       if (typeof child === 'string') {
-        return child.split(' ').map(spaced => {
-          return spaced.split('.').map(dotted => {
-            return dotted.split('-').map(dashed => {
+        return child.split(' ').map((spaced) => {
+          return spaced.split('.').map((dotted) => {
+            return dotted.split('-').map((dashed) => {
               return shuffle(dashed);
             }).join('-');
           }).join('.');
@@ -80,10 +80,10 @@ class StatusEffect extends React.Component<StatusEffectProps, {}> {
     });
   }
 
-  private panic(children: Array<React.ReactNode>): Array<React.ReactNode> {
+  private panic(children: React.ReactNode[]): React.ReactNode[] {
     return React.Children.map(children, (child) => {
       if (typeof child === 'string') {
-        return child.split(' ').map(word => {
+        return child.split(' ').map((word) => {
           if (Math.random() < 0.05) {
             return 'a'.repeat(word.length);
           }
@@ -97,10 +97,10 @@ class StatusEffect extends React.Component<StatusEffectProps, {}> {
     });
   }
 
-  private bees(children: Array<React.ReactNode>): Array<React.ReactNode> {
+  private bees(children: React.ReactNode[]): React.ReactNode[] {
     return React.Children.map(children, (child: any) => {
       if (typeof child === 'string') {
-        return child.split(' ').map(word => {
+        return child.split(' ').map((word) => {
           if (word.length < 3) {
             return word;
           }
@@ -118,9 +118,9 @@ class StatusEffect extends React.Component<StatusEffectProps, {}> {
   }
 }
 
-export default connect((state) => ({
-  statusEffects: state.getIn(['ui', 'statusEffects']),
-}))(StatusEffect);
+export const StatusEffect = connect((state: State) => ({
+  statusEffects: state.ui.statusEffects,
+}))(StatusEffectBase);
 
 const styles = {
   fire: {

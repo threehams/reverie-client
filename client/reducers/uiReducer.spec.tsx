@@ -1,14 +1,14 @@
-import { Set, List, OrderedSet, fromJS } from 'immutable';
+import { fromJS, List, OrderedSet, Set } from 'immutable';
 import { expect } from '../../__test__/configureExpect';
 
-import uiReducer, { INITIAL_STATE } from './uiReducer';
-import * as inventoryActions from '../actions/inventoryActions';
 import * as editorActions from '../actions/editorActions';
-import { SetState } from '../actions/messageActions';
+import * as inventoryActions from '../actions/inventoryActions';
 import { InventorySelectItems } from '../actions/inventoryActions';
+import { SetState } from '../actions/messageActions';
 import { InventoryExpandItems } from '../actions/playerActions';
 import * as socketActions from '../actions/socketActions';
 import { Ui } from '../records';
+import uiReducer, { INITIAL_STATE } from './uiReducer';
 
 describe('uiReducer', function() {
   describe('EDITOR_ADD_VIEW', function() {
@@ -223,7 +223,7 @@ describe('uiReducer', function() {
     it('updates the alert', function() {
       const action = socketActions.disconnected();
       expect(uiReducer(undefined, action).alert).to.equal(
-        'Reconnecting to server, give it a minute...'
+        'Reconnecting to server, give it a minute...',
       );
     });
   });

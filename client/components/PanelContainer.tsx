@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { Children, Component, cloneElement } from 'react';
+import { Children, cloneElement, Component } from 'react';
 import Radium = require('radium');
 import shallowCompare = require('react-addons-shallow-compare');
 
-import { PanelResizer } from './';
 import panelStyles from '../styles/panel';
+import { PanelResizer } from './';
 
 interface PanelContainerProps {
   footerHeight: number;
@@ -83,9 +83,9 @@ export class PanelContainer extends Component<PanelContainerProps, PanelContaine
   private setHeights(children) {
     const footerHeight = this.state.footerHeight || this.props.footerHeight;
     const sidebarWidth = this.state.sidebarWidth || this.props.sidebarWidth;
-    const sidebars = children.filter(child => child.props.type === 'sidebar');
-    const main = children.filter(child => child.props.type === 'main')[0];
-    const footer = children.filter(child => child.props.type === 'footer')[0];
+    const sidebars = children.filter((child) => child.props.type === 'sidebar');
+    const main = children.filter((child) => child.props.type === 'main')[0];
+    const footer = children.filter((child) => child.props.type === 'footer')[0];
     const topHeightStyle = footer ? `calc(100vh - ${footerHeight}px)` : '100vh';
     const sidebar = this.wrapSidebars(sidebars, sidebarWidth, topHeightStyle);
     const mainWidth = sidebar ? `calc(100% - ${sidebarWidth}px)` : '100%';

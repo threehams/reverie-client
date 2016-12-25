@@ -1,12 +1,12 @@
-import * as autocompleteSelectors from './autocompleteSelectors';
 import { List, Map, Set } from 'immutable';
+import * as autocompleteSelectors from './autocompleteSelectors';
 
 import { expect } from '../../__test__/configureExpect';
 
 import {
   Allowed,
-  CommandPart,
   Command,
+  CommandPart,
   CommandState,
   Entity,
   Exit,

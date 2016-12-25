@@ -1,12 +1,12 @@
-import * as React from 'react';
 import { List } from 'immutable';
+import * as React from 'react';
 
-import { expect } from '../../__test__/configureExpect';
 import { shallow } from 'enzyme';
+import { expect } from '../../__test__/configureExpect';
 
+import { Entity } from '../records';
 import { Inventory } from './Inventory';
 import InventoryItemContainer from './InventoryItem';
-import { Entity } from '../records';
 
 describe('Inventory', function() {
   describe('component', function() {

@@ -1,10 +1,10 @@
-import * as React from 'react';
 import {List} from 'immutable';
+import * as React from 'react';
 import shallowCompare = require('react-addons-shallow-compare');
 
 import { Command, Entity, Exit } from '../records';
 
-import StatusEffect from '../components/StatusEffect';
+import {StatusEffect} from '../components/StatusEffect';
 
 interface AutocompleteProps {
   fragment: string;
@@ -46,7 +46,7 @@ export class Autocomplete extends React.Component<AutocompleteProps, {}> {
                 {},
                 styles.item.global,
                 (focused ? styles.item.focused : styles.item.unfocused),
-                (option === selectedItem ? styles.itemSelected.unfocused : {})
+                (option === selectedItem ? styles.itemSelected.unfocused : {}),
               )}
               ref={(item) => {
                 if (option === selectedItem) {

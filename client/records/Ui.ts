@@ -1,8 +1,8 @@
-import { Record, Set, OrderedSet } from 'immutable';
+import { OrderedSet, Record, Set } from 'immutable';
 
 interface UiProps {
   activeEditorView?: string;
-  activePlayerView?: 'inventory' | 'player';
+  activePlayerView?: 'inventory' | 'character';
   alert?: string;
   editorViews?: OrderedSet<string>;
   footerHeight?: number;
@@ -27,7 +27,7 @@ export class Ui extends Record<UiProps>({
   statusEffects: Set([]),
 }) implements UiProps {
   public activeEditorView: string;
-  public activePlayerView: 'inventory' | 'player';
+  public activePlayerView: 'inventory' | 'character';
   public alert: string;
   public editorViews: OrderedSet<string>;
   public footerHeight: number;

@@ -1,14 +1,14 @@
+import { List } from 'immutable';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { List } from 'immutable';
 import { connect } from 'react-redux';
 import Radium = require('radium');
 
-import * as autocompleteSelectors from '../selectors/autocompleteSelectors';
 import * as commandActions from '../actions/commandActions';
-import { Autocomplete } from './Autocomplete';
-import panelStyles from '../styles/panel';
 import { Command, Entity, Exit, State } from '../records';
+import * as autocompleteSelectors from '../selectors/autocompleteSelectors';
+import panelStyles from '../styles/panel';
+import { Autocomplete } from './Autocomplete';
 
 import fontStyles from '../styles/font';
 
@@ -29,7 +29,7 @@ interface TerminalPromptProps {
 }
 
 @Radium
-export class TerminalPrompt extends React.Component<TerminalPromptProps, {}> {
+class TerminalPromptBase extends React.Component<TerminalPromptProps, {}> {
   private input: any;
 
   public render() {
@@ -77,7 +77,7 @@ export class TerminalPrompt extends React.Component<TerminalPromptProps, {}> {
   }
 
   // Intercept specific keystrokes and add special handling for autocomplete, or override browser defaults.
-  private selectOption(event: React.KeyboardEvent) {
+  private selectOption(event: React.KeyboardEvent<HTMLInputElement>) {
     const {
       autocompleteOptions,
       selectNextAutocompleteItem,
@@ -101,7 +101,7 @@ export class TerminalPrompt extends React.Component<TerminalPromptProps, {}> {
   // Based on current autocomplete open state:
   // - Open:   Based on the current command, fill in the command fragment with the selected autocomplete option.
   // - Closed: Send the command to the server.
-  private submit(event: React.SyntheticEvent) {
+  private submit(event: React.SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
     const {
       autocompleteOpen,
@@ -139,15 +139,23 @@ const styles = {
       padding: 4,
       width: '100%',
     },
-    fontStyles.monospace
+    fontStyles.monospace,
   ),
 };
 
-export default connect((state: State) => ({
+export const TerminalPrompt = connect((state: State) => ({
   autocompleteFragment: autocompleteSelectors.autocompleteFragment(state),
   autocompleteOpen: state.command.autocompleteOpen,
   autocompleteOptions: autocompleteSelectors.availableOptions(state),
   autocompletePosition: state.command.autocompletePosition,
   autocompleteSelectedItem: autocompleteSelectors.selectedOption(state),
   currentCommand: state.command.current,
-}), commandActions)(TerminalPrompt);
+}), {
+  closeAutocomplete: commandActions.closeAutocomplete,
+  completeCommand: commandActions.completeCommand,
+  selectAutocompleteItem: commandActions.selectAutocompleteItem,
+  selectNextAutocompleteItem: commandActions.selectNextAutocompleteItem,
+  selectPreviousAutocompleteItem: commandActions.selectPreviousAutocompleteItem,
+  sendCommand: commandActions.sendCommand,
+  setCurrentCommand: commandActions.setCurrentCommand,
+})(TerminalPromptBase);

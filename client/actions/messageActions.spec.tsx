@@ -1,8 +1,8 @@
 import { List, Map, Set } from 'immutable';
 
-import * as messageActions from './messageActions';
 import { expect } from '../../__test__/configureExpect';
 import { Allowed, Command, CommandPart, Entity } from '../records';
+import * as messageActions from './messageActions';
 
 describe('messageActions', function() {
   describe('setState', function() {

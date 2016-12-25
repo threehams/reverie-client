@@ -4,7 +4,7 @@ import Radium = require('radium');
 
 interface PanelProps {
   type: string;
-  style?: Object | Array<Object>;
+  style?: Object | Object[];
 }
 
 @Radium

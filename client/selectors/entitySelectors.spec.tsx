@@ -1,4 +1,4 @@
-import { Map, List } from 'immutable';
+import { List, Map } from 'immutable';
 import { Entity, State, Ui } from '../records';
 
 import { expect } from '../../__test__/configureExpect';
