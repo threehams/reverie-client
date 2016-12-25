@@ -1,13 +1,13 @@
 export default {
   entities: {
-    '18': {
+    18: {
       components: ['container', 'lockable', 'openable'],
       entities: ['19'],
       id: '18',
       name: 'usb-drive',
       states: ['unlocked', 'opened'],
     },
-    '19': {
+    19: {
       components: ['item'],
       description: '```andy; I’m just doing my job, nothing personal, sorry,```',
       id: '19',

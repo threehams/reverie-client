@@ -4,10 +4,10 @@ import { expect } from '../../__test__/configureExpect';
 import { Entity, Location, State, Ui } from '../records';
 import * as inventoryActions from './inventoryActions';
 
-describe('inventoryActions', function() {
-  describe('expandItems', function() {
-    context('selecting one item', function() {
-      it('selects the item', function() {
+describe('inventoryActions', () => {
+  describe('expandItems', () => {
+    context('selecting one item', () => {
+      it('selects the item', () => {
         const thunk = inventoryActions.selectItem('4', '6');
         let result;
         const getState = () => {
@@ -23,32 +23,32 @@ describe('inventoryActions', function() {
       });
     });
 
-    context('selecting multiple items', function() {
-      context('when no items contain other items', function() {
-        it('selects each of the items in order', function() {
+    context('selecting multiple items', () => {
+      context('when no items contain other items', () => {
+        it('selects each of the items in order', () => {
           const state = new State({
             entities: Map({
-              '1': new Entity({
+              1: new Entity({
                 id: '1',
                 name: 'name',
               }),
-              '2': new Entity({
+              2: new Entity({
                 id: '2',
                 name: 'name',
               }),
-              '3': new Entity({
+              3: new Entity({
                 id: '3',
                 name: 'name',
               }),
-              '4': new Entity({
+              4: new Entity({
                 id: '4',
                 name: 'name',
               }),
-              '5': new Entity({
+              5: new Entity({
                 id: '5',
                 name: 'name',
               }),
-              '6': new Entity({
+              6: new Entity({
                 entities: List(['1', '2', '4', '5']),
                 id: '6',
                 name: 'name',
@@ -73,29 +73,29 @@ describe('inventoryActions', function() {
         });
       });
 
-      context('when an item contains other items', function() {
-        it('selects each of the items in order', function() {
+      context('when an item contains other items', () => {
+        it('selects each of the items in order', () => {
           const state = new State({
             entities: Map({
-              '1': new Entity({
+              1: new Entity({
                 entities: List(['2']),
                 id: '1',
                 name: 'name',
               }),
-              '2': new Entity({
+              2: new Entity({
                 entities: List(['3']),
                 id: '2',
                 name: 'name',
               }),
-              '3': new Entity({
+              3: new Entity({
                 id: '3',
                 name: 'name',
               }),
-              '4': new Entity({
+              4: new Entity({
                 id: '4',
                 name: 'name',
               }),
-              '6': new Entity({
+              6: new Entity({
                 entities: List(['1', '4']),
                 id: '6',
                 name: 'name',
@@ -121,29 +121,29 @@ describe('inventoryActions', function() {
         });
       });
 
-      context('when the first item occurs after the second item', function() {
-        it('selects each of the items in order', function() {
+      context('when the first item occurs after the second item', () => {
+        it('selects each of the items in order', () => {
           const state = new State({
             entities: Map({
-              '1': new Entity({
+              1: new Entity({
                 entities: List(['2']),
                 id: '1',
                 name: 'name',
               }),
-              '2': new Entity({
+              2: new Entity({
                 entities: List(['3']),
                 id: '2',
                 name: 'name',
               }),
-              '3': new Entity({
+              3: new Entity({
                 id: '3',
                 name: 'name',
               }),
-              '4': new Entity({
+              4: new Entity({
                 id: '4',
                 name: 'name',
               }),
-              '6': new Entity({
+              6: new Entity({
                 entities: List(['1', '4']),
                 id: '6',
                 name: 'name',
@@ -169,39 +169,39 @@ describe('inventoryActions', function() {
         });
       });
 
-      context('large nested structure going backwards', function() {
-        it('selects each of the items in reverse order', function() {
+      context('large nested structure going backwards', () => {
+        it('selects each of the items in reverse order', () => {
           const state = new State({
             entities: Map({
-              '1': new Entity({
+              1: new Entity({
                 entities: List(['2']),
                 id: '1',
                 name: 'name',
               }),
-              '2': new Entity({
+              2: new Entity({
                 entities: List(['3', '4']),
                 id: '2',
                 name: 'name',
               }),
-              '3': new Entity({
+              3: new Entity({
                 id: '3',
                 name: 'name',
               }),
-              '4': new Entity({
+              4: new Entity({
                 entities: List(['7']),
                 id: '4',
                 name: 'name',
               }),
-              '5': new Entity({
+              5: new Entity({
                 id: '5',
                 name: 'name',
               }),
-              '6': new Entity({
+              6: new Entity({
                 entities: List(['1', '5']),
                 id: '6',
                 name: 'player',
               }),
-              '7': new Entity({
+              7: new Entity({
                 id: '7',
                 name: 'name',
               }),

@@ -8,15 +8,15 @@ import { Entity } from '../records';
 import { Inventory } from './Inventory';
 import InventoryItemContainer from './InventoryItem';
 
-describe('Inventory', function() {
-  describe('component', function() {
-    it('creates a list of Inventory components', function() {
+describe('Inventory', () => {
+  describe('component', () => {
+    it('creates a list of Inventory components', () => {
       const props = {
-        addView: function() { /* stub */ },
-        moveItem: function() { /* stub */ },
-        selectItem: function() { /* stub */ },
-        toggleExpand: function() { /* stub */ },
-        toggleItem: function() { /* stub */ },
+        addView: () => { /* stub */ },
+        moveItem: () => { /* stub */ },
+        selectItem: () => { /* stub */ },
+        toggleExpand: () => { /* stub */ },
+        toggleItem: () => { /* stub */ },
       };
       const entities = List([
         new Entity({ id: '1', name: '1' }),

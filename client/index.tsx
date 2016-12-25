@@ -16,11 +16,11 @@ import * as socketActions from './actions/socketActions';
 
 const store = configureStore(socket, undefined);
 
-socket.onopen = function() {
+socket.onopen = () => {
   store.dispatch(socketActions.reconnected());
 };
 
-socket.onclose = function() {
+socket.onclose = () => {
   store.dispatch(socketActions.disconnected());
 };
 
@@ -36,7 +36,7 @@ socket.onclose = function() {
  *   }
  * }
  */
-socket.onmessage = function(event) {
+socket.onmessage = (event) => {
   // All messages are expected to be valid JSON!
   const message = JSON.parse(event.data);
   if (!message.payload) {
@@ -56,7 +56,7 @@ socket.onmessage = function(event) {
 
 // Focus on terminal prompt on all keypresses.
 // This will have to change once keyboard navigation is set up.
-document.onkeypress = function() {
+document.onkeypress = () => {
   document.getElementById('prompt').focus();
 };
 

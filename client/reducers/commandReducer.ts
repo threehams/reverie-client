@@ -70,7 +70,16 @@ function setCursorIndex(state: CommandState, index: number) {
   return indexSet;
 }
 
-function completeCommand(state: CommandState, { payload: { command, cursorIndex, autocompleteItem } }: CommandComplete) {
+function completeCommand(
+  state: CommandState,
+  {
+    payload: {
+      command,
+      cursorIndex,
+      autocompleteItem,
+    },
+  }: CommandComplete,
+) {
   return replaceCommand(state, command, cursorIndex, autocompleteItem);
 }
 

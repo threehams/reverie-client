@@ -6,15 +6,15 @@ import entitiesReducer, { INITIAL_STATE } from './entitiesReducer';
 
 import { SetState } from '../actions/messageActions';
 
-describe('entitiesReducer', function() {
-  describe('SET_STATE', function() {
-    it('merges entity records', function() {
+describe('entitiesReducer', () => {
+  describe('SET_STATE', () => {
+    it('merges entity records', () => {
       const initial = Map({
-        '1': new Entity({
+        1: new Entity({
           id: '1',
           name: 'thing1',
         }),
-        '2': new Entity({
+        2: new Entity({
           id: '2',
           name: 'thing2',
         }),
@@ -22,11 +22,11 @@ describe('entitiesReducer', function() {
       const action: SetState = {
         payload: {
           entities: Map({
-            '1': new Entity({
+            1: new Entity({
               id: '1',
               name: 'thing1',
             }),
-            '3': new Entity({
+            3: new Entity({
               id: '3',
               name: 'thing3',
             }),
@@ -37,15 +37,15 @@ describe('entitiesReducer', function() {
       };
       expect(entitiesReducer(initial, action)).to.equal(
         Map({
-          '1': new Entity({
+          1: new Entity({
             id: '1',
             name: 'thing1',
           }),
-          '2': new Entity({
+          2: new Entity({
             id: '2',
             name: 'thing2',
           }),
-          '3': new Entity({
+          3: new Entity({
             id: '3',
             name: 'thing3',
           }),
@@ -53,13 +53,13 @@ describe('entitiesReducer', function() {
       );
     });
 
-    it('removes records which are marked for deletion', function() {
+    it('removes records which are marked for deletion', () => {
       const initial = Map({
-        '1': new Entity({
+        1: new Entity({
           id: '1',
           name: 'thing1',
         }),
-        '2': new Entity({
+        2: new Entity({
           id: '2',
           name: 'thing2',
         }),
@@ -73,7 +73,7 @@ describe('entitiesReducer', function() {
       };
       expect(entitiesReducer(initial, action)).to.equal(
         Map({
-          '2': new Entity({
+          2: new Entity({
             id: '2',
             name: 'thing2',
           }),
@@ -82,8 +82,8 @@ describe('entitiesReducer', function() {
     });
   });
 
-  // describe('default', function() {
-  //   it('returns the state', function() {
+  // describe('default', () => {
+  //   it('returns the state', () => {
   //     expect(entitiesReducer(undefined, { type: 'UNRELATED' })).to.equal(INITIAL_STATE);
   //   });
   // });

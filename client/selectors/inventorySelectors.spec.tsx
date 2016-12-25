@@ -5,10 +5,10 @@ import { expect } from '../../__test__/configureExpect';
 
 import * as inventorySelectors from './inventorySelectors';
 
-describe('inventorySelectors', function() {
-  describe('list', function() {
-    context('when an item is expanded', function() {
-      it('returns the list with the correct expansion and indent', function() {
+describe('inventorySelectors', () => {
+  describe('list', () => {
+    context('when an item is expanded', () => {
+      it('returns the list with the correct expansion and indent', () => {
         const player = new Entity({
           entities: List(['2']),
           id: '1',
@@ -16,17 +16,17 @@ describe('inventorySelectors', function() {
         });
         const state = new State({
           entities: Map({
-            '1': player,
-            '2': new Entity({
+            1: player,
+            2: new Entity({
               entities: List(['3']),
               id: '2',
               name: 'container',
             }),
-            '3': new Entity({
+            3: new Entity({
               id: '3',
               name: 'item',
             }),
-            '4': new Entity({
+            4: new Entity({
               id: '4',
               name: 'item',
             }),
@@ -62,8 +62,8 @@ describe('inventorySelectors', function() {
       });
     });
 
-    context('when an item is not expanded', function() {
-      it('filters out the item\'s entities', function() {
+    context('when an item is not expanded', () => {
+      it('filters out the item\'s entities', () => {
         const player = new Entity({
           entities: List(['2']),
           id: '1',
@@ -71,17 +71,17 @@ describe('inventorySelectors', function() {
         });
         const state = new State({
           entities: Map({
-            '1': player,
-            '2': new Entity({
+            1: player,
+            2: new Entity({
               entities: List(['3']),
               id: '2',
               name: 'container',
             }),
-            '3': new Entity({
+            3: new Entity({
               id: '3',
               name: 'item',
             }),
-            '4': new Entity({
+            4: new Entity({
               id: '4',
               name: 'item',
             }),

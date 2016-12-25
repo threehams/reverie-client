@@ -1,6 +1,6 @@
 import path = require('path');
 import webpack = require('webpack');
-const SpritesmithPlugin = require('webpack-spritesmith');
+import SpritesmithPlugin = require('webpack-spritesmith');
 
 const ENTRY_POINTS = {
   development: ['webpack-hot-middleware/client', 'react-hot-loader/patch', './client/index.tsx'],
@@ -65,8 +65,6 @@ const DEV_TOOLS = {
   development: 'eval',
   production: 'source-map',
 };
-
-console.log('Path', path.join(__dirname, '..', 'client'));
 
 export default {
   devtool: DEV_TOOLS[ENV],

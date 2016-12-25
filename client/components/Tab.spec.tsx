@@ -7,24 +7,24 @@ import { expect } from '../../__test__/configureExpect';
 import { Icon } from './Icon';
 import { styles, Tab } from './Tab';
 
-describe('Tab', function() {
-  describe('active', function() {
-    it('applies active styles', function() {
+describe('Tab', () => {
+  describe('active', () => {
+    it('applies active styles', () => {
       const element = shallow(<Tab active>Stuff</Tab>);
       expect(element.first().prop('style')).to.contain(styles.active);
     });
   });
 
-  describe('inactive', function() {
-    it('applies inactive styles', function() {
+  describe('inactive', () => {
+    it('applies inactive styles', () => {
       const element = shallow(<Tab>Stuff</Tab>);
       expect(element.first().prop('style')).to.contain(styles.inactive);
     });
   });
 
-  describe('click', function() {
-    context('left click', function() {
-      it('calls onClick', function() {
+  describe('click', () => {
+    context('left click', () => {
+      it('calls onClick', () => {
         const onClick = sinon.spy();
         const element = shallow(<Tab onClick={onClick}>Stuff</Tab>);
         const event = { button: 0 };
@@ -33,8 +33,8 @@ describe('Tab', function() {
       });
     });
 
-    context('middle click', function() {
-      it('calls onClickClose', function() {
+    context('middle click', () => {
+      it('calls onClickClose', () => {
         const onClickClose = sinon.spy();
         const element = shallow(<Tab onClickClose={onClickClose}>Stuff</Tab>);
         const event = { button: 1 };
@@ -44,8 +44,8 @@ describe('Tab', function() {
     });
   });
 
-  describe('click close button', function() {
-    it('stops propagation and calls onClickClose', function() {
+  describe('click close button', () => {
+    it('stops propagation and calls onClickClose', () => {
       const onClickClose = sinon.spy();
       const stopPropagation = sinon.spy();
       const element = shallow(<Tab onClickClose={onClickClose}>Stuff</Tab>);

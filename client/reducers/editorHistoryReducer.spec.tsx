@@ -5,10 +5,10 @@ import * as editorActions from '../actions/editorActions';
 import { SetState } from '../actions/messageActions';
 import editorHistoryReducer from './editorHistoryReducer';
 
-describe('editorHistoryReducer', function() {
-  describe('SET_STATE', function() {
-    context('with a message', function() {
-      it('adds the command to the history with a trailing blank line', function() {
+describe('editorHistoryReducer', () => {
+  describe('SET_STATE', () => {
+    context('with a message', () => {
+      it('adds the command to the history with a trailing blank line', () => {
         const initial = List(['Hello.']);
         const action: SetState = {
           payload: {
@@ -25,8 +25,8 @@ describe('editorHistoryReducer', function() {
       });
     });
 
-    context('with no message', function() {
-      it('returns the state', function() {
+    context('with no message', () => {
+      it('returns the state', () => {
         const initial = List(['Hello.', '']);
         const action: SetState = {
           payload: {
@@ -41,8 +41,8 @@ describe('editorHistoryReducer', function() {
       });
     });
 
-    context('when state is empty', function() {
-      it('does not prepend a blank line', function() {
+    context('when state is empty', () => {
+      it('does not prepend a blank line', () => {
         const initial = List([]);
         const action: SetState = {
           payload: {
@@ -55,16 +55,16 @@ describe('editorHistoryReducer', function() {
     });
   });
 
-  describe('EDITOR_HISTORY_CLEAR', function() {
-    it('clears the history', function() {
+  describe('EDITOR_HISTORY_CLEAR', () => {
+    it('clears the history', () => {
       const initial = List(['You are standing in an open field']);
       const action = editorActions.clear();
       expect(editorHistoryReducer(initial, action)).to.equal(List());
     });
   });
 
-  // describe('default', function() {
-  //   it('return default state', function() {
+  // describe('default', () => {
+  //   it('return default state', () => {
   //     expect(editorHistoryReducer(undefined, { type: 'UNRELATED' })).to.equal(INITIAL_STATE);
   //   });
   // });

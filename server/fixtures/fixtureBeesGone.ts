@@ -1,6 +1,6 @@
 export default {
   entities: {
-    '76': {
+    76: {
       components: ['creature'],
       currentHealth: 40,
       description: 'A large swarm of bees. They seem uninterested in your presence.',

@@ -10,9 +10,9 @@ import * as socketActions from '../actions/socketActions';
 import { Ui } from '../records';
 import uiReducer, { INITIAL_STATE } from './uiReducer';
 
-describe('uiReducer', function() {
-  describe('EDITOR_ADD_VIEW', function() {
-    it('adds a new view and sets it as active', function() {
+describe('uiReducer', () => {
+  describe('EDITOR_ADD_VIEW', () => {
+    it('adds a new view and sets it as active', () => {
       const initial = new Ui({
         editorViews: OrderedSet(['3']),
       });
@@ -23,8 +23,8 @@ describe('uiReducer', function() {
     });
   });
 
-  describe('EDITOR_SET_ACTIVE_VIEW', function() {
-    it('sets the view as active', function() {
+  describe('EDITOR_SET_ACTIVE_VIEW', () => {
+    it('sets the view as active', () => {
       const initial = new Ui({
         activeEditorView: '1',
       });
@@ -33,9 +33,9 @@ describe('uiReducer', function() {
     });
   });
 
-  describe('EDITOR_REMOVE_VIEW', function() {
-    context('when removing the current view', function() {
-      it('sets the active view to the next available view', function() {
+  describe('EDITOR_REMOVE_VIEW', () => {
+    context('when removing the current view', () => {
+      it('sets the active view to the next available view', () => {
         const initial = new Ui({
           activeEditorView: '2',
           editorViews: OrderedSet(['1', '2', '3', '4']),
@@ -47,8 +47,8 @@ describe('uiReducer', function() {
       });
     });
 
-    context('when removing a non-current view', function() {
-      it('does not change the active view', function() {
+    context('when removing a non-current view', () => {
+      it('does not change the active view', () => {
         const initial = new Ui({
           activeEditorView: '2',
           editorViews: OrderedSet(['1', '2']),
@@ -61,8 +61,8 @@ describe('uiReducer', function() {
     });
   });
 
-  describe('INVENTORY_SELECT_ITEMS', function() {
-    it('sets the items to the list given', function() {
+  describe('INVENTORY_SELECT_ITEMS', () => {
+    it('sets the items to the list given', () => {
       const initial = new Ui({});
       const action: InventorySelectItems = {
         payload: {
@@ -76,8 +76,8 @@ describe('uiReducer', function() {
     });
   });
 
-  describe('INVENTORY_EXPAND_ITEMS', function() {
-    it('sets the item as expanded', function() {
+  describe('INVENTORY_EXPAND_ITEMS', () => {
+    it('sets the item as expanded', () => {
       const initial = new Ui();
       const action: InventoryExpandItems = {
         payload: {
@@ -91,8 +91,8 @@ describe('uiReducer', function() {
     });
   });
 
-  describe('INVENTORY_TOGGLE_EXPAND', function() {
-    it('toggles the expanded state', function() {
+  describe('INVENTORY_TOGGLE_EXPAND', () => {
+    it('toggles the expanded state', () => {
       const initial = new Ui();
       const action = inventoryActions.toggleExpand('1');
       expect(uiReducer(initial, action)).to.equal(new Ui(fromJS({
@@ -101,9 +101,9 @@ describe('uiReducer', function() {
     });
   });
 
-  describe('INVENTORY_TOGGLE_SELECT', function() {
-    describe('when item is selected', function() {
-      it('removes the item', function() {
+  describe('INVENTORY_TOGGLE_SELECT', () => {
+    describe('when item is selected', () => {
+      it('removes the item', () => {
         const initial = new Ui({
           selectedItems: OrderedSet(['1']),
         });
@@ -112,8 +112,8 @@ describe('uiReducer', function() {
       });
     });
 
-    describe('when item is not selected', function() {
-      it('adds the item', function() {
+    describe('when item is not selected', () => {
+      it('adds the item', () => {
         const initial = new Ui();
         const action = inventoryActions.toggleItem('1');
         expect(uiReducer(initial, action).selectedItems).to.contain('1');
@@ -121,21 +121,21 @@ describe('uiReducer', function() {
     });
   });
 
-  describe('PLAYER_SET_ACTIVE_VIEW', function() {
-    it('sets the active view', function() {
+  describe('PLAYER_SET_ACTIVE_VIEW', () => {
+    it('sets the active view', () => {
       // derp
     });
   });
 
-  describe('RESIZE_PANEL', function() {
-    it('sets the size for the given property', function() {
+  describe('RESIZE_PANEL', () => {
+    it('sets the size for the given property', () => {
       // derp
     });
   });
 
-  describe('SET_STATE', function() {
-    context('with a player', function() {
-      it('replaces the player', function() {
+  describe('SET_STATE', () => {
+    context('with a player', () => {
+      it('replaces the player', () => {
         const initial = new Ui({ player: '2' });
         const action: SetState = {
           payload: {
@@ -148,8 +148,8 @@ describe('uiReducer', function() {
       });
     });
 
-    context('with a location', function() {
-      it('replaces the player', function() {
+    context('with a location', () => {
+      it('replaces the player', () => {
         const initial = new Ui({ player: '2' });
         const action: SetState = {
           payload: {
@@ -162,8 +162,8 @@ describe('uiReducer', function() {
       });
     });
 
-    context('with no player or location', function() {
-      it('keeps the existing data', function() {
+    context('with no player or location', () => {
+      it('keeps the existing data', () => {
         const initial = new Ui({ player: '1'  });
         const action: SetState = {
           payload: {
@@ -175,8 +175,8 @@ describe('uiReducer', function() {
       });
     });
 
-    context('with status effects', function() {
-      it('replacing the existing effects', function() {
+    context('with status effects', () => {
+      it('replacing the existing effects', () => {
         const initial = new Ui({ statusEffects: Set(['bees']) });
         const action: SetState = {
           payload: {
@@ -189,7 +189,7 @@ describe('uiReducer', function() {
       });
     });
 
-    it('removes entities from inventoryExpandedById', function() {
+    it('removes entities from inventoryExpandedById', () => {
       const initial = new Ui({
         inventoryExpandedById: Set(['1']),
       });
@@ -202,7 +202,7 @@ describe('uiReducer', function() {
       expect(uiReducer(initial, action).inventoryExpandedById).to.equal(Set());
     });
 
-    it('replaces the active view if the entity is removed', function() {
+    it('replaces the active view if the entity is removed', () => {
       const initial = new Ui({
         activeEditorView: '1',
         editorViews: OrderedSet(['0', '1']),
@@ -219,8 +219,8 @@ describe('uiReducer', function() {
     });
   });
 
-  describe('SOCKET_STATUS', function() {
-    it('updates the alert', function() {
+  describe('SOCKET_STATUS', () => {
+    it('updates the alert', () => {
       const action = socketActions.disconnected();
       expect(uiReducer(undefined, action).alert).to.equal(
         'Reconnecting to server, give it a minute...',
@@ -228,8 +228,8 @@ describe('uiReducer', function() {
     });
   });
 
-  // describe('default', function() {
-  //   it('returns the state', function() {
+  // describe('default', () => {
+  //   it('returns the state', () => {
   //     expect(uiReducer(undefined, { type: 'UNRELATED' })).to.equal(INITIAL_STATE);
   //   });
   // });
