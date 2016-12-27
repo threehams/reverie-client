@@ -6,7 +6,7 @@ import { SetState } from '../actions/messageActions';
 type EntityObjectMap = Map<string, Entity>;
 export const INITIAL_STATE: EntityObjectMap = Map<string, Entity>({});
 
-export default (state = INITIAL_STATE, action: SetState) => {
+export const entitiesReducer = (state = INITIAL_STATE, action: SetState) => {
   switch (action.type) {
     case 'SET_STATE':
       return setState(state, action);

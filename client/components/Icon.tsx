@@ -9,16 +9,11 @@ interface IconProps {
   onClick?: any;
 }
 
-@Radium
-export class Icon extends React.Component<IconProps, {}> {
-  public render() {
-    const { name, before, style, ...rest } = this.props;
-
-    return (
-      <i {...rest} className={`${name}`} style={[style, styles.all, before && styles.before]} />
-    );
-  }
-}
+export const IconBase: React.StatelessComponent<IconProps> = ({
+  name, before, style, ...rest,
+}) => (
+  <i {...rest} className={`${name}`} style={[style, styles.all, before && styles.before]} />
+);
 
 const styles = {
   all: {
@@ -28,3 +23,5 @@ const styles = {
     marginRight: 6,
   },
 };
+
+export const Icon = Radium(IconBase);

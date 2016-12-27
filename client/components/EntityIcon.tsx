@@ -23,36 +23,30 @@ interface EntityIconProps {
   before?: boolean;
 }
 
-@Radium
-export class EntityIcon extends React.Component<EntityIconProps, {}> {
-  public static defaultProps = {
-    components: Set(),
-    states: Set(),
-  };
-
-  public render() {
-    const { components, states, ...rest } = this.props;
-
-    return (
-      <Icon {...rest} name={this.iconFor(components, states)} />
-    );
+function iconFor(components: Set<string>, states: Set<string>) {
+  if (states.contains('locked')) {
+    return TYPE_ICONS.locked;
   }
-
-  private iconFor(components: Set<string>, states: Set<string>) {
-    if (states.contains('locked')) {
-      return TYPE_ICONS.locked;
-    }
-    if (states.contains('unlocked') && states.contains('closed')) {
-      return TYPE_ICONS.unlocked;
-    }
-    if (components.contains('openable') && states.contains('closed')) {
-      return TYPE_ICONS.containerClosed;
-    }
-    for (const component of ['container', 'player', 'room', 'creature']) {
-      if (components.contains(component)) {
-        return TYPE_ICONS[component];
-      }
-    }
-    return TYPE_ICONS.text;
+  if (states.contains('unlocked') && states.contains('closed')) {
+    return TYPE_ICONS.unlocked;
   }
+  if (components.contains('openable') && states.contains('closed')) {
+    return TYPE_ICONS.containerClosed;
+  }
+  for (const component of ['container', 'player', 'room', 'creature']) {
+    if (components.contains(component)) {
+      return TYPE_ICONS[component];
+    }
+  }
+  return TYPE_ICONS.text;
 }
+
+export const EntityIconBase: React.StatelessComponent<EntityIconProps> = ({
+  components = Set([]),
+  states = Set([]),
+  ...rest,
+}) => (
+  <Icon {...rest} name={iconFor(components, states)} />
+);
+
+export const EntityIcon = Radium(EntityIconBase);

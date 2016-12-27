@@ -27,8 +27,7 @@ interface PanelResizerState {
   initial?: number;
 }
 
-@Radium
-export class PanelResizer extends React.Component<PanelResizerProps, PanelResizerState> {
+export class PanelResizerBase extends React.Component<PanelResizerProps, PanelResizerState> {
   constructor() {
     super();
 
@@ -92,6 +91,8 @@ export class PanelResizer extends React.Component<PanelResizerProps, PanelResize
     this.setState({ initial: 0, resizing: false });
   }
 }
+
+export const PanelResizer = Radium(PanelResizerBase);
 
 const styles = {
   right: {

@@ -24,7 +24,7 @@ type CommandAction = CommandCloseAutocomplete |
   CommandSetCursorIndex |
   SetState;
 
-export default (state = INITIAL_STATE, action: CommandAction) => {
+export const commandReducer = (state = INITIAL_STATE, action: CommandAction) => {
   switch (action.type) {
     case 'COMMAND_HISTORY_CLEAR':
       return state.update('history', (history) => history.clear());

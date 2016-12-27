@@ -11,7 +11,6 @@ interface MarkdownLinkProps {
   move: Function;
   attack: Function;
   locateItem: Function;
-
 }
 
 export class MarkdownLink extends React.Component<MarkdownLinkProps, {}> {

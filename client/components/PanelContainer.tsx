@@ -19,8 +19,7 @@ interface PanelContainerState {
   sidebarWidth?: number;
 }
 
-@Radium
-export class PanelContainer extends Component<PanelContainerProps, PanelContainerState> {
+export class PanelContainerBase extends Component<PanelContainerProps, PanelContainerState> {
   constructor() {
     super();
     this.state = {
@@ -108,6 +107,8 @@ export class PanelContainer extends Component<PanelContainerProps, PanelContaine
     ];
   }
 }
+
+export const PanelContainer = Radium(PanelContainerBase);
 
 const styles = {
   footer: {

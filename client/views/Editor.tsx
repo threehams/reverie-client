@@ -6,7 +6,7 @@ import Radium = require('radium');
 import * as editorActions from '../actions/editorActions';
 import { Entity, State } from '../records';
 import { EditorPanel } from './EditorPanel';
-import EditorTabs from './EditorTabs';
+import { EditorTabs } from './EditorTabs';
 
 import fontStyles from '../styles/font';
 
@@ -20,33 +20,34 @@ interface EditorProps {
   views: OrderedSet<string>;
 }
 
-@Radium
-export class Editor extends React.Component<EditorProps, {}> {
-  public render() {
-    const { activeView, editorHistory, entities, removeView, setActiveView, views} = this.props;
-    const tabProps = {activeView, entities, setActiveView, removeView, views};
-    return (
-      <div style={styles.container}>
-        <EditorTabs {...tabProps} />
-        {
-          activeView !== '0' ?
-            <EditorPanel history={this.createHistory(entities.get(activeView))} /> :
-            <EditorPanel history={editorHistory} />
-        }
-      </div>
-    );
-  }
-
-  private createHistory(item: Entity) {
-    return List([
-      `# ${item.name}`,
-      '',
-      ...item.description.split('\n'),
-    ]);
-  }
+function createHistory(item: Entity) {
+  return List([
+    `# ${item.name}`,
+    '',
+    ...item.description.split('\n'),
+  ]);
 }
 
-export default connect((state: State) => ({
+const EditorBase: React.StatelessComponent<EditorProps> = ({
+  activeView,
+  editorHistory,
+  entities,
+  removeView,
+  setActiveView,
+  views,
+}) => {
+  const tabProps = { activeView, entities, setActiveView, removeView, views };
+  return <div style={styles.container}>
+    <EditorTabs {...tabProps} />
+    {
+      activeView !== '0' ?
+        <EditorPanel history={createHistory(entities.get(activeView))} /> :
+        <EditorPanel history={editorHistory} />
+    }
+  </div>;
+}
+
+export const Editor = connect((state: State) => ({
   activeView: state.ui.activeEditorView,
   editorHistory: state.editorHistory,
   entities: state.entities,
@@ -54,7 +55,7 @@ export default connect((state: State) => ({
 }), {
   removeView: editorActions.removeView,
   setActiveView: editorActions.setActiveView,
-})(Editor);
+})(Radium(EditorBase));
 
 const styles = {
   container: Object.assign(

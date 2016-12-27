@@ -7,7 +7,9 @@ const ENTRY_POINTS = {
   production: ['./client/index.tsx'],
 };
 
-const ENV = process.env.NODE_ENV || 'development';
+type Environment = 'development' | 'production';
+
+const ENV: Environment = process.env.NODE_ENV || 'development';
 
 const PLUGINS = {
   development: [

@@ -108,15 +108,12 @@ function createEntityMap(entities: EntityObjectMap): EntityMap {
     return Map<string, Entity>({});
   }
   return Object.entries(entities).reduce((entityMap: EntityMap, [id, entity]: EntityPair): EntityMap => {
-    const entityProps: any = Object.assign(
-      {},
-      entity,
-      {
-        components: Set(entity.components),
-        entities: List(entity.entities),
-        states: Set(entity.states),
-      },
-    );
+    const entityProps = {
+      ...entity,
+      components: Set(entity.components),
+      entities: List(entity.entities),
+      states: Set(entity.states),
+    };
     return entityMap.set(id, new Entity(entityProps));
   }, Map<string, Entity>({}));
 }
@@ -131,31 +128,18 @@ function createCommandSet(commands: CommandData[]): Set<Command> {
 }
 
 function createCommandRecord(commandData: CommandData): Command {
-  return new Command(Object.assign(
-    {},
-    commandData,
-    {
-      parts: List(commandData.parts.map((part) => {
-        return new CommandPart(Object.assign(
-          {},
-          part,
-          {
-            allowed: List(part.allowed.map((allow) => {
-              return new Allowed(Object.assign(
-                {},
-                allow,
-                {
-                  components: Set(allow.components),
-                  names: Set(allow.names),
-                  owners: Set(allow.owners),
-                  states: Set(allow.states),
-                  types: Set(allow.types),
-                },
-              ));
-            })),
-          },
-        ));
-      })),
-    },
-  ));
+  return new Command({
+    ...commandData,
+    parts: List(commandData.parts.map((part) => new CommandPart({
+      ...part,
+      allowed: List(part.allowed.map((allow) => new Allowed({
+        ...allow,
+        components: Set(allow.components),
+        names: Set(allow.names),
+        owners: Set(allow.owners),
+        states: Set(allow.states),
+        types: Set(allow.types),
+      })))
+    }))),
+  });
 }

@@ -39,8 +39,10 @@ export const attack = (id: string) => {
 
 // TODO don't send multiple actions from one thunk
 export const locateItem = (id: string) => {
+  console.log('hi');
   return (dispatch: Dispatch<InventoryExpandItems | InventorySelectItems>) => {
     const ids = List([id]);
+    console.log('thunkin');
 
     // dispatch one action to expand a number of containers
     dispatch({

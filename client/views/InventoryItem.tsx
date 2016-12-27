@@ -20,8 +20,7 @@ interface InventoryItemProps {
   toggleItem: Function;
 }
 
-@Radium
-export class InventoryItem extends React.Component<InventoryItemProps, {}> {
+export class InventoryItemBase extends React.Component<InventoryItemProps, {}> {
   public shouldComponentUpdate(nextProps: InventoryItemProps, nextState: {}) {
     /* istanbul-ignore-next */
     return shallowCompare(this, nextProps, nextState);
@@ -108,10 +107,10 @@ const collectDrop = (dropConnect, monitor) => ({
 });
 
 const DraggableInventoryItem = DragSource('INVENTORY_ITEM', inventoryItemSource, collectDrag)(
-  DropTarget('INVENTORY_ITEM', inventoryItemTarget, collectDrop)(InventoryItem),
+  DropTarget('INVENTORY_ITEM', inventoryItemTarget, collectDrop)(InventoryItemBase),
 );
 
-export default DraggableInventoryItem as React.ComponentClass<InventoryItemProps>;
+export const InventoryItem = DraggableInventoryItem as React.ComponentClass<InventoryItemProps>;
 
 const styles = {
   canDrop: {

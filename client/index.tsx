@@ -7,8 +7,8 @@ import * as React from 'react';
 import { render } from 'react-dom';
 
 import { AppContainer } from 'react-hot-loader';
-import configureStore from './configureStore';
-import socket from './socket';
+import { configureStore } from './configureStore';
+import { socket } from './socket';
 import { App } from './views/App';
 
 import * as messageActions from './actions/messageActions';

@@ -3,7 +3,7 @@ import { expect } from '../../__test__/configureExpect';
 
 import * as editorActions from '../actions/editorActions';
 import { SetState } from '../actions/messageActions';
-import editorHistoryReducer from './editorHistoryReducer';
+import {editorHistoryReducer} from './editorHistoryReducer';
 
 describe('editorHistoryReducer', () => {
   describe('SET_STATE', () => {

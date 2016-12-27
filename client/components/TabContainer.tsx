@@ -8,20 +8,14 @@ interface TabContainerProps {
   equalWidth?: boolean;
 }
 
-@Radium
-export class TabContainer extends React.Component<TabContainerProps, {}> {
-  public shouldComponentUpdate(nextProps: TabContainerProps, nextState: {}) {
-    /* istanbul-ignore-next */
-    return shallowCompare(this, nextProps, nextState);
-  }
+export const TabContainerBase: React.StatelessComponent<TabContainerProps> = ({
+  children,
+  equalWidth,
+}) => (
+  <div style={[styles.all, equalWidth && styles.equalWidth]}>{children}</div>
+);
 
-  public render() {
-    const { equalWidth } = this.props;
-    return (
-      <div style={[styles.all, equalWidth && styles.equalWidth]}>{this.props.children}</div>
-    );
-  }
-}
+export const TabContainer = Radium(TabContainerBase);
 
 const styles = {
   all: {

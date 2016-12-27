@@ -28,7 +28,6 @@ interface TerminalPromptProps {
   setCurrentCommand: Function;
 }
 
-@Radium
 class TerminalPromptBase extends React.Component<TerminalPromptProps, {}> {
   private input: any;
 
@@ -70,10 +69,10 @@ class TerminalPromptBase extends React.Component<TerminalPromptProps, {}> {
     );
   }
 
-  private setCommandFromInput(event) {
+  private setCommandFromInput(event: React.SyntheticEvent<HTMLInputElement>) {
     event.preventDefault();
     const cursorIndex: number = ReactDOM.findDOMNode<HTMLInputElement>(this.input).selectionStart;
-    this.props.setCurrentCommand(event.target.value, cursorIndex);
+    this.props.setCurrentCommand(event.currentTarget.value, cursorIndex);
   }
 
   // Intercept specific keystrokes and add special handling for autocomplete, or override browser defaults.
@@ -158,4 +157,4 @@ export const TerminalPrompt = connect((state: State) => ({
   selectPreviousAutocompleteItem: commandActions.selectPreviousAutocompleteItem,
   sendCommand: commandActions.sendCommand,
   setCurrentCommand: commandActions.setCurrentCommand,
-})(TerminalPromptBase);
+})(Radium(TerminalPromptBase));

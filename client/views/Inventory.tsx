@@ -8,7 +8,7 @@ import * as inventoryActions from '../actions/inventoryActions';
 import { Loader } from '../components/Loader';
 import { Entity, State } from '../records';
 import * as inventorySelectors from '../selectors/inventorySelectors';
-import InventoryItem from './InventoryItem';
+import {InventoryItem} from './InventoryItem';
 
 interface InventoryProps {
   addView: Function;
@@ -19,38 +19,40 @@ interface InventoryProps {
   toggleItem: Function;
 }
 
-@Radium
-export class Inventory extends React.Component<InventoryProps, {}> {
-  public render() {
-    const { addView, items, moveItem, selectItem, toggleExpand, toggleItem } = this.props;
-    return (
-      <div style={styles.container}>
-        <Loader showUntil={!!items}>
-          {
-            items && items.map((entity) => {
-              return (
-                <InventoryItem key={entity.id}
-                               item={entity}
-                               addView={addView}
-                               moveItem={moveItem}
-                               selectItem={selectItem}
-                               toggleExpand={toggleExpand}
-                               toggleItem={toggleItem}
-                />
-              );
-            })
-          }
-        </Loader>
-      </div>
-    );
-  }
-}
+export const InventoryBase: React.StatelessComponent<InventoryProps> = ({
+  addView,
+  items,
+  moveItem,
+  selectItem,
+  toggleExpand,
+  toggleItem,
+}) => (
+  <div style={styles.container}>
+    <Loader showUntil={!!items}>
+      {
+        items && items.map((entity) => {
+          return (
+            <InventoryItem
+              key={entity.id}
+              item={entity}
+              addView={addView}
+              moveItem={moveItem}
+              selectItem={selectItem}
+              toggleExpand={toggleExpand}
+              toggleItem={toggleItem}
+            />
+          );
+        })
+      }
+    </Loader>
+  </div>
+);
 
 interface ConnectProps {
   owner: string;
 }
 
-export default connect(
+export const Inventory = connect(
   (state: State, props: ConnectProps) => ({
     items: inventorySelectors.list(state).get(props.owner),
   }),
@@ -61,7 +63,7 @@ export default connect(
     toggleExpand: inventoryActions.toggleExpand,
     toggleItem: inventoryActions.toggleItem,
   },
-)(Inventory);
+)(Radium(InventoryBase));
 
 const styles = {
   container: {
