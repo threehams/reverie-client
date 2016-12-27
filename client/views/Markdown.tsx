@@ -38,7 +38,7 @@ export class MarkdownLink extends React.Component<MarkdownLinkProps, {}> {
       case 'items':
         return this.props.locateItem(id);
       default:
-        throw new Error('Cannot handle route: ${route}'); // eslint-disable-line no-console
+        throw new Error(`Cannot handle route: ${route}`); // eslint-disable-line no-console
     }
   }
 }

@@ -12,11 +12,11 @@ import {
   MarkdownEmphasis,
   MarkdownHeading,
   MarkdownItem,
-  MarkdownLink,
   MarkdownList,
   MarkdownParagraph,
   MarkdownStrong,
 } from '../views/Markdown';
+import { MarkdownLinkContainer } from './MarkdownLink';
 
 interface EditorPanelProps {
   history: List<string>;
@@ -67,11 +67,6 @@ export class EditorPanelBase extends React.Component<EditorPanelProps, {}> {
 }
 
 export const EditorPanel = pure(Radium(EditorPanelBase));
-
-const MarkdownLinkContainer = connect(null, {
-  attack: playerActions.attack,
-  locateItem: playerActions.locateItem,
-})(MarkdownLink);
 
 const styles = {
   container: {

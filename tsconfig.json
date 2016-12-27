@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "allowJs": false,
-    "experimentalDecorators": true,
+    "experimentalDecorators": false,
     "jsx": "react",
     "module": "commonjs",
     "outDir": "tsDist",
@@ -13,6 +13,7 @@
   },
   "include": [
     "client/**/*",
+    "shared/**/*",
     "server/**/*",
     "node_modules/@types/**/*",
     "typings/**/*"

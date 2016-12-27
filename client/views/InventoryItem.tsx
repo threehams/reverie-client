@@ -107,7 +107,7 @@ const collectDrop = (dropConnect, monitor) => ({
 });
 
 const DraggableInventoryItem = DragSource('INVENTORY_ITEM', inventoryItemSource, collectDrag)(
-  DropTarget('INVENTORY_ITEM', inventoryItemTarget, collectDrop)(InventoryItemBase),
+  DropTarget('INVENTORY_ITEM', inventoryItemTarget, collectDrop)(Radium(InventoryItemBase)),
 );
 
 export const InventoryItem = DraggableInventoryItem as React.ComponentClass<InventoryItemProps>;

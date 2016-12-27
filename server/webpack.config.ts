@@ -74,9 +74,14 @@ export default {
   module: {
     loaders: [
       {
-        include: [path.join(__dirname, '..', 'client'), path.join(__dirname, '..', 'common')],
+        // include: [path.join('.', 'client'), path.join(__dirname, '.', 'common')],
         loaders: ['react-hot-loader/webpack', 'ts'],
-        test: /\.(tsx|ts|js)/,
+        test: /\.(tsx|ts)/,
+      },
+      {
+        // include: [path.join('.', 'client'), path.join(__dirname, '.', 'common')],
+        loaders: ['react-hot-loader/webpack'],
+        test: /\.js/,
       },
       {
         loader: 'style-loader!css-loader',
