@@ -139,7 +139,7 @@ function createCommandRecord(commandData: CommandData): Command {
         owners: Set(allow.owners),
         states: Set(allow.states),
         types: Set(allow.types),
-      })))
+      }))),
     }))),
   });
 }

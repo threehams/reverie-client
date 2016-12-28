@@ -45,7 +45,7 @@ const EditorBase: React.StatelessComponent<EditorProps> = ({
         <EditorPanel history={editorHistory} />
     }
   </div>;
-}
+};
 
 export const Editor = connect((state: State) => ({
   activeView: state.ui.activeEditorView,

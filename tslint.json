@@ -3,11 +3,7 @@
   "rules": {
     "quotemark": [true, "single", "jsx-double"],
     "interface-name": [true, "never-prefix"],
-    "max-classes-per-file": [
-      false
-    ],
+    "max-classes-per-file": [false],
     "arrow-parens": false
-  },
-  "rulesDirectory": [
-  ]
+  }
 }

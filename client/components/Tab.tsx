@@ -34,6 +34,14 @@ export const styles = {
   active: {
     backgroundColor: 'white',
   },
+  button: {
+    backgroundColor: 'transparent',
+    border: 0,
+    paddingBottom: 3,
+    paddingLeft: 3,
+    paddingRight: 3,
+    paddingTop: 3,
+  },
   container: {
     borderRight: panelStyles.border,
     color: '#333333',
@@ -49,17 +57,9 @@ export const styles = {
   inactive: {
     backgroundColor: '#d4d4d4',
   },
-  button: {
-    backgroundColor: 'transparent',
-    border: 0,
-    paddingBottom: 3,
-    paddingLeft: 3,
-    paddingRight: 3,
-    paddingTop: 3,
-  },
   label: {
-    paddingLeft: 15,
     display: 'inline-block',
     marginRight: 10,
+    paddingLeft: 15,
   },
 };

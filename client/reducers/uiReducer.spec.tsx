@@ -8,7 +8,7 @@ import { SetState } from '../actions/messageActions';
 import { InventoryExpandItems } from '../actions/playerActions';
 import * as socketActions from '../actions/socketActions';
 import { Ui } from '../records';
-import {uiReducer, INITIAL_STATE } from './uiReducer';
+import {INITIAL_STATE, uiReducer } from './uiReducer';
 
 describe('uiReducer', () => {
   describe('EDITOR_ADD_VIEW', () => {

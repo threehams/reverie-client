@@ -2,7 +2,7 @@ import { List } from 'immutable';
 
 import { SetState } from '../actions/messageActions';
 import { Location } from '../records';
-import {locationReducer, INITIAL_STATE } from './locationReducer';
+import {INITIAL_STATE, locationReducer } from './locationReducer';
 
 import { expect } from '../../__test__/configureExpect';
 

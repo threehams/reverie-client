@@ -65,7 +65,7 @@ const StatusEffectBase: React.StatelessComponent<StatusEffectProps> = ({
       { result }
     </span>
   );
-}
+};
 
 function confuse(children: React.ReactNode[]): React.ReactNode[] {
   return React.Children.map(children, (child) => {
