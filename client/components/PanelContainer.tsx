@@ -53,15 +53,11 @@ export class PanelContainerBase extends Component<PanelContainerProps, PanelCont
   }
 
   private onPanelResize(property: 'footerHeight' | 'sidebarHeight' | 'sidebarWidth', delta: number, done: boolean) {
-    if (done) {
-      if (!this.state[property]) {
-        return;
-      }
-
+    if (!done) {
+      this.setState({[property]: this.props[property] + delta});
+    } else if (this.state[property] && this.state[property] !== this.props[property] + delta) {
       this.props.resizePanel(property, this.state[property]);
       this.setState({[property]: null});
-    } else if (this.state[property] !== this.props[property] + delta) {
-      this.setState({[property]: this.props[property] + delta});
     }
   }
 

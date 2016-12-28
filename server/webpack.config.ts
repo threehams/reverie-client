@@ -11,6 +11,13 @@ type Environment = 'development' | 'production';
 
 const ENV: Environment = process.env.NODE_ENV || 'development';
 
+// Production build uses tsc and ends up in tsDist/server/, while development uses ts-node and is served from server/
+// hacky, but can't seem to find a cleaner solution right now
+const fromRootPath = (...paths) => path.resolve(
+  path.resolve(__dirname, '..', ENV === 'production' ? '..' : ''),
+  ...paths,
+);
+
 const PLUGINS = {
   development: [
     new webpack.HotModuleReplacementPlugin(),
@@ -52,12 +59,12 @@ const PLUGINS = {
         cssImageRef: './icons.png',
       },
       src: {
-        cwd: path.resolve(__dirname, 'assets/icons'),
+        cwd: fromRootPath('assets/icons'),
         glob: '*.png',
       },
       target: {
-        css: path.resolve(__dirname, 'assets/icons.css'),
-        image: path.resolve(__dirname, 'assets/icons.png'),
+        css: fromRootPath('assets/icons.css'),
+        image: fromRootPath('assets/icons.png'),
       },
     }),
   ],
@@ -74,12 +81,12 @@ export default {
   module: {
     loaders: [
       {
-        // include: [path.join('.', 'client'), path.join(__dirname, '.', 'common')],
+        include: [fromRootPath('client'), fromRootPath('shared')],
         loaders: ['react-hot-loader/webpack', 'ts'],
         test: /\.(tsx|ts)/,
       },
       {
-        // include: [path.join('.', 'client'), path.join(__dirname, '.', 'common')],
+        include: [fromRootPath('client'), fromRootPath('shared')],
         loaders: ['react-hot-loader/webpack'],
         test: /\.js/,
       },
@@ -95,12 +102,12 @@ export default {
   },
   output: {
     filename: 'bundle.js',
-    path: path.join(__dirname, 'build'),
+    path: fromRootPath('build'),
     publicPath: '/build/',
   },
   plugins: PLUGINS[ENV],
   resolve: {
     extensions: ['', '.jsx', '.js', '.tsx', '.ts'],
-    root: [path.resolve('client')],
+    root: [fromRootPath('client')],
   },
 };
