@@ -24,6 +24,7 @@ export class Ui extends Record<UiProps>({
   player: null,
   selectedItems: OrderedSet([]),
   sidebarHeight: 300,
+  sidebarWidth: 250,
   statusEffects: Set([]),
 }) implements UiProps {
   public activeEditorView: string;
