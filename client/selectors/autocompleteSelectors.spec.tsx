@@ -1,12 +1,12 @@
-import * as autocompleteSelectors from './autocompleteSelectors';
 import { List, Map, Set } from 'immutable';
+import * as autocompleteSelectors from './autocompleteSelectors';
 
 import { expect } from '../../__test__/configureExpect';
 
 import {
   Allowed,
-  CommandPart,
   Command,
+  CommandPart,
   CommandState,
   Entity,
   Exit,
@@ -15,10 +15,10 @@ import {
   Ui,
 } from '../records';
 
-describe('autocompleteSelectors', function() {
-  describe('applyAllowed', function() {
-    context('when types are specified', function() {
-      it('restricts the objects to the given types', function() {
+describe('autocompleteSelectors', () => {
+  describe('applyAllowed', () => {
+    context('when types are specified', () => {
+      it('restricts the objects to the given types', () => {
         const commands = List([
           new Command({ name: 'command1' }),
           new Command({ name: 'command2' }),
@@ -35,8 +35,8 @@ describe('autocompleteSelectors', function() {
       });
     });
 
-    context('when types are not specified', function() {
-      it('returns a flat map of all objects', function() {
+    context('when types are not specified', () => {
+      it('returns a flat map of all objects', () => {
         const objects = List([
           new Command({ name: 'command1' }),
           new Command({ name: 'command2' }),
@@ -51,8 +51,8 @@ describe('autocompleteSelectors', function() {
       });
     });
 
-    context('when components are specified', function() {
-      it('returns objects where any component matches', function() {
+    context('when components are specified', () => {
+      it('returns objects where any component matches', () => {
         const creature = new Entity({
           components: Set(['creature']),
           id: '1',
@@ -79,9 +79,9 @@ describe('autocompleteSelectors', function() {
     });
   });
 
-  describe('availableOptions', function() {
-    context('with no current command', function() {
-      it('matches commands and exits', function() {
+  describe('availableOptions', () => {
+    context('with no current command', () => {
+      it('matches commands and exits', () => {
         const commandTransfer = new Command({
           name: 'stash',
         });
@@ -96,7 +96,7 @@ describe('autocompleteSelectors', function() {
             cursorIndex: 1,
           }),
           entities: Map({
-            '1': new Entity({
+            1: new Entity({
               id: '1',
               name: 'readme.txt',
             }),
@@ -112,9 +112,9 @@ describe('autocompleteSelectors', function() {
       });
     });
 
-    context('with a current command', function() {
-      context('when the part filters by type', function() {
-        it('returns the filtered and sorted list', function() {
+    context('with a current command', () => {
+      context('when the part filters by type', () => {
+        it('returns the filtered and sorted list', () => {
           const commandTransfer = new Command({
             name: 'transfer',
             parts: List([
@@ -142,7 +142,7 @@ describe('autocompleteSelectors', function() {
               cursorIndex: 9,
             }),
             entities: Map({
-              '1': entity,
+              1: entity,
             }),
             location: new Location(),
             ui: new Ui(),
@@ -153,20 +153,20 @@ describe('autocompleteSelectors', function() {
         });
       });
 
-      context('when the part filters by component', function() {
-        it('returns the filtered and sorted list', function() {
+      context('when the part filters by component', () => {
+        it('returns the filtered and sorted list', () => {
           // derp
         });
       });
 
-      context('when the part filters by owner', function() {
-        it('returns the filtered and sorted list', function() {
+      context('when the part filters by owner', () => {
+        it('returns the filtered and sorted list', () => {
           // derp
         });
       });
 
-      context('when the part contains multiple allowed lists', function() {
-        it('adds all possibilities to a single sorted list', function() {
+      context('when the part contains multiple allowed lists', () => {
+        it('adds all possibilities to a single sorted list', () => {
           // derp
         });
       });

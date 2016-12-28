@@ -8,7 +8,7 @@ import {
   CommandSelectAutocompleteItem,
   CommandSend,
   CommandSetCurrent,
-  CommandSetCursorIndex
+  CommandSetCursorIndex,
 } from '../actions/commandActions';
 import { SetState } from '../actions/messageActions';
 import { CommandState } from '../records';
@@ -24,10 +24,10 @@ type CommandAction = CommandCloseAutocomplete |
   CommandSetCursorIndex |
   SetState;
 
-export default (state = INITIAL_STATE, action: CommandAction) => {
+export const commandReducer = (state = INITIAL_STATE, action: CommandAction) => {
   switch (action.type) {
     case 'COMMAND_HISTORY_CLEAR':
-      return state.update('history', history => history.clear());
+      return state.update('history', (history) => history.clear());
     case 'COMMAND_SEND':
       return sendCommand(state, action);
     case 'COMMAND_COMPLETE':
@@ -51,13 +51,13 @@ export default (state = INITIAL_STATE, action: CommandAction) => {
 };
 
 function setState(state: CommandState, action: SetState) {
-  return state.update('available', available => {
+  return state.update('available', (available) => {
     return available.union(Set(action.payload.availableCommands));
   });
 }
 
 function sendCommand(state: CommandState, action: CommandSend) {
-  return closeAutocomplete(state.update('history', history => history.push(action.payload.command))
+  return closeAutocomplete(state.update('history', (history) => history.push(action.payload.command))
     .merge({ current: '', cursorIndex: 0 }));
 }
 
@@ -70,7 +70,16 @@ function setCursorIndex(state: CommandState, index: number) {
   return indexSet;
 }
 
-function completeCommand(state: CommandState, { payload: { command, cursorIndex, autocompleteItem } }: CommandComplete) {
+function completeCommand(
+  state: CommandState,
+  {
+    payload: {
+      command,
+      cursorIndex,
+      autocompleteItem,
+    },
+  }: CommandComplete,
+) {
   return replaceCommand(state, command, cursorIndex, autocompleteItem);
 }
 

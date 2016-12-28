@@ -1,12 +1,12 @@
 import { List, Map, Set } from 'immutable';
 
-import * as messageActions from './messageActions';
 import { expect } from '../../__test__/configureExpect';
 import { Allowed, Command, CommandPart, Entity } from '../records';
+import * as messageActions from './messageActions';
 
-describe('messageActions', function() {
-  describe('setState', function() {
-    it('converts command data to a set of records', function() {
+describe('messageActions', () => {
+  describe('setState', () => {
+    it('converts command data to a set of records', () => {
       const stateData = {
         availableCommands: [
           {
@@ -49,11 +49,11 @@ describe('messageActions', function() {
     });
   });
 
-  describe('entities', function() {
-    it('converts entity data to a map of records', function() {
+  describe('entities', () => {
+    it('converts entity data to a map of records', () => {
       const stateData = {
         entities: {
-          '1': {
+          1: {
             components: ['attackable'],
             entities: ['2'],
             id: '1',
@@ -64,7 +64,7 @@ describe('messageActions', function() {
       };
 
       const expected = Map({
-        '1': new Entity({
+        1: new Entity({
           components: Set(['attackable']),
           entities: List(['2']),
           id: '1',

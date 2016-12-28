@@ -1,13 +1,13 @@
 import { expect } from '../../__test__/configureExpect';
 
-import { Autocomplete } from './Autocomplete';
+import { AutocompleteBase } from './Autocomplete';
 
-describe('Autocomplete', function() {
-  describe('renderOption', function() {
-    it('styles the first occurrence of the command', function() {
+describe('Autocomplete', () => {
+  describe('renderOption', () => {
+    it('styles the first occurrence of the command', () => {
       const option = 'autocomplete';
       const command = 'comp';
-      expect(new Autocomplete().splitOption(option, command)).to.eql(['auto', 'comp', 'lete']);
+      expect(new AutocompleteBase().splitOption(option, command)).to.eql(['auto', 'comp', 'lete']);
     });
   });
 });

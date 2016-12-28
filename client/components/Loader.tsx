@@ -1,30 +1,24 @@
 import * as React from 'react';
-import shallowCompare = require('react-addons-shallow-compare');
 
 interface LoaderProps {
   showUntil?: boolean;
 }
 
-export class Loader extends React.Component<LoaderProps, {}> {
-  public shouldComponentUpdate(nextProps: LoaderProps, nextState: {}) {
-    /* istanbul-ignore-next */
-    return shallowCompare(this, nextProps, nextState);
+export const Loader: React.StatelessComponent<LoaderProps> = ({
+  children, showUntil,
+}) => {
+  if (!showUntil) {
+    return (
+      <div>
+        <style>
+          {css}
+        </style>
+        <div className="loader" />
+      </div>
+    );
   }
-
-  public render() {
-    if (!this.props.showUntil) {
-      return (
-        <div>
-          <style>
-            {css}
-          </style>
-          <div className="loader" />
-        </div>
-      );
-    }
-    return <div>{ this.props.children }</div>;
-  }
-}
+  return <div>{ children }</div>;
+};
 
 const css = `
   .loader {

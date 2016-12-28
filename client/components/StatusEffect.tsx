@@ -1,7 +1,8 @@
+import { Set } from 'immutable';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import * as _ from 'lodash';
-import { Set } from 'immutable';
+
+import { State } from '../records';
 
 const BEE_PHRASES = [
   'noooo not the bees!',
@@ -28,99 +29,102 @@ const shuffle = (phrase: string) => {
 };
 
 interface StatusEffectProps {
-  statusEffects?: Set<string>;
+  statusEffects: Set<string>;
 }
 
-class StatusEffect extends React.Component<StatusEffectProps, {}> {
-  public render() {
-    const { children, statusEffects } = this.props;
-    const rest = _.omit(this.props, ['children', 'statusEffects']);
-    if (!statusEffects.size) {
-      return <span>{ children }</span>;
-    }
+const StatusEffectBase: React.StatelessComponent<StatusEffectProps> = ({
+  children,
+  statusEffects,
+  ...rest,
+}) => {
+  if (!statusEffects.size) {
+    return <span>{ children }</span>;
+  }
 
-    const panicking = statusEffects.includes('panic');
-    const onFire = statusEffects.includes('fire');
-    const confused = statusEffects.includes('confusion');
-    const bees = statusEffects.includes('bees');
-    let result: any = children;
-    if (confused) {
-      result = this.confuse(result);
+  const panicking = statusEffects.includes('panic');
+  const onFire = statusEffects.includes('fire');
+  const confused = statusEffects.includes('confusion');
+  const bees = statusEffects.includes('bees');
+  let result: any = children;
+  if (confused) {
+    result = confuse(result);
+  }
+  if (panicking) {
+    result = panic(result);
+  }
+  if (bees) {
+    result = beeAttack(result);
+  }
+  return (
+    <span
+      { ...rest }
+      style={
+        Object.assign({}, onFire && styles.fire, panicking && styles.panic)
+      }
+    >
+      { result }
+    </span>
+  );
+};
+
+function confuse(children: React.ReactNode[]): React.ReactNode[] {
+  return React.Children.map(children, (child) => {
+    if (typeof child === 'string') {
+      return child.split(' ').map((spaced) => {
+        return spaced.split('.').map((dotted) => {
+          return dotted.split('-').map((dashed) => {
+            return shuffle(dashed);
+          }).join('-');
+        }).join('.');
+      }).join(' ');
     }
-    if (panicking) {
-      result = this.panic(result);
-    }
-    if (bees) {
-      result = this.bees(result);
-    }
-    return (
-      <span
-        { ...rest }
-        style={
-          Object.assign({}, onFire && styles.fire, panicking && styles.panic)
+    return child;
+  });
+}
+
+function panic(children: React.ReactNode[]): React.ReactNode[] {
+  return React.Children.map(children, (child) => {
+    if (typeof child === 'string') {
+      return child.split(' ').map((word) => {
+        if (Math.random() < 0.05) {
+          return 'a'.repeat(word.length);
         }
-      >
-        { result }
-      </span>
-    );
-  }
-
-  private confuse(children: Array<React.ReactNode>): Array<React.ReactNode> {
-    return React.Children.map(children, (child) => {
-      if (typeof child === 'string') {
-        return child.split(' ').map(spaced => {
-          return spaced.split('.').map(dotted => {
-            return dotted.split('-').map(dashed => {
-              return shuffle(dashed);
-            }).join('-');
-          }).join('.');
-        }).join(' ');
-      }
-      return child;
-    });
-  }
-
-  private panic(children: Array<React.ReactNode>): Array<React.ReactNode> {
-    return React.Children.map(children, (child) => {
-      if (typeof child === 'string') {
-        return child.split(' ').map(word => {
-          if (Math.random() < 0.05) {
-            return 'a'.repeat(word.length);
-          }
-          if (word[word.length - 1] !== '.') {
-            return word;
-          }
-          return word.substr(0, word.length - 1) + '!';
-        }).join(' ');
-      }
-      return child;
-    });
-  }
-
-  private bees(children: Array<React.ReactNode>): Array<React.ReactNode> {
-    return React.Children.map(children, (child: any) => {
-      if (typeof child === 'string') {
-        return child.split(' ').map(word => {
-          if (word.length < 3) {
-            return word;
-          }
-          if (Math.random() < 0.1) {
-            return 'b' + 'z'.repeat(word.length - 1);
-          }
-          if (Math.random() < 0.06) {
-            return `${word} ${BEE_PHRASES[Math.floor(Math.random() * BEE_PHRASES.length)]}`;
-          }
+        if (word[word.length - 1] !== '.') {
           return word;
-        }).join(' ');
-      }
-      return child;
-    });
-  }
+        }
+        return word.substr(0, word.length - 1) + '!';
+      }).join(' ');
+    }
+    return child;
+  });
 }
 
-export default connect((state) => ({
-  statusEffects: state.getIn(['ui', 'statusEffects']),
-}))(StatusEffect);
+function beeAttack(children: React.ReactNode[]): React.ReactNode[] {
+  return React.Children.map(children, (child: any) => {
+    if (typeof child === 'string') {
+      return child.split(' ').map((word) => {
+        if (word.length < 3) {
+          return word;
+        }
+        if (Math.random() < 0.1) {
+          return 'b' + 'z'.repeat(word.length - 1);
+        }
+        if (Math.random() < 0.06) {
+          return `${word} ${BEE_PHRASES[Math.floor(Math.random() * BEE_PHRASES.length)]}`;
+        }
+        return word;
+      }).join(' ');
+    }
+    return child;
+  });
+}
+
+export const StatusEffect = connect(
+  (state: State) => ({
+    statusEffects: state.ui.statusEffects,
+  }),
+  {},
+)(StatusEffectBase);
 
 const styles = {
   fire: {

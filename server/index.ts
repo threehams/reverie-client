@@ -4,27 +4,27 @@ import express = require('express');
 import webpack = require('webpack');
 import WebSocket = require('ws');
 import compression = require('compression');
-import webpackConfig = require('../webpack.config');
+import webpackConfig from './webpack.config';
 import webpackDevMiddleware = require('webpack-dev-middleware');
 import webpackHotMiddleware = require('webpack-hot-middleware');
 
 import config from './config';
+import fixtureAttackBees from './fixtures/fixtureAttackBees';
+import fixtureAttackedByBees from './fixtures/fixtureAttackedByBees';
+import fixtureAttackEnemyFailure from './fixtures/fixtureAttackEnemyFailure';
+import fixtureAttackEnemySuccess from './fixtures/fixtureAttackEnemySuccess';
+import fixtureBeesGone from './fixtures/fixtureBeesGone';
+import fixtureBeesPanic from './fixtures/fixtureBeesPanic';
+import fixtureBeesPanicGone from './fixtures/fixtureBeesPanicGone';
+import fixtureEnemyAttack from './fixtures/fixtureEnemyAttack';
 import fixtureInitialState from './fixtures/fixtureInitialState';
 import fixtureInventoryAdd from './fixtures/fixtureInventoryAdd';
 import fixtureInventoryRemove from './fixtures/fixtureInventoryRemove';
-import fixtureAttackEnemySuccess from './fixtures/fixtureAttackEnemySuccess';
-import fixtureAttackBees from './fixtures/fixtureAttackBees';
-import fixtureAttackedByBees from './fixtures/fixtureAttackedByBees';
-import fixtureBeesPanic from './fixtures/fixtureBeesPanic';
-import fixtureBeesGone from './fixtures/fixtureBeesGone';
-import fixtureBeesPanicGone from './fixtures/fixtureBeesPanicGone';
-import fixtureAttackEnemyFailure from './fixtures/fixtureAttackEnemyFailure';
-import fixtureEnemyAttack from './fixtures/fixtureEnemyAttack';
+import fixtureMoveItemToContainer from './fixtures/fixtureMoveItemToContainer';
 import fixtureMovePlayer from './fixtures/fixtureMovePlayer';
 import fixtureMovePlayerBack from './fixtures/fixtureMovePlayerBack';
-import fixtureMoveItemToContainer from './fixtures/fixtureMoveItemToContainer';
-import fixtureNotOnFire from './fixtures/fixtureNotOnFire';
 import fixtureNotConfused from './fixtures/fixtureNotConfused';
+import fixtureNotOnFire from './fixtures/fixtureNotOnFire';
 import fixtureNotPanicking from './fixtures/fixtureNotPanicking';
 import fixtureOpenContainer from './fixtures/fixtureOpenContainer';
 import fixtureOpenUnlockedContainer from './fixtures/fixtureOpenUnlockedContainer';
@@ -47,15 +47,15 @@ if (config.development) {
   app.use(webpackHotMiddleware(compiler));
 } else {
   app.use(compression());
-  app.use('/dist', express.static(path.join( __dirname, '..', 'dist')));
+  app.use('/build', express.static(path.join( __dirname, '..', 'build')));
   app.use('/assets', express.static(path.join( __dirname, '..', 'assets')));
 }
 
-app.get('/', function(request, response) {
+app.get('/', (request, response) => {
   response.sendFile(path.join(__dirname, 'index.html'));
 });
 
-const server = app.listen(config.port || 8080, function(err: Error) {
+const server = app.listen(config.port || 8080, (err: Error) => {
   if (err) {
     // tslint:disable
     console.log(err);
@@ -101,7 +101,7 @@ interface Message {
 }
 
 const wsServer = new WebSocket.Server({ server });
-wsServer.on('connection', function(ws) {
+wsServer.on('connection', (ws) => {
   const sendMessage = (message: Message, opts: MessageOptions = {}) => {
     ws.send(JSON.stringify({
       payload: message,

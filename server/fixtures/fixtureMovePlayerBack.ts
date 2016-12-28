@@ -12,8 +12,8 @@ export default {
   - There is a [small-mailbox](/items/13) here.
   - There is a [usb-drive](/items/18) here.
 
-  - [Hiro](/characters/74) is here.
-  - [Raven](/characters/75) is here.
+  - [Hiro](/creatures/74) is here.
+  - [Raven](/creatures/75) is here.
 
   Exits:
   - [North](/exits/north)`,

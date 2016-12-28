@@ -1,12 +1,12 @@
+import { List, Map, OrderedSet } from 'immutable';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Map, List, OrderedSet } from 'immutable';
 import Radium = require('radium');
 
 import * as editorActions from '../actions/editorActions';
-import { EditorPanel } from './EditorPanel';
-import EditorTabs from './EditorTabs';
 import { Entity, State } from '../records';
+import { EditorPanel } from './EditorPanel';
+import { EditorTabs } from './EditorTabs';
 
 import fontStyles from '../styles/font';
 
@@ -20,38 +20,42 @@ interface EditorProps {
   views: OrderedSet<string>;
 }
 
-@Radium
-export class Editor extends React.Component<EditorProps, {}> {
-  public render() {
-    const { activeView, editorHistory, entities, removeView, setActiveView, views} = this.props;
-    const tabProps = {activeView, entities, setActiveView, removeView, views};
-    return (
-      <div style={styles.container}>
-        <EditorTabs {...tabProps} />
-        {
-          activeView !== '0' ?
-            <EditorPanel history={this.createHistory(entities.get(activeView))} /> :
-            <EditorPanel history={editorHistory} />
-        }
-      </div>
-    );
-  }
-
-  private createHistory(item: Entity) {
-    return List([
-      `# ${item.name}`,
-      '',
-      ...item.description.split('\n'),
-    ]);
-  }
+function createHistory(item: Entity) {
+  return List([
+    `# ${item.name}`,
+    '',
+    ...item.description.split('\n'),
+  ]);
 }
 
-export default connect((state: State) => ({
+const EditorBase: React.StatelessComponent<EditorProps> = ({
+  activeView,
+  editorHistory,
+  entities,
+  removeView,
+  setActiveView,
+  views,
+}) => {
+  const tabProps = { activeView, entities, setActiveView, removeView, views };
+  return <div style={styles.container}>
+    <EditorTabs {...tabProps} />
+    {
+      activeView !== '0' ?
+        <EditorPanel history={createHistory(entities.get(activeView))} /> :
+        <EditorPanel history={editorHistory} />
+    }
+  </div>;
+};
+
+export const Editor = connect((state: State) => ({
   activeView: state.ui.activeEditorView,
   editorHistory: state.editorHistory,
   entities: state.entities,
   views: state.ui.editorViews,
-}), editorActions)(Editor);
+}), {
+  removeView: editorActions.removeView,
+  setActiveView: editorActions.setActiveView,
+})(Radium(EditorBase));
 
 const styles = {
   container: Object.assign(
@@ -60,6 +64,6 @@ const styles = {
       flexFlow: 'column nowrap',
       height: '100%',
     },
-    fontStyles.monospace
+    fontStyles.monospace,
   ),
 };

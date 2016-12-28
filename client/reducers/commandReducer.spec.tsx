@@ -1,14 +1,14 @@
-import { List, Set, fromJS } from 'immutable';
+import { fromJS, List, Set } from 'immutable';
 import { expect } from '../../__test__/configureExpect';
 
-import commandReducer from './commandReducer';
-import { SetState } from '../actions/messageActions';
 import * as commandActions from '../actions/commandActions';
+import { SetState } from '../actions/messageActions';
 import { Command, CommandState } from '../records';
+import {commandReducer} from './commandReducer';
 
-describe('commandReducer', function() {
-  describe('COMMAND_CLOSE_AUTOCOMPLETE', function() {
-    it('resets autocomplete properties', function() {
+describe('commandReducer', () => {
+  describe('COMMAND_CLOSE_AUTOCOMPLETE', () => {
+    it('resets autocomplete properties', () => {
       const initial = new CommandState({
         autocompleteOpen: true,
         autocompletePosition: 1,
@@ -23,9 +23,9 @@ describe('commandReducer', function() {
       expect(commandReducer(initial, action)).to.equal(expected);
     });
   });
-  describe('COMMAND_COMPLETE', function() {
-    context('when autocomplete is closed', function() {
-      it('returns the current command', function() {
+  describe('COMMAND_COMPLETE', () => {
+    context('when autocomplete is closed', () => {
+      it('returns the current command', () => {
         const initial = new CommandState({
           autocompleteOpen: false,
           current: 'run',
@@ -37,9 +37,9 @@ describe('commandReducer', function() {
       });
     });
 
-    context('when autocomplete is open', function() {
-      context('when cursor is at the end of a part', function() {
-        it('replaces that part of the command', function() {
+    context('when autocomplete is open', () => {
+      context('when cursor is at the end of a part', () => {
+        it('replaces that part of the command', () => {
           const initial = new CommandState({
             autocompleteOpen: true,
           });
@@ -49,8 +49,8 @@ describe('commandReducer', function() {
         });
       });
 
-      context('when cursor is at the end of the command', function() {
-        it('adds a space', function() {
+      context('when cursor is at the end of the command', () => {
+        it('adds a space', () => {
           const initial = new CommandState({
             autocompleteOpen: true,
           });
@@ -60,8 +60,8 @@ describe('commandReducer', function() {
         });
       });
 
-      context('when cursor is at the end of a part', function() {
-        it('replaces that part of the command', function() {
+      context('when cursor is at the end of a part', () => {
+        it('replaces that part of the command', () => {
           const initial = new CommandState({
             autocompleteOpen: true,
           });
@@ -71,8 +71,8 @@ describe('commandReducer', function() {
         });
       });
 
-      context('when cursor is in the middle of a part', function() {
-        it('replaces only the part of the command up to the cursor', function() {
+      context('when cursor is in the middle of a part', () => {
+        it('replaces only the part of the command up to the cursor', () => {
           const initial = new CommandState({
             autocompleteOpen: true,
           });
@@ -84,16 +84,16 @@ describe('commandReducer', function() {
     });
   });
 
-  describe('COMMAND_HISTORY_CLEAR', function() {
-    it('clears the history', function() {
+  describe('COMMAND_HISTORY_CLEAR', () => {
+    it('clears the history', () => {
       const initial = new CommandState({history: List(['git status'])});
       const action = commandActions.clear();
       expect(commandReducer(initial, action).history).to.equal(List());
     });
   });
 
-  describe('COMMAND_SELECT_AUTOCOMPLETE_ITEM', function() {
-    it('sets the item', function() {
+  describe('COMMAND_SELECT_AUTOCOMPLETE_ITEM', () => {
+    it('sets the item', () => {
       const initial = undefined;
       const item = new Command({ name: 'oh hai mark' });
       const action = commandActions.selectAutocompleteItem(item);
@@ -104,14 +104,14 @@ describe('commandReducer', function() {
     });
   });
 
-  describe('COMMAND_SEND', function() {
-    it('adds the command to the history', function() {
+  describe('COMMAND_SEND', () => {
+    it('adds the command to the history', () => {
       const initial = new CommandState({history: List(['git status'])});
       const action = commandActions.sendCommand('git add .');
       expect(commandReducer(initial, action).history).to.equal(fromJS(['git status', 'git add .']));
     });
 
-    it('clears the current command and cursorIndex', function() {
+    it('clears the current command and cursorIndex', () => {
       const initial = new CommandState({
         current: 'get inventory',
         cursorIndex: 11,
@@ -123,9 +123,9 @@ describe('commandReducer', function() {
     });
   });
 
-  describe('COMMAND_SET_CURRENT', function() {
-    context('when new command is shorter', function() {
-      it('closes autocomplete', function() {
+  describe('COMMAND_SET_CURRENT', () => {
+    context('when new command is shorter', () => {
+      it('closes autocomplete', () => {
         const initial = new CommandState({
           autocompleteOpen: true,
           current: 'get inv',
@@ -139,9 +139,9 @@ describe('commandReducer', function() {
       });
     });
 
-    context('when new command is longer', function() {
-      context('when new command ends with a space', function() {
-        it('closes autocomplete', function() {
+    context('when new command is longer', () => {
+      context('when new command ends with a space', () => {
+        it('closes autocomplete', () => {
           const initial = new CommandState({
             current: 'get inv',
             cursorIndex: 6,
@@ -154,8 +154,8 @@ describe('commandReducer', function() {
         });
       });
 
-      context('when new command ends with a non-space character', function() {
-        it('opens autocomplete and sets the autocomplete item', function() {
+      context('when new command ends with a non-space character', () => {
+        it('opens autocomplete and sets the autocomplete item', () => {
           const initial = new CommandState({
             current: 'get inv',
             cursorIndex: 6,
@@ -170,9 +170,9 @@ describe('commandReducer', function() {
     });
   });
 
-  describe('COMMAND_SET_CURSOR_INDEX', function() {
-    context('when cursor index jumps more than one character', function() {
-      it('closes autocomplete and clears the autocomplete item', function() {
+  describe('COMMAND_SET_CURSOR_INDEX', () => {
+    context('when cursor index jumps more than one character', () => {
+      it('closes autocomplete and clears the autocomplete item', () => {
         const initial = new CommandState({
           autocompleteOpen: true,
           autocompleteSelectedItem: new Command({name: 'thing'}),
@@ -187,9 +187,9 @@ describe('commandReducer', function() {
       });
     });
 
-    context('when cursor index moves by 1', function() {
-      context('when autocomplete is closed', function() {
-        it('keeps autocomplete closed', function() {
+    context('when cursor index moves by 1', () => {
+      context('when autocomplete is closed', () => {
+        it('keeps autocomplete closed', () => {
           const initial = new CommandState({
             autocompleteOpen: false,
             current: 'first second third',
@@ -203,9 +203,9 @@ describe('commandReducer', function() {
         });
       });
 
-      context('when autocomplete is open', function() {
-        context('when cursor moves outside the current command', function() {
-          it('closes autocomplete and clears the autocomplete item', function() {
+      context('when autocomplete is open', () => {
+        context('when cursor moves outside the current command', () => {
+          it('closes autocomplete and clears the autocomplete item', () => {
             const initial = new CommandState({
               autocompleteOpen: true,
               autocompleteSelectedItem: new Command({name: 'thing'}),
@@ -220,8 +220,8 @@ describe('commandReducer', function() {
           });
         });
 
-        context('when cursor stays within the current command', function() {
-          it('keeps autocomplete open', function() {
+        context('when cursor stays within the current command', () => {
+          it('keeps autocomplete open', () => {
             const initial = new CommandState({
               autocompleteOpen: true,
               current: 'first second third',
@@ -237,9 +237,9 @@ describe('commandReducer', function() {
     });
   });
 
-  describe('SET_STATE', function() {
-    context('when availableCommands is empty', function() {
-      it('returns the initial state', function() {
+  describe('SET_STATE', () => {
+    context('when availableCommands is empty', () => {
+      it('returns the initial state', () => {
         const initial = new CommandState({
           available: Set([]),
         });
@@ -253,8 +253,8 @@ describe('commandReducer', function() {
       });
     });
 
-    context('when availableCommands contains commands', function() {
-      it('merges existing commands with new commands', function() {
+    context('when availableCommands contains commands', () => {
+      it('merges existing commands with new commands', () => {
         const transfer = new Command({ name: 'transfer' });
         const move = new Command({ name: 'move' });
         const initial = new CommandState({
@@ -274,8 +274,8 @@ describe('commandReducer', function() {
     });
   });
 
-  // describe('default', function() {
-  //   it('return default state', function() {
+  // describe('default', () => {
+  //   it('return default state', () => {
   //     expect(commandReducer(undefined, { type: 'UNRELATED' })).to.equal(INITIAL_STATE);
   //   });
   // });

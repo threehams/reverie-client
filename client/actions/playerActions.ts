@@ -1,8 +1,8 @@
-import { Dispatch } from 'redux';
 import { List } from 'immutable';
+import { Dispatch } from 'redux';
 
-import { CommandSend, sendCommand } from './commandActions';
 import { State } from '../records';
+import { CommandSend, sendCommand } from './commandActions';
 
 export interface InventoryExpandItems {
   type: 'INVENTORY_EXPAND_ITEMS';

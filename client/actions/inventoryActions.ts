@@ -1,9 +1,9 @@
 import { List } from 'immutable';
 import { Dispatch } from 'redux';
 
+import { State } from '../records';
 import * as inventorySelectors from '../selectors/inventorySelectors';
 import * as commandActions from './commandActions';
-import { State } from '../records';
 
 export interface InventorySelectItems {
   type: 'INVENTORY_SELECT_ITEMS';
@@ -40,7 +40,7 @@ export const moveItem = (sourcePath: string, targetPath: string) => {
 export const selectItem = (
   selectId: string,
   owner: string,
-  options = { multiple: false }
+  options = { multiple: false },
 ) => {
   return (dispatch: Dispatch<InventorySelectItems>, getState: () => State) => {
 
@@ -50,10 +50,10 @@ export const selectItem = (
      */
     const createIdRange = () => {
       const state = getState();
-      const entityList = inventorySelectors.list(state).get(owner).map(item => item.id).toList();
+      const entityList = inventorySelectors.list(state).get(owner).map((item) => item.id).toList();
       const selectedId = state.ui.selectedItems.first();
-      const first = entityList.findIndex(id => id === selectedId);
-      const last = entityList.findIndex(id => id === selectId);
+      const first = entityList.findIndex((id) => id === selectedId);
+      const last = entityList.findIndex((id) => id === selectId);
       const result = List(entityList.slice(Math.min(first, last), Math.max(first, last) + 1));
       return first < last ? result : result.reverse();
     };

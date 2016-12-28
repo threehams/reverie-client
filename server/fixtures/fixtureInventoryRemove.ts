@@ -1,12 +1,12 @@
 export default {
   entities: {
-    '1': {
+    1: {
       components: ['container'],
       entities: ['3'],
       id: '1',
       name: 'scripts',
     },
-    '17': {
+    17: {
       components: ['player'],
       entities: ['1', '4', '9'],
       id: '17',

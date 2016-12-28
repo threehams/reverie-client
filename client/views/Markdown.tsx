@@ -1,9 +1,9 @@
 import * as React from 'react';
-import StatusEffect from '../components/StatusEffect';
+import {StatusEffect} from '../components/StatusEffect';
 import shallowCompare = require('react-addons-shallow-compare');
 
-import fontStyles from '../styles/font';
 import colors from '../styles/colors';
+import fontStyles from '../styles/font';
 
 interface MarkdownLinkProps {
   href: string;
@@ -11,7 +11,6 @@ interface MarkdownLinkProps {
   move: Function;
   attack: Function;
   locateItem: Function;
-
 }
 
 export class MarkdownLink extends React.Component<MarkdownLinkProps, {}> {
@@ -27,7 +26,7 @@ export class MarkdownLink extends React.Component<MarkdownLinkProps, {}> {
     );
   }
 
-  private onClick(event: React.MouseEvent) {
+  private onClick(event: React.MouseEvent<HTMLAnchorElement>) {
     event.preventDefault();
     const { href } = this.props;
     const [route, id] = href.split('/').slice(1);
@@ -39,7 +38,7 @@ export class MarkdownLink extends React.Component<MarkdownLinkProps, {}> {
       case 'items':
         return this.props.locateItem(id);
       default:
-        throw new Error('Cannot handle route: ${route}'); // eslint-disable-line no-console
+        throw new Error(`Cannot handle route: ${route}`); // eslint-disable-line no-console
     }
   }
 }

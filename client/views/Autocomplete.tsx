@@ -1,12 +1,13 @@
+import { List } from 'immutable';
 import * as React from 'react';
-import {List} from 'immutable';
-import shallowCompare = require('react-addons-shallow-compare');
+import pure from 'recompose/pure';
+import withHandlers from 'recompose/withHandlers';
 
 import { Command, Entity, Exit } from '../records';
 
-import StatusEffect from '../components/StatusEffect';
+import { StatusEffect } from '../components/StatusEffect';
 
-interface AutocompleteProps {
+interface AutocompleteBaseProps {
   fragment: string;
   focused?: boolean;
   options: List<Command | Entity | Exit>;
@@ -14,13 +15,8 @@ interface AutocompleteProps {
   selectedItem: Command | Entity | Exit;
 }
 
-export class Autocomplete extends React.Component<AutocompleteProps, {}> {
+export class AutocompleteBase extends React.Component<AutocompleteBaseProps, {}> {
   private selectedItem: any;
-
-  public shouldComponentUpdate(nextProps: AutocompleteProps, nextState: {}) {
-    /* istanbul-ignore-next */
-    return shallowCompare(this, nextProps, nextState);
-  }
 
   public componentDidUpdate() {
     if (this.selectedItem) {
@@ -37,17 +33,16 @@ export class Autocomplete extends React.Component<AutocompleteProps, {}> {
     return (
       <ul style={styles.panel.global} tabIndex={1000}>
         {
-          options.map((option, i) => {
+          options.map((option, index) => {
             const optionSplit = this.splitOption(option.name, fragment);
             const path = option.path ? ` (${option.path})` : '';
             return <li
-              key={i}
-              style={Object.assign(
-                {},
-                styles.item.global,
-                (focused ? styles.item.focused : styles.item.unfocused),
-                (option === selectedItem ? styles.itemSelected.unfocused : {})
-              )}
+              key={index}
+              style={{
+                ...styles.item.global,
+                ...(focused ? styles.item.focused : styles.item.unfocused),
+                ...(option === selectedItem ? styles.itemSelected.unfocused : {}),
+              }}
               ref={(item) => {
                 if (option === selectedItem) {
                   this.selectedItem = item;
@@ -72,6 +67,10 @@ export class Autocomplete extends React.Component<AutocompleteProps, {}> {
     return [parts[0], fragment, parts.slice(1).join(fragment)];
   }
 }
+
+export const Autocomplete = withHandlers<AutocompleteBaseProps, AutocompleteBaseProps>(
+  {},
+)(pure(AutocompleteBase));
 
 const styles = {
   footer: {

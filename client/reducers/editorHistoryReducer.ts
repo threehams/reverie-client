@@ -7,7 +7,7 @@ type State = List<string>;
 export const INITIAL_STATE: State = List([]);
 type Actions = SetState | EditorHistoryClear;
 
-export default (state = INITIAL_STATE, action: Actions) => {
+export const editorHistoryReducer = (state = INITIAL_STATE, action: Actions) => {
   switch (action.type) {
     case 'EDITOR_HISTORY_CLEAR':
       return state.clear();

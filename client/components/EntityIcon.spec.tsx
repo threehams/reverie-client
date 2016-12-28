@@ -1,15 +1,15 @@
-import * as React from 'react';
 import { shallow } from 'enzyme';
 import { Set } from 'immutable';
+import * as React from 'react';
 
 import { expect } from '../../__test__/configureExpect';
 
 import { EntityIcon, TYPE_ICONS } from './EntityIcon';
 import { Icon } from './Icon';
 
-describe('Icon', function() {
-  describe('locked containers', function() {
-    it('shows a lock icon', function() {
+describe('Icon', () => {
+  describe('locked containers', () => {
+    it('shows a lock icon', () => {
       const components = Set(['container', 'lockable']);
       const states = Set(['locked']);
       const element = shallow(<EntityIcon components={components} states={states} />);
@@ -17,8 +17,8 @@ describe('Icon', function() {
     });
   });
 
-  describe('unlocked, closed containers', function() {
-    it('shows a lock icon', function() {
+  describe('unlocked, closed containers', () => {
+    it('shows a lock icon', () => {
       const components = Set(['container', 'lockable']);
       const states = Set(['unlocked', 'closed']);
       const element = shallow(<EntityIcon components={components} states={states} />);
@@ -26,8 +26,8 @@ describe('Icon', function() {
     });
   });
 
-  describe('lockable, open containers', function() {
-    it('shows a lock icon', function() {
+  describe('lockable, open containers', () => {
+    it('shows a lock icon', () => {
       const components = Set(['container']);
       const states = Set(['opened']);
       const element = shallow(<EntityIcon components={components} states={states} />);
@@ -35,8 +35,8 @@ describe('Icon', function() {
     });
   });
 
-  describe('openable, closed containers', function() {
-    it('shows a closed container icon', function() {
+  describe('openable, closed containers', () => {
+    it('shows a closed container icon', () => {
       const components = Set(['container', 'openable']);
       const states = Set(['closed']);
       const element = shallow(<EntityIcon components={components} states={states} />);
@@ -44,8 +44,8 @@ describe('Icon', function() {
     });
   });
 
-  describe('openable, opened containers', function() {
-    it('shows an opened container icon', function() {
+  describe('openable, opened containers', () => {
+    it('shows an opened container icon', () => {
       const components = Set(['container', 'openable']);
       const states = Set(['opened']);
       const element = shallow(<EntityIcon components={components} states={states} />);
@@ -53,8 +53,8 @@ describe('Icon', function() {
     });
   });
 
-  describe('random junk', function() {
-    it('shows a generic icon', function() {
+  describe('random junk', () => {
+    it('shows a generic icon', () => {
       const components = Set(['stuff']);
       const element = shallow(<EntityIcon components={components} />);
       expect(element.find(Icon).prop('name')).to.equal(TYPE_ICONS.text);

@@ -1,14 +1,14 @@
 import { List } from 'immutable';
 
 import { SetState } from '../actions/messageActions';
-import locationReducer, { INITIAL_STATE } from './locationReducer';
 import { Location } from '../records';
+import {INITIAL_STATE, locationReducer } from './locationReducer';
 
 import { expect } from '../../__test__/configureExpect';
 
-describe('locationReducer', function() {
-  describe('SET_STATE', function() {
-    it('saves location data', function() {
+describe('locationReducer', () => {
+  describe('SET_STATE', () => {
+    it('saves location data', () => {
       const initial = undefined;
       const location = new Location({
         exits: List(['north', 'south']),
@@ -23,8 +23,8 @@ describe('locationReducer', function() {
     });
   });
 
-  // describe('default', function() {
-  //   it('returns the state', function() {
+  // describe('default', () => {
+  //   it('returns the state', () => {
   //     expect(locationReducer(undefined, { type: 'UNRELATED' })).to.equal(INITIAL_STATE);
   //   });
   // });

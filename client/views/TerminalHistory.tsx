@@ -1,17 +1,16 @@
+import { List } from 'immutable';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { List } from 'immutable';
 import Radium = require('radium');
 import { State } from '../records';
 
-import StatusEffect from '../components/StatusEffect';
+import {StatusEffect} from '../components/StatusEffect';
 
 interface TerminalHistoryProps {
   history: List<string>;
 }
 
-@Radium
-export class TerminalHistory extends React.Component<TerminalHistoryProps, {}> {
+export class TerminalHistoryBase extends React.Component<TerminalHistoryProps, {}> {
   private container: any;
 
   public componentDidUpdate() {
@@ -34,6 +33,10 @@ export class TerminalHistory extends React.Component<TerminalHistoryProps, {}> {
   }
 }
 
+export const TerminalHistory = connect((state: State) => ({
+  history: state.command.history,
+}))(Radium(TerminalHistoryBase));
+
 const styles = {
   container: {
     flex: '1 1 auto',
@@ -43,7 +46,3 @@ const styles = {
     padding: '4px 0 0 0',
   },
 };
-
-export default connect((state: State) => ({
-  history: state.command.history,
-}))(TerminalHistory);

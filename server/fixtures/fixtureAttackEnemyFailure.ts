@@ -1,6 +1,6 @@
 export default {
   entities: {
-    '17': {
+    17: {
       components: ['player'],
       currentHealth: 60,
       currentMemory: 100,

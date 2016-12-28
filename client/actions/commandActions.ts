@@ -41,7 +41,7 @@ export type CommandSetCurrent = {
     command: string;
     cursorIndex: number;
   };
-}
+};
 
 export interface CommandSetCursorIndex {
   type: 'COMMAND_SET_CURSOR_INDEX';
@@ -76,7 +76,7 @@ export const sendCommand = (command: string): CommandSend => ({
 export const completeCommand = (
   command: string,
   cursorIndex: number,
-  autocompleteItem: AutocompleteItem
+  autocompleteItem: AutocompleteItem,
 ): CommandComplete => ({
   payload: {
     command,
@@ -102,13 +102,13 @@ export const setCurrentCommand = (command: string, cursorIndex: number): Command
 });
 
 export const selectNextAutocompleteItem = (options: List<AutocompleteItem>, current: AutocompleteItem) => {
-  const index: number = options.findIndex(option => option === current);
+  const index: number = options.findIndex((option) => option === current);
   const item: AutocompleteItem = index === options.size - 1 ? options.first() : options.get(index + 1);
   return selectAutocompleteItem(item);
 };
 
 export const selectPreviousAutocompleteItem = (options: List<AutocompleteItem>, current: AutocompleteItem) => {
-  const index = options.findIndex(option => option === current);
+  const index = options.findIndex((option) => option === current);
   const item = index === 0 ? options.last() : options.get(index - 1);
   return selectAutocompleteItem(item);
 };

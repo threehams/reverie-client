@@ -1,4 +1,1 @@
-declare module 'chai-immutable' {
-  const x: any;
-  export = x;
-}
+declare module 'chai-immutable';

@@ -1,67 +1,65 @@
 import * as React from 'react';
 import Radium = require('radium');
-import shallowCompare = require('react-addons-shallow-compare');
+import withHandlers from 'recompose/withHandlers';
 
 import { Icon } from '../components/Icon';
-import panelStyles from '../styles/panel';
 import fontStyles from '../styles/font';
+import panelStyles from '../styles/panel';
+
+type ButtonClickEvent = React.MouseEvent<HTMLButtonElement>;
 
 interface TabProps {
   active?: boolean;
-  onClick?: Function;
-  onClickClose?: Function;
+  onClick?: () => void;
+  onClickClose?: () => void;
 }
 
-@Radium
-export class Tab extends React.Component<TabProps, {}> {
-  public shouldComponentUpdate(nextProps: TabProps, nextState: {}) {
-    /* istanbul-ignore-next */
-    return shallowCompare(this, nextProps, nextState);
-  }
+const TabBase: React.StatelessComponent<TabProps> = ({
+  active,
+  children,
+  onClick,
+  onClickClose,
+}) => (
+  <div style={[styles.container, active ? styles.active : styles.inactive]}>
+    <div style={styles.flexContainer}>
+      <button style={[styles.button, styles.label]} onClick={onClick}>{ children }</button>
+      { onClickClose && <button style={styles.button} onClick={onClickClose}><Icon name="fa fa-times" /></button> }
+    </div>
+  </div>
+);
 
-  public render() {
-    const { active, onClickClose } = this.props;
-    return (
-      <div style={[styles.global, active ? styles.active : styles.inactive]} onClick={this.elementClicked.bind(this)}>
-        <span style={styles.label}>{ this.props.children }</span>
-        { onClickClose && <Icon name="fa fa-times" onClick={
-          (e: MouseEvent) => { e.stopPropagation(); onClickClose(); }
-        } /> }
-      </div>
-    );
-  }
-
-  private elementClicked(event: MouseEvent) {
-    const { onClick, onClickClose } = this.props;
-    // Button 1 is middle click
-    if (event.button === 1 && onClickClose) {
-      onClickClose();
-    } else if (onClick) {
-      onClick();
-    }
-  }
-}
+export const Tab = Radium(TabBase);
 
 export const styles = {
   active: {
     backgroundColor: 'white',
   },
-  global: Object.assign(
-    {
-      borderRight: panelStyles.border,
-      color: '#333333',
-      cursor: 'default',
-      display: 'inline-block',
-      flex: '1 1 auto',
-      padding: '3px 3px 3px 15px',
-    },
-    fontStyles.default
-  ),
+  button: {
+    backgroundColor: 'transparent',
+    border: 0,
+    paddingBottom: 3,
+    paddingLeft: 3,
+    paddingRight: 3,
+    paddingTop: 3,
+  },
+  container: {
+    borderRight: panelStyles.border,
+    color: '#333333',
+    cursor: 'default',
+    display: 'inline-block',
+    flex: '1 1 auto',
+    ...fontStyles.default,
+  },
+  flexContainer: {
+    display: 'flex',
+    flexFlow: 'row nowrap',
+  },
   inactive: {
     backgroundColor: '#d4d4d4',
   },
   label: {
     display: 'inline-block',
     marginRight: 10,
+    paddingLeft: 15,
   },
 };

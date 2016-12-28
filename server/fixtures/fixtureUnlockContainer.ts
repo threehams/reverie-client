@@ -1,6 +1,6 @@
 export default {
   entities: {
-    '18': {
+    18: {
       components: ['container', 'lockable', 'openable'],
       id: '18',
       name: 'usb-drive',

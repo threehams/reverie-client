@@ -1,38 +1,32 @@
+import { List } from 'immutable';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { List } from 'immutable';
 import Radium = require('radium');
-import shallowCompare = require('react-addons-shallow-compare');
+import pure from 'recompose/pure';
 import ReactMarkdown = require('react-markdown');
-import {
-  MarkdownLink,
-  MarkdownHeading,
-  MarkdownParagraph,
-  MarkdownList,
-  MarkdownItem,
-  MarkdownCode,
-  MarkdownEmphasis,
-  MarkdownStrong,
-  MarkdownBlockQuote,
-} from '../views/Markdown';
 
 import * as playerActions from '../actions/playerActions';
+import {
+  MarkdownBlockQuote,
+  MarkdownCode,
+  MarkdownEmphasis,
+  MarkdownHeading,
+  MarkdownItem,
+  MarkdownList,
+  MarkdownParagraph,
+  MarkdownStrong,
+} from '../views/Markdown';
+import { MarkdownLinkContainer } from './MarkdownLink';
 
 interface EditorPanelProps {
   history: List<string>;
 }
 
-@Radium
-export class EditorPanel extends React.Component<EditorPanelProps, {}> {
+export class EditorPanelBase extends React.Component<EditorPanelProps, {}> {
   private container: any;
 
   public componentDidUpdate() {
     this.container.scrollTop = this.container.scrollHeight;
-  }
-
-  public shouldComponentUpdate(nextProps: EditorPanelProps, nextState: {}) {
-    /* istanbul-ignore-next */
-    return shallowCompare(this, nextProps, nextState);
   }
 
   public render() {
@@ -72,10 +66,7 @@ export class EditorPanel extends React.Component<EditorPanelProps, {}> {
   }
 }
 
-const MarkdownLinkContainer = connect(null, {
-  attack: playerActions.attack,
-  locateItem: playerActions.locateItem,
-})(MarkdownLink);
+export const EditorPanel = pure(Radium(EditorPanelBase));
 
 const styles = {
   container: {

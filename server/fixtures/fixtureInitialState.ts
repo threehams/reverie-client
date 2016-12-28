@@ -187,19 +187,19 @@ export default {
     },
   ],
   entities: {
-    '1': {
+    1: {
       components: ['container'],
       entities: ['2', '3'],
       id: '1',
       name: 'scripts',
     },
-    '2': {
+    2: {
       components: ['item'],
       description: 'Remove a file',
       id: '2',
       name: 'rm.js',
     },
-    '3': {
+    3: {
       components: ['item'],
       description: `Scans the target system for open ports.
 
@@ -208,63 +208,63 @@ export default {
       name: 'portscan.js',
       quantity: 4,
     },
-    '4': {
+    4: {
       components: ['container'],
       entities: ['5', '6'],
       id: '4',
       name: 'hacks',
     },
-    '5': {
+    5: {
       components: ['item'],
       id: '5',
       name: 'portscan1.js',
     },
-    '6': {
+    6: {
       components: ['container'],
       entities: ['7', '8'],
       id: '6',
       name: 'portscans',
     },
-    '7': {
+    7: {
       components: ['item'],
       description: 'Hacks a thing',
       id: '7',
       name: 'hack.js',
     },
-    '8': {
+    8: {
       components: ['item'],
       id: '8',
       name: 'hack-more.js',
     },
-    '9': {
+    9: {
       components: ['container'],
       entities: ['10', '11'],
       id: '9',
       name: 'docs',
     },
-    '10': {
+    10: {
       components: ['item'],
       id: '10',
       name: 'readme.txt',
     },
-    '11': {
+    11: {
       components: ['item'],
       id: '11',
       name: 'commands.txt',
     },
-    '13': {
+    13: {
       components: ['container', 'openable'],
       id: '13',
       name: 'small-mailbox',
       states: ['closed'],
     },
-    '14': {
+    14: {
       components: ['item'],
       description: 'WELCOME TO **REVERIE FORGE**!',
       id: '14',
       name: 'leaflet.txt',
     },
-    '17': {
+    17: {
       components: ['player'],
       currentHealth: 100,
       currentMemory: 100,
@@ -276,13 +276,13 @@ export default {
       maxStorage: 100,
       name: 'Big McLargeHuge',
     },
-    '18': {
+    18: {
       components: ['container', 'lockable'],
       id: '18',
       name: 'usb-drive',
       states: ['locked', 'closed'],
     },
-    '74': {
+    74: {
       components: ['creature'],
       currentHealth: 200,
       description: `Last of the freelance hackers
@@ -294,7 +294,7 @@ export default {
       maxHealth: 200,
       name: 'Hiro',
     },
-    '75': {
+    75: {
       components: ['creature'],
       currentHealth: 400,
       description: 'A large man with a tattoo on his forehead which reads "Poor Impulse Control"',
@@ -302,7 +302,7 @@ export default {
       maxHealth: 400,
       name: 'Raven',
     },
-    '76': {
+    76: {
       components: ['creature'],
       currentHealth: 40,
       description: 'A large swarm of bees. They seem uninterested in your presence.',

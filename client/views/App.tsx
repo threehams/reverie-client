@@ -1,14 +1,15 @@
 import * as React from 'react';
-import { Provider } from 'react-redux';
-import * as Html5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
+import * as Html5Backend from 'react-dnd-html5-backend';
+import { Provider } from 'react-redux';
 
-import Layout from './Layout';
+import { Layout } from './Layout';
 
 interface AppProps {
   store: any;
 }
 
+// this has to be a class or DragDropContext will throw errors
 class BaseApp extends React.Component<AppProps, {}> {
   public render() {
     return (

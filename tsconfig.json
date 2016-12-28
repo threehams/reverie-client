@@ -1,17 +1,21 @@
 {
   "compilerOptions": {
-    "allowJs": true,
-    "experimentalDecorators": true,
+    "allowJs": false,
+    "experimentalDecorators": false,
     "jsx": "react",
     "module": "commonjs",
     "outDir": "tsDist",
     "target": "es5",
     "moduleResolution": "node",
     "noImplicitAny": false,
-    "strictNullChecks": false
+    "strictNullChecks": false,
+    "noImplicitThis": true
   },
-  "exclude": [
-    "node_modules",
-    "webpack.config.js"
+  "include": [
+    "client/**/*",
+    "shared/**/*",
+    "server/**/*",
+    "node_modules/@types/**/*",
+    "typings/**/*"
   ]
 }

@@ -1,6 +1,6 @@
 export default {
   entities: {
-    '74': {
+    74: {
       components: ['creature'],
       currentHealth: 199,
       description: `Last of the freelance hackers
