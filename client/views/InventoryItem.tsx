@@ -80,11 +80,11 @@ const DroppableInventoryItem = DropTarget(
   'INVENTORY_ITEM',
   {
     drop(props: InventoryItemProps, monitor) {
-      const item = monitor && monitor.getItem();
+      const item = monitor && monitor.getItem() as Entity;
       props.moveItem(item.path, props.item.path);
     },
     canDrop(props: InventoryItemProps, monitor) {
-      const item = monitor && monitor.getItem();
+      const item = monitor && monitor.getItem() as Entity;
       return props.item.components.contains('container') && item.id !== props.item.id;
     },
   },
