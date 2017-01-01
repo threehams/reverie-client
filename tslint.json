@@ -4,6 +4,7 @@
     "quotemark": [true, "single", "jsx-double"],
     "interface-name": [true, "never-prefix"],
     "max-classes-per-file": [false],
-    "arrow-parens": false
+    "arrow-parens": false,
+    "no-any": true
   }
 }

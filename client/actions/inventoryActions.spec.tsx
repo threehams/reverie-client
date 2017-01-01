@@ -9,14 +9,13 @@ describe('inventoryActions', () => {
     context('selecting one item', () => {
       it('selects the item', () => {
         const thunk = inventoryActions.selectItem('4', '6');
-        let result;
+        let result: inventoryActions.InventorySelectItems;
         const getState = () => {
           return new State();
         };
-        const dispatch = (action) => {
+        thunk((action: inventoryActions.InventorySelectItems) => {
           result = action;
-        };
-        thunk(dispatch, getState);
+        }, getState);
         expect(result.type).to.equal('INVENTORY_SELECT_ITEMS');
         expect(result.payload.ids).to.equal(List(['4']));
         expect(result.payload.owner).to.equal('6');
@@ -61,9 +60,9 @@ describe('inventoryActions', () => {
             }),
           });
           const thunk = inventoryActions.selectItem('4', 'self', { multiple: true });
-          let result;
+          let result: inventoryActions.InventorySelectItems;
           const getState = () => state;
-          const dispatch = (action) => {
+          const dispatch = (action: inventoryActions.InventorySelectItems) => {
             result = action;
           };
           thunk(dispatch, getState);
@@ -109,9 +108,9 @@ describe('inventoryActions', () => {
             }),
           });
           const thunk = inventoryActions.selectItem('4', 'self', { multiple: true });
-          let result;
+          let result: inventoryActions.InventorySelectItems;
           const getState = () => state;
-          const dispatch = (action) => {
+          const dispatch = (action: inventoryActions.InventorySelectItems) => {
             result = action;
           };
           thunk(dispatch, getState);
@@ -157,9 +156,9 @@ describe('inventoryActions', () => {
             }),
           });
           const thunk = inventoryActions.selectItem('1', 'self', { multiple: true });
-          let result;
+          let result: inventoryActions.InventorySelectItems;
           const getState = () => state;
-          const dispatch = (action) => {
+          const dispatch = (action: inventoryActions.InventorySelectItems) => {
             result = action;
           };
           thunk(dispatch, getState);
@@ -214,9 +213,9 @@ describe('inventoryActions', () => {
             }),
           });
           const thunk = inventoryActions.selectItem('1', 'self', { multiple: true });
-          let result;
+          let result: inventoryActions.InventorySelectItems;
           const getState = () => state;
-          const dispatch = (action) => {
+          const dispatch = (action: inventoryActions.InventorySelectItems) => {
             result = action;
           };
           thunk(dispatch, getState);

@@ -17,8 +17,8 @@ interface LayoutProps {
   activePlayerView: 'inventory' | 'character';
   alert: string;
   footerHeight: number;
-  resizePanel: any;
-  setActiveView: any;
+  resizePanel: Function;
+  setActiveView: Function;
   sidebarHeight: number;
   sidebarWidth: number;
 }

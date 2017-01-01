@@ -94,13 +94,12 @@ describe('commandReducer', () => {
 
   describe('COMMAND_SELECT_AUTOCOMPLETE_ITEM', () => {
     it('sets the item', () => {
-      const initial = undefined;
       const item = new Command({ name: 'oh hai mark' });
       const action = commandActions.selectAutocompleteItem(item);
       const expected = new CommandState({
         autocompleteSelectedItem: item,
       });
-      expect(commandReducer(initial, action)).to.equal(expected);
+      expect(commandReducer(undefined, action)).to.equal(expected);
     });
   });
 

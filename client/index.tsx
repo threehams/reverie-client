@@ -11,6 +11,8 @@ import { configureStore } from './configureStore';
 import { socket } from './socket';
 import { App } from './views/App';
 
+import { Dispatch } from 'redux';
+
 import * as messageActions from './actions/messageActions';
 import * as socketActions from './actions/socketActions';
 
@@ -51,7 +53,9 @@ socket.onmessage = (event) => {
   } else {
     action = messageActions.setState(message.payload);
   }
-  store.dispatch(action);
+  // Remove any after redux-thunk typings are fixed
+  // tslint:disable-next-line no-any
+  store.dispatch<any>(action);
 };
 
 // Focus on terminal prompt on all keypresses.
@@ -67,6 +71,7 @@ render(
   document.getElementById('root'),
 );
 
+// tslint:disable-next-line no-any
 declare var module: { hot: any };
 
 if (module.hot) {

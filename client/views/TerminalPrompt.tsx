@@ -29,7 +29,7 @@ interface TerminalPromptProps {
 }
 
 class TerminalPromptBase extends React.Component<TerminalPromptProps, {}> {
-  private input: any;
+  private input: HTMLInputElement;
 
   public render() {
     const {

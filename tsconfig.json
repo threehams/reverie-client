@@ -7,9 +7,10 @@
     "outDir": "tsDist",
     "target": "es5",
     "moduleResolution": "node",
-    "noImplicitAny": false,
-    "strictNullChecks": false,
-    "noImplicitThis": true
+    "noImplicitAny": true,
+    "strictNullChecks": false, // re-enable after immediately-invoked callback annotation is available
+    "noImplicitThis": true,
+    "suppressImplicitAnyIndexErrors": true
   },
   "include": [
     "client/**/*",

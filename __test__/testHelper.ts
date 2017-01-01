@@ -1,6 +1,7 @@
+// tslint:disable-next-line no-any
 const glob: any = global;
 
-glob.WebSocket = function() {
+glob.WebSocket = () => {
   return {
     onmessage() {
       // stubbed

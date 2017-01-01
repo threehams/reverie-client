@@ -9,7 +9,6 @@ import { expect } from '../../__test__/configureExpect';
 describe('locationReducer', () => {
   describe('SET_STATE', () => {
     it('saves location data', () => {
-      const initial = undefined;
       const location = new Location({
         exits: List(['north', 'south']),
       });
@@ -19,7 +18,7 @@ describe('locationReducer', () => {
         },
         type: 'SET_STATE',
       };
-      expect(locationReducer(initial, action)).to.equal(location);
+      expect(locationReducer(undefined, action)).to.equal(location);
     });
   });
 

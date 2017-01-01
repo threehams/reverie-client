@@ -13,7 +13,7 @@ const ENV: Environment = process.env.NODE_ENV || 'development';
 
 // Production build uses tsc and ends up in tsDist/server/, while development uses ts-node and is served from server/
 // hacky, but can't seem to find a cleaner solution right now
-const fromRootPath = (...paths) => path.resolve(
+const fromRootPath = (...paths: string[]) => path.resolve(
   path.resolve(__dirname, '..', ENV === 'production' ? '..' : ''),
   ...paths,
 );
