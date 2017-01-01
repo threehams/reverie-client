@@ -58,18 +58,16 @@ export class PanelResizerBase extends React.Component<PanelResizerProps, PanelRe
     return (
       <div style={styles[position]}
            onMouseDown={this.startResize.bind(this)}
-           onMouseMove={this.resize}
-           onMouseUp={this.endResize}
       ></div>
     );
   }
 
-  private startResize(event) {
+  private startResize(event: React.MouseEvent<HTMLDivElement>) {
     event.preventDefault();
     this.setState({ initial: event[coords[this.props.position]], resizing: true });
   }
 
-  private resize(event) {
+  private resize(event: MouseEvent) {
     if (!this.state.resizing) {
       return;
     }
@@ -81,7 +79,7 @@ export class PanelResizerBase extends React.Component<PanelResizerProps, PanelRe
     );
   }
 
-  private endResize(event) {
+  private endResize(event: Event) {
     if (!this.state.resizing) {
       return;
     }

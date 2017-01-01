@@ -1,3 +1,5 @@
+// tslint:disable no-any
+// This needs to be completely rethought before better type checking can be used
 import * as React from 'react';
 import { Children, cloneElement, Component } from 'react';
 import Radium = require('radium');
@@ -61,12 +63,12 @@ export class PanelContainerBase extends Component<PanelContainerProps, PanelCont
     }
   }
 
-  private wrapSidebars(sidebars, width: number|string, height: number|string) {
+  private wrapSidebars(sidebars: any, width: number|string, height: number|string) {
     const sidebarHeight = this.state.sidebarHeight || this.props.sidebarHeight;
     return (
       <div style={[styles.sidebar, { width, height }]} key="sidebar-wrapper">
         {
-          sidebars.map((side, index) => {
+          sidebars.map((side: any, index: number) => {
             const style = index < sidebars.length - 1 ? [styles.sidebarSection, { height: sidebarHeight }] : [];
             return cloneElement(side, { style });
           })
@@ -75,12 +77,12 @@ export class PanelContainerBase extends Component<PanelContainerProps, PanelCont
     );
   }
 
-  private setHeights(children) {
+  private setHeights(children: any) {
     const footerHeight = this.state.footerHeight || this.props.footerHeight;
     const sidebarWidth = this.state.sidebarWidth || this.props.sidebarWidth;
-    const sidebars = children.filter((child) => child.props.type === 'sidebar');
-    const main = children.filter((child) => child.props.type === 'main')[0];
-    const footer = children.filter((child) => child.props.type === 'footer')[0];
+    const sidebars = children.filter((child: any) => child.props.type === 'sidebar');
+    const main = children.filter((child: any) => child.props.type === 'main')[0];
+    const footer = children.filter((child: any) => child.props.type === 'footer')[0];
     const topHeightStyle = footer ? `calc(100vh - ${footerHeight}px)` : '100vh';
     const sidebar = this.wrapSidebars(sidebars, sidebarWidth, topHeightStyle);
     const mainWidth = sidebar ? `calc(100% - ${sidebarWidth}px)` : '100%';

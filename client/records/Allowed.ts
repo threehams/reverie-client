@@ -1,11 +1,13 @@
 import { Record, Set } from 'immutable';
 
+export type AllowedObjectType = 'entity' | 'command' | 'exit';
+
 interface AllowedProps {
   components?: Set<string>;
   names?: Set<string>;
   owners?: Set<string>;
   states?: Set<string>;
-  types?: Set<string>;
+  types?: Set<AllowedObjectType>;
 }
 
 export class Allowed extends Record<AllowedProps>({
@@ -19,5 +21,5 @@ export class Allowed extends Record<AllowedProps>({
   public names: Set<string>;
   public owners: Set<string>;
   public states: Set<string>;
-  public types: Set<string>;
+  public types: Set<AllowedObjectType>;
 };

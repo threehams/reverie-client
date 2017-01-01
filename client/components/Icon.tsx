@@ -6,13 +6,12 @@ interface IconProps {
   before?: boolean;
   style?: Object;
   // TODO type this better, now that spread/rest work
-  onClick?: any;
 }
 
 export const IconBase: React.StatelessComponent<IconProps> = ({
-  name, before, style, ...rest,
+  name, before, style,
 }) => (
-  <i {...rest} className={`${name}`} style={[style, styles.all, before && styles.before]} />
+  <i className={`${name}`} style={[style, styles.all, before && styles.before]} />
 );
 
 const styles = {

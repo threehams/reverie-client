@@ -1,5 +1,7 @@
-import { List, Map, Set } from 'immutable';
+import { List, Map, Seq, Set } from 'immutable';
 import * as autocompleteSelectors from './autocompleteSelectors';
+
+import { AllowedObjectType } from '../records';
 
 import { expect } from '../../__test__/configureExpect';
 
@@ -19,16 +21,16 @@ describe('autocompleteSelectors', () => {
   describe('applyAllowed', () => {
     context('when types are specified', () => {
       it('restricts the objects to the given types', () => {
-        const commands = List([
+        const commands = Seq.Indexed([
           new Command({ name: 'command1' }),
           new Command({ name: 'command2' }),
         ]);
-        const objects = commands.concat(List([
+        const objects = commands.concat(Seq.Indexed([
           new Entity({ id: '1', name: 'entity1' }),
           new Entity({ id: '2', name: 'entity2' }),
         ]));
         const allowed = new Allowed({
-          types: Set(['command']),
+          types: Set<AllowedObjectType>(['command']),
         });
         const filtered = autocompleteSelectors.applyAllowed(objects, allowed);
         expect(filtered).to.equal(commands);
@@ -37,7 +39,7 @@ describe('autocompleteSelectors', () => {
 
     context('when types are not specified', () => {
       it('returns a flat map of all objects', () => {
-        const objects = List([
+        const objects = Seq.Indexed([
           new Command({ name: 'command1' }),
           new Command({ name: 'command2' }),
           new Entity({ id: '1', name: 'entity1' }),
@@ -68,10 +70,10 @@ describe('autocompleteSelectors', () => {
           id: '3',
           name: 'container',
         });
-        const objects = List([creature, item, container]);
+        const objects = Seq.Indexed([creature, item, container]);
         const allowed = new Allowed({
           components: Set(['item', 'creature']),
-          types: Set(['entity']),
+          types: Set<AllowedObjectType>(['entity']),
         });
         const filtered = autocompleteSelectors.applyAllowed(objects, allowed);
         expect(filtered).to.equal(List([creature, item]));
@@ -121,7 +123,7 @@ describe('autocompleteSelectors', () => {
               new CommandPart({
                 allowed: List([
                   new Allowed({
-                    types: Set(['entity']),
+                    types: Set<AllowedObjectType>(['entity']),
                   }),
                 ]),
               }),

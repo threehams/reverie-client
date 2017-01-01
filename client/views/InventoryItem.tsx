@@ -76,39 +76,39 @@ export class InventoryItemBase extends React.Component<InventoryItemProps, {}> {
   }
 }
 
-const inventoryItemSource = {
-  beginDrag(props: InventoryItemProps) {
-    return {
-      id: props.item.id,
-      path: props.item.path,
-    };
+const DroppableInventoryItem = DropTarget(
+  'INVENTORY_ITEM',
+  {
+    drop(props: InventoryItemProps, monitor) {
+      const item = monitor && monitor.getItem() as Entity;
+      props.moveItem(item.path, props.item.path);
+    },
+    canDrop(props: InventoryItemProps, monitor) {
+      const item = monitor && monitor.getItem() as Entity;
+      return props.item.components.contains('container') && item.id !== props.item.id;
+    },
   },
-};
-
-const inventoryItemTarget = {
-  drop(props: InventoryItemProps, monitor) {
-    const item = monitor.getItem();
-    props.moveItem(item.path, props.item.path);
-  },
-  canDrop(props: InventoryItemProps, monitor) {
-    const item = monitor.getItem();
-    return props.item.components.contains('container') && item.id !== props.item.id;
-  },
-};
-
-const collectDrag = (dragConnect) => ({
-  connectDragSource: dragConnect.dragSource(),
-});
-
-const collectDrop = (dropConnect, monitor) => ({
-  canDrop: monitor.canDrop(),
-  connectDropTarget: dropConnect.dropTarget(),
-  isOver: monitor.isOver(),
-});
-
-const DraggableInventoryItem = DragSource('INVENTORY_ITEM', inventoryItemSource, collectDrag)(
-  DropTarget('INVENTORY_ITEM', inventoryItemTarget, collectDrop)(Radium(InventoryItemBase)),
+  (dropConnect, monitor) => ({
+    canDrop: monitor.canDrop(),
+    connectDropTarget: dropConnect.dropTarget(),
+    isOver: monitor.isOver(),
+  }),
 );
+
+const DraggableInventoryItem = DragSource(
+  'INVENTORY_ITEM',
+  {
+    beginDrag(props: InventoryItemProps) {
+      return {
+        id: props.item.id,
+        path: props.item.path,
+      };
+    },
+  },
+  (dragConnect) => ({
+    connectDragSource: dragConnect.dragSource(),
+  }),
+)(DroppableInventoryItem(Radium(InventoryItemBase)));
 
 export const InventoryItem = DraggableInventoryItem as React.ComponentClass<InventoryItemProps>;
 

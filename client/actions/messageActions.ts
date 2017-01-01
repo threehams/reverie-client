@@ -1,7 +1,7 @@
 import { fromJS, List, Map, Set } from 'immutable';
 import { Dispatch } from 'redux';
 
-import { Allowed, Command, CommandPart, Entity, Location, State } from '../records';
+import { Allowed, AllowedObjectType, Command, CommandPart, Entity, Location, State } from '../records';
 
 export type SetState = {
   type: 'SET_STATE';
@@ -38,7 +38,7 @@ interface CommandPartData {
 }
 
 interface AllowedData {
-  types?: string[];
+  types?: AllowedObjectType[];
   owners?: string[];
   components?: string[];
   states?: string[];
@@ -91,7 +91,7 @@ export const setState = (stateData: StateData): SetState => ({
 });
 
 export const setInitialState = (state: StateData) => {
-  return (dispatch: Dispatch<SetState>, getState: () => State) => {
+  return (dispatch: Dispatch<State>, getState: () => State) => {
     const currentState = getState();
     if (currentState.getIn(['ui', 'player'])) {
       return;

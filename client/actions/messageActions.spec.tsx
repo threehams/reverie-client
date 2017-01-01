@@ -1,7 +1,7 @@
 import { List, Map, Set } from 'immutable';
 
 import { expect } from '../../__test__/configureExpect';
-import { Allowed, Command, CommandPart, Entity } from '../records';
+import { Allowed, AllowedObjectType, Command, CommandPart, Entity } from '../records';
 import * as messageActions from './messageActions';
 
 describe('messageActions', () => {
@@ -19,7 +19,7 @@ describe('messageActions', () => {
                     names: ['open'],
                     owners: ['floor'],
                     states: ['unlocked'],
-                    types: ['entity'],
+                    types: ['entity'] as AllowedObjectType[],
                   },
                 ],
               },
@@ -38,7 +38,7 @@ describe('messageActions', () => {
                   names: Set(['open']),
                   owners: Set(['floor']),
                   states: Set(['unlocked']),
-                  types: Set(['entity']),
+                  types: Set<AllowedObjectType>(['entity']),
                 }),
               ]),
             }),

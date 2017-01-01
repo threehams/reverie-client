@@ -1,6 +1,7 @@
 import { Set } from 'immutable';
 import * as React from 'react';
 import { connect } from 'react-redux';
+import compose from 'recompose/compose';
 
 import { State } from '../records';
 
@@ -11,29 +12,16 @@ const BEE_PHRASES = [
   'ohhh no my eyes my eyes aggggghhhh',
 ];
 
-const shuffle = (phrase: string) => {
-  if (phrase.length < 3) {
-    return phrase;
-  }
-  const head = phrase[0];
-  const tail = phrase[phrase.length - 1];
-  const body = phrase.slice(1, phrase.length - 1).split('');
-  let i = body.length;
-  while (--i) {
-    const j = Math.floor(Math.random() * (i + 1 ));
-    const a = body[i];
-    body[i] = body[j];
-    body[j] = a;
-  }
-  return head + body.join('') + tail;
-};
+type RandomFunction = () => number;
 
 interface StatusEffectProps {
+  random?: RandomFunction;
   statusEffects: Set<string>;
 }
 
-const StatusEffectBase: React.StatelessComponent<StatusEffectProps> = ({
+export const StatusEffectBase: React.StatelessComponent<StatusEffectProps> = ({
   children,
+  random = Math.random,
   statusEffects,
   ...rest,
 }) => {
@@ -45,15 +33,16 @@ const StatusEffectBase: React.StatelessComponent<StatusEffectProps> = ({
   const onFire = statusEffects.includes('fire');
   const confused = statusEffects.includes('confusion');
   const bees = statusEffects.includes('bees');
-  let result: any = children;
+
+  let result = children;
   if (confused) {
-    result = confuse(result);
+    result = shuffleWords(random, result);
   }
   if (panicking) {
-    result = panic(result);
+    result = panic(random, result);
   }
   if (bees) {
-    result = beeAttack(result);
+    result = beeAttack(random, result);
   }
   return (
     <span
@@ -67,7 +56,24 @@ const StatusEffectBase: React.StatelessComponent<StatusEffectProps> = ({
   );
 };
 
-function confuse(children: React.ReactNode[]): React.ReactNode[] {
+export function shuffleWords(random: RandomFunction, children: React.ReactNode): React.ReactNode {
+  function shuffle(phrase: string) {
+    if (phrase.length < 3) {
+      return phrase;
+    }
+    const head = phrase[0];
+    const tail = phrase[phrase.length - 1];
+    const body = phrase.slice(1, phrase.length - 1).split('');
+    let i = body.length;
+    while (--i) {
+      const j = Math.floor(random() * (i + 1));
+      const a = body[i];
+      body[i] = body[j];
+      body[j] = a;
+    }
+    return head + body.join('') + tail;
+  }
+
   return React.Children.map(children, (child) => {
     if (typeof child === 'string') {
       return child.split(' ').map((spaced) => {
@@ -82,11 +88,11 @@ function confuse(children: React.ReactNode[]): React.ReactNode[] {
   });
 }
 
-function panic(children: React.ReactNode[]): React.ReactNode[] {
+export function panic(random: RandomFunction, children: React.ReactNode): React.ReactNode[] {
   return React.Children.map(children, (child) => {
     if (typeof child === 'string') {
       return child.split(' ').map((word) => {
-        if (Math.random() < 0.05) {
+        if (random() < 0.05) {
           return 'a'.repeat(word.length);
         }
         if (word[word.length - 1] !== '.') {
@@ -99,18 +105,18 @@ function panic(children: React.ReactNode[]): React.ReactNode[] {
   });
 }
 
-function beeAttack(children: React.ReactNode[]): React.ReactNode[] {
-  return React.Children.map(children, (child: any) => {
+export function beeAttack(random: RandomFunction, children: React.ReactNode): React.ReactNode[] {
+  return React.Children.map(children, (child) => {
     if (typeof child === 'string') {
       return child.split(' ').map((word) => {
         if (word.length < 3) {
           return word;
         }
-        if (Math.random() < 0.1) {
+        if (random() < 0.1) {
           return 'b' + 'z'.repeat(word.length - 1);
         }
-        if (Math.random() < 0.06) {
-          return `${word} ${BEE_PHRASES[Math.floor(Math.random() * BEE_PHRASES.length)]}`;
+        if (random() < 0.06) {
+          return `${word} ${BEE_PHRASES[Math.floor(random() * BEE_PHRASES.length)]}`;
         }
         return word;
       }).join(' ');

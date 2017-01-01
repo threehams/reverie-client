@@ -2,8 +2,8 @@ import { List } from 'immutable';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import Radium = require('radium');
-import pure from 'recompose/pure';
 import ReactMarkdown = require('react-markdown');
+import pure from 'recompose/pure';
 
 import * as playerActions from '../actions/playerActions';
 import {
@@ -23,7 +23,7 @@ interface EditorPanelProps {
 }
 
 export class EditorPanelBase extends React.Component<EditorPanelProps, {}> {
-  private container: any;
+  private container: HTMLDivElement;
 
   public componentDidUpdate() {
     this.container.scrollTop = this.container.scrollHeight;

@@ -16,7 +16,7 @@ interface AutocompleteBaseProps {
 }
 
 export class AutocompleteBase extends React.Component<AutocompleteBaseProps, {}> {
-  private selectedItem: any;
+  private selectedItem: HTMLLIElement;
 
   public componentDidUpdate() {
     if (this.selectedItem) {

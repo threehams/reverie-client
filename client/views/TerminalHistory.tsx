@@ -11,7 +11,7 @@ interface TerminalHistoryProps {
 }
 
 export class TerminalHistoryBase extends React.Component<TerminalHistoryProps, {}> {
-  private container: any;
+  private container: HTMLDivElement;
 
   public componentDidUpdate() {
     this.container.scrollTop = this.container.scrollHeight;

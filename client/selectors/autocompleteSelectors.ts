@@ -1,10 +1,11 @@
 import { List, Seq, Set } from 'immutable';
 import { createSelector } from 'reselect';
 
-import { Allowed, AutocompleteItem, Command, Entity, Exit, State } from '../records';
+import { Allowed, AllowedObjectType, AutocompleteItem, Command, Entity, Exit, State } from '../records';
 import * as entitySelectors from './entitySelectors';
 
-const INSTANCE_TYPES: { [key: string]: any } = {
+type ItemType = 'command' | 'entity' | 'exit';
+const INSTANCE_TYPES = {
   command: Command,
   entity: Entity,
   exit: Exit,
@@ -18,34 +19,38 @@ function compare(a: string|boolean|number, b: string|boolean|number) {
 
 const defaultFilters = List([
   new Allowed({
-    types: Set(['command', 'exit']),
+    types: Set<AllowedObjectType>(['command', 'exit']),
   }),
 ]);
 
-function applyAllowedOwners(objects, owners: Set<string>) {
+function applyAllowedOwners(objects: Seq.Indexed<AutocompleteItem>, owners: Set<string>) {
   if (!owners.size) {
     return objects;
   }
 
-  return objects.filter((object) => owners.contains(object.owner));
+  return objects.filter((object) => {
+    return (object instanceof Entity) && owners.contains(object.owner);
+  });
 }
 
-function applyAllowedStates(objects, states: Set<string>) {
+function applyAllowedStates(objects: Seq.Indexed<AutocompleteItem>, states: Set<string>) {
   if (!states.size) {
     return objects;
   }
 
-  return objects.filter((object) => !!states.intersect(object.states).size);
+  return objects.filter((object) => {
+    return (object instanceof Entity) && !!states.intersect(object.states).size;
+  });
 }
 
-function applyAllowedComponents(objects, components: Set<string>) {
+function applyAllowedComponents(objects: Seq.Indexed<AutocompleteItem>, components: Set<string>) {
   if (!components.size) {
     return objects;
   }
 
   // Allow object if it contains any of the expected components.
   return objects.filter((object) => {
-    if (!object.components || !object.components.size) {
+    if (!(object instanceof Entity) || !object.components || !object.components.size) {
       return false;
     }
 
@@ -62,7 +67,7 @@ function applyAllowedComponents(objects, components: Set<string>) {
   });
 }
 
-function applyAllowedTypes(objects: List<AutocompleteItem>, types: Set<string>) {
+function applyAllowedTypes(objects: Seq.Indexed<AutocompleteItem>, types: Set<AllowedObjectType>) {
   if (!types.size) {
     return objects;
   }
@@ -81,7 +86,7 @@ function applyAllowedTypes(objects: List<AutocompleteItem>, types: Set<string>) 
 /*
  * Filter objects based on different attributes within records.
  */
-export function applyAllowed(objects, allowed: Allowed) {
+export function applyAllowed(objects: Seq.Indexed<AutocompleteItem>, allowed: Allowed) {
   if (allowed.names.size) {
     return List(allowed.names.map((name: string) => {
       return new Command({
