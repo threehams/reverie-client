@@ -5,8 +5,6 @@ import webpack = require('webpack');
 import WebSocket = require('ws');
 import compression = require('compression');
 import webpackConfig from './webpack.config';
-import webpackDevMiddleware = require('webpack-dev-middleware');
-import webpackHotMiddleware = require('webpack-hot-middleware');
 
 import config from './config';
 import fixtureAttackBees from './fixtures/fixtureAttackBees';
@@ -36,6 +34,11 @@ import fixtureUnlockContainer from './fixtures/fixtureUnlockContainer';
 const app = express();
 
 if (config.development) {
+  // tslint:disable no-var-requires
+  // Only require these in development - not possible with Typescript imports
+  const webpackDevMiddleware = require('webpack-dev-middleware');
+  const webpackHotMiddleware = require('webpack-hot-middleware');
+
   const compiler = webpack(webpackConfig);
   app.use(webpackDevMiddleware(compiler, {
     noInfo: true,
