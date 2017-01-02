@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Radium = require('radium');
-import shallowCompare = require('react-addons-shallow-compare');
 
 import panelStyles from '../styles/panel';
 

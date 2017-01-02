@@ -3,16 +3,21 @@ import * as React from 'react';
 import pure from 'recompose/pure';
 import withHandlers from 'recompose/withHandlers';
 
-import { Command, Entity, Exit } from '../records';
+import { AutocompleteItem } from '../records';
 
 import { StatusEffect } from '../components/StatusEffect';
+
+export function splitOption(option: string, fragment: string) {
+  const parts = option.split(fragment);
+  return [parts[0], fragment, parts.slice(1).join(fragment)];
+}
 
 interface AutocompleteBaseProps {
   fragment: string;
   focused?: boolean;
-  options: List<Command | Entity | Exit>;
+  options: List<AutocompleteItem>;
   onClickItem: Function;
-  selectedItem: Command | Entity | Exit;
+  selectedItem: AutocompleteItem;
 }
 
 export class AutocompleteBase extends React.Component<AutocompleteBaseProps, {}> {
@@ -34,7 +39,7 @@ export class AutocompleteBase extends React.Component<AutocompleteBaseProps, {}>
       <ul style={styles.panel.global} tabIndex={1000}>
         {
           options.map((option, index) => {
-            const optionSplit = this.splitOption(option.name, fragment);
+            const optionSplit = splitOption(option.name, fragment);
             const path = option.path ? ` (${option.path})` : '';
             return <li
               key={index}
@@ -60,11 +65,6 @@ export class AutocompleteBase extends React.Component<AutocompleteBaseProps, {}>
         }
       </ul>
     );
-  }
-
-  public splitOption(option: string, fragment: string) {
-    const parts = option.split(fragment);
-    return [parts[0], fragment, parts.slice(1).join(fragment)];
   }
 }
 

@@ -1,12 +1,9 @@
 import * as React from 'react';
 import Radium = require('radium');
-import withHandlers from 'recompose/withHandlers';
 
 import { Icon } from '../components/Icon';
 import fontStyles from '../styles/font';
 import panelStyles from '../styles/panel';
-
-type ButtonClickEvent = React.MouseEvent<HTMLButtonElement>;
 
 interface TabProps {
   active?: boolean;

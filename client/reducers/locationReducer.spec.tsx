@@ -2,7 +2,7 @@ import { List } from 'immutable';
 
 import { SetState } from '../actions/messageActions';
 import { Location } from '../records';
-import {INITIAL_STATE, locationReducer } from './locationReducer';
+import { locationReducer } from './locationReducer';
 
 import { expect } from '../../__test__/configureExpect';
 
@@ -21,10 +21,4 @@ describe('locationReducer', () => {
       expect(locationReducer(undefined, action)).to.equal(location);
     });
   });
-
-  // describe('default', () => {
-  //   it('returns the state', () => {
-  //     expect(locationReducer(undefined, { type: 'UNRELATED' })).to.equal(INITIAL_STATE);
-  //   });
-  // });
 });

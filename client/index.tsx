@@ -11,8 +11,6 @@ import { configureStore } from './configureStore';
 import { socket } from './socket';
 import { App } from './views/App';
 
-import { Dispatch } from 'redux';
-
 import * as messageActions from './actions/messageActions';
 import * as socketActions from './actions/socketActions';
 
