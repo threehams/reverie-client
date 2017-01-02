@@ -1,7 +1,6 @@
 import { Set } from 'immutable';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import compose from 'recompose/compose';
 
 import { State } from '../records';
 

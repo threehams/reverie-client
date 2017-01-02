@@ -8,7 +8,7 @@ import { SetState } from '../actions/messageActions';
 import { InventoryExpandItems } from '../actions/playerActions';
 import * as socketActions from '../actions/socketActions';
 import { Ui } from '../records';
-import {INITIAL_STATE, uiReducer } from './uiReducer';
+import {uiReducer } from './uiReducer';
 
 describe('uiReducer', () => {
   describe('EDITOR_ADD_VIEW', () => {
@@ -227,10 +227,4 @@ describe('uiReducer', () => {
       );
     });
   });
-
-  // describe('default', () => {
-  //   it('returns the state', () => {
-  //     expect(uiReducer(undefined, { type: 'UNRELATED' })).to.equal(INITIAL_STATE);
-  //   });
-  // });
 });

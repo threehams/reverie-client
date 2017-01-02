@@ -272,10 +272,4 @@ describe('commandReducer', () => {
       });
     });
   });
-
-  // describe('default', () => {
-  //   it('return default state', () => {
-  //     expect(commandReducer(undefined, { type: 'UNRELATED' })).to.equal(INITIAL_STATE);
-  //   });
-  // });
 });

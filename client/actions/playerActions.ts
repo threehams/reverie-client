@@ -1,7 +1,7 @@
 import { List } from 'immutable';
 import { Dispatch } from 'redux';
 
-import { State } from '../records';
+import { Entity, State } from '../records';
 import { CommandSend, sendCommand } from './commandActions';
 
 export interface InventoryExpandItems {
@@ -32,7 +32,7 @@ export const setActiveView = (name: string): PlayerSetActiveView => ({
 
 export const attack = (id: string) => {
   return (dispatch: Dispatch<CommandSend>, getState: () => State) => {
-    const entity = getState().getIn(['entities', id]);
+    const entity: Entity = getState().getIn(['entities', id]);
     dispatch(sendCommand(`attack ${entity.name}`));
   };
 };

@@ -4,7 +4,6 @@ import { createSelector } from 'reselect';
 import { Allowed, AllowedObjectType, AutocompleteItem, Command, Entity, Exit, State } from '../records';
 import * as entitySelectors from './entitySelectors';
 
-type ItemType = 'command' | 'entity' | 'exit';
 const INSTANCE_TYPES = {
   command: Command,
   entity: Entity,

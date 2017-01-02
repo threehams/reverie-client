@@ -10,7 +10,10 @@
     "noImplicitAny": true,
     "strictNullChecks": false, // re-enable after immediately-invoked callback annotation is available
     "noImplicitThis": true,
-    "suppressImplicitAnyIndexErrors": true
+    "suppressImplicitAnyIndexErrors": true,
+    // note that the next two might be very annoying
+    "noUnusedLocals": true,
+    "noUnusedParameters": false
   },
   "include": [
     "client/**/*",

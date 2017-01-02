@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Radium = require('radium');
 
 import * as commandActions from '../actions/commandActions';
-import { Command, Entity, Exit, State } from '../records';
+import { AutocompleteItem, State } from '../records';
 import * as autocompleteSelectors from '../selectors/autocompleteSelectors';
 import panelStyles from '../styles/panel';
 import { Autocomplete } from './Autocomplete';
@@ -15,9 +15,9 @@ import fontStyles from '../styles/font';
 interface TerminalPromptProps {
   autocompleteFragment: string;
   autocompleteOpen: boolean;
-  autocompleteOptions: List<Command | Entity | Exit>;
+  autocompleteOptions: List<AutocompleteItem>;
   autocompletePosition: number;
-  autocompleteSelectedItem: Command | Entity | Exit;
+  autocompleteSelectedItem: AutocompleteItem;
   closeAutocomplete: Function;
   completeCommand: Function;
   currentCommand: string;

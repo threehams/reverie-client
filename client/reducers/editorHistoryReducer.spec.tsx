@@ -62,10 +62,4 @@ describe('editorHistoryReducer', () => {
       expect(editorHistoryReducer(initial, action)).to.equal(List());
     });
   });
-
-  // describe('default', () => {
-  //   it('return default state', () => {
-  //     expect(editorHistoryReducer(undefined, { type: 'UNRELATED' })).to.equal(INITIAL_STATE);
-  //   });
-  // });
 });

@@ -2,7 +2,7 @@ import { List, Map } from 'immutable';
 import { expect } from '../../__test__/configureExpect';
 
 import { Entity } from '../records';
-import {entitiesReducer, INITIAL_STATE } from './entitiesReducer';
+import {entitiesReducer } from './entitiesReducer';
 
 import { SetState } from '../actions/messageActions';
 
@@ -81,10 +81,4 @@ describe('entitiesReducer', () => {
       );
     });
   });
-
-  // describe('default', () => {
-  //   it('returns the state', () => {
-  //     expect(entitiesReducer(undefined, { type: 'UNRELATED' })).to.equal(INITIAL_STATE);
-  //   });
-  // });
 });

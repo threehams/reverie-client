@@ -1,4 +1,4 @@
-import { applyMiddleware, compose, createStore, Store } from 'redux';
+import { applyMiddleware, createStore, Store } from 'redux';
 // tslint:disable-next-line no-var-requires
 import thunk from 'redux-thunk';
 
@@ -21,7 +21,7 @@ const socketMiddleware = (socket: WebSocket) => {
 
 export const configureStore = (socket: WebSocket, initialState: State) => {
   // tslint:disable-next-line no-any
-  const win: any = window;
+  // const win: any = window;
   const withMiddleware = applyMiddleware(thunk, socketMiddleware(socket))(createStore);
   // TODO figure out why this complains about async actions
   // const withDevTools = window.devToolsExtension ? window.devToolsExtension()(withMiddleware) : withMiddleware;
