@@ -1,12 +1,13 @@
-/* eslint-env node */
 import path = require('path');
 import express = require('express');
-import webpack = require('webpack');
 import WebSocket = require('ws');
 import compression = require('compression');
-import webpackConfig from './webpack.config';
 
+import * as messageActions from './actions/messageActions';
 import config from './config';
+import configureStore from './configureStore';
+import { State, StateDelta } from './records';
+
 import fixtureAttackBees from './fixtures/fixtureAttackBees';
 import fixtureAttackedByBees from './fixtures/fixtureAttackedByBees';
 import fixtureAttackEnemyFailure from './fixtures/fixtureAttackEnemyFailure';
@@ -33,156 +34,111 @@ import fixtureUnlockContainer from './fixtures/fixtureUnlockContainer';
 
 const app = express();
 
-if (config.development) {
-  // tslint:disable no-var-requires
-  // Only require these in development - not possible with Typescript imports
-  const webpackDevMiddleware = require('webpack-dev-middleware');
-  const webpackHotMiddleware = require('webpack-hot-middleware');
-
-  const compiler = webpack(webpackConfig);
-  app.use(webpackDevMiddleware(compiler, {
-    noInfo: true,
-    publicPath: webpackConfig.output.publicPath,
-    stats: { chunks: false },
-  }));
-  app.use('/assets', express.static(path.join( __dirname, '..', 'assets')));
-
-  app.use(webpackHotMiddleware(compiler));
-} else {
+if (!config.development) {
   app.use(compression());
   app.use('/build', express.static(path.join( __dirname, '..', 'build')));
   app.use('/assets', express.static(path.join( __dirname, '..', 'assets')));
+
+  app.get('/', (request, response) => {
+    response.sendFile(path.join(__dirname, 'index.html'));
+  });
 }
 
-app.get('/', (request, response) => {
-  response.sendFile(path.join(__dirname, 'index.html'));
-});
+const PORT = config.port || 3000;
 
-const server = app.listen(config.port || 8080, (err: Error) => {
+const server = app.listen(PORT, (err: Error) => {
   if (err) {
-    // tslint:disable
+    // tslint:disable-next-line no-console
     console.log(err);
-    // tslint:enable
     return;
   }
 
-  // tslint:disable
-  console.log('Listening at http://localhost, port', config.port);
-  // tslint:eisable
-
+  // tslint:disable-next-line no-console
+  console.log('Listening at http://localhost, port', PORT);
 });
-
-// const getInitialState = () => { // eslint-disable-line no-unused-vars
-//   const itemCount = 1000;
-//   const ids = Array.from(new Array(itemCount).keys()).map(i => (i + itemCount).toString());
-//   return {
-//     ...fixtureInitialState,
-//     entities: {
-//       ...fixtureInitialState.entities,
-//       ...ids.reduce((result, id) => {
-//         result[id] = {
-//           id,
-//           name: `item-#${id}`,
-//           components: ['item'],
-//         };
-//         return result;
-//       }, {}),
-//       [9]: {
-//         ...fixtureInitialState.entities[9],
-//         entities: [...fixtureInitialState.entities[9].entities, ...ids]
-//       }
-//     }
-//   };
-// };
 
 interface MessageOptions {
   initial?: boolean;
 }
 
 interface Message {
-  
+  payload?: {
+    command?: string;
+  };
 }
 
-const wsServer = new WebSocket.Server({ server });
-wsServer.on('connection', (ws) => {
-  const sendMessage = (message: Message, opts: MessageOptions = {}) => {
-    ws.send(JSON.stringify({
-      payload: message,
-      meta: {
-        initial: opts.initial
-      }
-    }));
-  };
+const webSocketServer = new WebSocket.Server({ server });
+const store = configureStore();
 
-  // Uncomment for performance testing against lots of items.
-  // sendMessage(getInitialState(), {initial: true});
-  sendMessage(fixtureInitialState, {initial: true});
+webSocketServer.on('connection', (webSocket) => {
+  sendMessage(webSocket, fixtureInitialState, {initial: true});
+  const playerId = '1';
 
   // Canned responses!
   // See expected meta/payload message structure in views/App.js
   // Follow Flux Standard Action, minus 'type'
   // Don't care about complexity here, it's all going away!
-  ws.on('message', (json) => { // eslint-disable-line complexity
-    const command = JSON.parse(json).command.trim();
+  webSocket.on('message', (json) => {
+    const command: string = JSON.parse(json).command.trim();
     switch (command.toLowerCase().trim()) {
       case 'attack hiro':
       case 'kill hiro':
-        sendMessage(fixtureAttackEnemySuccess);
+        sendMessage(webSocket, fixtureAttackEnemySuccess);
         return setTimeout(() => {
-          sendMessage(fixtureEnemyAttack);
+          sendMessage(webSocket, fixtureEnemyAttack);
           setTimeout(() => {
-            sendMessage(fixtureNotConfused);
+            sendMessage(webSocket, fixtureNotConfused);
           }, 15000);
         }, 2000);
       case 'attack raven':
       case 'kill raven':
-        sendMessage(fixtureAttackEnemyFailure);
+        sendMessage(webSocket, fixtureAttackEnemyFailure);
         return setTimeout(() => {
-          sendMessage(fixturePanicking);
+          sendMessage(webSocket, fixturePanicking);
           setTimeout(() => {
-            sendMessage(fixtureNotOnFire);
+            sendMessage(webSocket, fixtureNotOnFire);
             setTimeout(() => {
-              sendMessage(fixtureNotPanicking);
+              sendMessage(webSocket, fixtureNotPanicking);
             }, 10000);
           }, 10000);
         }, 5000);
       case 'attack bees':
       case 'kill bees':
-        sendMessage(fixtureAttackBees);
+        sendMessage(webSocket, fixtureAttackBees);
         return setTimeout(() => {
-          sendMessage(fixtureAttackedByBees);
+          sendMessage(webSocket, fixtureAttackedByBees);
           setTimeout(() => {
-            sendMessage(fixtureBeesPanic);
+            sendMessage(webSocket, fixtureBeesPanic);
             setTimeout(() => {
-              sendMessage(fixtureBeesGone);
+              sendMessage(webSocket, fixtureBeesGone);
               setTimeout(() => {
-                sendMessage(fixtureBeesPanicGone);
+                sendMessage(webSocket, fixtureBeesPanicGone);
               }, 15000);
             }, 15000);
           }, 5000);
         }, 3000);
-      case 'transfer readme.txt to hacks':
-      case 'transfer self/docs/readme.txt to self/hacks':
-        return sendMessage(fixtureMoveItemToContainer);
+      // case 'transfer readme.txt to hacks':
+      // case 'transfer self/docs/readme.txt to self/hacks':
+      //   return sendMessage(webSocket, fixtureMoveItemToContainer);
       case 'n':
       case 'north':
       case 'walk n':
       case 'walk north':
       case 'run':
-        return sendMessage(fixtureMovePlayer);
+        return sendMessage(webSocket, fixtureMovePlayer);
       case 's':
       case 'south':
       case 'walk s':
       case 'walk south':
-        return sendMessage(fixtureMovePlayerBack);
+        return sendMessage(webSocket, fixtureMovePlayerBack);
       case 'open small-mailbox':
       case 'open floor/small-mailbox':
-        return sendMessage(fixtureOpenContainer);
+        return sendMessage(webSocket, fixtureOpenContainer);
       case 'open usb-drive':
       case 'open floor/usb-drive':
-        return sendMessage(fixtureOpenUnlockedContainer);
+        return sendMessage(webSocket, fixtureOpenUnlockedContainer);
       case 'help':
-        return sendMessage({
+        return sendMessage(webSocket, {
           message: `Available commands:
             attack hiro
             attack raven
@@ -194,22 +150,41 @@ wsServer.on('connection', (ws) => {
             south
             use tmp
             take tmp
-            say something`
+            say something`,
         });
       case 'use tmp':
-        return sendMessage(fixtureInventoryRemove);
+        return sendMessage(webSocket, fixtureInventoryRemove);
       case 'say something':
-        sendMessage(fixturePlayerSay);
+        sendMessage(webSocket, fixturePlayerSay);
         return setTimeout(() => {
-          sendMessage(fixtureOtherPlayerSay);
+          sendMessage(webSocket, fixtureOtherPlayerSay);
         }, 1000);
       case 'take tmp':
-        return sendMessage(fixtureInventoryAdd);
+        return sendMessage(webSocket, fixtureInventoryAdd);
       case 'unlock usb-drive':
       case 'unlock floor/usb-drive':
-        return sendMessage(fixtureUnlockContainer);
+        return sendMessage(webSocket, fixtureUnlockContainer);
       default:
-        return sendMessage({ message: `I don't know how to ${command}.`});
+        return sendMessage(webSocket, { message: `I don't know how to ${command}.`});
     }
   });
 });
+
+function parseMessage(jsonMessage: string): string | null {
+  try {
+    const message: Message = JSON.parse(jsonMessage);
+    return message.payload.command;
+  } catch (err) {
+    return null;
+  }
+}
+
+// TODO reconcile immutable message with JS fixtures
+function sendMessage(webSocket: WebSocket, delta: any, opts: MessageOptions = {}) {
+  webSocket.send(JSON.stringify({
+    meta: {
+      initial: opts.initial,
+    },
+    payload: delta,
+  }));
+};
