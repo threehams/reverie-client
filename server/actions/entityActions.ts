@@ -1,5 +1,4 @@
-import { Dispatch } from 'redux';
-import { EntityState, State } from '../records';
+import { EntityState } from '../records';
 
 export interface MoveEntity {
   type: 'ENTITY_MOVE';

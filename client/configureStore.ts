@@ -12,7 +12,7 @@ const socketMiddleware = (socket: WebSocket) => {
   // tslint:disable-next-line no-any
   return (store: Store<State>) => (next: Function) => (action: any) => {
     if (action.meta && action.meta.socket) {
-      socket.send(JSON.stringify(action.payload));
+      socket.send(JSON.stringify({ payload: action.payload }));
       return next(action);
     }
     next(action);

@@ -6,7 +6,6 @@ import compression = require('compression');
 import * as messageActions from './actions/messageActions';
 import config from './config';
 import configureStore from './configureStore';
-import { State, StateDelta } from './records';
 
 import fixtureAttackBees from './fixtures/fixtureAttackBees';
 import fixtureAttackedByBees from './fixtures/fixtureAttackedByBees';
@@ -19,7 +18,6 @@ import fixtureEnemyAttack from './fixtures/fixtureEnemyAttack';
 import fixtureInitialState from './fixtures/fixtureInitialState';
 import fixtureInventoryAdd from './fixtures/fixtureInventoryAdd';
 import fixtureInventoryRemove from './fixtures/fixtureInventoryRemove';
-import fixtureMoveItemToContainer from './fixtures/fixtureMoveItemToContainer';
 import fixtureMovePlayer from './fixtures/fixtureMovePlayer';
 import fixtureMovePlayerBack from './fixtures/fixtureMovePlayerBack';
 import fixtureNotConfused from './fixtures/fixtureNotConfused';
@@ -74,13 +72,18 @@ webSocketServer.on('connection', (webSocket) => {
   sendMessage(webSocket, fixtureInitialState, {initial: true});
   const playerId = '1';
 
-  // Canned responses!
-  // See expected meta/payload message structure in views/App.js
-  // Follow Flux Standard Action, minus 'type'
-  // Don't care about complexity here, it's all going away!
-  webSocket.on('message', (json) => {
-    const command: string = JSON.parse(json).command.trim();
-    switch (command.toLowerCase().trim()) {
+  const unsubscribe = store.subscribe(() => {
+    // const transactions = store.getState().transactions;
+    sendMessage(webSocket, {});
+  });
+
+  webSocket.on('message', (message) => {
+    const command = parseMessage(message);
+    if (!command) {
+      return;
+    }
+
+    switch (command) {
       case 'attack hiro':
       case 'kill hiro':
         sendMessage(webSocket, fixtureAttackEnemySuccess);
@@ -117,9 +120,9 @@ webSocketServer.on('connection', (webSocket) => {
             }, 15000);
           }, 5000);
         }, 3000);
-      // case 'transfer readme.txt to hacks':
-      // case 'transfer self/docs/readme.txt to self/hacks':
-      //   return sendMessage(webSocket, fixtureMoveItemToContainer);
+      case 'transfer readme.txt to hacks':
+      case 'transfer self/docs/readme.txt to self/hacks':
+        return store.dispatch<any>(messageActions.parseCommand(command, playerId));
       case 'n':
       case 'north':
       case 'walk n':
@@ -168,12 +171,16 @@ webSocketServer.on('connection', (webSocket) => {
         return sendMessage(webSocket, { message: `I don't know how to ${command}.`});
     }
   });
+
+  webSocket.on('close', () => {
+    unsubscribe();
+  });
 });
 
 function parseMessage(jsonMessage: string): string | null {
   try {
     const message: Message = JSON.parse(jsonMessage);
-    return message.payload.command;
+    return message.payload.command.trim().toLowerCase();
   } catch (err) {
     return null;
   }

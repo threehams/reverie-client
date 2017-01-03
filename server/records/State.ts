@@ -1,9 +1,9 @@
-import { Map, Record } from 'immutable';
-import { CommandState, Entity } from '../records';
+import { Record } from 'immutable';
+import { CommandState, EntityState } from '../records';
 
 interface StateProps {
   command?: CommandState;
-  entities?: Map<string, Entity>;
+  entities?: EntityState;
 }
 
 export class State extends Record<StateProps>({
@@ -11,5 +11,5 @@ export class State extends Record<StateProps>({
   entities: undefined,
 }) implements StateProps {
   public command: CommandState;
-  public entities: Map<string, Entity>;
+  public entities: EntityState;
 }

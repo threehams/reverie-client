@@ -1,10 +1,9 @@
 import { Map } from 'immutable';
-import { Entity } from '../records';
+import { EntityState } from '../records';
 
 import { SetState } from '../actions/messageActions';
 
-type EntityObjectMap = Map<string, Entity>;
-export const INITIAL_STATE: EntityObjectMap = Map<string, Entity>({});
+export const INITIAL_STATE: EntityState = Map({}) as EntityState;
 
 export const entitiesReducer = (state = INITIAL_STATE, action: SetState) => {
   switch (action.type) {
@@ -15,9 +14,9 @@ export const entitiesReducer = (state = INITIAL_STATE, action: SetState) => {
   }
 };
 
-function setState(state: EntityObjectMap, action: SetState) {
+function setState(state: EntityState, action: SetState) {
   const entities = state.merge(action.payload.entities);
-  return action.payload.entitiesToRemove.reduce((newEntities: Map<string, Entity>, toRemove: string) => {
+  return action.payload.entitiesToRemove.reduce((newEntities: EntityState, toRemove: string) => {
     return newEntities.remove(toRemove);
   }, entities);
 }

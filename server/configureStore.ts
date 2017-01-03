@@ -1,4 +1,4 @@
-import { applyMiddleware, compose, createStore } from 'redux';
+import { applyMiddleware, compose, createStore, Store } from 'redux';
 import thunk from 'redux-thunk';
 import { State } from './records';
 import { rootReducer } from './rootReducer';
@@ -8,7 +8,7 @@ declare var module: { hot: any };
 
 const configureStore = (initialState?: State) => {
   const finalCreateStore = compose(applyMiddleware(thunk))(createStore);
-  const store = finalCreateStore(rootReducer, initialState);
+  const store: Store<State> = finalCreateStore(rootReducer, initialState);
 
   if (module.hot) {
     module.hot.accept('./rootReducer', () => {

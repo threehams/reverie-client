@@ -2,7 +2,7 @@ import { List } from 'immutable';
 import { Dispatch } from 'redux';
 
 import * as entityActions from '../actions/entityActions';
-import { Command, EntityState, State, StateDelta } from '../records';
+import { Command, EntityState, State } from '../records';
 
 export interface SetState {
   type: 'SET_STATE';
@@ -40,7 +40,7 @@ export function parseCommand(command: string, userId: string) {
     const state = getState();
     const root = state.command.available.find(availableCommand => availableCommand.name === parts[0]);
     if (!root) {
-      dispatch( sendMessage(userId, `I don\'t know how to ${parts[0]}.`) );
+      sendMessage(userId, `I don\'t know how to ${parts[0]}.`);
       return;
     }
 

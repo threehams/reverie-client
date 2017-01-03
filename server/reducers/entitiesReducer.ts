@@ -1,11 +1,10 @@
 import { List, Map } from 'immutable';
-import { Entity } from '../records';
+import { EntityState } from '../records';
 
 import { MoveEntity } from '../actions/entityActions';
 import { SetState } from '../actions/messageActions';
 
-type EntityObjectMap = Map<string, Entity>;
-export const INITIAL_STATE: EntityObjectMap = Map<string, Entity>({});
+export const INITIAL_STATE: EntityState = Map({}) as EntityState;
 type Actions = SetState | MoveEntity;
 
 export const entitiesReducer = (state = INITIAL_STATE, action: Actions) => {
@@ -19,14 +18,14 @@ export const entitiesReducer = (state = INITIAL_STATE, action: Actions) => {
   }
 };
 
-function setState(state: EntityObjectMap, action: SetState): EntityObjectMap {
+function setState(state: EntityState, action: SetState): EntityState {
   const entities = state.merge(action.payload.entities);
-  return action.payload.entitiesToRemove.reduce((newEntities: Map<string, Entity>, toRemove: string) => {
+  return action.payload.entitiesToRemove.reduce((newEntities: EntityState, toRemove: string) => {
     return newEntities.remove(toRemove);
   }, entities);
 }
 
-function moveEntity(state: EntityObjectMap, action: MoveEntity): EntityObjectMap {
+function moveEntity(state: EntityState, action: MoveEntity): EntityState {
   return state.updateIn([action.payload.parentId, 'entities'], (entities: List<string>): List<string> => {
     return entities.filter(entityId => entityId !== action.payload.destinationId);
   }).setIn([action.payload.id, action.payload.parentId], action.payload.destinationId);

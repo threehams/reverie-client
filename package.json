@@ -6,8 +6,8 @@
   "scripts": {
     "build": "better-npm-run build",
     "dev-server": "better-npm-run dev-server",
-    "lint": "tslint {client,server}/**/*.ts{,x}",
-    "lint:fix": "tslint {client,server}/**/*.ts{,x} . --fix",
+    "lint": "tslint {client,shared,server}/**/*.ts{,x}",
+    "lint:fix": "tslint {client,shared,server}/**/*.ts{,x} . --fix",
     "postinstall": "node scripts/postinstall.js",
     "test": "better-npm-run test --watch --watch-extensions ts,tsx",
     "test:ci": "better-npm-run test",
