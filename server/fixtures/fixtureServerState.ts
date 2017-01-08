@@ -308,26 +308,19 @@ export default {
       maxHealth: 40,
       name: 'Bees',
     },
+    101: {
+      components: ['location'],
+      description: 'You are standing in an open field west of a white house, with a boarded front door.',
+      entities: ['13', '18'],
+      exits: ['north'],
+      name: 'West of House',
+    },
+    102: {
+      components: ['location'],
+      description: `You are facing the north side of a white house. There is no door here, and all the windows are
+ barred.`,
+      exits: ['south'],
+      name: 'North of House',
+    },
   },
-  location: {
-    description: 'This is a field. No big deal.',
-    entities: ['13', '18'],
-    exits: ['north'],
-    name: 'Field',
-  },
-  message: `# West of House
-
-  You are standing in an open field west of a white house, with a boarded front door.
-
-  - There is a [small-mailbox](/items/13) here.
-  - There is a [usb-drive](/items/18) here.
-
-  - [Hiro](/creatures/74) is here.
-  - [Raven](/creatures/75) is here.
-  - A swarm of [Bees](/creatures/76) is here.
-
-  Exits:
-  - [North](/exits/north)`,
-
-  player: '17',
 };

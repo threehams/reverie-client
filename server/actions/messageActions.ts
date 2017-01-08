@@ -1,17 +1,9 @@
-import { List } from 'immutable';
 import { Dispatch } from 'redux';
 
 import * as entityActions from '../actions/entityActions';
-import { Command, EntityState, State } from '../records';
+import { State } from '../records';
 
-export interface SetState {
-  type: 'SET_STATE';
-  payload: {
-    availableCommands?: Set<Command>;
-    entities?: EntityState;
-    entitiesToRemove?: List<string>;
-  };
-};
+export { setState, SetState } from '../../shared/actions/messageActions';
 
 export interface SendMessage {
   type: 'SEND_MESSAGE';

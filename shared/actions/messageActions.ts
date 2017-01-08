@@ -56,7 +56,6 @@ export interface EntityObjectMap {
 export interface EntityData {
   components?: string[];
   currentHealth?: number;
-  currentMemory?: number;
   currentStorage?: number;
   description?: string;
   entities?: string[];
@@ -64,7 +63,6 @@ export interface EntityData {
   id: string;
   indent?: number;
   maxHealth?: number;
-  maxMemory?: number;
   maxStorage?: number;
   name: string;
   owner?: string;
