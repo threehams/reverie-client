@@ -1,3 +1,5 @@
+import './polyfills';
+
 import path = require('path');
 import express = require('express');
 import WebSocket = require('ws');
@@ -29,6 +31,8 @@ import fixtureOtherPlayerSay from './fixtures/fixtureOtherPlayerSay';
 import fixturePanicking from './fixtures/fixturePanicking';
 import fixturePlayerSay from './fixtures/fixturePlayerSay';
 import fixtureUnlockContainer from './fixtures/fixtureUnlockContainer';
+
+import fixtureServerState from './fixtures/fixtureServerState';
 
 const app = express();
 
@@ -67,6 +71,7 @@ interface Message {
 
 const webSocketServer = new WebSocket.Server({ server });
 const store = configureStore();
+store.dispatch(messageActions.setState(fixtureServerState));
 
 webSocketServer.on('connection', (webSocket) => {
   sendMessage(webSocket, fixtureInitialState, {initial: true});

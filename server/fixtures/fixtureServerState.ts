@@ -1,3 +1,5 @@
+import { AllowedObjectType } from '../records';
+
 export default {
   availableCommands: [
     {
@@ -96,7 +98,7 @@ export default {
         {
           allowed: [
             {
-              types: ['exit'],
+              types: ['exit'] as AllowedObjectType[],
             },
           ],
         },
@@ -109,10 +111,10 @@ export default {
           allowed: [
             {
               owners: ['self', 'floor'],
-              types: ['entity'],
+              types: ['entity'] as AllowedObjectType[],
             },
             {
-              types: ['exit'],
+              types: ['exit'] as AllowedObjectType[],
             },
           ],
         },
@@ -125,7 +127,7 @@ export default {
           allowed: [
             {
               components: ['creature', 'player'],
-              types: ['entity'],
+              types: ['entity'] as AllowedObjectType[],
             },
           ],
         },
@@ -138,7 +140,7 @@ export default {
           allowed: [
             {
               components: ['creature', 'player'],
-              types: ['entity'],
+              types: ['entity'] as AllowedObjectType[],
             },
           ],
         },
@@ -151,7 +153,7 @@ export default {
           allowed: [
             {
               components: ['creature', 'player'],
-              types: ['entity'],
+              types: ['entity'] as AllowedObjectType[],
             },
           ],
         },
@@ -165,7 +167,7 @@ export default {
             {
               components: ['container'],
               states: ['closed'],
-              types: ['entity'],
+              types: ['entity'] as AllowedObjectType[],
             },
           ],
         },
@@ -179,7 +181,7 @@ export default {
             {
               components: ['container', 'lockable'],
               states: ['locked'],
-              types: ['entity'],
+              types: ['entity'] as AllowedObjectType[],
             },
           ],
         },
@@ -265,7 +267,7 @@ export default {
       name: 'leaflet.txt',
     },
     17: {
-      components: ['player'],
+      components: ['creature', 'player'],
       currentHealth: 100,
       currentStorage: 100,
       entities: ['1', '4', '9'],
@@ -313,6 +315,7 @@ export default {
       description: 'You are standing in an open field west of a white house, with a boarded front door.',
       entities: ['13', '18'],
       exits: ['north'],
+      id: '101',
       name: 'West of House',
     },
     102: {
@@ -320,6 +323,7 @@ export default {
       description: `You are facing the north side of a white house. There is no door here, and all the windows are
  barred.`,
       exits: ['south'],
+      id: '102',
       name: 'North of House',
     },
   },

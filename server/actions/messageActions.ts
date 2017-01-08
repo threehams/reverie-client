@@ -38,6 +38,6 @@ export function parseCommand(command: string, userId: string) {
 
     // TODO remove assertion after redux-thunk typings are fixed
     // tslint:disable-next-line no-any
-    dispatch<any>(entityActions.move(parts[1], parts[3], state.entities));
+    dispatch<any>(entityActions.move(userId, parts[1], parts[3], state.entities));
   };
 }

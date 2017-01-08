@@ -59,6 +59,7 @@ export interface EntityData {
   currentStorage?: number;
   description?: string;
   entities?: string[];
+  exits?: string[];
   expanded?: boolean;
   id: string;
   indent?: number;
@@ -96,6 +97,7 @@ function createEntityMap(entities: EntityObjectMap): EntityState {
       ...entity,
       components: Set(entity.components),
       entities: List(entity.entities),
+      exits: Set(entity.exits),
       states: Set(entity.states),
     };
     return entityMap.set(id, new Entity(entityProps));

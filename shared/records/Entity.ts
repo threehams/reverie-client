@@ -6,6 +6,7 @@ interface EntityProps {
   currentStorage?: number;
   description?: string;
   entities?: List<string>;
+  exits?: Set<string>;
   expanded?: boolean;
   id: string;
   indent?: number;
@@ -25,6 +26,7 @@ export class Entity extends Record<EntityProps>({
   currentStorage: 0,
   description: '',
   entities: List([]),
+  exits: Set([]),
   expanded: false,
   id: null,
   indent: 1,
@@ -42,6 +44,7 @@ export class Entity extends Record<EntityProps>({
   public currentStorage: number;
   public description: string;
   public entities: List<string>;
+  public exits: Set<string>;
   public expanded: boolean;
   public id: string;
   public indent: number;
