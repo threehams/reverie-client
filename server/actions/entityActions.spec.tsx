@@ -1,9 +1,9 @@
 import { List, Map, Set } from 'immutable';
 import { expect } from '../../__test__/configureExpect';
 
-import { Entity, EntityState, State } from '../records';
+import { Entity, State } from '../records';
 import { move } from './entityActions';
-import { SetServerState, setState } from './messageActions';
+import { SetServerState } from './messageActions';
 
 describe('entityActions', () => {
   describe('move', () => {

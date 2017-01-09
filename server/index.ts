@@ -185,6 +185,7 @@ webSocketServer.on('connection', (webSocket) => {
         return sendMessage(webSocket, fixtureUnlockContainer);
       default:
         if (command.startsWith('transfer')) {
+          // tslint:disable-next-line no-any
           return store.dispatch<any>(messageActions.parseCommand(command, userId));
         }
         return sendMessage(webSocket, { message: `I don't know how to ${command}.`});
@@ -209,6 +210,7 @@ function parseMessage(jsonMessage: string): string | null {
 }
 
 // TODO reconcile immutable message with JS fixtures
+// tslint:disable-next-line no-any
 function sendMessage(webSocket: WebSocket, payload: any, opts: MessageOptions = {}) {
   webSocket.send(JSON.stringify({
     meta: {

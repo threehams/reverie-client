@@ -1,10 +1,8 @@
-import { List, Set } from 'immutable';
 import { Dispatch } from 'redux';
 
 import * as entityActions from '../actions/entityActions';
-import { Command, EntityState, MessageTarget, ServerStateDelta, State } from '../records';
+import { ServerStateDelta, State } from '../records';
 export { setState, SetState } from '../../shared/actions/messageActions';
-import { SetState } from '../../shared/actions/messageActions';
 
 export interface SendMessage {
   type: 'SEND_MESSAGE';

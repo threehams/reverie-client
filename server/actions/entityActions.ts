@@ -1,7 +1,7 @@
-import { List, Map } from 'immutable';
+import { Map } from 'immutable';
 import { Dispatch } from 'redux';
 
-import { EntityState, MessageTarget, State } from '../records';
+import { MessageTarget, State } from '../records';
 import { setServerState, SetServerState } from './messageActions';
 
 export interface MoveEntity {

@@ -1,15 +1,11 @@
-import { List, Set } from 'immutable';
 import { Dispatch } from 'redux';
 
-import { setState, SetState } from '../../shared/actions/messageActions';
-import { EntityState } from '../records';
+import { setState } from '../../shared/actions/messageActions';
 
 export { setState, SetState } from '../../shared/actions/messageActions';
 
 import {
   AllowedObjectType,
-  Command,
-  Location,
   State,
 } from '../records';
 

@@ -1,4 +1,4 @@
-import { List, Map } from 'immutable';
+import { List } from 'immutable';
 import { TransactionState } from '../records';
 
 import { SetServerState } from '../actions/messageActions';

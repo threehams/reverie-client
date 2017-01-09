@@ -12,7 +12,7 @@
     "noImplicitThis": true,
     "suppressImplicitAnyIndexErrors": true,
     // note that the next two might be very annoying
-    "noUnusedLocals": false,
+    "noUnusedLocals": true,
     "noUnusedParameters": false
   },
   "include": [

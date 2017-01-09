@@ -1,4 +1,4 @@
-import { List, Map, Set } from 'immutable';
+import { Map, Set } from 'immutable';
 import { Entity, EntityNameState, EntityState } from '../records';
 
 import { MoveEntity } from '../actions/entityActions';
