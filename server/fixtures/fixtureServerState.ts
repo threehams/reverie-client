@@ -313,7 +313,7 @@ export default {
     101: {
       components: ['location'],
       description: 'You are standing in an open field west of a white house, with a boarded front door.',
-      entities: ['13', '18'],
+      entities: ['13', '18', '17'],
       exits: ['north'],
       id: '101',
       name: 'West of House',

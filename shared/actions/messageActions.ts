@@ -1,18 +1,19 @@
 import { fromJS, List, Map, Set } from 'immutable';
 
-import { Allowed, AllowedObjectType, Command, CommandPart, Entity, EntityState, Location } from '../records';
+import {
+  Allowed,
+  AllowedObjectType,
+  Command,
+  CommandPart,
+  Entity,
+  EntityState,
+  Location,
+  StateDelta,
+} from '../records';
 
 export interface SetState {
+  payload: StateDelta;
   type: 'SET_STATE';
-  payload: {
-    availableCommands?: Set<Command>;
-    entities?: EntityState;
-    entitiesToRemove?: List<string>;
-    location?: Location;
-    message?: string;
-    player?: string;
-    statusEffects?: Set<string>;
-  };
 }
 
 interface StateData {

@@ -4,10 +4,12 @@ import path = require('path');
 import express = require('express');
 import WebSocket = require('ws');
 import compression = require('compression');
+import { Map } from 'immutable';
 
 import * as messageActions from './actions/messageActions';
 import config from './config';
 import configureStore from './configureStore';
+import { TransactionState } from './records';
 
 import fixtureAttackBees from './fixtures/fixtureAttackBees';
 import fixtureAttackedByBees from './fixtures/fixtureAttackedByBees';
@@ -75,11 +77,23 @@ store.dispatch(messageActions.setState(fixtureServerState));
 
 webSocketServer.on('connection', (webSocket) => {
   sendMessage(webSocket, fixtureInitialState, {initial: true});
-  const playerId = '1';
+  const userId = '17';
+  let currentTransactions: TransactionState;
 
   const unsubscribe = store.subscribe(() => {
-    // const transactions = store.getState().transactions;
-    sendMessage(webSocket, {});
+    const newTransactions = store.getState().transactions;
+    if (currentTransactions === newTransactions) {
+      return;
+    }
+
+    const transaction = newTransactions.last();
+    if (transaction.owner === userId) {
+      sendMessage(webSocket, Map({
+        entities: transaction.entities,
+        entitiesToRemove: transaction.entitiesToRemove,
+        message: transaction.messages.get('owner'),
+      }));
+    }
   });
 
   webSocket.on('message', (message) => {
@@ -125,9 +139,6 @@ webSocketServer.on('connection', (webSocket) => {
             }, 15000);
           }, 5000);
         }, 3000);
-      case 'transfer readme.txt to hacks':
-      case 'transfer self/docs/readme.txt to self/hacks':
-        return store.dispatch<any>(messageActions.parseCommand(command, playerId));
       case 'n':
       case 'north':
       case 'walk n':
@@ -173,12 +184,18 @@ webSocketServer.on('connection', (webSocket) => {
       case 'unlock floor/usb-drive':
         return sendMessage(webSocket, fixtureUnlockContainer);
       default:
+        if (command.startsWith('transfer')) {
+          return store.dispatch<any>(messageActions.parseCommand(command, userId));
+        }
         return sendMessage(webSocket, { message: `I don't know how to ${command}.`});
     }
   });
 
   webSocket.on('close', () => {
     unsubscribe();
+    webSocket.removeAllListeners('on');
+    webSocket.removeAllListeners('close');
+    webSocket.removeAllListeners('message');
   });
 });
 
@@ -192,11 +209,11 @@ function parseMessage(jsonMessage: string): string | null {
 }
 
 // TODO reconcile immutable message with JS fixtures
-function sendMessage(webSocket: WebSocket, delta: any, opts: MessageOptions = {}) {
+function sendMessage(webSocket: WebSocket, payload: any, opts: MessageOptions = {}) {
   webSocket.send(JSON.stringify({
     meta: {
       initial: opts.initial,
     },
-    payload: delta,
+    payload,
   }));
 };

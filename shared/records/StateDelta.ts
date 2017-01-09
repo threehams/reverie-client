@@ -1,5 +1,5 @@
-import { List } from 'immutable';
-import { Command, EntityState } from './';
+import { List, Set } from 'immutable';
+import { Command, EntityState, Location } from './';
 
 export interface StateDelta {
   availableCommands?: Set<Command>;

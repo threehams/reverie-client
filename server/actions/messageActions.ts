@@ -1,9 +1,10 @@
+import { List, Set } from 'immutable';
 import { Dispatch } from 'redux';
 
 import * as entityActions from '../actions/entityActions';
-import { State } from '../records';
-
+import { Command, EntityState, MessageTarget, ServerStateDelta, State } from '../records';
 export { setState, SetState } from '../../shared/actions/messageActions';
+import { SetState } from '../../shared/actions/messageActions';
 
 export interface SendMessage {
   type: 'SEND_MESSAGE';
@@ -11,6 +12,16 @@ export interface SendMessage {
     message: string;
   };
 }
+
+export interface SetServerState {
+  type: 'SET_SERVER_STATE';
+  payload: ServerStateDelta;
+}
+
+export const setServerState = (state: ServerStateDelta): SetServerState => ({
+  payload: state,
+  type: 'SET_SERVER_STATE',
+});
 
 export function sendMessage(id: string, message: string): SendMessage {
   return {
@@ -38,6 +49,6 @@ export function parseCommand(command: string, userId: string) {
 
     // TODO remove assertion after redux-thunk typings are fixed
     // tslint:disable-next-line no-any
-    dispatch<any>(entityActions.move(userId, parts[1], parts[3], state.entities));
+    dispatch<any>(entityActions.move(userId, parts[1], parts[3]));
   };
 }

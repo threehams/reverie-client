@@ -1,10 +1,10 @@
 import { List, Set } from 'immutable';
 import { Dispatch } from 'redux';
 
-import { setState } from '../../shared/actions/messageActions';
+import { setState, SetState } from '../../shared/actions/messageActions';
 import { EntityState } from '../records';
 
-export { setState } from '../../shared/actions/messageActions';
+export { setState, SetState } from '../../shared/actions/messageActions';
 
 import {
   AllowedObjectType,
@@ -22,19 +22,6 @@ export interface StateDeltaJs {
   location?: LocationData;
   statusEffects?: string[];
 }
-
-export type SetState = {
-  type: 'SET_STATE';
-  payload: {
-    availableCommands?: Set<Command>;
-    entities?: EntityState;
-    entitiesToRemove?: List<string>;
-    location?: Location;
-    message?: string;
-    player?: string;
-    statusEffects?: Set<string>;
-  }
-};
 
 interface CommandData {
   name: string;
