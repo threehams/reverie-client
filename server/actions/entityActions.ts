@@ -1,4 +1,4 @@
-import { List, Map } from 'immutable';
+import { Map } from 'immutable';
 import { Dispatch } from 'redux';
 
 import { MessageTarget, State } from '../records';
@@ -25,7 +25,6 @@ export const move = (userId: string, itemPath: string, toPath: string) => {
     const to = findIn(pathArray(toPath, userId, locationId), state.entities);
     if (!item || !parent || !to) {
       dispatch(setServerState({
-        entitiesToRemove: List([]),
         messages: Map({
           owner: `I couldn't find ${ !item ? itemPath : toPath }.`,
         }) as Map<MessageTarget, string>,
@@ -40,7 +39,6 @@ export const move = (userId: string, itemPath: string, toPath: string) => {
         [parent.id]: parent.set('entities', parent.entities.filter(entityId => entityId !== item.id)),
         [to.id]: to.update('entities', entities => entities.push(item.id)),
       }),
-      entitiesToRemove: List([]),
       messages: Map({
         owner: `You moved ${item.name} to ${to.name}.`,
         viewer: `${userId} moved ${item.name} to ${to.name}.`,

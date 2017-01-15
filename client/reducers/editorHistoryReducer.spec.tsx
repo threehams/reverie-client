@@ -30,7 +30,6 @@ describe('editorHistoryReducer', () => {
         const initial = List(['Hello.', '']);
         const action: SetState = {
           payload: {
-            entitiesToRemove: List([]),
           },
           type: 'SET_STATE',
         };

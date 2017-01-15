@@ -13,8 +13,10 @@ export default {
       location: '12',
       name: 'Big McLargeHuge',
     },
+    2: null,
+    35: null,
+    36: null,
   },
-  entitiesToRemove: ['2', '35', '36'],
   message: `The [tmp](/items/35) folder contained ransomware! You've lost the following:
 
   - [rm.js](/items/2)

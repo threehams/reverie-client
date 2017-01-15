@@ -1,4 +1,4 @@
-import { List, Map } from 'immutable';
+import { Map } from 'immutable';
 import { expect } from '../../__test__/configureExpect';
 
 import { Entity, EntityState } from '../records';
@@ -31,7 +31,6 @@ describe('entitiesReducer', () => {
               name: 'thing3',
             }),
           }),
-          entitiesToRemove: List([]),
         },
         type: 'SET_STATE',
       };
@@ -66,13 +65,13 @@ describe('entitiesReducer', () => {
       });
       const action: SetState = {
         payload: {
-          entities: Map({}) as EntityState,
-          entitiesToRemove: List(['1']),
+          entities: Map({ 1: null }) as EntityState,
         },
         type: 'SET_STATE',
       };
       expect(entitiesReducer(initial, action)).to.equal(
         Map({
+          1: null,
           2: new Entity({
             id: '2',
             name: 'thing2',

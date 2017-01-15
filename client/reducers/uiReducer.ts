@@ -81,10 +81,10 @@ function removeView(state: Ui, id: string): Ui {
 }
 
 function setState(state: Ui, action: SetState): Ui {
-  const entitiesRemoved = action.payload.entitiesToRemove.reduce((removedState, id) => {
+  const entitiesRemoved = action.payload.entities ? action.payload.entities.filter(entity => entity === null).reduce((removedState, entity, id) => {
     return removeView(removedState, id)
-      .update('inventoryExpandedById', (expanded) => expanded.remove(id));
-  }, state);
+      .update('inventoryExpandedById', expanded => expanded.remove(id));
+  }, state) : state;
 
   const withEffects = setStatusEffects(entitiesRemoved, action);
   // If player or location are provided, merge them into the state

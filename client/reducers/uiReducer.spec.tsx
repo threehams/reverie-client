@@ -1,4 +1,4 @@
-import { fromJS, List, OrderedSet, Set } from 'immutable';
+import { fromJS, List, Map, OrderedSet, Set } from 'immutable';
 import { expect } from '../../__test__/configureExpect';
 
 import * as editorActions from '../actions/editorActions';
@@ -139,7 +139,6 @@ describe('uiReducer', () => {
         const initial = new Ui({ player: '2' });
         const action: SetState = {
           payload: {
-            entitiesToRemove: List([]),
             player: '1',
           },
           type: 'SET_STATE',
@@ -153,7 +152,6 @@ describe('uiReducer', () => {
         const initial = new Ui({ player: '2' });
         const action: SetState = {
           payload: {
-            entitiesToRemove: List([]),
             player: '1',
           },
           type: 'SET_STATE',
@@ -166,9 +164,7 @@ describe('uiReducer', () => {
       it('keeps the existing data', () => {
         const initial = new Ui({ player: '1'  });
         const action: SetState = {
-          payload: {
-            entitiesToRemove: List([]),
-          },
+          payload: {},
           type: 'SET_STATE',
         };
         expect(uiReducer(initial, action)).to.equal(new Ui({ player: '1' }));
@@ -180,7 +176,6 @@ describe('uiReducer', () => {
         const initial = new Ui({ statusEffects: Set(['bees']) });
         const action: SetState = {
           payload: {
-            entitiesToRemove: List([]),
             statusEffects: Set(['fire']),
           },
           type: 'SET_STATE',
@@ -195,7 +190,7 @@ describe('uiReducer', () => {
       });
       const action: SetState = {
         payload: {
-          entitiesToRemove: List(['1']),
+          entities: Map({ 1: null }),
         },
         type: 'SET_STATE',
       };
@@ -209,7 +204,7 @@ describe('uiReducer', () => {
       });
       const action: SetState = {
         payload: {
-          entitiesToRemove: List(['1']),
+          entities: Map({ 1: null }),
         },
         type: 'SET_STATE',
       };

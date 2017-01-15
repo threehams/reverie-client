@@ -277,10 +277,17 @@ export default {
       name: 'Big McLargeHuge',
     },
     18: {
-      components: ['container', 'lockable'],
+      components: ['container', 'lockable', 'openable'],
+      entities: ['19'],
       id: '18',
       name: 'usb-drive',
-      states: ['locked', 'closed'],
+      states: ['unlocked', 'opened'],
+    },
+    19: {
+      components: ['item'],
+      description: '```andy; I’m just doing my job, nothing personal, sorry,```',
+      id: '19',
+      name: 'mydoom.js',
     },
     74: {
       components: ['creature'],

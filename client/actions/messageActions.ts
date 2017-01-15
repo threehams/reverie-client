@@ -12,7 +12,6 @@ import {
 export interface StateDeltaJs {
   availableCommands?: CommandData[];
   entities?: EntityObjectMap;
-  entitiesToRemove?: string[];
   message?: string;
   player?: string;
   location?: LocationData;

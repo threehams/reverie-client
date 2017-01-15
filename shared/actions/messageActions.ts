@@ -19,7 +19,6 @@ export interface SetState {
 interface StateData {
   availableCommands?: CommandData[];
   entities?: EntityObjectMap;
-  entitiesToRemove?: string[];
   message?: string;
   player?: string;
   location?: LocationData;
@@ -78,7 +77,6 @@ export const setState = (stateData: StateData): SetState => ({
   payload: {
     availableCommands: createCommandSet(stateData.availableCommands),
     entities: createEntityMap(stateData.entities),
-    entitiesToRemove: fromJS(stateData.entitiesToRemove) || List(),
     location: stateData.location && new Location(fromJS(stateData.location)),
     message: stateData.message || '',
     player: stateData.player,

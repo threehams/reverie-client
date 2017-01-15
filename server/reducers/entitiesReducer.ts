@@ -18,8 +18,5 @@ export const entitiesReducer = (state = INITIAL_STATE, action: Actions) => {
 };
 
 function setState(state: EntityState, action: SetState | SetServerState): EntityState {
-  const entities = state.merge(action.payload.entities);
-  return action.payload.entitiesToRemove.reduce((newEntities: EntityState, toRemove: string) => {
-    return newEntities.remove(toRemove);
-  }, entities);
+  return state.merge(action.payload.entities);
 }

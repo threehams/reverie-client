@@ -89,7 +89,6 @@ webSocketServer.on('connection', (webSocket) => {
     if (transaction.owner === userId) {
       sendMessage(webSocket, Map({
         entities: transaction.entities,
-        entitiesToRemove: transaction.entitiesToRemove,
         message: transaction.messages.get('owner'),
       }));
     }
