@@ -37,7 +37,7 @@ type Actions = entityActions.MoveEntity;
  */
 export function parseCommand(command: string, userId: string) {
   return (dispatch: Dispatch<Actions>, getState: () => State): void => {
-    const parts = command.split(' ');
+    const parts = command.split(/ +/);
     const state = getState();
     const root = state.command.available.find(availableCommand => availableCommand.name === parts[0]);
     if (!root) {
@@ -45,8 +45,17 @@ export function parseCommand(command: string, userId: string) {
       return;
     }
 
+    let action;
+    if (['move', 'transfer', 'give'].includes(root.name)) {
+      action = entityActions.move(userId, parts[1], parts[3]);
+    } else if (root.name === 'drop') {
+      action = entityActions.move(userId, parts[1], 'floor');
+    } else if (root.name === 'take') {
+      action = entityActions.move(userId, parts[1], 'self');
+    }
+
     // TODO remove assertion after redux-thunk typings are fixed
     // tslint:disable-next-line no-any
-    dispatch<any>(entityActions.move(userId, parts[1], parts[3]));
+    dispatch<any>(action);
   };
 }

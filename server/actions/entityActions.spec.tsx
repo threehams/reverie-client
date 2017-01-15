@@ -35,30 +35,11 @@ describe('entityActions', () => {
             5: new Entity({
               components: Set(['creature', 'player']),
               id: '5',
-              name: 'player',
+              name: 'player2',
             }),
             6: new Entity({
               id: '6',
               name: 'thing2',
-            }),
-          }),
-          entityByName: Map({
-            1: Map({
-              id: '1',
-              thing: Map({
-                id: '2',
-              }),
-            }),
-            3: Map({
-              container: Map({
-                id: '4',
-              }),
-              id: '3',
-              player: Map({
-                things: Map({
-                  id: '2',
-                }),
-              }),
             }),
           }),
         }));
@@ -85,8 +66,8 @@ describe('entityActions', () => {
           }),
         }));
         expect(result.payload.messages).to.equal(Map({
-          owner: 'You moved self/thing to floor/container.',
-          viewer: '1 moved self/thing to floor/container.',
+          owner: 'You moved thing to container.',
+          viewer: '1 moved thing to container.',
         }));
         expect(result.payload.observers).to.equal(List(['5']));
         expect(result.payload.owner).to.equal('1');

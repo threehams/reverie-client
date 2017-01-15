@@ -4,12 +4,12 @@ import path = require('path');
 import express = require('express');
 import WebSocket = require('ws');
 import compression = require('compression');
-import { Map } from 'immutable';
+import { List, Map, Set } from 'immutable';
 
 import * as messageActions from './actions/messageActions';
 import config from './config';
 import configureStore from './configureStore';
-import { TransactionState } from './records';
+import { State, TransactionState } from './records';
 
 import fixtureAttackBees from './fixtures/fixtureAttackBees';
 import fixtureAttackedByBees from './fixtures/fixtureAttackedByBees';
@@ -19,7 +19,6 @@ import fixtureBeesGone from './fixtures/fixtureBeesGone';
 import fixtureBeesPanic from './fixtures/fixtureBeesPanic';
 import fixtureBeesPanicGone from './fixtures/fixtureBeesPanicGone';
 import fixtureEnemyAttack from './fixtures/fixtureEnemyAttack';
-import fixtureInitialState from './fixtures/fixtureInitialState';
 import fixtureInventoryAdd from './fixtures/fixtureInventoryAdd';
 import fixtureInventoryRemove from './fixtures/fixtureInventoryRemove';
 import fixtureMovePlayer from './fixtures/fixtureMovePlayer';
@@ -76,9 +75,9 @@ const store = configureStore();
 store.dispatch(messageActions.setState(fixtureServerState));
 
 webSocketServer.on('connection', (webSocket) => {
-  sendMessage(webSocket, fixtureInitialState, {initial: true});
   const userId = '17';
   let currentTransactions: TransactionState;
+  sendMessage(webSocket, getInitialState(store.getState(), userId), {initial: true});
 
   const unsubscribe = store.subscribe(() => {
     const newTransactions = store.getState().transactions;
@@ -184,7 +183,7 @@ webSocketServer.on('connection', (webSocket) => {
       case 'unlock floor/usb-drive':
         return sendMessage(webSocket, fixtureUnlockContainer);
       default:
-        if (command.startsWith('transfer')) {
+        if (/^(transfer|move|take|drop|give)/.test(command)) {
           // tslint:disable-next-line no-any
           return store.dispatch<any>(messageActions.parseCommand(command, userId));
         }
@@ -200,6 +199,28 @@ webSocketServer.on('connection', (webSocket) => {
   });
 });
 
+function getInitialState(state: State, userId: string) {
+  function getEntityTree(entityIds: List<string>): List<string> {
+    return entityIds.map((entityId) => {
+      const entity = state.entities.get(entityId);
+      return entity.entities.size ? getEntityTree(entity.entities).concat(entityId) : entityId;
+    }).flatten() as List<string>;
+  }
+
+  const user = state.entities.get(userId);
+  // TODO add "parentId" to entities and it'll fix a lot of these linear operations... at the cost
+  // of larger state deltas
+  const location = state.entities.find(entity => entity.entities.includes(userId));
+  const ids = Set([userId, location.id]).union(getEntityTree(user.entities)).union(getEntityTree(location.entities));
+  return Map({
+    availableCommands: state.command.available,
+    entities: state.entities.filter((entity, id) => ids.includes(id)),
+    location: location.set('entities', location.entities.filter(entityId => entityId !== userId)),
+    message: location.description,
+    player: userId,
+  });
+}
+
 function parseMessage(jsonMessage: string): string | null {
   try {
     const message: Message = JSON.parse(jsonMessage);
@@ -209,7 +230,8 @@ function parseMessage(jsonMessage: string): string | null {
   }
 }
 
-// TODO reconcile immutable message with JS fixtures
+// TODO reconcile immutable message with JS fixtures to get rid of any type
+// (after replacing all fixtures)
 // tslint:disable-next-line no-any
 function sendMessage(webSocket: WebSocket, payload: any, opts: MessageOptions = {}) {
   webSocket.send(JSON.stringify({

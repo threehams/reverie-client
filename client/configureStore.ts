@@ -22,10 +22,10 @@ const socketMiddleware = (socket: WebSocket) => {
 export const configureStore = (socket: WebSocket, initialState: State) => {
   // tslint:disable-next-line no-any
   // const win: any = window;
-  const withMiddleware = applyMiddleware(thunk, socketMiddleware(socket))(createStore);
+  const withDevTools = window.devToolsExtension ? window.devToolsExtension()(createStore) : createStore;
+  const withMiddleware = applyMiddleware(thunk, socketMiddleware(socket))(withDevTools);
   // TODO figure out why this complains about async actions
-  // const withDevTools = window.devToolsExtension ? window.devToolsExtension()(withMiddleware) : withMiddleware;
-  const store: Store<State> = withMiddleware(rootReducer, initialState);
+  const store: Store<State> = withMiddleware(rootReducer, initialState) as Store<State>;
 
   if (module.hot) {
     module.hot.accept('./rootReducer', () => {
