@@ -55,7 +55,6 @@ function applyAllowedComponents(objects: Seq.Indexed<AutocompleteItem>, componen
 
     let found = false;
     // returning false has special meaning to forEach, and this is a necessary performance improvement
-    // eslint-disable-next-line consistent-return
     components.forEach((component) => {
       if (object.components.includes(component)) {
         found = true;

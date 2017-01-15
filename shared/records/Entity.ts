@@ -3,15 +3,14 @@ import { List, Record, Set } from 'immutable';
 interface EntityProps {
   components?: Set<string>;
   currentHealth?: number;
-  currentMemory?: number;
   currentStorage?: number;
   description?: string;
   entities?: List<string>;
+  exits?: Set<string>;
   expanded?: boolean;
   id: string;
   indent?: number;
   maxHealth?: number;
-  maxMemory?: number;
   maxStorage?: number;
   name: string;
   owner?: string;
@@ -24,15 +23,14 @@ interface EntityProps {
 export class Entity extends Record<EntityProps>({
   components: Set([]),
   currentHealth: 0,
-  currentMemory: 0,
   currentStorage: 0,
   description: '',
   entities: List([]),
+  exits: Set([]),
   expanded: false,
   id: null,
   indent: 1,
   maxHealth: 0,
-  maxMemory: 0,
   maxStorage: 0,
   name: '',
   owner: null,
@@ -43,15 +41,14 @@ export class Entity extends Record<EntityProps>({
 }) implements EntityProps {
   public components: Set<string>;
   public currentHealth: number;
-  public currentMemory: number;
   public currentStorage: number;
   public description: string;
   public entities: List<string>;
+  public exits: Set<string>;
   public expanded: boolean;
   public id: string;
   public indent: number;
   public maxHealth: number;
-  public maxMemory: number;
   public maxStorage: number;
   public name: string;
   public owner: string;

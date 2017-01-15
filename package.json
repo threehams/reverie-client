@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "better-npm-run build",
-    "lint": "tslint {client,server}/**/*.ts{,x}",
-    "lint:fix": "tslint {client,server}/**/*.ts{,x} . --fix",
+    "dev-server": "better-npm-run dev-server",
+    "lint": "tslint {client,shared,server}/**/*.ts{,x}",
+    "lint:fix": "tslint {client,shared,server}/**/*.ts{,x} . --fix",
     "postinstall": "node scripts/postinstall.js",
     "test": "better-npm-run test --watch --watch-extensions ts,tsx",
     "test:ci": "better-npm-run test",
@@ -28,6 +29,12 @@
         "NODE_ENV": "test"
       }
     },
+    "dev-server": {
+      "command": "ts-node ./server/devServer.ts",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
     "server": {
       "command": "ts-node ./server/index.ts",
       "env": {
@@ -38,7 +45,7 @@
       "command": "nodemon --exec ts-node server/index.ts",
       "env": {
         "NODE_ENV": "development",
-        "PORT": 8080
+        "PORT": 3000
       }
     },
     "test": {

@@ -1,7 +1,7 @@
 import { List, Map } from 'immutable';
 import { expect } from '../../__test__/configureExpect';
 
-import { Entity } from '../records';
+import { Entity, EntityState } from '../records';
 import {entitiesReducer } from './entitiesReducer';
 
 import { SetState } from '../actions/messageActions';
@@ -66,7 +66,7 @@ describe('entitiesReducer', () => {
       });
       const action: SetState = {
         payload: {
-          entities: Map<string, Entity>({}),
+          entities: Map({}) as EntityState,
           entitiesToRemove: List(['1']),
         },
         type: 'SET_STATE',

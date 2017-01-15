@@ -32,7 +32,9 @@ export class AutocompleteBase extends React.Component<AutocompleteBaseProps, {}>
   public render() {
     const { fragment, focused, onClickItem, options, selectedItem } = this.props;
     if (!options || !options.size) {
-      return <div></div>;
+      return <ul style={styles.panel.global} tabIndex={1000}>
+        <li style={styles.item.global}>(no suggestions found)</li>
+      </ul>;
     }
 
     return (

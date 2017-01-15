@@ -1,10 +1,10 @@
-import { List, Map, OrderedSet } from 'immutable';
+import { List, OrderedSet } from 'immutable';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import Radium = require('radium');
 
 import * as editorActions from '../actions/editorActions';
-import { Entity, State } from '../records';
+import { Entity, EntityState, State } from '../records';
 import { EditorPanel } from './EditorPanel';
 import { EditorTabs } from './EditorTabs';
 
@@ -13,7 +13,7 @@ import fontStyles from '../styles/font';
 interface EditorProps {
   activeView: string;
   editorHistory: List<string>;
-  entities: Map<string, Entity>;
+  entities: EntityState;
   log: List<string>;
   removeView: Function;
   setActiveView: Function;

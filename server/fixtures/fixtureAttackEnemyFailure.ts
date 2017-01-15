@@ -3,12 +3,10 @@ export default {
     17: {
       components: ['player'],
       currentHealth: 60,
-      currentMemory: 100,
       currentStorage: 100,
       entities: ['1', '4', '9'],
       id: '17',
       maxHealth: 100,
-      maxMemory: 100,
       maxStorage: 100,
       name: 'Big McLargeHuge',
     },

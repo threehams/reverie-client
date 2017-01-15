@@ -1,4 +1,4 @@
-import {Map, OrderedSet} from 'immutable';
+import { OrderedSet } from 'immutable';
 import * as React from 'react';
 import pure from 'recompose/pure';
 
@@ -6,11 +6,11 @@ import { Loader } from '../components/Loader';
 import { StatusEffect } from '../components/StatusEffect';
 import { Tab } from '../components/Tab';
 import { TabContainer } from '../components/TabContainer';
-import { Entity } from '../records';
+import { EntityState } from '../records';
 
 interface EditorTabsProps {
   activeView: string;
-  entities: Map<string, Entity>;
+  entities: EntityState;
   setActiveView: Function;
   removeView: Function;
   views: OrderedSet<string>;

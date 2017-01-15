@@ -31,10 +31,6 @@ export const PlayerBase: React.StatelessComponent<PlayerProps> = ({
         { player.currentHealth } / { player.maxHealth }
       </li>
       <li>
-        <Icon name="laptop" before />
-        { player.currentMemory } / { player.maxMemory }
-      </li>
-      <li>
         <Icon name="hdd-o" before />
         { player.currentStorage } / { player.maxStorage }
       </li>

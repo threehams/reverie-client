@@ -1,8 +1,7 @@
-import { Map } from 'immutable';
 import { createSelector } from 'reselect';
-import { Entity, State } from '../records';
+import { Entity, EntityState, State } from '../records';
 
-function addPaths(entity: Entity, entities: Map<string, Entity>, owner: string, path: string) {
+function addPaths(entity: Entity, entities: EntityState, owner: string, path: string) {
   const newPath = `${path}/${entity.name}`;
   const pathSet = entity.merge({ owner, path: newPath });
   let newEntities = entities;

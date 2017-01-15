@@ -19,7 +19,6 @@
     "client/**/*",
     "shared/**/*",
     "server/**/*",
-    "node_modules/@types/**/*",
-    "typings/**/*"
+    "node_modules/@types/**/*"
   ]
 }
