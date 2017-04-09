@@ -13,8 +13,8 @@ export interface StateDeltaJs {
   availableCommands?: CommandData[];
   entities?: EntityObjectMap;
   message?: string;
-  player?: string;
-  location?: LocationData;
+  player?: EntityData;
+  location?: EntityData;
   statusEffects?: string[];
 }
 
@@ -33,13 +33,6 @@ interface AllowedData {
   components?: string[];
   states?: string[];
   names?: string[];
-}
-
-interface LocationData {
-  name: string;
-  description: string;
-  entities?: string[];
-  exits?: string[];
 }
 
 export interface EntityObjectMap {
@@ -68,7 +61,7 @@ export interface EntityData {
 export const setInitialState = (state: StateDeltaJs) => {
   return (dispatch: Dispatch<State>, getState: () => State) => {
     const currentState = getState();
-    if (currentState.getIn(['ui', 'player'])) {
+    if (currentState.player.id) {
       return;
     }
 

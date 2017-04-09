@@ -39,7 +39,7 @@ export const PlayerBase: React.StatelessComponent<PlayerProps> = ({
 );
 
 export const Player = connect((state: State) => ({
-  player: state.entities.get(state.ui.player),
+  player: state.player,
 }))(Radium(PlayerBase));
 
 const styles = {

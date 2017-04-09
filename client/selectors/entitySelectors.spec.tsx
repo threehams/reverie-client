@@ -1,5 +1,5 @@
 import { List, Map } from 'immutable';
-import { Entity, State, Ui } from '../records';
+import { Entity, State } from '../records';
 
 import { expect } from '../../__test__/configureExpect';
 
@@ -15,7 +15,6 @@ describe('entitySelectors', () => {
       });
       const state = new State({
         entities: Map({
-          1: player,
           2: new Entity({
             entities: List(['3']),
             id: '2',
@@ -26,13 +25,10 @@ describe('entitySelectors', () => {
             name: 'item',
           }),
         }),
-        ui: new Ui({
-          player: '1',
-        }),
+        player,
       });
       const entities = entitySelectors.entitiesWithPath(state);
       expect(entities).to.equal(Map({
-        1: player,
         2: new Entity({
           entities: List(['3']),
           id: '2',

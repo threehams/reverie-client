@@ -10,7 +10,8 @@ export const list = createSelector(
   entitySelectors.entitiesWithPath,
   (state) => state.ui,
   (state) => state.location,
-  (entities, ui, location): OwnerEntityMap => {
+  (state) => state.player,
+  (entities, ui, location, player): OwnerEntityMap => {
     const floorEntities = entityIds('floor').flatMap((entityId) => addUiData(entityId, 1));
     const selfEntities = entityIds('self').flatMap((entityId) => addUiData(entityId, 1));
     return Map({
@@ -35,7 +36,7 @@ export const list = createSelector(
 
     function entityIds(owner: 'self' | 'floor'): List<string> {
       if (owner === 'self') {
-        return entities.getIn([ui.player, 'entities']) || List([]);
+        return player.entities || List([]);
       } else if (owner === 'floor') {
         return location.entities || List([]);
       }

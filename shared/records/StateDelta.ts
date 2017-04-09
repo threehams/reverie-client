@@ -1,11 +1,11 @@
 import { Set } from 'immutable';
-import { Command, EntityState, Location } from './';
+import { Command, Entity, EntityState } from './';
 
 export interface StateDelta {
   availableCommands?: Set<Command>;
   entities?: EntityState;
-  location?: Location;
+  location?: Entity;
   message?: string;
-  player?: string;
+  player?: Entity;
   statusEffects?: Set<string>;
 }

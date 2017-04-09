@@ -1,4 +1,4 @@
-import { fromJS, List, Map, Set } from 'immutable';
+import { List, Map, Set } from 'immutable';
 
 import {
   Allowed,
@@ -7,7 +7,6 @@ import {
   CommandPart,
   Entity,
   EntityState,
-  Location,
   StateDelta,
 } from '../records';
 
@@ -20,8 +19,8 @@ interface StateData {
   availableCommands?: CommandData[];
   entities?: EntityObjectMap;
   message?: string;
-  player?: string;
-  location?: LocationData;
+  player?: EntityData;
+  location?: EntityData;
   statusEffects?: string[];
 }
 
@@ -40,13 +39,6 @@ interface AllowedData {
   components?: string[];
   states?: string[];
   names?: string[];
-}
-
-interface LocationData {
-  name: string;
-  description: string;
-  entities?: string[];
-  exits?: string[];
 }
 
 export interface EntityObjectMap {
@@ -77,9 +69,9 @@ export const setState = (stateData: StateData): SetState => ({
   payload: {
     availableCommands: createCommandSet(stateData.availableCommands),
     entities: createEntityMap(stateData.entities),
-    location: stateData.location && new Location(fromJS(stateData.location)),
+    location: stateData.location && createEntity(stateData.location),
     message: stateData.message || '',
-    player: stateData.player,
+    player: stateData.player && createEntity(stateData.player),
     statusEffects: stateData.statusEffects && Set(stateData.statusEffects),
   },
   type: 'SET_STATE',
@@ -91,16 +83,19 @@ function createEntityMap(entities: EntityObjectMap): EntityState {
   if (!entities) {
     return Map({}) as EntityState;
   }
-  return Object.entries(entities).reduce((entityMap: EntityState, [id, entity]: EntityPair): EntityState => {
-    const entityProps = {
-      ...entity,
-      components: Set(entity.components),
-      entities: List(entity.entities),
-      exits: Set(entity.exits),
-      states: Set(entity.states),
-    };
-    return entityMap.set(id, new Entity(entityProps));
+  return Object.entries(entities).reduce((entityMap: EntityState, [id, entityData]: EntityPair): EntityState => {
+    return entityMap.set(id, createEntity(entityData));
   }, Map({}) as EntityState);
+}
+
+function createEntity(entityData: EntityData): Entity {
+  return new Entity({
+    ...entityData,
+    components: Set(entityData.components),
+    entities: List(entityData.entities),
+    exits: List(entityData.exits),
+    states: Set(entityData.states),
+  })
 }
 
 function createCommandSet(commands: CommandData[]): Set<Command> {

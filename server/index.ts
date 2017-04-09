@@ -4,12 +4,13 @@ import path = require('path');
 import express = require('express');
 import WebSocket = require('ws');
 import compression = require('compression');
-import { List, Map, Set } from 'immutable';
+import { Map } from 'immutable';
 
 import * as messageActions from './actions/messageActions';
 import config from './config';
 import configureStore from './configureStore';
-import { State, TransactionState } from './records';
+import { TransactionState } from './records';
+import { filterEntities, filterInitialState } from './utils/filterState';
 
 import fixtureAttackBees from './fixtures/fixtureAttackBees';
 import fixtureAttackedByBees from './fixtures/fixtureAttackedByBees';
@@ -77,7 +78,7 @@ store.dispatch(messageActions.setState(fixtureServerState));
 webSocketServer.on('connection', (webSocket) => {
   const userId = '17';
   let currentTransactions: TransactionState;
-  sendMessage(webSocket, getInitialState(store.getState(), userId), {initial: true});
+  sendMessage(webSocket, filterInitialState(userId, store.getState()), {initial: true});
 
   const unsubscribe = store.subscribe(() => {
     const newTransactions = store.getState().transactions;
@@ -87,9 +88,12 @@ webSocketServer.on('connection', (webSocket) => {
 
     const transaction = newTransactions.last();
     if (transaction.owner === userId) {
+      const filtered = filterEntities(userId, transaction.entities);
       sendMessage(webSocket, Map({
-        entities: transaction.entities,
+        entities: filtered.entities,
+        location: filtered.location,
         message: transaction.messages.get('owner'),
+        player: filtered.player,
       }));
     }
   });
@@ -197,28 +201,6 @@ webSocketServer.on('connection', (webSocket) => {
     webSocket.removeAllListeners('message');
   });
 });
-
-function getInitialState(state: State, userId: string) {
-  function getEntityTree(entityIds: List<string>): List<string> {
-    return entityIds.map((entityId) => {
-      const entity = state.entities.get(entityId);
-      return entity.entities.size ? getEntityTree(entity.entities).concat(entityId) : entityId;
-    }).flatten() as List<string>;
-  }
-
-  const user = state.entities.get(userId);
-  // TODO add "parentId" to entities and it'll fix a lot of these linear operations... at the cost
-  // of larger state deltas
-  const location = state.entities.find(entity => entity.entities.includes(userId));
-  const ids = Set([userId, location.id]).union(getEntityTree(user.entities)).union(getEntityTree(location.entities));
-  return Map({
-    availableCommands: state.command.available,
-    entities: state.entities.filter((entity, id) => ids.includes(id)),
-    location: location.set('entities', location.entities.filter(entityId => entityId !== userId)),
-    message: location.description,
-    player: userId,
-  });
-}
 
 function parseMessage(jsonMessage: string): string | null {
   try {

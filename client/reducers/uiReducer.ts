@@ -1,4 +1,4 @@
-import { Map, OrderedSet } from 'immutable';
+import { OrderedSet } from 'immutable';
 
 import { EditorAddView, EditorRemoveView, EditorSetActiveView } from '../actions/editorActions';
 import { InventorySelectItems, InventoryToggleExpand, InventoryToggleSelect } from '../actions/inventoryActions';
@@ -86,10 +86,7 @@ function setState(state: Ui, action: SetState): Ui {
       .update('inventoryExpandedById', expanded => expanded.remove(id));
   }, state) : state;
 
-  const withEffects = setStatusEffects(entitiesRemoved, action);
-  // If player or location are provided, merge them into the state
-  const newState = Map({ player: action.payload.player });
-  return withEffects.mergeWith((prev, next) => next || prev, newState);
+  return setStatusEffects(entitiesRemoved, action);
 }
 
 function setStatusEffects(state: Ui, action: SetState): Ui {

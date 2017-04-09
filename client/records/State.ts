@@ -1,11 +1,12 @@
 import { List, Record } from 'immutable';
-import { CommandState, EntityState, Location, Ui } from './';
+import { CommandState, Entity, EntityState, Ui } from './';
 
 interface StateProps {
   command?: CommandState;
   editorHistory?: List<string>;
   entities?: EntityState;
-  location?: Location;
+  location?: Entity;
+  player?: Entity;
   ui?: Ui;
 }
 
@@ -14,11 +15,13 @@ export class State extends Record<StateProps>({
   editorHistory: undefined,
   entities: undefined,
   location: undefined,
+  player: undefined,
   ui: undefined,
 }) implements StateProps {
   public command: CommandState;
   public editorHistory: List<string>;
   public entities: EntityState;
-  public location: Location;
+  public location: Entity;
+  public player: Entity;
   public ui: Ui;
 };

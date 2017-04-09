@@ -1,5 +1,5 @@
 import { List, Map, Set } from 'immutable';
-import { Entity, Location, State, Ui } from '../records';
+import { Entity, State, Ui } from '../records';
 
 import { expect } from '../../__test__/configureExpect';
 
@@ -16,7 +16,6 @@ describe('inventorySelectors', () => {
         });
         const state = new State({
           entities: Map({
-            1: player,
             2: new Entity({
               entities: List(['3']),
               id: '2',
@@ -31,10 +30,10 @@ describe('inventorySelectors', () => {
               name: 'item',
             }),
           }),
-          location: new Location(),
+          location: new Entity(),
+          player,
           ui: new Ui({
             inventoryExpandedById: Set(['2']),
-            player: '1',
           }),
         });
         const entities = inventorySelectors.list(state);
@@ -71,7 +70,6 @@ describe('inventorySelectors', () => {
         });
         const state = new State({
           entities: Map({
-            1: player,
             2: new Entity({
               entities: List(['3']),
               id: '2',
@@ -86,10 +84,9 @@ describe('inventorySelectors', () => {
               name: 'item',
             }),
           }),
-          location: new Location(),
-          ui: new Ui({
-            player: '1',
-          }),
+          location: new Entity(),
+          player,
+          ui: new Ui(),
         });
         const props = { owner: 'self' };
         const entities = inventorySelectors.list(state, props);

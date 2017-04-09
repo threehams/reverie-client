@@ -134,43 +134,6 @@ describe('uiReducer', () => {
   });
 
   describe('SET_STATE', () => {
-    context('with a player', () => {
-      it('replaces the player', () => {
-        const initial = new Ui({ player: '2' });
-        const action: SetState = {
-          payload: {
-            player: '1',
-          },
-          type: 'SET_STATE',
-        };
-        expect(uiReducer(initial, action)).to.equal(new Ui({ player: '1' }));
-      });
-    });
-
-    context('with a location', () => {
-      it('replaces the player', () => {
-        const initial = new Ui({ player: '2' });
-        const action: SetState = {
-          payload: {
-            player: '1',
-          },
-          type: 'SET_STATE',
-        };
-        expect(uiReducer(initial, action)).to.equal(new Ui({ player: '1' }));
-      });
-    });
-
-    context('with no player or location', () => {
-      it('keeps the existing data', () => {
-        const initial = new Ui({ player: '1'  });
-        const action: SetState = {
-          payload: {},
-          type: 'SET_STATE',
-        };
-        expect(uiReducer(initial, action)).to.equal(new Ui({ player: '1' }));
-      });
-    });
-
     context('with status effects', () => {
       it('replacing the existing effects', () => {
         const initial = new Ui({ statusEffects: Set(['bees']) });

@@ -13,13 +13,12 @@ function addPaths(entity: Entity, entities: EntityState, owner: string, path: st
 
 export const entitiesWithPath = createSelector(
   (state: State) => state.entities,
-  (state: State) => state.ui.player,
+  (state: State) => state.player,
   (state: State) => state.location,
   (entities, player, location) => {
-    const playerEntity = entities.get(player);
     let newEntities = entities;
-    if (playerEntity) {
-      playerEntity.entities.forEach((entityId) => {
+    if (player) {
+      player.entities.forEach((entityId) => {
         newEntities = addPaths(newEntities.get(entityId), newEntities, 'self', 'self');
       });
     }

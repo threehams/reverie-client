@@ -1,7 +1,7 @@
 import { List, Map, OrderedSet, Set } from 'immutable';
 
 import { expect } from '../../__test__/configureExpect';
-import { Entity, Location, State, Ui } from '../records';
+import { Entity, State, Ui } from '../records';
 import * as inventoryActions from './inventoryActions';
 
 describe('inventoryActions', () => {
@@ -47,15 +47,14 @@ describe('inventoryActions', () => {
                 id: '5',
                 name: 'name',
               }),
-              6: new Entity({
-                entities: List(['1', '2', '4', '5']),
-                id: '6',
-                name: 'name',
-              }),
             }),
-            location: new Location(),
+            location: new Entity(),
+            player: new Entity({
+              entities: List(['1', '2', '4', '5']),
+              id: '6',
+              name: 'name',
+            }),
             ui: new Ui({
-              player: '6',
               selectedItems: OrderedSet(['1']),
             }),
           });
@@ -94,16 +93,15 @@ describe('inventoryActions', () => {
                 id: '4',
                 name: 'name',
               }),
-              6: new Entity({
-                entities: List(['1', '4']),
-                id: '6',
-                name: 'name',
-              }),
             }),
-            location: new Location(),
+            location: new Entity(),
+            player: new Entity({
+              entities: List(['1', '4']),
+              id: '6',
+              name: 'name',
+            }),
             ui: new Ui({
               inventoryExpandedById: Set(['1', '2']),
-              player: '6',
               selectedItems: OrderedSet(['1']),
             }),
           });
@@ -142,16 +140,15 @@ describe('inventoryActions', () => {
                 id: '4',
                 name: 'name',
               }),
-              6: new Entity({
-                entities: List(['1', '4']),
-                id: '6',
-                name: 'name',
-              }),
             }),
-            location: new Location(),
+            location: new Entity(),
+            player: new Entity({
+              entities: List(['1', '4']),
+              id: '6',
+              name: 'name',
+            }),
             ui: new Ui({
               inventoryExpandedById: Set(['1', '2']),
-              player: '6',
               selectedItems: OrderedSet(['3']),
             }),
           });
@@ -195,20 +192,19 @@ describe('inventoryActions', () => {
                 id: '5',
                 name: 'name',
               }),
-              6: new Entity({
-                entities: List(['1', '5']),
-                id: '6',
-                name: 'player',
-              }),
               7: new Entity({
                 id: '7',
                 name: 'name',
               }),
             }),
-            location: new Location(),
+            location: new Entity(),
+            player: new Entity({
+              entities: List(['1', '5']),
+              id: '6',
+              name: 'player',
+            }),
             ui: new Ui({
               inventoryExpandedById: Set(['1', '2', '4']),
-              player: '6',
               selectedItems: OrderedSet(['4']),
             }),
           });

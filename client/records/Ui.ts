@@ -7,7 +7,6 @@ interface UiProps {
   editorViews?: OrderedSet<string>;
   footerHeight?: number;
   inventoryExpandedById?: Set<string>;
-  player?: string;
   selectedItems?: OrderedSet<string>;
   sidebarHeight?: number;
   sidebarWidth?: number;
@@ -17,11 +16,10 @@ interface UiProps {
 export class Ui extends Record<UiProps>({
   activeEditorView: '0',
   activePlayerView: 'inventory',
-  alert: null,
+  alert: '',
   editorViews: OrderedSet(['0']),
   footerHeight: 300,
   inventoryExpandedById: Set([]),
-  player: null,
   selectedItems: OrderedSet([]),
   sidebarHeight: 300,
   sidebarWidth: 250,
@@ -33,7 +31,6 @@ export class Ui extends Record<UiProps>({
   public editorViews: OrderedSet<string>;
   public footerHeight: number;
   public inventoryExpandedById: Set<string>;
-  public player: string;
   public selectedItems: OrderedSet<string>;
   public sidebarHeight: number;
   public sidebarWidth: number;

@@ -12,7 +12,6 @@ import {
   CommandState,
   Entity,
   Exit,
-  Location,
   State,
   Ui,
 } from '../records';
@@ -103,8 +102,10 @@ describe('autocompleteSelectors', () => {
               name: 'readme.txt',
             }),
           }),
-          location: new Location({
+          location: new Entity({
             exits: List(['south']),
+            id: '4',
+            name: 'location',
           }),
           ui: new Ui(),
         });
@@ -146,7 +147,7 @@ describe('autocompleteSelectors', () => {
             entities: Map({
               1: entity,
             }),
-            location: new Location(),
+            location: new Entity(),
             ui: new Ui(),
           });
           expect(autocompleteSelectors.availableOptions(state)).to.equal(List([
